@@ -31,7 +31,8 @@
       "subtitle_de": "Ein Auto. Null Kompromisse.",
       "subtitle_en": "One Car. Zero Compromises.",
       "description_de": "Der Mitsubishi ASX - kompakter Crossover mit sportlichem Design und urbaner Attitüde.",
-      "description_en": "The Mitsubishi ASX - compact crossover with sporty design and urban attitude."
+      "description_en": "The Mitsubishi ASX - compact crossover with sporty design and urban attitude.",
+      "featured": false
     },
     {
       "slug": "bavarian-car-meet",
@@ -64,7 +65,8 @@
       "subtitle_de": "Chiemgauer Bergwelten eingefangen",
       "subtitle_en": "Chiemgau Mountain Worlds Captured",
       "description_de": "Bergen im Chiemgau - wo bayerische Berge und grüne Täler aufeinandertreffen und alpine Schönheit entsteht.",
-      "description_en": "Bergen in Chiemgau - where Bavarian mountains and green valleys meet to create alpine beauty."
+      "description_en": "Bergen in Chiemgau - where Bavarian mountains and green valleys meet to create alpine beauty.",
+      "featured": false
     },
     {
       "slug": "dropped-house-crew",
@@ -80,7 +82,8 @@
       "subtitle_de": "Tiefer geht's nicht. Besser auch nicht.",
       "subtitle_en": "Can't Go Lower. Shouldn't Either.",
       "description_de": "Die Dropped House Crew in Action - tiefergelegte Autos und eine Crew mit Style und Leidenschaft.",
-      "description_en": "The Dropped House Crew in action - lowered cars and a crew with style and passion."
+      "description_en": "The Dropped House Crew in action - lowered cars and a crew with style and passion.",
+      "featured": false
     },
     {
       "slug": "gewitter",
@@ -96,7 +99,8 @@
       "subtitle_de": "33 Aufnahmen reiner Naturgewalt",
       "subtitle_en": "33 Shots of Pure Natural Force",
       "description_de": "Naturgewalten eingefangen - dramatische Gewitterstimmung mit Blitzen, dunklen Wolken und atmosphärischer Spannung.",
-      "description_en": "Forces of nature captured - dramatic thunderstorm atmosphere with lightning, dark clouds and atmospheric tension."
+      "description_en": "Forces of nature captured - dramatic thunderstorm atmosphere with lightning, dark clouds and atmospheric tension.",
+      "featured": false
     },
     {
       "slug": "hinterhoftreff",
@@ -112,7 +116,8 @@
       "subtitle_de": "Kein Glamour. Nur Leidenschaft.",
       "subtitle_en": "No Glamour. Just Passion.",
       "description_de": "Car Meet auf grüner Wiese am Waldrand - wo die Szene unter sich bleibt und authentische Tuning-Kultur gelebt wird.",
-      "description_en": "Car meet on green meadow at the forest edge - where the scene stays among themselves and authentic tuning culture is lived."
+      "description_en": "Car meet on green meadow at the forest edge - where the scene stays among themselves and authentic tuning culture is lived.",
+      "featured": false
     },
     {
       "slug": "hkw-aubing",
@@ -128,7 +133,8 @@
       "subtitle_de": "Lost Place. Roher Beton. Pure Atmosphäre.",
       "subtitle_en": "Lost Place. Raw Concrete. Pure Atmosphere.",
       "description_de": "Das verlassene Heizkraftwerk München Aubing - Lost Place mit industriellem Charme und urbaner Vergänglichkeit.",
-      "description_en": "The abandoned thermal power station Munich Aubing - lost place with industrial charm and urban transience."
+      "description_en": "The abandoned thermal power station Munich Aubing - lost place with industrial charm and urban transience.",
+      "featured": false
     },
     {
       "slug": "ingolstadt",
@@ -144,7 +150,8 @@
       "subtitle_de": "Audis Heimat. Meine Perspektive.",
       "subtitle_en": "Audi's Home. My Perspective.",
       "description_de": "Die Stadt Ingolstadt durch die Linse - urbane Strukturen und architektonische Highlights.",
-      "description_en": "The city of Ingolstadt through the lens - urban structures and architectural highlights."
+      "description_en": "The city of Ingolstadt through the lens - urban structures and architectural highlights.",
+      "featured": false
     },
     {
       "slug": "landshut",
@@ -160,7 +167,8 @@
       "subtitle_de": "Wo Türme in den Himmel ragen",
       "subtitle_en": "Where Towers Reach for the Sky",
       "description_de": "Landshut's mittelalterlicher Charme - Historice Architektur und städtische Atmosphäre.",
-      "description_en": "Landshut's medieval charm - historic architecture and urban atmosphere."
+      "description_en": "Landshut's medieval charm - historic architecture and urban atmosphere.",
+      "featured": false
     },
     {
       "slug": "muehldorf",
@@ -176,7 +184,8 @@
       "subtitle_de": "Kleine Stadt. Großes Herz. Echte Bilder.",
       "subtitle_en": "Small Town. Big Heart. Real Images.",
       "description_de": "Mühldorf am Inn - traditionelle bayerische Stadt-Architektur und lokale Atmosphäre.",
-      "description_en": "Mühldorf am Inn - traditional Bavarian city architecture and local atmosphere."
+      "description_en": "Mühldorf am Inn - traditional Bavarian city architecture and local atmosphere.",
+      "featured": false
     },
     {
       "slug": "oberstaufen",
@@ -192,7 +201,8 @@
       "subtitle_de": "Wo Berge die Seele berühren",
       "subtitle_en": "Where Mountains Touch the Soul",
       "description_de": "Alpenpanorama und grüne Wiesen - die malerische Schönheit von Oberstaufen im Allgäu.",
-      "description_en": "Alpine panorama and green meadows - the picturesque beauty of Oberstaufen in the Allgäu."
+      "description_en": "Alpine panorama and green meadows - the picturesque beauty of Oberstaufen in the Allgäu.",
+      "featured": false
     },
     {
       "slug": "olympiastation-eins",
@@ -208,7 +218,8 @@
       "subtitle_de": "Wo 1972 noch heute lebt",
       "subtitle_en": "Where 1972 Still Lives Today",
       "description_de": "Erste Session am Münchner Olympiapark - ikonische Architektur und urban vibes.",
-      "description_en": "First session at Munich's Olympic Park - iconic architecture and urban vibes."
+      "description_en": "First session at Munich's Olympic Park - iconic architecture and urban vibes.",
+      "featured": false
     },
     {
       "slug": "olympiastation-zwei",
@@ -224,7 +235,8 @@
       "subtitle_de": "Wo die Natur die alte S-Bahn zurückerobert",
       "subtitle_en": "Where Nature Reclaims the Old S-Bahn",
       "description_de": "Die überwucherten Ausläufer der alten S-Bahn Station - verlassene Gleise treffen auf wilde Vegetation.",
-      "description_en": "The overgrown outskirts of the old S-Bahn station - abandoned tracks meet wild vegetation."
+      "description_en": "The overgrown outskirts of the old S-Bahn station - abandoned tracks meet wild vegetation.",
+      "featured": false
     },
     {
       "slug": "schmiedewerk",
@@ -240,7 +252,8 @@
       "subtitle_de": "Wo die Autoschmiede zusammenkommt",
       "subtitle_en": "Community, Cars, and Pure Passion",
       "description_de": "Das Schmiedewerk Event - fast 250 Bilder von Custom Cars, Tuning-Perlen und der krassesten Automotive-Community.",
-      "description_en": "The Schmiedewerk event - almost 250 images of custom cars, tuning gems and the sickest automotive community."
+      "description_en": "The Schmiedewerk event - almost 250 images of custom cars, tuning gems and the sickest automotive community.",
+      "featured": false
     },
     {
       "slug": "silvester-muenchen-olympia",
@@ -256,7 +269,8 @@
       "subtitle_de": "Feuerwerk, Lichter, Neuanfang",
       "subtitle_en": "Fireworks, Lights, New Beginnings",
       "description_de": "Silvesterfeier am Olympiapark München - Feuerwerk, Lichter und New Year's Eve Atmosphäre.",
-      "description_en": "New Year's Eve celebration at Munich's Olympic Park - fireworks, lights and New Year's Eve atmosphere."
+      "description_en": "New Year's Eve celebration at Munich's Olympic Park - fireworks, lights and New Year's Eve atmosphere.",
+      "featured": false
     },
     {
       "slug": "stadtpark-erding",
@@ -272,7 +286,8 @@
       "subtitle_de": "Wo Stadt zur Ruhe kommt",
       "subtitle_en": "Where the City Comes to Rest",
       "description_de": "Ruhige Momente im Stadtpark Erding - Natur, Wege und grüne Oasen im urbanen Raum.",
-      "description_en": "Quiet moments in Erding's city park - nature, paths and green oases in urban space."
+      "description_en": "Quiet moments in Erding's city park - nature, paths and green oases in urban space.",
+      "featured": false
     },
     {
       "slug": "streetlife-crew",
@@ -288,7 +303,8 @@
       "subtitle_de": "Street Culture in Reinform",
       "subtitle_en": "Street Culture in Its Purest Form",
       "description_de": "Die Streetlife Crew auf den Straßen - authentische Car Culture und Community Spirit.",
-      "description_en": "The Streetlife Crew on the streets - authentic car culture and community spirit."
+      "description_en": "The Streetlife Crew on the streets - authentic car culture and community spirit.",
+      "featured": false
     },
     {
       "slug": "tce-xxx-lutz-060623",
@@ -304,7 +320,8 @@
       "subtitle_de": "Der Parkplatz, der Legende wurde",
       "subtitle_en": "TCE event: The Parking Lot That Became Legend",
       "description_de": "Tuning Club Event am XXXLutz Parkplatz - regelmäßiger Treffpunkt der lokalen Car Scene.",
-      "description_en": "Tuning Club event at XXXLutz parking lot - regular meeting point of the local car scene."
+      "description_en": "Tuning Club event at XXXLutz parking lot - regular meeting point of the local car scene.",
+      "featured": false
     },
     {
       "slug": "tce-xxx-lutz-170623",
@@ -320,7 +337,8 @@
       "subtitle_de": "Runde zwei. Noch mehr Power.",
       "subtitle_en": "TCE event: Round Two. Even More Power.",
       "description_de": "Zweites TCE Event im Juni - noch mehr Cars, noch mehr Action am beliebten Meeting Point.",
-      "description_en": "Second TCE event in June - even more cars, even more action at the popular meeting point."
+      "description_en": "Second TCE event in June - even more cars, even more action at the popular meeting point.",
+      "featured": false
     },
     {
       "slug": "tce-xxx-lutz-210924",
@@ -336,7 +354,8 @@
       "subtitle_de": "Die Szene bleibt heiß bis in den Herbst",
       "subtitle_en": "The Scene Stays Hot Into Fall",
       "description_de": "Herbst-Edition des TCE Meets - die Car Scene bleibt aktiv bis in den Spätsommer.",
-      "description_en": "Autumn edition of the TCE meet - the car scene stays active into late summer."
+      "description_en": "Autumn edition of the TCE meet - the car scene stays active into late summer.",
+      "featured": false
     },
     {
       "slug": "tce-xxx-lutz-280823",
@@ -352,7 +371,8 @@
       "subtitle_de": "Wenn Asphalt schmilzt und Motoren glühen",
       "subtitle_en": "When Asphalt Melts and Engines Glow",
       "description_de": "Hochsommer-Session beim TCE - über 130 Bilder von tuned Cars der leidenschaftlichen Community.",
-      "description_en": "High summer session at TCE - over 130 images of tuned cars from the passionate community."
+      "description_en": "High summer session at TCE - over 130 images of tuned cars from the passionate community.",
+      "featured": false
     },
     {
       "slug": "tief-im-sueden",
@@ -368,7 +388,8 @@
       "subtitle_de": "Wo Straße zur Leinwand wird",
       "subtitle_en": "Where the Street Becomes Canvas",
       "description_de": "Car Meet tief im Süden Deutschlands - geile Autos vor der Kulisse süddeutscher Landschaften.",
-      "description_en": "Car meet deep in southern Germany - awesome cars against the backdrop of southern German landscapes."
+      "description_en": "Car meet deep in southern Germany - awesome cars against the backdrop of southern German landscapes.",
+      "featured": false
     },
     {
       "slug": "villa-rustica",
@@ -384,7 +405,8 @@
       "subtitle_de": "Wo Geschichte auf Natur trifft",
       "subtitle_en": "Where History Meets Nature",
       "description_de": "Römische Geschichte und Natur - die Villa Rustica als Historice Location inmitten grüner Landschaft.",
-      "description_en": "Roman history and nature - Villa Rustica as a historic location amid green landscape."
+      "description_en": "Roman history and nature - Villa Rustica as a historic location amid green landscape.",
+      "featured": false
     },
     {
       "slug": "waldwipfelweg-neuschoenau",
@@ -400,7 +422,8 @@
       "subtitle_de": "Bayerischer Wald aus der Vogelperspektive",
       "subtitle_en": "Bavarian Forest from Bird's Eye View",
       "description_de": "Über 100 Bilder vom spektakulären Baumwipfelpfad im Bayerischen Wald - Natur aus der Vogelperspektive.",
-      "description_en": "Over 100 images from the spectacular treetop walkway in the Bavarian Forest - nature from a bird's eye view."
+      "description_en": "Over 100 images from the spectacular treetop walkway in the Bavarian Forest - nature from a bird's eye view.",
+      "featured": false
     },
     {
       "slug": "wasserfall-niedersonthofen",
@@ -433,7 +456,8 @@
       "subtitle_de": "Wenn Schnee die Welt verzaubert",
       "subtitle_en": "When snow enchants the world",
       "description_de": "Winterzauber in Weiß - verschneite Landschaften und die stille Schönheit der kalten Jahreszeit.",
-      "description_en": "Winter magic in white - snow-covered landscapes and the quiet beauty of the cold season."
+      "description_en": "Winter magic in white - snow-covered landscapes and the quiet beauty of the cold season.",
+      "featured": false
     }
   ]
 }
