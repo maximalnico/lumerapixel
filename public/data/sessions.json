@@ -462,12 +462,12 @@
     {
       "slug": "test",
       "date": "08.04.2026",
-      "shoot_date": "08.04.2026",
       "location": "Test",
       "category": "test",
       "category_de": "Test",
       "category_en": "Test",
       "images": 3,
+      "folder": "https://lumerapixel.b-cdn.net/Test-080426",
       "title_de": "Test",
       "title_en": "Test",
       "subtitle_de": "Test",
