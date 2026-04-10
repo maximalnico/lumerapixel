@@ -1,0 +1,56 @@
+---
+import { getLangFromUrl, t } from '../i18n';
+const lang = getLangFromUrl(Astro.url);
+---
+<footer class="lp-footer">
+  <div class="lp-footer__line"></div>
+  <div class="lp-footer__inner">
+    <img src="/logos/lplong-dark.svg" alt="LumeraPixel" class="lp-footer__logo logo-dark" />
+    <img src="/logos/lplong-light.svg" alt="LumeraPixel" class="lp-footer__logo logo-light" />
+    <p class="lp-footer__tagline">{t(lang, 'footer.tagline')}</p>
+    <p class="lp-footer__copy">{t(lang, 'footer.copy')}</p>
+  </div>
+</footer>
+
+<style>
+  .lp-footer {
+    padding: var(--gap-sm) var(--page-x) var(--gap-sm);
+  }
+  .lp-footer__line {
+    height: 1px;
+    background: var(--accent);
+    margin-bottom: var(--gap-sm);
+  }
+  .lp-footer__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    text-align: center;
+  }
+  .lp-footer__logo {
+    height: clamp(1.2rem, 2.5vw, 1.9rem);
+    width: auto;
+    margin-bottom: 0.1rem;
+  }
+  .lp-footer__tagline {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: clamp(0.88rem, 1.3vw, 1.05rem);
+    color: var(--text);
+    letter-spacing: 0.06em;
+  }
+  .lp-footer__copy {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: clamp(0.82rem, 1.1vw, 0.95rem);
+    color: var(--text-muted);
+    letter-spacing: 0.03em;
+  }
+</style>
+
+<style is:global>
+  .logo-light { display: none; }
+  [data-theme="light"] .logo-dark { display: none; }
+  [data-theme="light"] .logo-light { display: block; }
+</style>

@@ -1,0 +1,87 @@
+<svg viewBox="0 0 2800 1800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Light Background -->
+    <linearGradient id="lightBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5f5f7;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#fafbfc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f0f0f5;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Soft blur filter for particles -->
+    <filter id="particleBlur">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Organic shape filter -->
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="20" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g opacity="0.7">
+    <!-- Background -->
+    <rect width="2800" height="1800" fill="url(#lightBg)"/>
+
+    <!-- Organic flowing background shapes -->
+    <ellipse cx="400" cy="300" rx="600" ry="800" fill="#9900ff" opacity="0.06" filter="url(#softGlow)"/>
+    <ellipse cx="2400" cy="1500" rx="700" ry="900" fill="#9900ff" opacity="0.05" filter="url(#softGlow)"/>
+    <ellipse cx="1400" cy="900" rx="500" ry="700" fill="#9900ff" opacity="0.04" filter="url(#softGlow)"/>
+    <ellipse cx="2800" cy="300" rx="400" ry="600" fill="#9900ff" opacity="0.055" filter="url(#softGlow)"/>
+    <ellipse cx="100" cy="1500" rx="500" ry="800" fill="#9900ff" opacity="0.05" filter="url(#softGlow)"/>
+
+    <!-- Subtle curved waves -->
+    <path d="M 0,900 Q 700,600 1400,800 T 2800,900" 
+          stroke="#9900ff" stroke-width="3" fill="none" opacity="0.12" filter="url(#particleBlur)"/>
+    <path d="M 0,1200 Q 800,1000 1400,1100 T 2800,1200" 
+          stroke="#9900ff" stroke-width="2" fill="none" opacity="0.08" filter="url(#particleBlur)"/>
+    <path d="M 0,600 Q 900,400 1400,500 T 2800,600" 
+          stroke="#9900ff" stroke-width="2" fill="none" opacity="0.06" filter="url(#particleBlur)"/>
+
+    <!-- Floating particles - large -->
+    <circle cx="300" cy="200" r="12" fill="#9900ff" opacity="0.12" filter="url(#particleBlur)"/>
+    <circle cx="800" cy="400" r="10" fill="#9900ff" opacity="0.1" filter="url(#particleBlur)"/>
+    <circle cx="1600" cy="300" r="14" fill="#9900ff" opacity="0.11" filter="url(#particleBlur)"/>
+    <circle cx="2200" cy="600" r="9" fill="#9900ff" opacity="0.09" filter="url(#particleBlur)"/>
+    <circle cx="2600" cy="400" r="11" fill="#9900ff" opacity="0.1" filter="url(#particleBlur)"/>
+
+    <!-- Floating particles - medium -->
+    <circle cx="500" cy="700" r="6" fill="#9900ff" opacity="0.11" filter="url(#particleBlur)"/>
+    <circle cx="1200" cy="1200" r="7" fill="#9900ff" opacity="0.1" filter="url(#particleBlur)"/>
+    <circle cx="1900" cy="900" r="5" fill="#9900ff" opacity="0.11" filter="url(#particleBlur)"/>
+    <circle cx="2400" cy="1300" r="8" fill="#9900ff" opacity="0.09" filter="url(#particleBlur)"/>
+    <circle cx="600" cy="1400" r="6" fill="#9900ff" opacity="0.1" filter="url(#particleBlur)"/>
+    <circle cx="2100" cy="1600" r="7" fill="#9900ff" opacity="0.11" filter="url(#particleBlur)"/>
+
+    <!-- Floating particles - small -->
+    <circle cx="400" cy="500" r="3" fill="#9900ff" opacity="0.15" filter="url(#particleBlur)"/>
+    <circle cx="900" cy="800" r="2.5" fill="#9900ff" opacity="0.13" filter="url(#particleBlur)"/>
+    <circle cx="1400" cy="600" r="3" fill="#9900ff" opacity="0.14" filter="url(#particleBlur)"/>
+    <circle cx="1900" cy="1100" r="2.5" fill="#9900ff" opacity="0.12" filter="url(#particleBlur)"/>
+    <circle cx="2300" cy="800" r="3" fill="#9900ff" opacity="0.13" filter="url(#particleBlur)"/>
+    <circle cx="700" cy="1100" r="2.5" fill="#9900ff" opacity="0.14" filter="url(#particleBlur)"/>
+    <circle cx="2500" cy="1500" r="3" fill="#9900ff" opacity="0.12" filter="url(#particleBlur)"/>
+    <circle cx="1100" cy="1500" r="2.5" fill="#9900ff" opacity="0.13" filter="url(#particleBlur)"/>
+
+    <!-- Very subtle mesh of lines (PS3 vibe) -->
+    <line x1="0" y1="450" x2="2800" y2="450" stroke="#9900ff" stroke-width="1" opacity="0.04"/>
+    <line x1="0" y1="900" x2="2800" y2="900" stroke="#9900ff" stroke-width="1" opacity="0.03"/>
+    <line x1="0" y1="1350" x2="2800" y2="1350" stroke="#9900ff" stroke-width="1" opacity="0.04"/>
+    
+    <line x1="700" y1="0" x2="700" y2="1800" stroke="#9900ff" stroke-width="0.5" opacity="0.03"/>
+    <line x1="1400" y1="0" x2="1400" y2="1800" stroke="#9900ff" stroke-width="0.5" opacity="0.03"/>
+    <line x1="2100" y1="0" x2="2100" y2="1800" stroke="#9900ff" stroke-width="0.5" opacity="0.03"/>
+
+    <!-- Subtle organic depth shapes -->
+    <ellipse cx="200" cy="900" rx="800" ry="400" fill="none" stroke="#9900ff" stroke-width="1" opacity="0.06"/>
+    <ellipse cx="2600" cy="900" rx="700" ry="450" fill="none" stroke="#9900ff" stroke-width="1" opacity="0.055"/>
+    <ellipse cx="1400" cy="300" rx="1000" ry="300" fill="none" stroke="#9900ff" stroke-width="1" opacity="0.05"/>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+---
+import SessionPage from '../../../components/pages/SessionPage.astro';
+import sessionsData from '/public/data/sessions.json';
+
+export function getStaticPaths() {
+  const sessions: any[] = Array.isArray(sessionsData)
+    ? sessionsData
+    : (sessionsData as any).sessions ?? Object.values(sessionsData);
+  return sessions.map((s: any) => ({ params: { slug: s.slug } }));
+}
+const { slug } = Astro.params;
+---
+<SessionPage lang="en" slug={slug} />

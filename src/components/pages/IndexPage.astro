@@ -1,0 +1,822 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../Nav.astro';
+import Footer from '../Footer.astro';
+import sessionsData from '/public/data/sessions.json';
+import { t, type Lang } from '../../i18n';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const isEN = lang === 'en';
+
+const parseDMY = (d: string) => {
+  const [day, month, year] = d.split('.');
+  return new Date(+year, +month - 1, +day).getTime();
+};
+
+const allSessions: any[] = Array.isArray(sessionsData)
+  ? sessionsData
+  : (sessionsData as any).sessions ?? Object.values(sessionsData);
+
+const sorted = [...allSessions].sort((a, b) => parseDMY(b.date) - parseDMY(a.date));
+const totalPhotos = allSessions.reduce((s: number, ses: any) => s + (ses.images || 0), 0);
+const categories = [...new Set(allSessions.map((s: any) => s.category))];
+
+const featured = allSessions.filter((s: any) => s.featured).length >= 1
+  ? allSessions.filter((s: any) => s.featured).slice(0, 3)
+  : sorted.slice(0, 3);
+
+const slideshowSessions = [...allSessions]
+  .sort(() => Math.random() - 0.5)
+  .slice(0, 8);
+
+// Lang helpers
+const st = (s: any) => isEN ? (s.title_en || s.title_de) : (s.title_de || s.title_en);
+const ss = (s: any) => isEN ? (s.subtitle_en || s.subtitle_de) : (s.subtitle_de || s.subtitle_en);
+const sc = (s: any) => isEN ? (s.category_en || s.category) : (s.category_de || s.category);
+const sessionPath = (slug: string) => isEN ? `/en/sessions/${slug}` : `/sessions/${slug}`;
+const dateLocale = isEN ? 'en-US' : 'de-DE';
+
+// SEO
+const siteUrl = 'https://lumerapixel.com';
+const canonicalUrl = isEN ? `${siteUrl}/en/` : `${siteUrl}/`;
+const pageTitle = isEN
+  ? 'LumeraPixel – Photography by MaximalNico | Lost Places · Automotive · Aerial'
+  : 'LumeraPixel – Fotografie von MaximalNico | Lost Places · Automotive · Aerial';
+const pageDesc = isEN
+  ? `Photography portfolio by Nico Henkel from Bavaria. ${allSessions.length} sessions with ${totalPhotos.toLocaleString('en-US')} photos covering Lost Places, Automotive and Aerial Photography.`
+  : `Fotografieportfolio von Nico Henkel aus Bayern. ${allSessions.length} Sessions mit ${totalPhotos.toLocaleString('de-DE')} Fotos aus den Kategorien Lost Places, Automotive und Aerial Photography.`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      "url": siteUrl,
+      "name": "LumeraPixel",
+      "description": "Photography portfolio by Nico Henkel – Lost Places, Automotive & Aerial Photography from Bavaria.",
+      "inLanguage": isEN ? "en" : "de-DE",
+      "author": { "@id": `${siteUrl}/#person` }
+    },
+    {
+      "@type": "Person",
+      "@id": `${siteUrl}/#person`,
+      "name": "Nico Thomas Henkel",
+      "alternateName": "MaximalNico",
+      "url": siteUrl,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Blumenstraße 26",
+        "addressLocality": "Neuching",
+        "postalCode": "85467",
+        "addressCountry": "DE"
+      },
+      "knowsAbout": ["Photography", "Lost Places", "Automotive Photography", "Aerial Photography", "Drone", "Fujifilm"],
+      "sameAs": [`${siteUrl}`]
+    },
+    {
+      "@type": "ImageGallery",
+      "@id": `${siteUrl}/#gallery`,
+      "name": "LumeraPixel Photo Gallery",
+      "description": pageDesc,
+      "url": siteUrl,
+      "numberOfItems": allSessions.length,
+      "author": { "@id": `${siteUrl}/#person` }
+    }
+  ]
+};
+---
+
+<Base
+  title={pageTitle}
+  description={pageDesc}
+  ogImage={`${siteUrl}/logos/lplong.svg`}
+  canonical={canonicalUrl}
+  {schema}
+  hreflangDe={`${siteUrl}/`}
+  hreflangEn={`${siteUrl}/en/`}
+>
+  <Nav />
+
+  <main>
+
+    <!-- ══ HERO ══ -->
+    <section class="hero" aria-label="Hero">
+
+      <!-- Slideshow Box links -->
+      <div class="hero__slideshow" id="slideshow">
+        {slideshowSessions.map((s: any, i: number) => {
+          const cover = s.folder + '/000.webp';
+          return (
+            <img
+              src={cover}
+              alt=""
+              class={`hero__slide ${i === 0 ? 'is-active' : ''}`}
+              loading={i === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+          );
+        })}
+      </div>
+
+      <!-- Text rechts -->
+      <div class="hero__content">
+        <img src="/logos/lplong-dark.svg" alt="LumeraPixel" class="hero__logo hero__logo--dark" />
+        <img src="/logos/lplong-light.svg" alt="LumeraPixel" class="hero__logo hero__logo--light" />
+        <p class="hero__tagline">{t(lang, 'hero.tagline')}</p>
+
+        <!-- Stats inline rechts -->
+        <div class="hero__stats">
+          <div class="hero__stats-item">
+            <span class="hero__stats-num rg">{allSessions.length}</span>
+            <span class="hero__stats-label">{t(lang, 'stats.sessions')}</span>
+          </div>
+          <div class="hero__stats-sep" aria-hidden="true"></div>
+          <div class="hero__stats-item">
+            <span class="hero__stats-num rg">{totalPhotos.toLocaleString('de-DE')}</span>
+            <span class="hero__stats-label">{t(lang, 'stats.photos')}</span>
+          </div>
+          <div class="hero__stats-sep" aria-hidden="true"></div>
+          <div class="hero__stats-item">
+            <span class="hero__stats-num rg">{categories.length}</span>
+            <span class="hero__stats-label">{t(lang, 'stats.categories')}</span>
+          </div>
+        </div>
+
+        <!-- Scroll hint -->
+        <a href="#featured" class="scroll-hint" aria-label={t(lang, 'hero.tagline')}>
+          <svg class="scroll-hint__arrow" width="52" height="52" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+    </section>
+
+    <!-- ══ FEATURED SESSIONS ══ -->
+    <section class="featured-section" id="featured" aria-label="Featured Sessions">
+      <div class="featured-section__head">
+        <div class="featured-section__line" aria-hidden="true"></div>
+        <h2 class="featured-section__title">{t(lang, 'section.highlights')}</h2>
+        <div class="featured-section__line" aria-hidden="true"></div>
+      </div>
+
+      <div class="featured-grid">
+        {featured.map((s: any) => {
+          const folder = s.folder;
+          const cover = `${folder}/000.webp`;
+          const [d, m, y] = s.date.split('.');
+          const dateStr = new Date(+y, +m - 1, +d).toLocaleDateString(dateLocale, { month: 'long', year: 'numeric' });
+          return (
+            <a href={sessionPath(s.slug)} class="featured-card">
+              <div class="featured-card__img">
+                <img src={cover} alt={s.title} loading="lazy" decoding="async" />
+                <div class="featured-card__img-overlay"></div>
+              </div>
+              <div class="featured-card__body">
+                <span class="featured-card__cat">{sc(s)}</span>
+                <h3 class="featured-card__title">{st(s)}</h3>
+                <span class="featured-card__date">{dateStr}</span>
+              </div>
+              <div class="featured-card__arrow" aria-hidden="true">
+                <img src="/logos/arrow-right.svg" alt="" width="18" height="18" class="featured-card__arrow-img" />
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    </section>
+
+    <!-- ══ ALLE SESSIONS + FILTER + MASONRY ══ -->
+    <section class="all-section" id="sessions" aria-label="Alle Sessions">
+
+      <!-- Filter -->
+      <div class="filter-bar reveal" id="filterBar">
+        <button class="filter-btn is-active" data-cat="all">{t(lang, 'filter.all')}</button>
+        {categories.map((cat: string) => (
+          <button class="filter-btn" data-cat={cat}>{cat}</button>
+        ))}
+      </div>
+
+      <div class="rg-line reveal" style="margin: 0 var(--page-x) var(--gap-md);"></div>
+
+      <!-- Masonry Grid -->
+      <div class="masonry-grid" id="masonryGrid">
+        {sorted.map((s: any) => {
+          const folder = s.folder;
+          const cover = `${folder}/000.webp`;
+          return (
+            <a href={sessionPath(s.slug)} class="session-card reveal" data-cat={s.category}>
+              <div class="session-card__img">
+                <img src={cover} alt={s.title} loading="lazy" decoding="async" />
+              </div>
+              <div class="session-card__body glass">
+                <h3 class="session-card__title">{st(s)}</h3>
+                <span class="session-card__cat rg">{sc(s)}</span>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <Footer />
+
+</Base>
+
+<style>
+  /* ══ GLOBAL BG ══ */
+
+
+  /* ══ HERO ══ */
+  .hero {
+    position: relative;
+    height: 100svh;
+    min-height: 560px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+  }
+
+  /* ══ HERO — Slideshow links, Text+Stats rechts ══ */
+  .hero {
+    min-height: calc(100svh - var(--nav-h));
+    padding: calc(var(--nav-h) + var(--gap-sm) + var(--gap-sm)) var(--page-x) var(--gap-lg);
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: var(--gap-lg);
+    align-items: center;
+    position: relative;
+  }
+  @media (max-width: 768px) {
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--nav-h) var(--page-x) 0.3rem;
+      gap: 0.27rem;
+      min-height: 100svh;
+    }
+    .hero__slideshow {
+      width: 88%;
+      margin: 0 auto;
+      aspect-ratio: 4/3;
+      border-width: 4px;
+      border-radius: 12px;
+    }
+    .hero__content { gap: 0.27rem; margin-top: 2.7rem; align-items: center; text-align: center;}
+    .hero__logo { height: clamp(1.4rem, 5.5vw, 1.9rem); }
+    .hero__tagline {
+      font-size: clamp(0.6rem, 2.5vw, 0.78rem);
+      margin-bottom: 0;
+      letter-spacing: 0.14em;
+    }
+    .hero__stats {
+      display: flex;
+      flex-direction: row !important;
+      border-radius: 10px;
+      border-width: 1.5px;
+    }
+    .hero__stats-item {
+      flex: 1;
+      padding: 0.3rem 0.2rem;
+      gap: 0.06rem;
+    }
+    .hero__stats-sep {
+      width: 1px;
+      height: 50%;
+      align-self: center;
+      background: var(--border-mid);
+    }
+    .hero__stats-num { font-size: clamp(0.9rem, 3.8vw, 1.15rem); }
+    .hero__stats-label { font-size: 0.52rem; letter-spacing: 0.08em; }
+    .scroll-hint {
+      position: static;
+      transform: none;
+      animation: bob-mobile 2.5s ease-in-out infinite;
+      margin-top: 0.15rem;
+    }
+    .scroll-hint__arrow { width: 26px; height: 26px; }
+  }
+  @keyframes bob-mobile {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(5px); }
+  }
+
+  /* Slideshow Box */
+  .hero__slideshow {
+    position: relative;
+    aspect-ratio: 4/3;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 7px solid var(--accent);
+  }
+  .hero__slide {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+    filter: brightness(0.88) contrast(1.04);
+  }
+  .hero__slide.is-active { opacity: 1; }
+
+  /* Text rechts */
+  .hero__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.2rem;
+  }
+  .hero__logo {
+    height: clamp(2.8rem, 6vw, 4.5rem);
+    width: auto;
+    opacity: 0.95;
+  }
+  .hero__logo--light { display: none; }
+  :global([data-theme="light"]) .hero__logo--dark { display: none; }
+  :global([data-theme="light"]) .hero__logo--light { display: block; }
+  .hero__tagline {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: clamp(1.1rem, 2.4vw, 1.7rem);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: var(--gap-sm);
+  }
+
+  /* Stats unter Text rechts */
+  .hero__stats {
+    display: flex;
+    flex-direction: column;
+    background: rgba(0,0,0,0.27);
+    backdrop-filter: blur(27px);
+    -webkit-backdrop-filter: blur(27px);
+    border-radius: 14px;
+    border: 2.7px solid rgba(0,0,0,0.37);
+    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.27);
+    width: 100%;
+  }
+  .hero__stats-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(0.6rem, 1.4vw, 1rem) clamp(0.8rem, 2vw, 1.5rem);
+    gap: 0.2rem;
+  }
+  .hero__stats-sep {
+    height: 1px;
+    width: 60%;
+    background: var(--border-mid);
+    align-self: center;
+  }
+  .hero__stats-num {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    line-height: 1;
+  }
+  .hero__stats-label {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: clamp(0.72rem, 0.95vw, 0.85rem);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+  }
+
+  /* Scroll hint */
+  .scroll-hint {
+    position: absolute;
+    bottom: var(--gap-md);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    animation: bob 2.5s ease-in-out infinite;
+    transition: opacity 0.4s ease;
+    text-decoration: none;
+  }
+  .scroll-hint:hover { opacity: 0.7; }
+  .scroll-hint__arrow { width: 52px; height: 52px; opacity: 0.85; }
+  .scroll-hint--hidden { opacity: 0 !important; pointer-events: none; }
+  @keyframes bob {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50%      { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ══ FEATURED ══ */
+  .featured-section {
+    padding: var(--gap-lg) var(--page-x) var(--gap-md);
+  }
+  .featured-section__head {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: var(--gap-md);
+    margin-bottom: var(--gap-lg);
+  }
+  .featured-section__line {
+    height: 1px;
+    background: var(--accent);
+  }
+  .featured-section__title {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: clamp(1.2rem, 2.4vw, 2rem);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text);
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  /* Featured Grid — 3 Karten */
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--gap-sm);
+  }
+  @media (max-width: 768px) { 
+    .featured-grid { 
+      display: flex;
+      flex-direction: row;
+      text-align: center;
+    } 
+    .featured-card {
+      border-radius: 10px;
+    }
+    .featured-card__img {
+      max-height: unset;
+      aspect-ratio: 16/10;
+      display: none;
+    }
+    .featured-card__img-overlay { display: none; }
+    .featured-card__body {
+      padding: 0.55rem 0.8rem 0.65rem;
+      border-top: 1px solid var(--border);
+    }
+    .featured-card__cat {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: normal;
+      color: var(--accent) !important;
+      font-weight: 420 !important;
+    }
+    .featured-card__title {
+      font-size: 1rem !important;
+      font-weight: 277;
+      letter-spacing: normal !important;
+      color: var(--accent) !important;
+      font-weight: 420 !important;
+
+    }
+    .featured-card__date { display: none; }
+    .featured-card__arrow { display: none !important; }
+  }
+
+  .featured-card {
+    display: flex;
+    flex-direction: row-reverse;
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+    background: var(--bg-card);
+    border: 1.5px solid var(--accent);
+    transition: transform var(--flow), border-color var(--quick);
+    text-decoration: none;
+  }
+  .featured-card:hover {
+    transform: translateY(-4px);
+  }
+
+
+  .featured-card__img {
+    position: relative;
+    aspect-ratio: 16/10;
+    max-height: 50vh;
+    overflow: hidden;
+  }
+  .featured-card__img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform var(--flow);
+    filter: brightness(1) contrast(1.02) saturate(1);
+  }
+  .featured-card__img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,10,15,0.85) 0%, transparent 50%);
+  }
+
+  .featured-card__body {
+    padding: var(--gap-sm) var(--gap-md) var(--gap-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex: 1;
+  }
+  .featured-card__cat {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: normal;
+    color: var(--accent);
+  }
+  .featured-card__title {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 420;
+    font-size: clamp(1.2rem, 2.2vw, 1.7rem);
+    letter-spacing: normal;
+    line-height: 1.15;
+    color: var(--text);
+  }
+  .featured-card__date {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: 1.00rem;
+    color: var(--accent);
+    letter-spacing: 0.07em;
+  }
+  .featured-card__arrow {
+    position: absolute;
+    bottom: var(--gap-sm);
+    left: var(--gap-md);
+    transition: transform var(--quick);
+    display: flex;
+  }
+  .featured-card__arrow-img {
+    filter: invert(1);
+    opacity: 0.4;
+    transition: opacity var(--quick), filter var(--quick);
+  }
+  :global([data-theme="light"]) .featured-card__arrow-img {
+    filter: invert(0);
+    opacity: 0.5;
+  }
+  .featured-card:hover .featured-card__arrow { transform: translateX(3px); }
+  .featured-card:hover .featured-card__arrow-img {
+    opacity: 0.9;
+    filter: invert(77%) sepia(98%) saturate(1000%) hue-rotate(155deg) brightness(105%);
+  }
+
+  /* ══ ALL SESSIONS ══ */
+  .all-section {
+    padding: var(--gap-md) 0 var(--gap-xl);
+    border-top: 1px solid var(--border);
+  }
+
+
+  /* Filter */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0 var(--page-x);
+    margin-bottom: var(--gap-sm);
+  }
+  .filter-btn {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: clamp(0.78rem, 1vw, 0.9rem);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    padding: 0.55rem 1.4rem;
+    border-radius: 999px;
+    border: 1.5px solid var(--text);
+    color: var(--text);
+    cursor: pointer;
+    transition: all var(--quick);
+    background: transparent;
+  }
+  .filter-btn:hover {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #000000;
+    -webkit-text-fill-color: #000000;
+  }
+  .filter-btn.is-active {
+    font-weight: 277;
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000000;
+    -webkit-text-fill-color: #000000;
+  }
+  :global([data-theme="light"]) .filter-btn:hover,
+  :global([data-theme="light"]) .filter-btn.is-active {
+    color: #ffffff;
+    -webkit-text-fill-color: #ffffff;
+  }
+
+  /* Masonry — CSS Columns */
+  .masonry-grid {
+    columns: 4;
+    column-gap: 0.6rem;
+    padding: 0 var(--page-x);
+  }
+  .masonry-grid .session-card {
+    break-inside: avoid;
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  @media (max-width: 1100px) { .masonry-grid { columns: 3; } }
+  @media (max-width: 700px)  { 
+    .masonry-grid { 
+      columns: 2; 
+    } 
+    .session-card__img img {
+      height: auto;
+      aspect-ratio: 16/10;
+      object-fit: cover;
+    }
+  }
+  @media (max-width: 440px) { 
+    .masonry-grid { 
+      columns: 2; 
+    } 
+    .session-card__img img {
+    height: auto;
+    aspect-ratio: 16/10;
+    object-fit: cover;
+    }
+  }
+
+  /* Session Card */
+  .session-card {
+    display: block;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    transition: transform var(--flow);
+    text-decoration: none;
+  }
+  .session-card:hover { transform: translateY(-2px); }
+  .session-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    padding: 1.5px;
+    background: var(--accent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity var(--quick);
+    z-index: 2;
+    pointer-events: none;
+  }
+  .session-card:hover::before { opacity: 1; }
+
+  .session-card__img { overflow: hidden; }
+  .session-card__img img {
+    width: 100%; height: auto; display: block;
+    transition: transform var(--flow), filter var(--flow);
+    filter: brightness(0.95) contrast(1.04);
+  }
+  .session-card:hover .session-card__img img {
+    filter: brightness(1.02) contrast(1.02);
+  }
+  .session-card__body {
+    padding: 0.55rem 0.8rem 0.65rem;
+    border-top: 1px solid var(--border);
+    border-radius: 0 0 10px 10px;
+  }
+  .session-card__title {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: clamp(0.95rem, 1.6vw, 1.2rem);
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    color: var(--text);
+    margin-bottom: 0.18rem;
+  }
+  .session-card__cat {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: 0.84rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    background-size: 200% 100%;
+    animation: rainbow-shift 3s linear infinite;
+  }
+
+  /* Footer */
+  .lp-footer { padding: var(--gap-lg) var(--page-x) var(--gap-md); }
+  .lp-footer__inner {
+    display: flex; flex-direction: column;
+    align-items: center; gap: var(--gap-sm); text-align: center;
+  }
+  .lp-footer__logo { height: 1.8rem; width: auto; opacity: 0.35; }
+  .lp-footer__copy {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+  }
+  .lp-footer__mn {
+    font-weight: 277;
+    background-size: 200% 100%;
+    animation: rainbow-shift 3s linear infinite;
+  }
+  .lp-footer__legal {
+    display: flex; gap: 0.75rem; align-items: center;
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: 0.68rem;
+    color: var(--text-dim);
+  }
+  .lp-footer__legal a { transition: color var(--quick); }
+  .lp-footer__legal a:hover { color: var(--text-muted); }
+
+  /* ── Akzentfarbe via var(--accent) ── */
+  .rg {
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    -webkit-text-fill-color: var(--accent);
+    color: var(--accent);
+    animation: none;
+  }
+  .rg-line { background: var(--accent); animation: none; }
+  .rg-border::before { background: var(--accent); }
+
+  :global([data-theme="light"]) .hero__stats {
+    background: rgba(255,255,255,0.27);
+    border-color: rgba(255,255,255,0.37);
+  }
+  :global([data-theme="light"]) .featured-card {
+    background: rgba(255,255,255,0.27);
+  }
+  :global([data-theme="light"]) .session-card__body {
+    background: rgba(255,255,255,0.27);
+    border-color: rgba(255,255,255,0.37);
+  }
+  :global([data-theme="light"]) .filter-btn {
+    border-color: rgba(10,10,15,0.6);
+    color: rgba(10,10,15,0.85);
+  }
+
+
+  :global([data-theme="dark"]) {
+    --accent: #66ff00;
+  }
+  :global([data-theme="light"]) {
+    --accent: #9900ff;
+  }
+  :global([data-theme="light"]) .featured-card__title { color: rgba(10,10,15,0.9); }
+  :global([data-theme="light"]) .featured-card__date { color: rgba(10,10,15,0.6); }
+
+</style>
+
+<script>
+  // ── Scroll hint ──
+  const scrollHint = document.querySelector('.scroll-hint') as HTMLElement;
+  if (scrollHint) {
+    window.addEventListener('scroll', () => {
+      scrollHint.classList.toggle('scroll-hint--hidden', window.scrollY > 80);
+    }, { passive: true });
+  }
+
+  // ── Slideshow ──
+  const slides = document.querySelectorAll<HTMLElement>('.hero__slide');
+  let current = 0;
+  if (slides.length > 1) {
+    setInterval(() => {
+      slides[current].classList.remove('is-active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('is-active');
+    }, 5000);
+  }
+
+  // ── Filter ──
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const cards = document.querySelectorAll<HTMLElement>('.session-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      const cat = btn.dataset.cat;
+      cards.forEach(card => {
+        const match = cat === 'all' || card.dataset.cat === cat;
+        card.style.display = match ? 'block' : 'none';
+      });
+    });
+  });
+</script>

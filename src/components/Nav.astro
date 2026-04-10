@@ -1,0 +1,542 @@
+---
+import { getLangFromUrl, t } from '../i18n';
+const currentPath = Astro.url.pathname;
+const lang = getLangFromUrl(Astro.url);
+const isEN = lang === 'en';
+const home = isEN ? '/en/' : '/';
+const contact = 'mailto:nico@maximalnico.de';
+const legal = isEN ? '/en/site-notice' : '/impressum';
+const privacy = isEN ? '/en/privacy-policy' : '/datenschutz';
+const isHomActive = currentPath === '/' || currentPath === '/en/' || currentPath === '/en';
+const isLegalActive = currentPath.includes('impressum') || currentPath.includes('site-notice');
+const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.includes('privacy-policy');
+---
+<nav class="lp-nav">
+  <div class="lp-nav__island">
+    <div class="lp-nav__row lp-nav__row--top">
+      <a href={home} class="lp-nav__brand" aria-label="LumeraPixel Home">
+        <img src="/logos/lplong-dark.svg" alt="LumeraPixel" class="lp-nav__logo logo-dark" />
+        <img src="/logos/lplong-light.svg" alt="LumeraPixel" class="lp-nav__logo logo-light" />
+      </a>
+      <div class="lp-nav__top-actions">
+        <button class="lp-nav__settings-btn" id="settingsToggle" aria-label="Settings">
+          <img src="/logos/hiddensettings.svg" class="lp-nav__settings-icon" alt="" />
+        </button>
+        <button class="lp-nav__burger" id="navBurger" aria-label="Menü öffnen" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="lp-nav__row lp-nav__row--bottom">
+      <div class="lp-nav__links" id="navLinks">
+        <a href={home} class={`lp-nav__link ${isHomActive ? 'is-active' : ''}`}>{t(lang, 'nav.home')}</a>
+        <a href={contact} class="lp-nav__link">{t(lang, 'nav.contact')}</a>
+        <a href={legal} class={`lp-nav__link ${isLegalActive ? 'is-active' : ''}`}>{t(lang, 'nav.legal')}</a>
+        <a href={privacy} class={`lp-nav__link ${isPrivacyActive ? 'is-active' : ''}`}>{t(lang, 'nav.privacy')}</a>
+        <button class="lp-nav__settings-btn lp-nav__settings-btn--desktop" id="settingsToggleDesktop" aria-label="Settings">
+          <img src="/logos/hiddensettings.svg" class="lp-nav__settings-icon" alt="" />
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="lp-nav__controls" id="navControls">
+    <div class="lp-nav__pill" id="themeToggle" role="group" aria-label="Theme wählen">
+      <div class="toggle-indicator" id="toggleIndicator"></div>
+      <button class="toggle-btn" id="btn-dark" data-mode="dark" aria-label="Dark"><img src="/logos/darkmode.svg" class="toggle-icon" alt="" /></button>
+      <button class="toggle-btn" id="btn-auto" data-mode="auto" aria-label="Auto"><img src="/logos/autosetting.svg" class="toggle-icon" alt="" /></button>
+      <button class="toggle-btn" id="btn-light" data-mode="light" aria-label="Light"><img src="/logos/lightmode.svg" class="toggle-icon" alt="" /></button>
+    </div>
+    <div class="lp-nav__pill" id="langToggle" role="group" aria-label="Language">
+      <div class="toggle-indicator" id="langIndicator"></div>
+      <a href="/" class="toggle-btn" id="btn-lang-de" data-lang="de" aria-label="Deutsch"><img src="/logos/lang-de.svg" class="toggle-icon" alt="" /></a>
+      <button class="toggle-btn" id="btn-lang-auto" data-lang="auto" aria-label="Auto"><img src="/logos/autosetting.svg" class="toggle-icon" alt="" /></button>
+      <a href="/en/" class="toggle-btn" id="btn-lang-en" data-lang="en" aria-label="English"><img src="/logos/lang-en.svg" class="toggle-icon" alt="" /></a>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .lp-nav {
+    position: fixed;
+    top: var(--gap-sm);
+    left: var(--gap-sm);
+    right: var(--gap-sm);
+    z-index: 100;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+    pointer-events: none;
+  }
+  .lp-nav__island,
+  .lp-nav__controls,
+  .lp-nav__burger {
+    pointer-events: all;
+  }
+  .lp-nav__island {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.55rem 1.4rem;
+    background: rgba(6,7,8,0.82);
+    backdrop-filter: blur(27px);
+    -webkit-backdrop-filter: blur(27px);
+    border-radius: 14px;
+    border: 2.7px solid rgba(0,0,0,0.37);
+    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.27);
+    transition: background 0.3s ease, border-color 0.3s ease;
+    align-self: auto;
+    position: relative;
+  }
+  .lp-nav__row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .lp-nav__row--top {
+    justify-content: center;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--accent);
+    margin-bottom: 0.3rem;
+  }
+  .lp-nav__row--bottom {
+    justify-content: center;
+  }
+  .lp-nav__logo {
+    height: 2.6rem;
+    width: auto;
+    opacity: 0.9;
+    transition: opacity var(--quick);
+    flex-shrink: 0;
+  }
+  .lp-nav__brand:hover .lp-nav__logo { opacity: 0.65; }
+  .lp-nav__links {
+    display: flex;
+    align-items: center;
+    gap: 0.1rem;
+    justify-content: center;
+  }
+  .lp-nav__link {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: clamp(0.88rem, 1.1vw, 1.05rem);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.9);
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    transition: color var(--quick), background var(--quick);
+    white-space: nowrap;
+  }
+  .lp-nav__link:hover { color: var(--accent); background: rgba(128,128,128,0.08); }
+  .lp-nav__link.is-active { color: var(--accent); }
+
+  /* Desktop: top-actions (Mobile-only) verstecken */
+  .lp-nav__top-actions { display: none; }
+
+  .lp-nav__settings-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    align-self: stretch;
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 0.25rem;
+    flex-shrink: 0;
+    transition: background var(--quick);
+    box-sizing: border-box;
+  }
+  .lp-nav__settings-btn:hover { background: rgba(128,128,128,0.12); }
+  .lp-nav__settings-icon {
+    width: 27px;
+    height: 27px;
+    display: block;
+    filter: invert(39%) sepia(97%) saturate(600%) hue-rotate(72deg) brightness(1.1);
+    opacity: 1;
+    max-width: none !important;
+    max-height: none !important;
+    object-fit: contain;
+    transition: opacity 0.2s, filter 0.2s, transform 0.3s ease;
+  }
+  .lp-nav__settings-btn.is-active .lp-nav__settings-icon {
+    transform: rotate(90deg);
+  }
+  .lp-nav__controls {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 3px;
+    width: 12rem;
+    height: var(--nav-h);
+    box-sizing: border-box;
+    background: rgba(6,7,8,0.82);
+    backdrop-filter: blur(27px);
+    -webkit-backdrop-filter: blur(27px);
+    border-radius: 14px;
+    border: 2.7px solid rgba(0,0,0,0.37);
+    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.27);
+    transition: background 0.3s ease, border-color 0.3s ease, opacity 0.2s ease;
+    position: fixed;
+    top: var(--gap-sm);
+    right: var(--gap-sm);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 98;
+  }
+  .lp-nav__controls.is-open {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .lp-nav__pill {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 3px;
+    gap: 0;
+    position: relative;
+    box-sizing: border-box;
+    background: rgba(255,255,255,0.06);
+    border-radius: 9px;
+    min-height: 0;
+  }
+  .toggle-indicator {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    border-radius: 7px;
+    transition: left 0.22s ease, width 0.22s ease, background 0.22s ease, border 0.22s ease;
+    pointer-events: none;
+    background: rgba(128,128,128,0.18);
+    border: 1.5px solid rgba(128,128,128,0.3);
+    z-index: 0;
+  }
+  .toggle-btn {
+    flex: 1;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    text-decoration: none;
+    border-radius: 7px;
+    padding: 6px;
+    box-sizing: border-box;
+    min-width: 2.4rem;
+    min-height: 2rem;
+  }
+  a.toggle-btn { text-decoration: none; }
+  .toggle-icon {
+    width: 100%;
+    height: 100%;
+    max-width: none !important;
+    max-height: none !important;
+    display: block;
+    object-fit: contain;
+    opacity: 0.5;
+    filter: invert(1);
+    transition: opacity 0.2s, filter 0.2s;
+    pointer-events: none;
+    flex-shrink: 0;
+  }
+  .lp-nav__burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 0.4rem;
+    border-radius: 6px;
+    transition: background var(--quick);
+    flex-shrink: 0;
+  }
+  .lp-nav__burger span {
+    display: block; width: 20px; height: 2px;
+    background: var(--accent);
+    border-radius: 1px;
+    transition: transform var(--flow), opacity var(--quick);
+  }
+  .lp-nav__burger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .lp-nav__burger.is-open span:nth-child(2) { opacity: 0; }
+  .lp-nav__burger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 640px) {
+    .lp-nav { left: var(--gap-xs); right: var(--gap-xs); top: var(--gap-xs); justify-content: stretch; }
+    .lp-nav__island { flex: 1; padding: 0.35rem 0.9rem; }
+    .lp-nav__row--top {
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 0;
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+    .lp-nav__top-actions { display: flex; align-items: center; gap: 0.25rem; }
+    .lp-nav__settings-btn--desktop { display: none; }
+    .lp-nav__logo { height: 1.8rem; }
+    .lp-nav__burger { display: flex; }
+    .lp-nav__row--bottom {
+      display: none;
+      top: calc(var(--gap-xs) + var(--nav-h) + 0.4rem);
+      left: var(--gap-xs);
+      right: var(--gap-xs);
+    }
+    .lp-nav__row--bottom.is-open { display: flex; }
+    .lp-nav__controls {
+      position: fixed;
+      top: calc(var(--gap-xs) + var(--nav-h) + 0.4rem);
+      left: var(--gap-xs);
+      right: var(--gap-xs);
+      width: auto;
+      height: auto;
+      opacity: 0;
+      pointer-events: none;
+      flex-direction: column;
+      gap: 4px;
+      padding: 4px;
+    }
+    .lp-nav__controls.is-open { opacity: 1; pointer-events: all; }
+    .lp-nav__pill { flex: none; height: 3.5rem; }
+    .toggle-btn { align-items: center; justify-content: center; min-width: 0; min-height: 0; padding: 0; }
+    .toggle-icon { width: 3rem; height: 3rem; flex-shrink: 0; }
+    .lp-nav__links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      padding: 4px;
+      border-top: none;
+      margin-top: 0.4rem;
+      width: 100%;
+      background: rgba(6,7,8,0.82);
+      backdrop-filter: blur(27px);
+      -webkit-backdrop-filter: blur(27px);
+      border-radius: 14px;
+      border: 2.7px solid rgba(0,0,0,0.37);
+      box-shadow: 0 8px 32px 0 rgba(31,38,135,0.27);
+      box-sizing: border-box;
+    }
+    .lp-nav__link {
+      height: 3rem;
+      align-content: center;
+      padding: 0.5rem 0.4rem;
+      letter-spacing: 0.08em;
+      border-radius: 9px;
+      text-align: center;
+      background: rgba(255,255,255,0.06);
+    }
+  }
+</style>
+
+<style is:global>
+  .logo-light { display: none; }
+  [data-theme="light"] .logo-dark { display: none; }
+  [data-theme="light"] .logo-light { display: block; }
+  [data-theme="light"] .lp-nav__island { background: rgba(235,240,245,0.92); border-color: rgba(200,210,220,0.6); }
+  [data-theme="dark"] .lp-nav__island { background: rgba(6,7,8,0.82); border-color: rgba(0,0,0,0.37); }
+  [data-theme="light"] .lp-nav__link { color: rgba(10,10,15,0.8); }
+  [data-theme="dark"] .lp-nav__link { color: rgba(255,255,255,0.9); }
+  [data-theme="light"] .lp-nav__link:hover { color: var(--accent); }
+  [data-theme="dark"] .lp-nav__link:hover { color: var(--accent); }
+  [data-theme="light"] .lp-nav__link.is-active { color: var(--accent); }
+  [data-theme="dark"] .lp-nav__link.is-active { color: var(--accent); }
+  [data-theme="light"] .lp-nav__links { background: rgba(235,240,245,0.92); border-color: rgba(200,210,220,0.6); }
+  [data-theme="light"] .lp-nav__controls { background: rgba(235,240,245,0.92); border-color: rgba(200,210,220,0.6); }
+  [data-theme="dark"] .lp-nav__controls { background: rgba(6,7,8,0.82); border-color: rgba(0,0,0,0.37); }
+  [data-theme="light"] .lp-nav__pill { background: rgba(0,0,0,0.06); }
+  [data-theme="dark"] .lp-nav__pill { background: rgba(255,255,255,0.06); }
+  [data-theme="dark"] .toggle-btn { color: rgba(255,255,255,0.6); }
+  [data-theme="light"] .toggle-btn { color: rgba(10,10,15,0.6); }
+  [data-theme="light"] .lp-nav__burger span { background: rgba(10,10,15,0.55); }
+  [data-theme="light"] .lp-nav__settings-icon { filter: invert(0); }
+  [data-theme="dark"] .lp-nav__burger span { background: rgba(255,255,255,0.55); }
+</style>
+
+<script>
+  const burger = document.getElementById('navBurger');
+  const links = document.getElementById('navLinks');
+  const rowBottom = document.querySelector('.lp-nav__row--bottom') as HTMLElement;
+  burger?.addEventListener('click', () => {
+    const open = burger.classList.toggle('is-open');
+    rowBottom?.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+  });
+
+  const ACCENT_DARK = '#66ff00';
+  const ACCENT_LIGHT = '#9900ff';
+  const ind = document.getElementById('toggleIndicator') as HTMLElement;
+  const btns = ['dark','auto','light'].map(m => document.getElementById('btn-' + m) as HTMLElement);
+
+  function getNeutralFilter() {
+    return document.documentElement.getAttribute('data-theme') === 'light' ? 'invert(0)' : 'invert(1)';
+  }
+  function getAccentFilter() {
+    return document.documentElement.getAttribute('data-theme') === 'light'
+      ? 'invert(15%) sepia(100%) saturate(3000%) hue-rotate(260deg) brightness(0.8)'
+      : 'invert(39%) sepia(97%) saturate(600%) hue-rotate(72deg) brightness(1.1)';
+  }
+  function refreshIcons() {
+    const f = getNeutralFilter();
+    document.querySelectorAll('.toggle-icon').forEach(el => {
+      (el as HTMLImageElement).style.filter = f;
+      (el as HTMLImageElement).style.opacity = '0.5';
+    });
+  }
+  function applyTheme(mode: string) {
+    const html = document.documentElement;
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = mode === 'auto' ? (prefersDark ? 'dark' : 'light') : mode;
+    html.setAttribute('data-theme', theme);
+    (window as any).__updateFavicon?.(theme);
+    refreshIcons();
+    updateToggle(currentMode, false);
+    updateLangToggle(currentLangMode);
+  }
+  function getBtnSize(pill: HTMLElement) { return pill.offsetWidth / 3; }
+  function updateToggle(mode: string, animate = true) {
+    const idx = ['dark','auto','light'].indexOf(mode);
+    const pill = document.getElementById('themeToggle') as HTMLElement;
+    if (!pill) return;
+    const btnSize = getBtnSize(pill);
+    if (!animate) ind.style.transition = 'none';
+    ind.style.width = btnSize + 'px';
+    ind.style.left = (idx * btnSize) + 'px';
+    if (!animate) requestAnimationFrame(() => { ind.style.transition = ''; });
+    const accent = mode === 'dark' ? ACCENT_DARK : mode === 'light' ? ACCENT_LIGHT : null;
+    ind.style.background = accent ? accent + '33' : 'rgba(128,128,128,0.22)';
+    ind.style.border = accent ? `1px solid ${accent}66` : '1px solid transparent';
+    btns.forEach((btn, i) => {
+      const isActive = i === idx;
+      const hasAccent = isActive && !!accent;
+      btn.classList.toggle('is-active', i === idx);
+      const icon = btn.querySelector('.toggle-icon') as HTMLImageElement | null;
+      if (icon) {
+        icon.style.filter = hasAccent ? getAccentFilter() : getNeutralFilter();
+        icon.style.opacity = isActive ? '1' : '0.45';
+      }
+    });
+  }
+  let currentMode = localStorage.getItem('lp-theme-mode') || 'auto';
+  function setMode(mode: string) {
+    currentMode = mode;
+    localStorage.setItem('lp-theme-mode', mode);
+    applyTheme(mode);
+    updateToggle(mode);
+  }
+  btns.forEach((btn, i) => { btn?.addEventListener('click', () => setMode(['dark','auto','light'][i])); });
+
+  const langInd = document.getElementById('langIndicator') as HTMLElement;
+  const langBtns = ['de','auto','en'].map(l => document.getElementById('btn-lang-' + l) as HTMLElement);
+  function updateLangToggle(mode: string) {
+    const idx = ['de','auto','en'].indexOf(mode);
+    const pill = document.getElementById('langToggle') as HTMLElement;
+    if (!langInd || !pill) return;
+    const btnSize = getBtnSize(pill);
+    langInd.style.width = btnSize + 'px';
+    langInd.style.left = (idx * btnSize) + 'px';
+    const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()
+      || (document.documentElement.getAttribute('data-theme') === 'light' ? '#9900ff' : '#66ff00');
+    const isFixed = mode === 'de' || mode === 'en';
+    langInd.style.background = isFixed ? accent + '33' : 'rgba(128,128,128,0.22)';
+    langInd.style.border = isFixed ? `1px solid ${accent}66` : '1px solid transparent';
+    langBtns.forEach((btn, i) => {
+      const isActive = i === idx;
+      const hasAccent = isActive && isFixed;
+      btn?.classList.toggle('is-active', i === idx);
+      const icon = btn?.querySelector('.toggle-icon') as HTMLImageElement | null;
+      if (icon) {
+        icon.style.filter = hasAccent ? getAccentFilter() : getNeutralFilter();
+        icon.style.opacity = isActive ? '1' : '0.45';
+      }
+    });
+  }
+  let currentLangMode = localStorage.getItem('lp-lang-mode') || 'auto';
+  requestAnimationFrame(() => updateLangToggle(currentLangMode));
+  langBtns.forEach((btn, i) => {
+    btn?.addEventListener('click', (e) => {
+      const mode = ['de','auto','en'][i];
+      e.preventDefault();
+      if (mode === 'auto') {
+        localStorage.removeItem('lp-lang-mode');
+        currentLangMode = 'auto';
+        updateLangToggle('auto');
+        const preferDE = (navigator.language || navigator.languages?.[0] || 'de').toLowerCase().startsWith('de');
+        const curIsEN = window.location.pathname.startsWith('/en');
+        const p = window.location.pathname;
+        const enToDe = {'/en/':'/','/en/site-notice':'/impressum','/en/privacy-policy':'/datenschutz'};
+        const deToEn = {'/':'/en/','/impressum':'/en/site-notice','/datenschutz':'/en/privacy-policy'};
+        if (preferDE && curIsEN) { window.location.href = enToDe[p] ?? (p.replace(/^\/en/, '') || '/'); }
+        else if (!preferDE && !curIsEN) { window.location.href = deToEn[p] ?? ('/en' + (p === '/' ? '/' : p)); }
+        return;
+      }
+      localStorage.setItem('lp-lang-mode', mode);
+      currentLangMode = mode;
+      updateLangToggle(mode);
+      const p2 = window.location.pathname;
+      const isEN = p2.startsWith('/en');
+      const enToDe2 = {'/en/':'/','/en/site-notice':'/impressum','/en/privacy-policy':'/datenschutz'};
+      const deToEn2 = {'/':'/en/','/impressum':'/en/site-notice','/datenschutz':'/en/privacy-policy'};
+      if (mode === 'en' && !isEN) { window.location.href = deToEn2[p2] ?? ('/en' + (p2 === '/' ? '/' : p2)); }
+      else if (mode === 'de' && isEN) { window.location.href = enToDe2[p2] ?? (p2.replace(/^\/en/, '') || '/'); }
+    });
+  });
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    if (currentMode === 'auto') applyTheme('auto');
+  });
+
+  const settingsBtn = document.getElementById('settingsToggle') as HTMLElement;
+  const settingsBtnDesktop = document.getElementById('settingsToggleDesktop') as HTMLElement;
+  const navControls = document.getElementById('navControls') as HTMLElement;
+
+  const allSettingsBtns = [settingsBtn, settingsBtnDesktop].filter(Boolean);
+
+  function openSettings() {
+    navControls?.classList.add('is-open');
+    allSettingsBtns.forEach(btn => {
+      btn?.classList.add('is-active');
+      const icon = btn?.querySelector('.lp-nav__settings-icon') as HTMLImageElement;
+      if (icon) {
+        icon.style.filter = document.documentElement.getAttribute('data-theme') === 'light'
+          ? 'invert(15%) sepia(100%) saturate(3000%) hue-rotate(260deg) brightness(0.8)'
+          : 'invert(39%) sepia(97%) saturate(600%) hue-rotate(72deg) brightness(1.1)';
+        icon.style.opacity = '1';
+      }
+    });
+    updateToggle(currentMode, false);
+    updateLangToggle(currentLangMode);
+  }
+  function closeSettings() {
+    navControls?.classList.remove('is-open');
+    allSettingsBtns.forEach(btn => {
+      btn?.classList.remove('is-active');
+      const icon = btn?.querySelector('.lp-nav__settings-icon') as HTMLImageElement;
+      if (icon) {
+        icon.style.filter = document.documentElement.getAttribute('data-theme') === 'light'
+          ? 'invert(15%) sepia(100%) saturate(3000%) hue-rotate(260deg) brightness(0.8)'
+          : 'invert(39%) sepia(97%) saturate(600%) hue-rotate(72deg) brightness(1.1)';
+        icon.style.opacity = '1';
+      }
+    });
+  }
+  allSettingsBtns.forEach(btn => {
+    btn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navControls?.classList.contains('is-open') ? closeSettings() : openSettings();
+    });
+  });
+  document.addEventListener('click', (e) => {
+    if (navControls?.classList.contains('is-open')) {
+      const clickedBtn = allSettingsBtns.some(btn => btn?.contains(e.target as Node));
+      if (!navControls.contains(e.target as Node) && !clickedBtn) {
+        closeSettings();
+      }
+    }
+  });
+  navControls?.querySelectorAll('.toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => setTimeout(closeSettings, 150));
+  });
+  updateToggle(currentMode, false);
+  if (currentMode !== 'auto') applyTheme(currentMode);
+</script>

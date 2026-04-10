@@ -1,0 +1,700 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../Nav.astro';
+import Footer from '../Footer.astro';
+import sessionsData from '/public/data/sessions.json';
+import { t, type Lang } from '../../i18n';
+
+interface Props { lang: Lang; slug: string | undefined; }
+const { lang, slug } = Astro.props;
+const isEN = lang === 'en';
+
+const parseDMY = (d: string) => {
+  const [day, month, year] = d.split('.');
+  return new Date(+year, +month - 1, +day).getTime();
+};
+
+const allSessions: any[] = Array.isArray(sessionsData)
+  ? sessionsData
+  : (sessionsData as any).sessions ?? Object.values(sessionsData);
+
+const session = allSessions.find((s: any) => s.slug === slug);
+if (!session) throw new Error(`Session not found: ${slug}`);
+
+const sorted = [...allSessions].sort((a: any, b: any) => parseDMY(b.date) - parseDMY(a.date));
+const idx = sorted.findIndex((s: any) => s.slug === slug);
+const prev = sorted[idx + 1] ?? null;
+const next = sorted[idx - 1] ?? null;
+
+// Lang helpers
+const title = isEN ? (session.title_en || session.title_de) : (session.title_de || session.title_en);
+const subtitle = isEN ? (session.subtitle_en || session.subtitle_de) : (session.subtitle_de || session.subtitle_en);
+const category = isEN ? (session.category_en || session.category) : (session.category_de || session.category);
+const navTitle = (s: any) => isEN ? (s.title_en || s.title_de) : (s.title_de || s.title_en);
+const sessionPath = (s: string) => isEN ? `/en/sessions/${s}` : `/sessions/${s}`;
+const homePath = isEN ? '/en/' : '/';
+const dateLocale = isEN ? 'en-US' : 'de-DE';
+
+const folder = session.folder;
+const photos: string[] = Array.from({ length: session.images }, (_, i) =>
+  `${folder}/${String(i).padStart(3, '0')}.webp`
+);
+
+const [d, m, y] = session.date.split('.');
+const dateStr = new Date(+y, +m - 1, +d).toLocaleDateString(dateLocale, { day: '2-digit', month: 'long', year: 'numeric' });
+const isoDate = `${y}-${m.padStart(2,'0')}-${d.padStart(2,'0')}`;
+
+// SEO
+const siteUrl = 'https://lumerapixel.com';
+const pageUrl = isEN ? `${siteUrl}/en/sessions/${slug}` : `${siteUrl}/sessions/${slug}`;
+const deUrl = `${siteUrl}/sessions/${slug}`;
+const enUrl = `${siteUrl}/en/sessions/${slug}`;
+const ogImg = photos[6] ? `${siteUrl}${photos[6]}` : `${siteUrl}${photos[0]}`;
+const pageTitle = isEN
+  ? `${title} – ${category} Photography | LumeraPixel`
+  : `${title} – ${category} Fotografie | LumeraPixel`;
+const pageDesc = isEN
+  ? (subtitle
+    ? `${subtitle} – ${session.images} photos from the session "${title}" by MaximalNico. Taken on ${dateStr}.`
+    : `${session.images} photos from the ${category} session "${title}" by MaximalNico. Taken on ${dateStr}.`)
+  : (subtitle
+    ? `${subtitle} – ${session.images} Fotos aus der Session "${title}" von MaximalNico. Aufgenommen am ${dateStr}.`
+    : `${session.images} Fotos aus der ${category}-Session "${title}" von MaximalNico. Aufgenommen am ${dateStr}.`);
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ImageGallery",
+      "@id": `${pageUrl}#gallery`,
+      "name": title,
+      "description": pageDesc,
+      "url": pageUrl,
+      "numberOfItems": session.images,
+      "datePublished": isoDate,
+      "dateModified": isoDate,
+      "inLanguage": isEN ? "en" : "de-DE",
+      "genre": category,
+      "locationCreated": session.location ? { "@type": "Place", "name": session.location } : undefined,
+      "author": { "@type": "Person", "name": "Nico Thomas Henkel", "alternateName": "MaximalNico", "url": siteUrl },
+      "thumbnailUrl": ogImg,
+      "isPartOf": { "@id": `${siteUrl}/#gallery` }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "LumeraPixel", "item": homePath === '/en/' ? `${siteUrl}/en/` : siteUrl },
+        { "@type": "ListItem", "position": 2, "name": title, "item": pageUrl }
+      ]
+    }
+  ]
+};
+---
+
+<Base
+  title={pageTitle}
+  description={pageDesc}
+  ogImage={ogImg}
+  ogType="article"
+  canonical={pageUrl}
+  {schema}
+  hreflangDe={deUrl}
+  hreflangEn={enUrl}
+>
+  <Nav />
+
+  <main class="session-page">
+
+    <!-- Hero -->
+    <header class="session-hero">
+      <!-- Prev/Next Bar -->
+      <div class="session-hero__nav">
+        {next ? (
+          <a href={sessionPath(next.slug)} class="session-hero__nav-btn">
+            <img src="/logos/arrow-left.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
+            <span>{navTitle(next)}</span>
+          </a>
+        ) : <span />}
+        {prev ? (
+          <a href={sessionPath(prev.slug)} class="session-hero__nav-btn">
+            <span>{navTitle(prev)}</span>
+            <img src="/logos/arrow-right.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
+          </a>
+        ) : <span />}
+      </div>
+
+      <!-- Bild links + Text rechts -->
+      <div class="session-hero__body">
+        <div class="session-hero__preview" id="heroSlideshow">
+          {photos.slice(0, 8).map((src, i) => (
+            <img
+              src={src}
+              alt={title}
+              class={`hero-slide ${i === 0 ? 'is-active' : ''}`}
+              loading={i === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+          ))}
+        </div>
+        <div class="session-hero__text">
+          <div class="session-hero__divider" aria-hidden="true"></div>
+          <div class="session-hero__meta">
+            <span class="session-hero__meta-row">
+              <span class="session-hero__cat">{category}</span>
+              <span class="session-hero__sep" aria-hidden="true">·</span>
+              <span>{session.images} {t(lang, 'session.photos')}</span>
+            </span>
+            <span class="session-hero__sep session-hero__sep--desktop" aria-hidden="true">·</span>
+            <span class="session-hero__meta-date">{dateStr}</span>
+          </div>
+          <h1 class="session-hero__title">{title}</h1>
+          {subtitle && <p class="session-hero__sub">{subtitle}</p>}
+        </div>
+      </div>
+    </header>
+
+    <!-- Photo Grid -->
+    <section class="photo-section" aria-label="Fotos">
+      <div class="photo-grid" id="photoGrid" data-folder={folder} data-total={session.images}>
+        {photos.map((src, i) => (
+          <button class="photo-item" data-index={i} aria-label={isEN ? `Photo ${i + 1} of ${session.images}` : `Foto ${i + 1} von ${session.images} öffnen`}>
+            <img src={src} alt={`${title} – ${isEN ? 'Photo' : 'Foto'} ${i + 1}`} loading={i < 4 ? 'eager' : 'lazy'} decoding="async" />
+          </button>
+        ))}
+      </div>
+    </section>
+
+
+
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto-Lightbox" hidden>
+    <div class="lightbox__backdrop" id="lbBackdrop"></div>
+
+    <!-- Counter oben mittig -->
+    <div class="lightbox__counter" id="lbCounter" aria-live="polite"></div>
+
+    <!-- Close oben rechts -->
+    <button class="lightbox__close" id="lbClose" aria-label="Schließen">
+      <img src="/logos/cross.svg" alt="" aria-hidden="true" />
+    </button>
+
+    <!-- Prev/Next seitlich -->
+    <button class="lightbox__btn lightbox__btn--prev" id="lbPrev" aria-label="Vorheriges Foto">
+      <img src="/logos/arrow-left.svg" alt="" aria-hidden="true" />
+    </button>
+    <button class="lightbox__btn lightbox__btn--next" id="lbNext" aria-label="Nächstes Foto">
+      <img src="/logos/arrow-right.svg" alt="" aria-hidden="true" />
+    </button>
+
+    <div class="lightbox__stage">
+      <div class="lightbox__spinner" id="lbSpinner" aria-hidden="true">
+        <div class="lightbox__spinner-ring"></div>
+      </div>
+      <img class="lightbox__img" id="lbImg" src="" alt="" />
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <Footer />
+
+</Base>
+
+<style>
+  /* ── GLOBAL BG ── */
+
+
+  /* ── HERO ── */
+  .session-hero {
+    padding: calc(var(--nav-h) + var(--gap-sm)) var(--page-x) clamp(2rem, 5vh, 4rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-md);
+    position: relative;
+  }
+  .session-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: var(--page-x); right: var(--page-x);
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+  }
+  /* Body: bild links + text rechts */
+  .session-hero__body {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: var(--gap-lg);
+    align-items: center;
+  }
+  @media (max-width: 768px) {
+    .session-hero__body { grid-template-columns: 1fr; }
+    .session-hero__preview { order: -1; }
+    .session-hero__text {
+      align-items: center !important;
+      text-align: center;
+    }
+    .session-hero__meta {
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      text-align: center;
+    }
+    .session-hero__sep--desktop { display: none; }
+    .session-hero__meta-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .session-hero__title {
+      text-align: center;
+      max-width: 100%;
+    }
+    .session-hero__sub {
+      text-align: center;
+      max-width: 100%;
+    }
+    .session-hero__nav-btn span { display: none; }
+    .session-hero__divider {
+      align-self: center !important;
+    }
+  }
+  /* Vorschaubild links */
+  .session-hero__preview {
+    border-radius: 14px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    border: 1.5px solid var(--accent);
+    position: relative;
+  }
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: brightness(0.92) contrast(1.04);
+    display: block;
+    opacity: 0;
+    transition: opacity 0.7s ease-in-out;
+  }
+  .hero-slide.is-active { opacity: 1; }
+  .hero-slide:first-child { position: relative; }
+  /* Text rechts */
+  .session-hero__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    gap: 0.6rem;
+  }
+
+  .session-hero__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-md);
+  }
+  .session-hero__nav-btn {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: clamp(0.82rem, 1.1vw, 1rem);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color var(--quick), border-color var(--quick), background var(--quick);
+    max-width: 36%;
+    padding: 0.55rem 1.1rem;
+    border: 1.5px solid var(--text-muted);
+    border-radius: 10px;
+    background: var(--glass-bg);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    overflow: hidden;
+  }
+  .session-hero__nav-btn span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .session-hero__nav-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    opacity: 0.75;
+    filter: var(--icon-filter, invert(1));
+    transition: opacity var(--quick), filter var(--quick);
+  }
+  .session-hero__nav-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: rgba(128,128,128,0.08);
+  }
+  .session-hero__nav-btn:hover .session-hero__nav-icon {
+    opacity: 1;
+    filter: var(--icon-filter-accent, invert(1));
+    opacity: 1;
+  }
+  .session-hero__meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: 1.05rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-muted);
+  }
+  .session-hero__cat { color: var(--accent); }
+  .session-hero__sep { opacity: 0.35; }
+
+  .session-hero__title {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: clamp(2.8rem, 8vw, 7rem);
+    line-height: 0.92;
+    letter-spacing: -0.025em;
+    color: #ffffff;
+    max-width: 22ch;
+  }
+  .session-hero__sub {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: clamp(1.1rem, 1.9vw, 1.4rem);
+    color: var(--text-muted);
+    max-width: 52ch;
+    line-height: 1.5;
+    margin-top: var(--gap-sm);
+  }
+  .session-hero__divider {
+    width: clamp(3rem, 8vw, 6rem);
+    height: 2px;
+    background: var(--accent);
+    border-radius: 1px;
+    opacity: 0.75;
+    align-self: flex-end;
+  }
+
+  /* ── PHOTO GRID ── */
+  .photo-section {
+    padding: var(--gap-md) var(--page-x) var(--gap-lg);
+  }
+  .photo-grid {
+    columns: 5;
+    column-gap: 0.5rem;
+  }
+  .photo-item {
+    break-inside: avoid;
+    display: block;
+    margin-bottom: 0.5rem;
+    cursor: zoom-in;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    transition: transform var(--flow);
+    border: 1.5px solid transparent;
+  }
+  .photo-item:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+  }
+  .photo-item img {
+    width: 100%; height: auto; display: block;
+    transition: filter var(--flow);
+    filter: brightness(0.88) contrast(1.04);
+    content-visibility: auto;
+  }
+  .photo-item:hover img { filter: brightness(1) contrast(1.02); }
+  @media (max-width: 1000px) { .photo-grid { columns: 4; } }
+  @media (max-width: 700px)  { .photo-grid { columns: 3; } }
+  @media (max-width: 480px)  { .photo-grid { columns: 2; } }
+
+
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox[hidden] { display: none; }
+
+  .lightbox__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.27);
+    backdrop-filter: blur(27px);
+    cursor: pointer;
+  }
+
+  /* Bild — volle Helligkeit, volle Opacity */
+  .lightbox__stage {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: min(88vw, 130vh);
+    max-height: 88vh;
+  }
+  .lightbox__img {
+    max-width: 100%;
+    max-height: 88vh;
+    object-fit: contain;
+    border-radius: 6px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    filter: none;
+  }
+  .lightbox__img.is-loaded { opacity: 1; }
+
+  .lightbox__spinner {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox__spinner-ring {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 2px solid rgba(128,128,128,0.15);
+    border-top-color: var(--accent);
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Counter — groß, oben mittig, glass */
+  .lightbox__counter {
+    position: absolute;
+    top: var(--gap-md);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: clamp(0.85rem, 1.6vw, 1.2rem);
+    letter-spacing: 0.08em;
+    color: var(--text);
+    white-space: nowrap;
+    background: rgba(0,0,0,0.27);
+    backdrop-filter: blur(27px);
+    -webkit-backdrop-filter: blur(27px);
+    border: 2.7px solid rgba(0,0,0,0.37);
+    border-radius: 12px;
+    padding: 0.45rem 1.2rem;
+  }
+
+  /* Prev/Next — seitlich, groß */
+  .lightbox__btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    cursor: pointer;
+    background: rgba(0,0,0,0.27);
+    border: 2.7px solid rgba(0,0,0,0.37);
+    border-radius: 12px;
+    padding: 0.9rem 0.75rem;
+    transition: background var(--quick), border-color var(--quick);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox__btn img {
+    width: 28px; height: 28px;
+    filter: var(--icon-filter, invert(1));
+    opacity: 0.8;
+    transition: opacity var(--quick), filter var(--quick);
+  }
+  .lightbox__btn:hover {
+    background: rgba(128,128,128,0.12);
+    border-color: var(--accent);
+  }
+  .lightbox__btn:hover img {
+    opacity: 1;
+    filter: var(--icon-filter-accent, invert(1));
+  }
+  .lightbox__btn--prev { left: var(--gap-md); }
+  .lightbox__btn--next { right: var(--gap-md); }
+
+  /* Close — oben rechts */
+  .lightbox__close {
+    position: absolute;
+    top: var(--gap-md);
+    right: var(--gap-md);
+    z-index: 2;
+    cursor: pointer;
+    background: rgba(0,0,0,0.27);
+    border: 2.7px solid rgba(0,0,0,0.37);
+    border-radius: 10px;
+    padding: 0.6rem;
+    transition: background var(--quick), border-color var(--quick);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox__close img {
+    width: 22px; height: 22px;
+    filter: var(--icon-filter, invert(1));
+    opacity: 0.75;
+    transition: opacity var(--quick), filter var(--quick);
+  }
+  .lightbox__close:hover {
+    background: rgba(128,128,128,0.12);
+    border-color: var(--accent);
+  }
+  .lightbox__close:hover img {
+    opacity: 1;
+    filter: var(--icon-filter-accent, invert(1));
+  }
+
+  /* ── FOOTER ── */
+  .lp-footer { padding: var(--gap-lg) var(--page-x) var(--gap-md); }
+  .lp-footer__line {
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.5;
+    margin-bottom: var(--gap-md);
+  }
+  .lp-footer__inner {
+    display: flex; flex-direction: column;
+    align-items: center; gap: var(--gap-sm); text-align: center;
+  }
+  .lp-footer__copy {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.04em;
+  }
+  .lp-footer__mn {
+    color: var(--accent);
+    font-weight: 277;
+    transition: opacity var(--quick);
+  }
+  .lp-footer__mn:hover { opacity: 0.75; }
+  .lp-footer__legal {
+    display: flex; gap: 0.75rem; align-items: center;
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: 0.68rem;
+    color: var(--text-dim);
+  }
+  .lp-footer__legal a { transition: color var(--quick); }
+  .lp-footer__legal a:hover { color: var(--text-muted); }
+
+  :global([data-theme="dark"]) {
+    --accent: #66ff00;
+    --icon-filter: invert(1);
+    --icon-filter-accent: invert(54%) sepia(100%) saturate(500%) hue-rotate(60deg) brightness(1.1);
+  }
+  :global([data-theme="light"]) {
+    --accent: #9900ff;
+    --icon-filter: invert(0);
+    --icon-filter-accent: invert(20%) sepia(100%) saturate(1000%) hue-rotate(270deg) brightness(0.9);
+  }
+  :global([data-theme="light"]) .session-hero__title { color: var(--text); }
+  :global([data-theme="light"]) .glass-box {
+    background: rgba(255,255,255,0.27);
+    border-color: rgba(255,255,255,0.37);
+  }
+  :global([data-theme="light"]) .lightbox__backdrop {
+    background: rgba(255,255,255,0.15);
+  }
+  :global([data-theme="light"]) .lightbox__counter,
+  :global([data-theme="light"]) .lightbox__btn,
+  :global([data-theme="light"]) .lightbox__close {
+    background: rgba(255,255,255,0.27);
+    border-color: rgba(255,255,255,0.37);
+  }
+  :global([data-theme="light"]) .lightbox__btn:hover,
+  :global([data-theme="light"]) .lightbox__close:hover {
+    background: rgba(128,128,128,0.12);
+    border-color: var(--accent);
+  }
+
+</style>
+
+<script>
+  const grid = document.getElementById('photoGrid');
+  const folder = grid?.dataset.folder ?? '';
+  const total = parseInt(grid?.dataset.total ?? '0', 10);
+  const photos = Array.from({ length: total }, (_, i) =>
+    `${folder}/${String(i).padStart(3, '0')}.webp`
+  );
+
+  const items = document.querySelectorAll('.photo-item');
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbCounter = document.getElementById('lbCounter');
+  const lbSpinner = document.getElementById('lbSpinner');
+  const lbPrev = document.getElementById('lbPrev');
+  const lbNext = document.getElementById('lbNext');
+  const lbClose = document.getElementById('lbClose');
+  const lbBackdrop = document.getElementById('lbBackdrop');
+
+  let current = 0;
+
+  function show(idx) {
+    current = (idx + total) % total;
+    lb.hidden = false;
+    document.body.style.overflow = 'hidden';
+    lbImg.classList.remove('is-loaded');
+    lbSpinner.style.display = 'flex';
+    lbCounter.textContent = `${current + 1} / ${total}`;
+    const img = new Image();
+    img.onload = () => {
+      lbImg.src = photos[current];
+      lbImg.alt = `Foto ${current + 1}`;
+      lbImg.classList.add('is-loaded');
+      lbSpinner.style.display = 'none';
+    };
+    img.src = photos[current];
+  }
+
+  function close() {
+    lb.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  items.forEach(btn => {
+    btn.addEventListener('click', () => show(Number(btn.dataset.index)));
+  });
+  lbPrev?.addEventListener('click', () => show(current - 1));
+  lbNext?.addEventListener('click', () => show(current + 1));
+  lbClose?.addEventListener('click', close);
+  lbBackdrop?.addEventListener('click', close);
+
+  document.addEventListener('keydown', e => {
+    if (lb.hidden) return;
+    if (e.key === 'ArrowLeft')  show(current - 1);
+    if (e.key === 'ArrowRight') show(current + 1);
+    if (e.key === 'Escape')     close();
+  });
+
+  let touchX = 0;
+  lb?.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+  lb?.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 40) show(dx < 0 ? current + 1 : current - 1);
+  });
+
+  // Hero Slideshow
+  const heroSlides = document.querySelectorAll('.hero-slide');
+  if (heroSlides.length > 1) {
+    let hCurrent = 0;
+    setInterval(() => {
+      heroSlides[hCurrent].classList.remove('is-active');
+      hCurrent = (hCurrent + 1) % heroSlides.length;
+      heroSlides[hCurrent].classList.add('is-active');
+    }, 2700);
+  }
+</script>

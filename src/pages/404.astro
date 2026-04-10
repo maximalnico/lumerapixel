@@ -1,0 +1,141 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+<Base title="404 – Seite nicht gefunden · LumeraPixel">
+  <Nav />
+
+  <main class="not-found">
+    <div class="not-found__wrap">
+
+      <div class="not-found__header">
+        <div class="not-found__divider" aria-hidden="true"></div>
+        <h1 class="not-found__code">404</h1>
+        <p class="not-found__title">Seite nicht gefunden</p>
+      </div>
+
+      <div class="glass-box">
+        <p>Die gesuchte Seite existiert nicht oder wurde verschoben.</p>
+        <a href="/" class="not-found__btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M19 12H5M12 5l-7 7 7 7" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Zurück zur Startseite
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  :global(body) {
+    background-color: #0a0a0f;
+    background-image: url('/logos/lpwall.svg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+  :global(body::before) {
+    background-image: none;
+    background: rgba(10, 10, 15, 0.28);
+    opacity: 1;
+  }
+
+  .not-found {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: calc(var(--nav-h) + var(--gap-lg)) var(--page-x) var(--gap-xl);
+  }
+
+  .not-found__wrap {
+    width: min(480px, 100%);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-md);
+  }
+
+  .not-found__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.4rem;
+    padding-bottom: var(--gap-md);
+  }
+
+  .not-found__divider {
+    width: 4rem;
+    height: 2px;
+    background: #00e5ff;
+    border-radius: 1px;
+    margin-bottom: 0.4rem;
+  }
+
+  .not-found__code {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: clamp(5rem, 18vw, 9rem);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: #00e5ff;
+  }
+
+  .not-found__title {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    letter-spacing: 0.04em;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .glass-box {
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: var(--gap-md) var(--gap-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-md);
+    text-align: center;
+  }
+
+  .glass-box p {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+  }
+
+  .not-found__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: 0.88rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #ffffff;
+    padding: 0.6rem 1.4rem;
+    border: 1.5px solid rgba(0,229,255,1);
+    border-radius: 10px;
+    background: rgba(0,229,255,0.06);
+    transition: background 180ms ease-out, color 180ms ease-out;
+    text-decoration: none;
+  }
+  .not-found__btn:hover {
+    background: rgba(0,229,255,0.14);
+    color: #00e5ff;
+  }
+</style>
