@@ -458,6 +458,23 @@
       "description_de": "Winterzauber in Weiß - verschneite Landschaften und die stille Schönheit der kalten Jahreszeit.",
       "description_en": "Winter magic in white - snow-covered landscapes and the quiet beauty of the cold season.",
       "featured": false
+    },
+    {
+      "slug": "test",
+      "date": "08.04.2026",
+      "shoot_date": "08.04.2026",
+      "location": "Test",
+      "category": "test",
+      "category_de": "Test",
+      "category_en": "Test",
+      "images": 3,
+      "title_de": "Test",
+      "title_en": "Test",
+      "subtitle_de": "Test",
+      "subtitle_en": "Test",
+      "description_de": "Testinhalte für eine Fotosession auf LumeraPixel.",
+      "description_en": "Test content for a photography session on LumeraPixel.",
+      "featured": false
     }
   ]
 }
