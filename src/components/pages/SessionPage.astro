@@ -310,7 +310,7 @@ const schema = {
     letter-spacing: 0.12em;
     color: var(--text-muted);
     text-decoration: none;
-    transition: color var(--quick), border-color var(--quick), background var(--quick);
+    transition: border-color var(--quick);
     max-width: 36%;
     padding: 0.55rem 1.1rem;
     border: 1.5px solid var(--text-muted);
@@ -320,6 +320,22 @@ const schema = {
     align-items: center;
     gap: 0.5rem;
     overflow: hidden;
+    position: relative;
+  }
+  .session-hero__nav-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    padding: 1.5px;
+    background: var(--rainbow);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity var(--quick);
+    pointer-events: none;
+    z-index: 1;
   }
   .session-hero__nav-btn span {
     overflow: hidden;
@@ -335,16 +351,14 @@ const schema = {
     transition: opacity var(--quick), filter var(--quick);
   }
   .session-hero__nav-btn:hover {
-    border-image: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff) 1;
-    background: var(--rainbow);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    border-color: transparent;
+  }
+  .session-hero__nav-btn:hover::before {
+    opacity: 1;
   }
   .session-hero__nav-btn:hover .session-hero__nav-icon {
     opacity: 1;
     filter: var(--icon-filter-accent, invert(1));
-    opacity: 1;
   }
   .session-hero__meta {
     display: flex;
@@ -411,12 +425,26 @@ const schema = {
     padding: 0;
     position: relative;
     transition: transform var(--flow);
-    border: 1.5px solid transparent;
+  }
+  .photo-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    padding: 1.5px;
+    background: var(--rainbow);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity var(--quick);
+    z-index: 2;
+    pointer-events: none;
   }
   .photo-item:hover {
     transform: translateY(-2px);
-    border-image: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff) 1;
   }
+  .photo-item:hover::before { opacity: 1; }
   .photo-item img {
     width: 100%; height: auto; display: block;
     transition: filter var(--flow);
