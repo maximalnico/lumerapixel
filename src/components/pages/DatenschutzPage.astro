@@ -305,7 +305,7 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
   .legal-header__divider {
     width: clamp(3rem, 8vw, 5rem);
     height: 2px;
-    background: var(--accent);
+    background: var(--rainbow);
     border-radius: 1px;
     opacity: 0.9;
     margin-bottom: 0.2rem;
@@ -337,7 +337,10 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
     font-size: 1.1rem;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: var(--accent);
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     padding-bottom: 0.6rem;
     border-bottom: 1px solid rgba(128,128,128,0.25);
     text-align: center;
@@ -383,7 +386,8 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
     color: var(--text-dim);
     line-height: 1.65;
     letter-spacing: 0.02em;
-    border-left: 2px solid var(--accent);
+    border-left: 2px solid transparent;
+    border-image: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff) 1;
     padding-left: var(--gap-sm);
     opacity: 0.7;
   }
@@ -394,7 +398,8 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
     flex-direction: column;
     gap: 0.6rem;
     padding-left: var(--gap-sm);
-    border-left: 2px solid var(--accent);
+    border-left: 2px solid transparent;
+    border-image: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff) 1;
   }
   .legal-list li {
     font-family: 'GeneralSans', sans-serif;
@@ -409,7 +414,10 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
     content: '–';
     position: absolute;
     left: -0.1rem;
-    color: var(--accent);
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .glass-box a {
@@ -419,19 +427,22 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
     word-break: break-all;
   }
   .glass-box a:hover {
-    color: var(--accent);
-    border-color: var(--accent);
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border-image: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff) 1;
   }
-
-  :global([data-theme="dark"]) { --accent: #66ff00; }
-  :global([data-theme="light"]) { --accent: #9900ff; }
 
   :global([data-theme="light"]) .glass-box {
     background: rgba(255,255,255,0.27);
     border-color: rgba(255,255,255,0.37);
   }
   :global([data-theme="light"]) .glass-box a:hover {
-    color: var(--accent);
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     border-color: var(--accent);
   }
 </style>

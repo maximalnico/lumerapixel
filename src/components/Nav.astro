@@ -98,7 +98,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   .lp-nav__row--top {
     justify-content: center;
     padding-bottom: 0.4rem;
-    border-bottom: 1px solid var(--accent);
+    border-bottom: 1px solid transparent;
+    border-image: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff) 1;
     margin-bottom: 0.3rem;
   }
   .lp-nav__row--bottom {
@@ -130,8 +131,18 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     transition: color var(--quick), background var(--quick);
     white-space: nowrap;
   }
-  .lp-nav__link:hover { color: var(--accent); background: rgba(128,128,128,0.08); }
-  .lp-nav__link.is-active { color: var(--accent); }
+  .lp-nav__link:hover {
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .lp-nav__link.is-active {
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
   /* Desktop: top-actions (Mobile-only) verstecken */
   .lp-nav__top-actions { display: none; }
@@ -337,10 +348,15 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   [data-theme="dark"] .lp-nav__island { background: rgba(6,7,8,0.82); border-color: rgba(0,0,0,0.37); }
   [data-theme="light"] .lp-nav__link { color: rgba(10,10,15,0.8); }
   [data-theme="dark"] .lp-nav__link { color: rgba(255,255,255,0.9); }
-  [data-theme="light"] .lp-nav__link:hover { color: var(--accent); }
-  [data-theme="dark"] .lp-nav__link:hover { color: var(--accent); }
-  [data-theme="light"] .lp-nav__link.is-active { color: var(--accent); }
-  [data-theme="dark"] .lp-nav__link.is-active { color: var(--accent); }
+  [data-theme="light"] .lp-nav__link:hover,
+  [data-theme="dark"] .lp-nav__link:hover,
+  [data-theme="light"] .lp-nav__link.is-active,
+  [data-theme="dark"] .lp-nav__link.is-active {
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
   [data-theme="light"] .lp-nav__links { background: rgba(235,240,245,0.92); border-color: rgba(200,210,220,0.6); }
   [data-theme="light"] .lp-nav__controls { background: rgba(235,240,245,0.92); border-color: rgba(200,210,220,0.6); }
   [data-theme="dark"] .lp-nav__controls { background: rgba(6,7,8,0.82); border-color: rgba(0,0,0,0.37); }

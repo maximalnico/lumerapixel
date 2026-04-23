@@ -124,7 +124,7 @@ const enUrl = `${siteUrl}/en/site-notice`;
   .legal-header__divider {
     width: clamp(3rem, 8vw, 5rem);
     height: 2px;
-    background: var(--accent);
+    background: var(--rainbow);
     border-radius: 1px;
     opacity: 0.9;
     margin-bottom: 0.2rem;
@@ -157,7 +157,10 @@ const enUrl = `${siteUrl}/en/site-notice`;
     font-size: 1.1rem;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: var(--accent);
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid rgba(128,128,128,0.25);
     margin-bottom: 0.2rem;
@@ -178,8 +181,11 @@ const enUrl = `${siteUrl}/en/site-notice`;
     transition: color var(--quick), border-color var(--quick);
   }
   .glass-box a:hover {
-    color: var(--accent);
-    border-color: var(--accent);
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border-image: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff) 1;
   }
 
   .ust-id {
@@ -187,11 +193,11 @@ const enUrl = `${siteUrl}/en/site-notice`;
     font-weight: 277;
     font-size: clamp(1.2rem, 2.5vw, 1.8rem);
     letter-spacing: 0.08em;
-    color: var(--accent);
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
-
-  :global([data-theme="dark"]) { --accent: #66ff00; }
-  :global([data-theme="light"]) { --accent: #9900ff; }
 
   :global([data-theme="light"]) .glass-box {
     background: rgba(255,255,255,0.27);
@@ -202,7 +208,10 @@ const enUrl = `${siteUrl}/en/site-notice`;
     color: var(--text-muted);
   }
   :global([data-theme="light"]) .glass-box a:hover {
-    color: var(--accent);
-    border-color: var(--accent);
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border-image: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff) 1;
   }
 </style>

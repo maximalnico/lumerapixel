@@ -125,16 +125,18 @@ const schema = {
 
       <!-- Bild links + Text rechts -->
       <div class="session-hero__body">
-        <div class="session-hero__preview" id="heroSlideshow">
-          {photos.slice(0, 8).map((src, i) => (
-            <img
-              src={src}
-              alt={title}
-              class={`hero-slide ${i === 0 ? 'is-active' : ''}`}
-              loading={i === 0 ? 'eager' : 'lazy'}
-              decoding="async"
-            />
-          ))}
+        <div class="session-hero__preview-wrap">
+          <div class="session-hero__preview" id="heroSlideshow">
+            {photos.slice(0, 8).map((src, i) => (
+              <img
+                src={src}
+                alt={title}
+                class={`hero-slide ${i === 0 ? 'is-active' : ''}`}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+            ))}
+          </div>
         </div>
         <div class="session-hero__text">
           <div class="session-hero__divider" aria-hidden="true"></div>
@@ -261,11 +263,16 @@ const schema = {
     }
   }
   /* Vorschaubild links */
+  .session-hero__preview-wrap {
+    padding: 1.5px;
+    background: var(--rainbow);
+    border-radius: 15.5px;
+    flex-shrink: 0;
+  }
   .session-hero__preview {
     border-radius: 14px;
     overflow: hidden;
     aspect-ratio: 4/3;
-    border: 1.5px solid var(--accent);
     position: relative;
   }
   .hero-slide {
@@ -328,9 +335,11 @@ const schema = {
     transition: opacity var(--quick), filter var(--quick);
   }
   .session-hero__nav-btn:hover {
-    color: var(--accent);
-    border-color: var(--accent);
-    background: rgba(128,128,128,0.08);
+    border-image: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff) 1;
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   .session-hero__nav-btn:hover .session-hero__nav-icon {
     opacity: 1;
@@ -349,7 +358,12 @@ const schema = {
     letter-spacing: 0.14em;
     color: var(--text-muted);
   }
-  .session-hero__cat { color: var(--accent); }
+  .session-hero__cat {
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
   .session-hero__sep { opacity: 0.35; }
 
   .session-hero__title {
@@ -373,7 +387,7 @@ const schema = {
   .session-hero__divider {
     width: clamp(3rem, 8vw, 6rem);
     height: 2px;
-    background: var(--accent);
+    background: var(--rainbow);
     border-radius: 1px;
     opacity: 0.75;
     align-self: flex-end;
@@ -401,7 +415,7 @@ const schema = {
   }
   .photo-item:hover {
     transform: translateY(-2px);
-    border-color: var(--accent);
+    border-image: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff) 1;
   }
   .photo-item img {
     width: 100%; height: auto; display: block;
@@ -516,7 +530,7 @@ const schema = {
   }
   .lightbox__btn:hover {
     background: rgba(128,128,128,0.12);
-    border-color: var(--accent);
+    border-image: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff) 1;
   }
   .lightbox__btn:hover img {
     opacity: 1;
@@ -549,7 +563,7 @@ const schema = {
   }
   .lightbox__close:hover {
     background: rgba(128,128,128,0.12);
-    border-color: var(--accent);
+    border-image: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff) 1;
   }
   .lightbox__close:hover img {
     opacity: 1;
@@ -560,7 +574,7 @@ const schema = {
   .lp-footer { padding: var(--gap-lg) var(--page-x) var(--gap-md); }
   .lp-footer__line {
     height: 1px;
-    background: var(--accent);
+    background: var(--rainbow);
     opacity: 0.5;
     margin-bottom: var(--gap-md);
   }
@@ -576,9 +590,12 @@ const schema = {
     letter-spacing: 0.04em;
   }
   .lp-footer__mn {
-    color: var(--accent);
     font-weight: 277;
     transition: opacity var(--quick);
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   .lp-footer__mn:hover { opacity: 0.75; }
   .lp-footer__legal {
@@ -592,12 +609,10 @@ const schema = {
   .lp-footer__legal a:hover { color: var(--text-muted); }
 
   :global([data-theme="dark"]) {
-    --accent: #66ff00;
     --icon-filter: invert(1);
-    --icon-filter-accent: invert(54%) sepia(100%) saturate(500%) hue-rotate(60deg) brightness(1.1);
+    --icon-filter-accent: invert(54%) sepia(100%) saturate(500%) hue-rotate(72deg) brightness(1.1);
   }
   :global([data-theme="light"]) {
-    --accent: #9900ff;
     --icon-filter: invert(0);
     --icon-filter-accent: invert(20%) sepia(100%) saturate(1000%) hue-rotate(270deg) brightness(0.9);
   }
@@ -618,7 +633,7 @@ const schema = {
   :global([data-theme="light"]) .lightbox__btn:hover,
   :global([data-theme="light"]) .lightbox__close:hover {
     background: rgba(128,128,128,0.12);
-    border-color: var(--accent);
+    border-image: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff) 1;
   }
 
 </style>

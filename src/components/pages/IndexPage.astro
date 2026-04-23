@@ -105,19 +105,21 @@ const schema = {
     <section class="hero" aria-label="Hero">
 
       <!-- Slideshow Box links -->
-      <div class="hero__slideshow" id="slideshow">
-        {slideshowSessions.map((s: any, i: number) => {
-          const cover = s.folder + '/000.webp';
-          return (
-            <img
-              src={cover}
-              alt=""
-              class={`hero__slide ${i === 0 ? 'is-active' : ''}`}
-              loading={i === 0 ? 'eager' : 'lazy'}
-              decoding="async"
-            />
-          );
-        })}
+      <div class="hero__slideshow-wrap">
+        <div class="hero__slideshow" id="slideshow">
+          {slideshowSessions.map((s: any, i: number) => {
+            const cover = s.folder + '/000.webp';
+            return (
+              <img
+                src={cover}
+                alt=""
+                class={`hero__slide ${i === 0 ? 'is-active' : ''}`}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+            );
+          })}
+        </div>
       </div>
 
       <!-- Text rechts -->
@@ -147,7 +149,17 @@ const schema = {
         <!-- Scroll hint -->
         <a href="#featured" class="scroll-hint" aria-label={t(lang, 'hero.tagline')}>
           <svg class="scroll-hint__arrow" width="52" height="52" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M6 9l6 6 6-6" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs>
+              <linearGradient id="arrowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff0000"/>
+                <stop offset="20%" stop-color="#ff7700"/>
+                <stop offset="40%" stop-color="#ffee00"/>
+                <stop offset="60%" stop-color="#00cc00"/>
+                <stop offset="80%" stop-color="#0088ff"/>
+                <stop offset="100%" stop-color="#8800ff"/>
+              </linearGradient>
+            </defs>
+            <path d="M6 9l6 6 6-6" stroke="url(#arrowGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </a>
       </div>
@@ -312,12 +324,17 @@ const schema = {
   }
 
   /* Slideshow Box */
+  .hero__slideshow-wrap {
+    padding: 3px;
+    background: var(--rainbow);
+    border-radius: 19px;
+    flex-shrink: 0;
+  }
   .hero__slideshow {
     position: relative;
     aspect-ratio: 4/3;
     border-radius: 16px;
     overflow: hidden;
-    border: 7px solid var(--accent);
   }
   .hero__slide {
     position: absolute;
@@ -431,7 +448,7 @@ const schema = {
   }
   .featured-section__line {
     height: 1px;
-    background: var(--accent);
+    background: var(--rainbow);
   }
   .featured-section__title {
     font-family: 'GeneralSans', sans-serif;
@@ -473,16 +490,20 @@ const schema = {
       font-size: 1rem;
       text-transform: uppercase;
       letter-spacing: normal;
-      color: var(--accent) !important;
       font-weight: 420 !important;
+      background: var(--rainbow) !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
     }
     .featured-card__title {
       font-size: 1rem !important;
-      font-weight: 277;
       letter-spacing: normal !important;
-      color: var(--accent) !important;
       font-weight: 420 !important;
-
+      background: var(--rainbow) !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
     }
     .featured-card__date { display: none; }
     .featured-card__arrow { display: none !important; }
@@ -495,9 +516,21 @@ const schema = {
     overflow: hidden;
     position: relative;
     background: var(--bg-card);
-    border: 1.5px solid var(--accent);
-    transition: transform var(--flow), border-color var(--quick);
+    transition: transform var(--flow);
     text-decoration: none;
+  }
+  .featured-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    padding: 1.5px;
+    background: var(--rainbow);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 2;
   }
   .featured-card:hover {
     transform: translateY(-4px);
@@ -535,7 +568,10 @@ const schema = {
     font-size: 1rem;
     text-transform: uppercase;
     letter-spacing: normal;
-    color: var(--accent);
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   .featured-card__title {
     font-family: 'GeneralSans', sans-serif;
@@ -549,8 +585,11 @@ const schema = {
     font-family: 'GeneralSans', sans-serif;
     font-weight: 277;
     font-size: 1.00rem;
-    color: var(--accent);
     letter-spacing: 0.07em;
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   .featured-card__arrow {
     position: absolute;
@@ -604,15 +643,15 @@ const schema = {
     background: transparent;
   }
   .filter-btn:hover {
-    border-color: var(--accent);
-    background: var(--accent);
+    background: var(--rainbow);
+    border-color: transparent;
     color: #000000;
     -webkit-text-fill-color: #000000;
   }
   .filter-btn.is-active {
     font-weight: 277;
-    background: var(--accent);
-    border-color: var(--accent);
+    background: var(--rainbow);
+    border-color: transparent;
     color: #000000;
     -webkit-text-fill-color: #000000;
   }
@@ -671,7 +710,7 @@ const schema = {
     inset: 0;
     border-radius: 10px;
     padding: 1.5px;
-    background: var(--accent);
+    background: var(--rainbow);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: destination-out;
     mask-composite: exclude;
@@ -744,18 +783,6 @@ const schema = {
   .lp-footer__legal a { transition: color var(--quick); }
   .lp-footer__legal a:hover { color: var(--text-muted); }
 
-  /* ── Akzentfarbe via var(--accent) ── */
-  .rg {
-    background: none;
-    -webkit-background-clip: unset;
-    background-clip: unset;
-    -webkit-text-fill-color: var(--accent);
-    color: var(--accent);
-    animation: none;
-  }
-  .rg-line { background: var(--accent); animation: none; }
-  .rg-border::before { background: var(--accent); }
-
   :global([data-theme="light"]) .hero__stats {
     background: rgba(255,255,255,0.27);
     border-color: rgba(255,255,255,0.37);
@@ -773,12 +800,6 @@ const schema = {
   }
 
 
-  :global([data-theme="dark"]) {
-    --accent: #66ff00;
-  }
-  :global([data-theme="light"]) {
-    --accent: #9900ff;
-  }
   :global([data-theme="light"]) .featured-card__title { color: rgba(10,10,15,0.9); }
   :global([data-theme="light"]) .featured-card__date { color: rgba(10,10,15,0.6); }
 
