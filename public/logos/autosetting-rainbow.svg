@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="800px" height="800px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="rainbow" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="48" y2="0">
+    <stop offset="0%"    stop-color="#ff0040"/>
+    <stop offset="16.6%" stop-color="#ff8000"/>
+    <stop offset="33.3%" stop-color="#ffcc00"/>
+    <stop offset="50%"   stop-color="#00e85a"/>
+    <stop offset="66.6%" stop-color="#0090ff"/>
+    <stop offset="83.3%" stop-color="#8c3fff"/>
+    <stop offset="100%"  stop-color="#ff2eaa"/>
+  </linearGradient>
+  <style>.a{fill:none;stroke:url(#rainbow);stroke-linecap:round;stroke-linejoin:round;}</style></defs>
+  <path class="a" d="M20.9,24.87H27m1.56,4.67L24,15.69,19.34,29.54M24,6l5.54,5.54h6.92v6.92L42,24l-5.54,5.54v6.92H29.54L24,42l-5.54-5.54H11.54V29.54L6,24l5.54-5.54V11.54h6.92Z"/>
+</svg>
