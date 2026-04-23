@@ -279,6 +279,7 @@ const schema = {
     overflow: hidden;
     aspect-ratio: 4/3;
     position: relative;
+    background: var(--bg);
   }
   .hero-slide {
     position: absolute;
@@ -324,13 +325,12 @@ const schema = {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    overflow: hidden;
     position: relative;
   }
   .session-hero__nav-btn::before {
     content: '';
     position: absolute;
-    inset: 0;
+    inset: -1.5px;
     border-radius: 10px;
     padding: 1.5px;
     background: var(--rainbow);
@@ -564,7 +564,7 @@ const schema = {
   .lightbox__btn::before {
     content: '';
     position: absolute;
-    inset: 0;
+    inset: -2.7px;
     border-radius: 12px;
     padding: 2.7px;
     background: var(--rainbow);
@@ -609,7 +609,7 @@ const schema = {
   .lightbox__close::before {
     content: '';
     position: absolute;
-    inset: 0;
+    inset: -2.7px;
     border-radius: 10px;
     padding: 2.7px;
     background: var(--rainbow);
