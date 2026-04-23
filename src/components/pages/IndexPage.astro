@@ -131,17 +131,17 @@ const schema = {
         <!-- Stats inline rechts -->
         <div class="hero__stats">
           <div class="hero__stats-item">
-            <span class="hero__stats-num rg">{allSessions.length}</span>
+            <span class="hero__stats-num">{allSessions.length}</span>
             <span class="hero__stats-label">{t(lang, 'stats.sessions')}</span>
           </div>
           <div class="hero__stats-sep" aria-hidden="true"></div>
           <div class="hero__stats-item">
-            <span class="hero__stats-num rg">{totalPhotos.toLocaleString('de-DE')}</span>
+            <span class="hero__stats-num">{totalPhotos.toLocaleString('de-DE')}</span>
             <span class="hero__stats-label">{t(lang, 'stats.photos')}</span>
           </div>
           <div class="hero__stats-sep" aria-hidden="true"></div>
           <div class="hero__stats-item">
-            <span class="hero__stats-num rg">{categories.length}</span>
+            <span class="hero__stats-num">{categories.length}</span>
             <span class="hero__stats-label">{t(lang, 'stats.categories')}</span>
           </div>
         </div>
@@ -404,6 +404,7 @@ const schema = {
     font-weight: 277;
     font-size: clamp(1.4rem, 2.5vw, 2rem);
     line-height: 1;
+    color: var(--text-muted);
   }
   .hero__stats-label {
     font-family: 'GeneralSans', sans-serif;
@@ -639,26 +640,31 @@ const schema = {
     border: 1.5px solid var(--text);
     color: var(--text);
     cursor: pointer;
-    transition: all var(--quick);
+    transition: border-color var(--quick);
     background: transparent;
+    position: relative;
   }
-  .filter-btn:hover {
+  .filter-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    padding: 1.5px;
     background: var(--rainbow);
-    border-color: transparent;
-    color: #000000;
-    -webkit-text-fill-color: #000000;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity var(--quick);
+    pointer-events: none;
   }
+  .filter-btn:hover,
   .filter-btn.is-active {
-    font-weight: 277;
-    background: var(--rainbow);
     border-color: transparent;
-    color: #000000;
-    -webkit-text-fill-color: #000000;
   }
-  :global([data-theme="light"]) .filter-btn:hover,
-  :global([data-theme="light"]) .filter-btn.is-active {
-    color: #ffffff;
-    -webkit-text-fill-color: #ffffff;
+  .filter-btn:hover::before,
+  .filter-btn.is-active::before {
+    opacity: 1;
   }
 
   /* Masonry — CSS Columns */
@@ -750,8 +756,6 @@ const schema = {
     font-size: 0.84rem;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    background-size: 200% 100%;
-    animation: rainbow-shift 3s linear infinite;
   }
 
   /* Footer */
@@ -770,8 +774,6 @@ const schema = {
   }
   .lp-footer__mn {
     font-weight: 277;
-    background-size: 200% 100%;
-    animation: rainbow-shift 3s linear infinite;
   }
   .lp-footer__legal {
     display: flex; gap: 0.75rem; align-items: center;

@@ -357,7 +357,10 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  [data-theme="light"] .lp-nav__links { background: rgba(235,240,245,0.92); border-color: rgba(200,210,220,0.6); }
+  [data-theme="light"] .lp-nav__links { border-color: rgba(200,210,220,0.6); }
+  @media (max-width: 640px) {
+    [data-theme="light"] .lp-nav__links { background: rgba(235,240,245,0.92); }
+  }
   [data-theme="light"] .lp-nav__controls { background: rgba(235,240,245,0.92); border-color: rgba(200,210,220,0.6); }
   [data-theme="dark"] .lp-nav__controls { background: rgba(6,7,8,0.82); border-color: rgba(0,0,0,0.37); }
   [data-theme="light"] .lp-nav__pill { background: rgba(0,0,0,0.06); }
