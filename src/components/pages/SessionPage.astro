@@ -509,8 +509,8 @@ const schema = {
     letter-spacing: 0.08em;
     color: var(--text);
     white-space: nowrap;
-    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
-    border: 2.7px solid var(--text);
+    background: transparent;
+    border: 2.7px solid var(--text-muted);
     border-radius: 7px;
     padding: 0.45rem 1.2rem;
   }
@@ -624,9 +624,6 @@ const schema = {
   }
   :global([data-theme="light"]) .lightbox__backdrop {
     background: rgba(255,255,255,0.15);
-  }
-  :global([data-theme="dark"]) .lightbox__counter {
-    background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
   }
   :global([data-theme="dark"]) .lightbox__btn:hover,
   :global([data-theme="dark"]) .lightbox__close:hover {
