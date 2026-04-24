@@ -47,9 +47,9 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     </div>
     <div class="lp-nav__pill" id="langToggle" role="group" aria-label="Language">
       <div class="toggle-indicator" id="langIndicator"></div>
-      <a href="/" class="toggle-btn" id="btn-lang-de" data-lang="de" aria-label="Deutsch"><img src="/logos/lang-de.svg" class="toggle-icon" alt="" /></a>
-      <button class="toggle-btn" id="btn-lang-auto" data-lang="auto" aria-label="Auto"><img src="/logos/autosetting.svg" class="toggle-icon" alt="" /></button>
-      <a href="/en/" class="toggle-btn" id="btn-lang-en" data-lang="en" aria-label="English"><img src="/logos/lang-en.svg" class="toggle-icon" alt="" /></a>
+      <a href="/" class="toggle-btn" id="btn-lang-de" data-lang="de" aria-label="Deutsch"><span class="toggle-label">DE</span></a>
+      <button class="toggle-btn" id="btn-lang-auto" data-lang="auto" aria-label="Auto"><img src="/logos/translate.svg" class="toggle-icon" alt="" /></button>
+      <a href="/en/" class="toggle-btn" id="btn-lang-en" data-lang="en" aria-label="English"><span class="toggle-label">EN</span></a>
     </div>
   </div>
 </nav>
@@ -245,6 +245,23 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     flex-shrink: 0;
   }
   .toggle-btn.is-active .toggle-icon { opacity: 1; }
+  .toggle-label {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 420;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text);
+    opacity: 0.55;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    filter: invert(1);
+  }
+  .toggle-btn.is-active .toggle-label { opacity: 1; }
   .lp-nav__burger {
     display: none;
     flex-direction: column;
@@ -359,6 +376,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   [data-theme="light"] .toggle-btn { color: rgba(10,10,15,0.6); }
   [data-theme="light"] .lp-nav__settings-icon { filter: invert(0); }
   [data-theme="light"] .toggle-icon { filter: invert(0); }
+  [data-theme="light"] .toggle-label { filter: invert(0); }
 </style>
 
 <script>
