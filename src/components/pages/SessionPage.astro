@@ -528,7 +528,7 @@ const schema = {
     border: 2.7px solid var(--text-muted);
     border-radius: 7px;
     padding: 0.9rem 0.75rem;
-    transition: background var(--quick);
+    transition: background var(--quick), border-color var(--quick);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -539,6 +539,7 @@ const schema = {
     opacity: 0.8;
   }
   .lightbox__btn:hover {
+    border-color: var(--text);
     background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
   .lightbox__btn--prev { left: var(--gap-md); }
@@ -555,7 +556,7 @@ const schema = {
     border: 2.7px solid var(--text-muted);
     border-radius: 7px;
     padding: 0.6rem;
-    transition: background var(--quick);
+    transition: background var(--quick), border-color var(--quick);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -565,6 +566,7 @@ const schema = {
     opacity: 0.75;
   }
   .lightbox__close:hover {
+    border-color: var(--text);
     background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
 
