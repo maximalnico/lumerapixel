@@ -15,7 +15,7 @@ import Footer from '../components/Footer.astro';
       </div>
 
       <div class="glass-box">
-        <h2 class="glass-box__title">Angaben gemäß § 5 TMG</h2>
+        <h2 class="glass-box__title section-num">Angaben gemäß § 5 TMG</h2>
         <p>
           Nico Thomas Henkel<br />
           MultaEnhavo<br />
@@ -25,7 +25,7 @@ import Footer from '../components/Footer.astro';
       </div>
 
       <div class="glass-box">
-        <h2 class="glass-box__title">Kontakt</h2>
+        <h2 class="glass-box__title section-num">Kontakt</h2>
         <p>
           Telefon: <a href="tel:+4915122268995">+49-151-22268995</a><br />
           E-Mail: <a href="mailto:hello@multaenhavo.com">hello@multaenhavo.com</a>
@@ -33,13 +33,13 @@ import Footer from '../components/Footer.astro';
       </div>
 
       <div class="glass-box">
-        <h2 class="glass-box__title">Umsatzsteuer-ID</h2>
+        <h2 class="glass-box__title section-num">Umsatzsteuer-ID</h2>
         <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:</p>
         <p class="ust-id">DE459009808</p>
       </div>
 
       <div class="glass-box">
-        <h2 class="glass-box__title">Verbraucherstreit&shy;beilegung / Universal&shy;schlichtungs&shy;stelle</h2>
+        <h2 class="glass-box__title section-num">Verbraucherstreit&shy;beilegung / Universal&shy;schlichtungs&shy;stelle</h2>
         <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
       </div>
 
@@ -72,7 +72,7 @@ import Footer from '../components/Footer.astro';
   .legal-header__divider {
     width: clamp(3rem, 8vw, 5rem);
     height: 2px;
-    background: var(--accent);
+    background: var(--rainbow);
     border-radius: 1px;
     opacity: 0.9;
     margin-bottom: 0.2rem;
@@ -105,12 +105,17 @@ import Footer from '../components/Footer.astro';
     font-size: 1.1rem;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: var(--accent);
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(128,128,128,0.25);
-    margin-bottom: 0.2rem;
+    color: var(--text);
     text-align: center;
     width: 100%;
+  }
+  .section-num {
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
+    border-radius: 6px;
+    padding: 0.25rem 0.75rem;
+  }
+  :global([data-theme="dark"]) .section-num {
+    background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
   }
   .glass-box p {
     font-family: 'GeneralSans', sans-serif;
@@ -126,8 +131,11 @@ import Footer from '../components/Footer.astro';
     transition: color var(--quick), border-color var(--quick);
   }
   .glass-box a:hover {
-    color: var(--accent);
-    border-color: var(--accent);
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border-image: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff) 1;
   }
 
   .ust-id {
@@ -135,11 +143,8 @@ import Footer from '../components/Footer.astro';
     font-weight: 277;
     font-size: clamp(1.2rem, 2.5vw, 1.8rem);
     letter-spacing: 0.08em;
-    color: var(--accent);
+    color: var(--text-muted);
   }
-
-  :global([data-theme="dark"]) { --accent: #66ff00; }
-  :global([data-theme="light"]) { --accent: #9900ff; }
 
   :global([data-theme="light"]) .glass-box {
     background: rgba(255,255,255,0.27);
@@ -150,7 +155,10 @@ import Footer from '../components/Footer.astro';
     color: var(--text-muted);
   }
   :global([data-theme="light"]) .glass-box a:hover {
-    color: var(--accent);
-    border-color: var(--accent);
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border-image: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff) 1;
   }
 </style>
