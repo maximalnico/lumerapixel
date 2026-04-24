@@ -756,23 +756,9 @@ const schema = {
     display: inline-block;
     padding: 0.15rem 0.6rem;
     border-radius: 999px;
-    position: relative;
-    background-image: var(--rainbow), linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
-    -webkit-background-clip: text, padding-box;
-    background-clip: text, padding-box;
-    -webkit-text-fill-color: transparent;
-  }
-  .session-card__cat::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: 999px;
-    padding: 1px;
-    background: var(--rainbow);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: destination-out;
-    mask-composite: exclude;
-    pointer-events: none;
+    border: 1px solid var(--text-muted);
+    color: var(--text);
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
 
   /* Footer */
@@ -823,10 +809,7 @@ const schema = {
   :global([data-theme="light"]) .featured-card__date { color: rgba(10,10,15,0.6); }
 
   :global([data-theme="dark"]) .session-card__cat {
-    background-image: var(--rainbow), linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
-    -webkit-background-clip: text, padding-box;
-    background-clip: text, padding-box;
-    -webkit-text-fill-color: transparent;
+    background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
   }
 
 </style>
