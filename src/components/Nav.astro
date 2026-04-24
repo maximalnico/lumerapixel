@@ -127,18 +127,15 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     color: var(--text);
     padding: 0.55rem 1.4rem;
     border-radius: 7px;
-    border: 2.7px solid var(--text-muted);
     background: transparent;
-    transition: background var(--quick), border-color var(--quick);
+    transition: background var(--quick);
     white-space: nowrap;
     cursor: pointer;
   }
   .lp-nav__link:hover {
-    border-color: var(--text);
     background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
   .lp-nav__link.is-active {
-    border-color: var(--text);
     background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
 
@@ -153,19 +150,16 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     align-self: stretch;
     cursor: pointer;
     border-radius: 7px;
-    border: 2.7px solid var(--text-muted);
     padding: 0.25rem;
     flex-shrink: 0;
-    transition: background var(--quick), border-color var(--quick);
+    transition: background var(--quick);
     box-sizing: border-box;
     background: transparent;
   }
   .lp-nav__settings-btn:hover {
-    border-color: var(--text);
     background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
   .lp-nav__settings-btn.is-active {
-    border-color: var(--text);
     background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
   .lp-nav__settings-icon {
@@ -366,16 +360,15 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 <style is:global>
   [data-theme="light"] .lp-nav__island { background: rgba(235,240,245,0.92); border-color: rgba(200,210,220,0.6); }
   [data-theme="dark"] .lp-nav__island { background: rgba(6,7,8,0.82); border-color: rgba(0,0,0,0.37); }
-  [data-theme="light"] .lp-nav__link { color: rgba(10,10,15,0.85); border-color: rgba(10,10,15,0.35); }
+  [data-theme="light"] .lp-nav__link { color: rgba(10,10,15,0.85); }
   [data-theme="light"] .lp-nav__link:hover,
-  [data-theme="light"] .lp-nav__link.is-active { border-color: rgba(10,10,15,0.85); background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18)); }
+  [data-theme="light"] .lp-nav__link.is-active { background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18)); }
   [data-theme="dark"] .lp-nav__link:hover,
   [data-theme="dark"] .lp-nav__link.is-active { background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32)); }
-  [data-theme="light"] .lp-nav__settings-btn { border-color: rgba(10,10,15,0.35); }
   [data-theme="dark"] .lp-nav__settings-btn:hover,
   [data-theme="dark"] .lp-nav__settings-btn.is-active { background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32)); }
   [data-theme="light"] .lp-nav__settings-btn:hover,
-  [data-theme="light"] .lp-nav__settings-btn.is-active { border-color: rgba(10,10,15,0.85); background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18)); }
+  [data-theme="light"] .lp-nav__settings-btn.is-active { background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18)); }
   [data-theme="dark"] .toggle-indicator {
     background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
   }
