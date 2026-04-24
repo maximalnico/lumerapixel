@@ -79,10 +79,17 @@ const canonicalURL = canonical ?? Astro.url.href;
 
     /* ── FONTS ── */
     @font-face {
-      font-family: 'GeneralSans';
-      src: url('/fonts/GeneralSans-Variable.woff2') format('woff2');
+      font-family: 'Switzer';
+      src: url('/fonts/Switzer-Variable.woff2') format('woff2');
       font-weight: 100 900;
       font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Switzer';
+      src: url('/fonts/Switzer-VariableItalic.woff2') format('woff2');
+      font-weight: 100 900;
+      font-style: italic;
       font-display: swap;
     }
 
@@ -159,7 +166,7 @@ const canonicalURL = canonical ?? Astro.url.href;
       background-position: center center;
       background-repeat: no-repeat;
       color: var(--text);
-      font-family: 'GeneralSans', Arial, sans-serif;
+      font-family: 'Switzer', Arial, sans-serif;
       font-size: clamp(0.9rem, 1.3vw, 1.05rem);
       line-height: 1.6;
       overflow-x: hidden;
@@ -213,9 +220,9 @@ const canonicalURL = canonical ?? Astro.url.href;
     }
 
     /* ── TYPOGRAPHY ── */
-    .font-display { font-family: 'GeneralSans', sans-serif; font-weight: 700; letter-spacing: -0.02em; }
+    .font-display { font-family: 'Switzer', sans-serif; font-weight: 700; letter-spacing: -0.02em; }
     .t-micro {
-      font-family: 'GeneralSans', sans-serif; font-weight: 600;
+      font-family: 'Switzer', sans-serif; font-weight: 600;
       font-size: clamp(0.65rem, 1vw, 0.8rem);
       text-transform: uppercase;
       letter-spacing: 0.08em;
