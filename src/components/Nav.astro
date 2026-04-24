@@ -19,7 +19,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
       </a>
       <div class="lp-nav__top-actions">
         <button class="lp-nav__settings-btn" id="settingsToggle" aria-label="Settings">
-          <img src="/logos/hiddensettings.svg" class="lp-nav__settings-icon" alt="" />
+          <img src="/logos/phosphoricons/gear-six-thin.svg" class="lp-nav__settings-icon" alt="" />
         </button>
         <button class="lp-nav__burger" id="navBurger" aria-label="Menü öffnen" aria-expanded="false">
           <span></span><span></span><span></span>
@@ -33,7 +33,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
         <a href={legal} class={`lp-nav__link ${isLegalActive ? 'is-active' : ''}`}>{t(lang, 'nav.legal')}</a>
         <a href={privacy} class={`lp-nav__link ${isPrivacyActive ? 'is-active' : ''}`}>{t(lang, 'nav.privacy')}</a>
         <button class="lp-nav__settings-btn lp-nav__settings-btn--desktop" id="settingsToggleDesktop" aria-label="Settings">
-          <img src="/logos/hiddensettings.svg" class="lp-nav__settings-icon" alt="" />
+          <img src="/logos/phosphoricons/gear-six-thin.svg" class="lp-nav__settings-icon" alt="" />
         </button>
       </div>
     </div>
@@ -41,14 +41,14 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   <div class="lp-nav__controls" id="navControls">
     <div class="lp-nav__pill" id="themeToggle" role="group" aria-label="Theme wählen">
       <div class="toggle-indicator" id="toggleIndicator"></div>
-      <button class="toggle-btn" id="btn-dark" data-mode="dark" aria-label="Dark"><img src="/logos/darkmode.svg" class="toggle-icon" alt="" /></button>
-      <button class="toggle-btn" id="btn-auto" data-mode="auto" aria-label="Auto"><img src="/logos/autosetting.svg" class="toggle-icon" alt="" /></button>
-      <button class="toggle-btn" id="btn-light" data-mode="light" aria-label="Light"><img src="/logos/lightmode.svg" class="toggle-icon" alt="" /></button>
+      <button class="toggle-btn" id="btn-dark" data-mode="dark" aria-label="Dark"><img src="/logos/phosphoricons/moon-thin.svg" class="toggle-icon" alt="" /></button>
+      <button class="toggle-btn" id="btn-auto" data-mode="auto" aria-label="Auto"><img src="/logos/phosphoricons/sun-horizon-thin.svg" class="toggle-icon" alt="" /></button>
+      <button class="toggle-btn" id="btn-light" data-mode="light" aria-label="Light"><img src="/logos/phosphoricons/sun-thin.svg" class="toggle-icon" alt="" /></button>
     </div>
     <div class="lp-nav__pill" id="langToggle" role="group" aria-label="Language">
       <div class="toggle-indicator" id="langIndicator"></div>
       <a href="/" class="toggle-btn" id="btn-lang-de" data-lang="de" aria-label="Deutsch"><span class="toggle-label">DE</span></a>
-      <button class="toggle-btn" id="btn-lang-auto" data-lang="auto" aria-label="Auto"><img src="/logos/translate.svg" class="toggle-icon" alt="" /></button>
+      <button class="toggle-btn" id="btn-lang-auto" data-lang="auto" aria-label="Auto"><img src="/logos/phosphoricons/translate-thin.svg" class="toggle-icon" alt="" /></button>
       <a href="/en/" class="toggle-btn" id="btn-lang-en" data-lang="en" aria-label="English"><span class="toggle-label">EN</span></a>
     </div>
   </div>
@@ -248,7 +248,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   .toggle-label {
     font-family: 'GeneralSans', sans-serif;
     font-weight: 420;
-    font-size: 0.68rem;
+    font-size: 0.85rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--text);
