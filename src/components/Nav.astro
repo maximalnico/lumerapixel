@@ -342,9 +342,14 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   [data-theme="dark"] .lp-nav__link { color: rgba(255,255,255,0.9); }
   [data-theme="light"] .lp-nav__link:hover,
   [data-theme="dark"] .lp-nav__link:hover { background: rgba(128,128,128,0.10); }
-  [data-theme="light"] .lp-nav__link.is-active,
-  [data-theme="dark"] .lp-nav__link.is-active {
+  [data-theme="light"] .lp-nav__link.is-active {
     background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
+  }
+  [data-theme="dark"] .lp-nav__link.is-active {
+    background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
+  }
+  [data-theme="dark"] .toggle-indicator {
+    background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
   }
   [data-theme="light"] .lp-nav__links { border-color: rgba(200,210,220,0.6); }
   @media (max-width: 640px) {
