@@ -229,7 +229,9 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     box-sizing: border-box;
     min-width: 2.4rem;
     min-height: 2rem;
+    transition: background var(--quick);
   }
+  .toggle-btn:hover { background: rgba(128,128,128,0.14); }
   a.toggle-btn { text-decoration: none; }
   .toggle-icon {
     width: 100%;
@@ -238,29 +240,31 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     max-height: none !important;
     display: block;
     object-fit: contain;
-    opacity: 0.55;
+    opacity: 0.5;
     filter: invert(1);
-    transition: opacity 0.2s;
+    transition: opacity var(--quick), transform var(--quick);
     pointer-events: none;
     flex-shrink: 0;
   }
-  .toggle-btn.is-active .toggle-icon { opacity: 1; }
+  .toggle-btn:hover .toggle-icon { opacity: 0.9; transform: scale(1.1); }
+  .toggle-btn.is-active .toggle-icon { opacity: 1; transform: none; }
   .toggle-label {
     font-family: 'GeneralSans', sans-serif;
-    font-weight: 420;
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
+    font-weight: 500;
+    font-size: 1.3rem;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--text);
-    opacity: 0.55;
+    opacity: 0.5;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     pointer-events: none;
-    transition: opacity 0.2s;
+    transition: opacity var(--quick);
     filter: invert(1);
   }
+  .toggle-btn:hover .toggle-label { opacity: 0.9; }
   .toggle-btn.is-active .toggle-label { opacity: 1; }
   .lp-nav__burger {
     display: none;
