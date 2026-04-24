@@ -1,87 +1,425 @@
 <svg viewBox="0 0 2800 1800" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Dark Background -->
-    <linearGradient id="darkBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0a0a0a;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#0f1419;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#060708;stop-opacity:1" />
+    <linearGradient id="rh1" gradientUnits="userSpaceOnUse" x1="-200.00" y1="300.00" x2="1000.00" y2="300.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
     </linearGradient>
-
-    <!-- Soft blur filter for particles -->
-    <filter id="particleBlur">
-      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-
-    <!-- Organic shape filter -->
-    <filter id="softGlow">
-      <feGaussianBlur stdDeviation="20" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
+    <linearGradient id="rh2" gradientUnits="userSpaceOnUse" x1="1700.00" y1="1500.00" x2="3100.00" y2="1500.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh3" gradientUnits="userSpaceOnUse" x1="900.00" y1="900.00" x2="1900.00" y2="900.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh4" gradientUnits="userSpaceOnUse" x1="2400.00" y1="300.00" x2="3200.00" y2="300.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh5" gradientUnits="userSpaceOnUse" x1="-400.00" y1="1500.00" x2="600.00" y2="1500.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh6" gradientUnits="userSpaceOnUse" x1="-600.00" y1="900.00" x2="1000.00" y2="900.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh7" gradientUnits="userSpaceOnUse" x1="1900.00" y1="900.00" x2="3300.00" y2="900.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh8" gradientUnits="userSpaceOnUse" x1="400.00" y1="300.00" x2="2400.00" y2="300.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh9" gradientUnits="userSpaceOnUse" x1="0.00" y1="600.00" x2="2800.00" y2="600.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh10" gradientUnits="userSpaceOnUse" x1="0.00" y1="1000.00" x2="2800.00" y2="1000.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh11" gradientUnits="userSpaceOnUse" x1="0.00" y1="400.00" x2="2800.00" y2="400.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh12" gradientUnits="userSpaceOnUse" x1="288.00" y1="200.00" x2="312.00" y2="200.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh13" gradientUnits="userSpaceOnUse" x1="790.00" y1="400.00" x2="810.00" y2="400.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh14" gradientUnits="userSpaceOnUse" x1="1586.00" y1="300.00" x2="1614.00" y2="300.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh15" gradientUnits="userSpaceOnUse" x1="2191.00" y1="600.00" x2="2209.00" y2="600.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh16" gradientUnits="userSpaceOnUse" x1="2589.00" y1="400.00" x2="2611.00" y2="400.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh17" gradientUnits="userSpaceOnUse" x1="494.00" y1="700.00" x2="506.00" y2="700.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh18" gradientUnits="userSpaceOnUse" x1="1193.00" y1="1200.00" x2="1207.00" y2="1200.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh19" gradientUnits="userSpaceOnUse" x1="1895.00" y1="900.00" x2="1905.00" y2="900.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh20" gradientUnits="userSpaceOnUse" x1="2392.00" y1="1300.00" x2="2408.00" y2="1300.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh21" gradientUnits="userSpaceOnUse" x1="594.00" y1="1400.00" x2="606.00" y2="1400.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh22" gradientUnits="userSpaceOnUse" x1="2093.00" y1="1600.00" x2="2107.00" y2="1600.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh23" gradientUnits="userSpaceOnUse" x1="397.00" y1="500.00" x2="403.00" y2="500.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh24" gradientUnits="userSpaceOnUse" x1="897.50" y1="800.00" x2="902.50" y2="800.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh25" gradientUnits="userSpaceOnUse" x1="1397.00" y1="600.00" x2="1403.00" y2="600.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh26" gradientUnits="userSpaceOnUse" x1="1897.50" y1="1100.00" x2="1902.50" y2="1100.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh27" gradientUnits="userSpaceOnUse" x1="2297.00" y1="800.00" x2="2303.00" y2="800.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh28" gradientUnits="userSpaceOnUse" x1="697.50" y1="1100.00" x2="702.50" y2="1100.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh29" gradientUnits="userSpaceOnUse" x1="2497.00" y1="1500.00" x2="2503.00" y2="1500.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh30" gradientUnits="userSpaceOnUse" x1="1097.50" y1="1500.00" x2="1102.50" y2="1500.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh31" gradientUnits="userSpaceOnUse" x1="0.00" y1="450.00" x2="2800.00" y2="450.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh32" gradientUnits="userSpaceOnUse" x1="0.00" y1="900.00" x2="2800.00" y2="900.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh33" gradientUnits="userSpaceOnUse" x1="0.00" y1="1350.00" x2="2800.00" y2="1350.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh34" gradientUnits="userSpaceOnUse" x1="700.00" y1="0.00" x2="700.00" y2="1800.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh35" gradientUnits="userSpaceOnUse" x1="1400.00" y1="0.00" x2="1400.00" y2="1800.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <linearGradient id="rh36" gradientUnits="userSpaceOnUse" x1="2100.00" y1="0.00" x2="2100.00" y2="1800.00">
+      <stop offset="0%"    stop-color="#ff0040"/>
+      <stop offset="14.3%" stop-color="#ff6600"/>
+      <stop offset="28.6%" stop-color="#ffcc00"/>
+      <stop offset="42.9%" stop-color="#00e85a"/>
+      <stop offset="57.1%" stop-color="#00aaff"/>
+      <stop offset="71.4%" stop-color="#7700ff"/>
+      <stop offset="85.7%" stop-color="#ff00aa"/>
+      <stop offset="100%"  stop-color="#ff0040"/>
+    </linearGradient>
+    <filter id="particleBlur"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="softGlow"><feGaussianBlur stdDeviation="20" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   </defs>
 
-  <g opacity="0.7">
+  <g opacity="1.00">
     <!-- Background -->
-    <rect width="2800" height="1800" fill="url(#darkBg)"/>
+    <rect width="2800" height="1800" fill="#060708"/>
 
     <!-- Organic flowing background shapes -->
-    <ellipse cx="400" cy="300" rx="600" ry="800" fill="#66ff00" opacity="0.08" filter="url(#softGlow)"/>
-    <ellipse cx="2400" cy="1500" rx="700" ry="900" fill="#66ff00" opacity="0.06" filter="url(#softGlow)"/>
-    <ellipse cx="1400" cy="900" rx="500" ry="700" fill="#66ff00" opacity="0.05" filter="url(#softGlow)"/>
-    <ellipse cx="2800" cy="300" rx="400" ry="600" fill="#66ff00" opacity="0.07" filter="url(#softGlow)"/>
-    <ellipse cx="100" cy="1500" rx="500" ry="800" fill="#66ff00" opacity="0.06" filter="url(#softGlow)"/>
+    <ellipse cx="400" cy="300" rx="600" ry="800" fill="url(#rh1)" opacity="0.180" filter="url(#softGlow)"/>
+    <ellipse cx="2400" cy="1500" rx="700" ry="900" fill="url(#rh2)" opacity="0.135" filter="url(#softGlow)"/>
+    <ellipse cx="1400" cy="900" rx="500" ry="700" fill="url(#rh3)" opacity="0.115" filter="url(#softGlow)"/>
+    <ellipse cx="2800" cy="300" rx="400" ry="600" fill="url(#rh4)" opacity="0.160" filter="url(#softGlow)"/>
+    <ellipse cx="100" cy="1500" rx="500" ry="800" fill="url(#rh5)" opacity="0.135" filter="url(#softGlow)"/>
 
     <!-- Subtle curved waves -->
     <path d="M 0,900 Q 700,600 1400,800 T 2800,900" 
-          stroke="#66ff00" stroke-width="3" fill="none" opacity="0.15" filter="url(#particleBlur)"/>
+          stroke="url(#rh9)" stroke-width="3" fill="none" opacity="0.335" filter="url(#particleBlur)"/>
     <path d="M 0,1200 Q 800,1000 1400,1100 T 2800,1200" 
-          stroke="#66ff00" stroke-width="2" fill="none" opacity="0.1" filter="url(#particleBlur)"/>
+          stroke="url(#rh10)" stroke-width="2" fill="none" opacity="0.225" filter="url(#particleBlur)"/>
     <path d="M 0,600 Q 900,400 1400,500 T 2800,600" 
-          stroke="#66ff00" stroke-width="2" fill="none" opacity="0.08" filter="url(#particleBlur)"/>
+          stroke="url(#rh11)" stroke-width="2" fill="none" opacity="0.180" filter="url(#particleBlur)"/>
 
     <!-- Floating particles - large -->
-    <circle cx="300" cy="200" r="12" fill="#66ff00" opacity="0.15" filter="url(#particleBlur)"/>
-    <circle cx="800" cy="400" r="10" fill="#66ff00" opacity="0.12" filter="url(#particleBlur)"/>
-    <circle cx="1600" cy="300" r="14" fill="#66ff00" opacity="0.14" filter="url(#particleBlur)"/>
-    <circle cx="2200" cy="600" r="9" fill="#66ff00" opacity="0.11" filter="url(#particleBlur)"/>
-    <circle cx="2600" cy="400" r="11" fill="#66ff00" opacity="0.13" filter="url(#particleBlur)"/>
+    <circle cx="300" cy="200" r="12" fill="url(#rh12)" opacity="0.335" filter="url(#particleBlur)"/>
+    <circle cx="800" cy="400" r="10" fill="url(#rh13)" opacity="0.270" filter="url(#particleBlur)"/>
+    <circle cx="1600" cy="300" r="14" fill="url(#rh14)" opacity="0.315" filter="url(#particleBlur)"/>
+    <circle cx="2200" cy="600" r="9" fill="url(#rh15)" opacity="0.245" filter="url(#particleBlur)"/>
+    <circle cx="2600" cy="400" r="11" fill="url(#rh16)" opacity="0.290" filter="url(#particleBlur)"/>
 
     <!-- Floating particles - medium -->
-    <circle cx="500" cy="700" r="6" fill="#66ff00" opacity="0.14" filter="url(#particleBlur)"/>
-    <circle cx="1200" cy="1200" r="7" fill="#66ff00" opacity="0.12" filter="url(#particleBlur)"/>
-    <circle cx="1900" cy="900" r="5" fill="#66ff00" opacity="0.13" filter="url(#particleBlur)"/>
-    <circle cx="2400" cy="1300" r="8" fill="#66ff00" opacity="0.11" filter="url(#particleBlur)"/>
-    <circle cx="600" cy="1400" r="6" fill="#66ff00" opacity="0.12" filter="url(#particleBlur)"/>
-    <circle cx="2100" cy="1600" r="7" fill="#66ff00" opacity="0.14" filter="url(#particleBlur)"/>
+    <circle cx="500" cy="700" r="6" fill="url(#rh17)" opacity="0.315" filter="url(#particleBlur)"/>
+    <circle cx="1200" cy="1200" r="7" fill="url(#rh18)" opacity="0.270" filter="url(#particleBlur)"/>
+    <circle cx="1900" cy="900" r="5" fill="url(#rh19)" opacity="0.290" filter="url(#particleBlur)"/>
+    <circle cx="2400" cy="1300" r="8" fill="url(#rh20)" opacity="0.245" filter="url(#particleBlur)"/>
+    <circle cx="600" cy="1400" r="6" fill="url(#rh21)" opacity="0.270" filter="url(#particleBlur)"/>
+    <circle cx="2100" cy="1600" r="7" fill="url(#rh22)" opacity="0.315" filter="url(#particleBlur)"/>
 
     <!-- Floating particles - small -->
-    <circle cx="400" cy="500" r="3" fill="#66ff00" opacity="0.18" filter="url(#particleBlur)"/>
-    <circle cx="900" cy="800" r="2.5" fill="#66ff00" opacity="0.16" filter="url(#particleBlur)"/>
-    <circle cx="1400" cy="600" r="3" fill="#66ff00" opacity="0.17" filter="url(#particleBlur)"/>
-    <circle cx="1900" cy="1100" r="2.5" fill="#66ff00" opacity="0.15" filter="url(#particleBlur)"/>
-    <circle cx="2300" cy="800" r="3" fill="#66ff00" opacity="0.16" filter="url(#particleBlur)"/>
-    <circle cx="700" cy="1100" r="2.5" fill="#66ff00" opacity="0.17" filter="url(#particleBlur)"/>
-    <circle cx="2500" cy="1500" r="3" fill="#66ff00" opacity="0.15" filter="url(#particleBlur)"/>
-    <circle cx="1100" cy="1500" r="2.5" fill="#66ff00" opacity="0.16" filter="url(#particleBlur)"/>
+    <circle cx="400" cy="500" r="3" fill="url(#rh23)" opacity="0.405" filter="url(#particleBlur)"/>
+    <circle cx="900" cy="800" r="2.5" fill="url(#rh24)" opacity="0.360" filter="url(#particleBlur)"/>
+    <circle cx="1400" cy="600" r="3" fill="url(#rh25)" opacity="0.385" filter="url(#particleBlur)"/>
+    <circle cx="1900" cy="1100" r="2.5" fill="url(#rh26)" opacity="0.335" filter="url(#particleBlur)"/>
+    <circle cx="2300" cy="800" r="3" fill="url(#rh27)" opacity="0.360" filter="url(#particleBlur)"/>
+    <circle cx="700" cy="1100" r="2.5" fill="url(#rh28)" opacity="0.385" filter="url(#particleBlur)"/>
+    <circle cx="2500" cy="1500" r="3" fill="url(#rh29)" opacity="0.335" filter="url(#particleBlur)"/>
+    <circle cx="1100" cy="1500" r="2.5" fill="url(#rh30)" opacity="0.360" filter="url(#particleBlur)"/>
 
     <!-- Very subtle mesh of lines (PS3 vibe) -->
-    <line x1="0" y1="450" x2="2800" y2="450" stroke="#66ff00" stroke-width="1" opacity="0.05"/>
-    <line x1="0" y1="900" x2="2800" y2="900" stroke="#66ff00" stroke-width="1" opacity="0.04"/>
-    <line x1="0" y1="1350" x2="2800" y2="1350" stroke="#66ff00" stroke-width="1" opacity="0.05"/>
+    <line x1="0" y1="450" x2="2800" y2="450" stroke="url(#rh31)" stroke-width="1" opacity="0.115"/>
+    <line x1="0" y1="900" x2="2800" y2="900" stroke="url(#rh32)" stroke-width="1" opacity="0.090"/>
+    <line x1="0" y1="1350" x2="2800" y2="1350" stroke="url(#rh33)" stroke-width="1" opacity="0.115"/>
     
-    <line x1="700" y1="0" x2="700" y2="1800" stroke="#66ff00" stroke-width="0.5" opacity="0.04"/>
-    <line x1="1400" y1="0" x2="1400" y2="1800" stroke="#66ff00" stroke-width="0.5" opacity="0.04"/>
-    <line x1="2100" y1="0" x2="2100" y2="1800" stroke="#66ff00" stroke-width="0.5" opacity="0.04"/>
+    <line x1="700" y1="0" x2="700" y2="1800" stroke="url(#rh34)" stroke-width="0.5" opacity="0.090"/>
+    <line x1="1400" y1="0" x2="1400" y2="1800" stroke="url(#rh35)" stroke-width="0.5" opacity="0.090"/>
+    <line x1="2100" y1="0" x2="2100" y2="1800" stroke="url(#rh36)" stroke-width="0.5" opacity="0.090"/>
 
     <!-- Subtle organic depth shapes -->
-    <ellipse cx="200" cy="900" rx="800" ry="400" fill="none" stroke="#66ff00" stroke-width="1" opacity="0.08"/>
-    <ellipse cx="2600" cy="900" rx="700" ry="450" fill="none" stroke="#66ff00" stroke-width="1" opacity="0.07"/>
-    <ellipse cx="1400" cy="300" rx="1000" ry="300" fill="none" stroke="#66ff00" stroke-width="1" opacity="0.06"/>
+    <ellipse cx="200" cy="900" rx="800" ry="400" fill="url(#rh6)" stroke="url(#rh6)" stroke-width="1" opacity="0.180"/>
+    <ellipse cx="2600" cy="900" rx="700" ry="450" fill="url(#rh7)" stroke="url(#rh7)" stroke-width="1" opacity="0.160"/>
+    <ellipse cx="1400" cy="300" rx="1000" ry="300" fill="url(#rh8)" stroke="url(#rh8)" stroke-width="1" opacity="0.135"/>
   </g>
 </svg>
