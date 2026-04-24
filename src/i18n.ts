@@ -24,7 +24,7 @@ export const ui = {
     'session.back': 'Zurück',
     // Footer
     'footer.tagline': 'LumeraPixel – by MaximalNico',
-    'footer.copy': '© 2024 – 2026 Nico Thomas Henkel • Alle Rechte vorbehalten.',
+    'footer.copy': '© 2025-2026 · MultaEnhavo · Nico Thomas Henkel',
     // 404
     '404.title': 'Seite nicht gefunden',
     '404.text': 'Die gesuchte Seite existiert nicht oder wurde verschoben.',
@@ -57,7 +57,7 @@ export const ui = {
     'session.back': 'Back',
     // Footer
     'footer.tagline': 'LumeraPixel – by MaximalNico',
-    'footer.copy': '© 2024 – 2026 Nico Thomas Henkel • All rights reserved.',
+    'footer.copy': '© 2025-2026 · MultaEnhavo · Nico Thomas Henkel',
     // 404
     '404.title': 'Page not found',
     '404.text': 'The page you are looking for does not exist or has been moved.',

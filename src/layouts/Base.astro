@@ -62,8 +62,8 @@ const canonicalURL = canonical ?? Astro.url.href;
   {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
 
   <!-- Favicon -->
-  <link rel="icon" id="favicon" href="/logos/lplogo-dark.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="/logos/lplogo-dark.svg" />
+  <link rel="icon" id="favicon" href="/logos/lplogo-rainbow.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/logos/lplogo-rainbow.svg" />
 
   <!-- Theme init: vor render setzen um FOUC zu verhindern -->
   <script is:inline>
@@ -72,8 +72,6 @@ const canonicalURL = canonical ?? Astro.url.href;
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const theme = mode === 'auto' ? (prefersDark ? 'dark' : 'light') : mode;
       document.documentElement.setAttribute('data-theme', theme);
-      const favicon = document.getElementById('favicon');
-      if (favicon) favicon.href = theme === 'light' ? '/logos/lplogo-light.svg' : '/logos/lplogo-dark.svg';
     })();
   </script>
 
@@ -278,18 +276,13 @@ const canonicalURL = canonical ?? Astro.url.href;
       const next = current === 'dark' ? 'light' : 'dark';
       html.setAttribute('data-theme', next);
       localStorage.setItem('lp-theme', next);
-      const fav = document.getElementById('favicon') as HTMLLinkElement;
-      if (fav) fav.href = next === 'light' ? '/logos/lplogo-light.svg' : '/logos/lplogo-dark.svg';
       // Icon updaten
       document.querySelectorAll('.theme-toggle__icon').forEach(el => {
         (el as HTMLElement).textContent = next === 'dark' ? '☀️' : '🌙';
       });
     };
 
-    window.__updateFavicon = function(theme: string) {
-      const fav = document.getElementById('favicon') as HTMLLinkElement;
-      if (fav) fav.href = theme === 'light' ? '/logos/lplogo-light.svg' : '/logos/lplogo-dark.svg';
-    };
+    window.__updateFavicon = function(_theme: string) {};
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
       if (!localStorage.getItem('lp-theme')) {
         const theme = e.matches ? 'dark' : 'light';

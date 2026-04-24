@@ -5,9 +5,7 @@ const lang = getLangFromUrl(Astro.url);
 <footer class="lp-footer">
   <div class="lp-footer__line"></div>
   <div class="lp-footer__inner">
-    <img src="/logos/lplong-dark.svg" alt="LumeraPixel" class="lp-footer__logo logo-dark" />
-    <img src="/logos/lplong-light.svg" alt="LumeraPixel" class="lp-footer__logo logo-light" />
-    <p class="lp-footer__tagline">{t(lang, 'footer.tagline')}</p>
+    <img src="/logos/lplong-rainbow.svg" alt="LumeraPixel" class="lp-footer__logo" />
     <p class="lp-footer__copy">{t(lang, 'footer.copy')}</p>
   </div>
 </footer>
@@ -33,24 +31,11 @@ const lang = getLangFromUrl(Astro.url);
     width: auto;
     margin-bottom: 0.1rem;
   }
-  .lp-footer__tagline {
+  .lp-footer__copy {
     font-family: 'GeneralSans', sans-serif;
     font-weight: 277;
     font-size: clamp(0.88rem, 1.3vw, 1.05rem);
     color: var(--text);
     letter-spacing: 0.06em;
   }
-  .lp-footer__copy {
-    font-family: 'GeneralSans', sans-serif;
-    font-weight: 277;
-    font-size: clamp(0.82rem, 1.1vw, 0.95rem);
-    color: var(--text-muted);
-    letter-spacing: 0.03em;
-  }
-</style>
-
-<style is:global>
-  .logo-light { display: none; }
-  [data-theme="light"] .logo-dark { display: none; }
-  [data-theme="light"] .logo-light { display: block; }
 </style>
