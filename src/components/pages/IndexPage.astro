@@ -484,10 +484,13 @@ const schema = {
     .featured-card__body {
       padding: 0.55rem 0.8rem 0.65rem;
       border-top: 1px solid var(--border);
+      align-items: center;
+      text-align: center;
     }
     .featured-card__cat {
       font-size: 0.7rem !important;
       font-weight: 277 !important;
+      align-self: center !important;
       background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18)) !important;
       -webkit-background-clip: initial !important;
       background-clip: initial !important;
@@ -497,10 +500,7 @@ const schema = {
       font-size: 1rem !important;
       letter-spacing: normal !important;
       font-weight: 420 !important;
-      background: var(--rainbow) !important;
-      -webkit-background-clip: text !important;
-      background-clip: text !important;
-      -webkit-text-fill-color: transparent !important;
+      color: var(--text) !important;
     }
     .featured-card__date { display: none; }
     .featured-card__arrow { display: none !important; }
@@ -795,6 +795,20 @@ const schema = {
 
 
   :global([data-theme="light"]) .featured-card__title { color: rgba(10,10,15,0.9); }
+
+  @media (max-width: 700px) {
+    .filter-bar {
+      justify-content: center;
+    }
+    .filter-btn {
+      font-size: 0.7rem;
+      padding: 0.35rem 0.85rem;
+      letter-spacing: 0.12em;
+    }
+    .session-card__body {
+      text-align: center;
+    }
+  }
 
 </style>
 

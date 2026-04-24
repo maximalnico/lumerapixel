@@ -257,7 +257,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   }
   .lp-nav__burger span {
     display: block; width: 20px; height: 2px;
-    background: var(--accent);
+    background: linear-gradient(to right, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff);
     border-radius: 1px;
     transition: transform var(--flow), opacity var(--quick);
   }
@@ -357,10 +357,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   [data-theme="dark"] .lp-nav__pill { background: rgba(255,255,255,0.06); }
   [data-theme="dark"] .toggle-btn { color: rgba(255,255,255,0.6); }
   [data-theme="light"] .toggle-btn { color: rgba(10,10,15,0.6); }
-  [data-theme="light"] .lp-nav__burger span { background: rgba(10,10,15,0.55); }
   [data-theme="light"] .lp-nav__settings-icon { filter: invert(0); }
   [data-theme="light"] .toggle-icon { filter: invert(0); }
-  [data-theme="dark"] .lp-nav__burger span { background: rgba(255,255,255,0.55); }
 </style>
 
 <script>
