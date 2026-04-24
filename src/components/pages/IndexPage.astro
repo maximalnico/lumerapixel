@@ -513,7 +513,10 @@ const schema = {
     border-radius: 7px;
     overflow: hidden;
     position: relative;
-    background: var(--bg-card);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    box-shadow: var(--glass-shadow);
     transition: transform var(--flow);
     text-decoration: none;
   }
@@ -712,6 +715,9 @@ const schema = {
     padding: 0.55rem 0.8rem 0.65rem;
     border-top: 2.7px solid var(--border);
     border-radius: 7px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
   }
   .session-card__title {
     font-family: 'Switzer', sans-serif;
@@ -767,11 +773,7 @@ const schema = {
     background: rgba(255,255,255,0.27);
     border-color: rgba(255,255,255,0.37);
   }
-  :global([data-theme="light"]) .featured-card {
-    background: rgba(255,255,255,0.27);
-  }
   :global([data-theme="light"]) .session-card__body {
-    background: rgba(255,255,255,0.27);
     border-color: rgba(255,255,255,0.37);
   }
   :global([data-theme="light"]) .filter-btn {
