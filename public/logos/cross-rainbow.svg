@@ -1,15 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-<svg  width="800px" height="800px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
-<defs>
-  <linearGradient id="rainbow" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1920" y2="0">
-    <stop offset="0%"    stop-color="#ff0040"/>
-    <stop offset="16.6%" stop-color="#ff8000"/>
-    <stop offset="33.3%" stop-color="#ffcc00"/>
-    <stop offset="50%"   stop-color="#00e85a"/>
-    <stop offset="66.6%" stop-color="#0090ff"/>
-    <stop offset="83.3%" stop-color="#8c3fff"/>
-    <stop offset="100%"  stop-color="#ff2eaa"/>
-  </linearGradient>
-</defs>
-    <path fill="url(#rainbow)" d="M1827.701 0 960.065 867.636 92.3 0 0 92.168l867.636 867.767L0 1827.57 92.299 1920l867.766-867.766L1827.701 1920l92.168-92.43-867.635-867.635 867.635-867.767z" fill-rule="evenodd"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><defs><linearGradient id="rg" x1="0" y1="128" x2="256" y2="128" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#ff0040"/><stop offset="16.6%" stop-color="#ff8000"/><stop offset="33.3%" stop-color="#ffcc00"/><stop offset="50%" stop-color="#00e85a"/><stop offset="66.6%" stop-color="#0090ff"/><stop offset="83.3%" stop-color="#8c3fff"/><stop offset="100%" stop-color="#ff2eaa"/></linearGradient></defs><line x1="200" y1="56" x2="56" y2="200" stroke="url(#rg)" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="200" y1="200" x2="56" y2="56" stroke="url(#rg)" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
