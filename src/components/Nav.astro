@@ -253,7 +253,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     font-size: 1.3rem;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: var(--text);
+    color: #ffffff;
     opacity: 0.5;
     display: flex;
     align-items: center;
@@ -261,7 +261,6 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     width: 100%;
     pointer-events: none;
     transition: opacity var(--quick);
-    filter: invert(1);
   }
   .toggle-btn.is-active .toggle-label { opacity: 1; }
   .lp-nav__burger {
@@ -378,7 +377,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   [data-theme="light"] .toggle-btn { color: rgba(10,10,15,0.6); }
   [data-theme="light"] .lp-nav__settings-icon { filter: invert(0); }
   [data-theme="light"] .toggle-icon { filter: invert(0); }
-  [data-theme="light"] .toggle-label { filter: invert(0); }
+  [data-theme="light"] .toggle-label { color: #0a0a0f; }
 </style>
 
 <script>
