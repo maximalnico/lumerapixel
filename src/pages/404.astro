@@ -127,13 +127,29 @@ import Footer from '../components/Footer.astro';
     padding: 0.6rem 1.4rem;
     border: 1.5px solid var(--border-mid);
     border-radius: 10px;
+    position: relative;
     transition: background var(--quick), border-color var(--quick);
     text-decoration: none;
   }
+  .not-found__btn::before {
+    content: '';
+    position: absolute;
+    inset: -1.5px;
+    border-radius: 11px;
+    padding: 1.5px;
+    background: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--quick);
+  }
   .not-found__btn:hover {
     background: linear-gradient(277deg, rgba(255,0,0,0.14), rgba(255,119,0,0.14), rgba(255,238,0,0.14), rgba(0,204,0,0.14), rgba(0,136,255,0.14), rgba(136,0,255,0.14));
-    border-image: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff) 1;
+    border-color: transparent;
   }
+  .not-found__btn:hover::before { opacity: 1; }
 
   .not-found__btn-icon {
     width: 1rem;
