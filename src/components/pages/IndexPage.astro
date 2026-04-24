@@ -566,6 +566,7 @@ const schema = {
     text-transform: uppercase;
     letter-spacing: 0.12em;
     display: inline-block;
+    align-self: flex-start;
     padding: 0.15rem 0.6rem;
     border-radius: 999px;
     border: 1px solid var(--text-muted);
@@ -585,10 +586,7 @@ const schema = {
     font-weight: 277;
     font-size: 1.00rem;
     letter-spacing: 0.07em;
-    background: var(--rainbow);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--text-muted);
   }
   .featured-card__arrow {
     position: absolute;
@@ -795,11 +793,6 @@ const schema = {
 
 
   :global([data-theme="light"]) .featured-card__title { color: rgba(10,10,15,0.9); }
-  :global([data-theme="light"]) .featured-card__date { color: rgba(10,10,15,0.6); }
-
-  :global([data-theme="dark"]) .session-card__cat {
-    background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
-  }
 
 </style>
 
