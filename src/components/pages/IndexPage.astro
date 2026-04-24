@@ -307,7 +307,7 @@ const schema = {
       width: 2.7px;
       height: 50%;
       align-self: center;
-      background: var(--rainbow);
+      background: linear-gradient(to bottom, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff);
       opacity: 0.7;
     }
     .hero__stats-num { font-size: clamp(0.9rem, 3.8vw, 1.15rem); }
@@ -396,7 +396,7 @@ const schema = {
   .hero__stats-sep {
     height: 2.7px;
     width: 60%;
-    background: var(--rainbow);
+    background: linear-gradient(to right, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff);
     opacity: 0.7;
     align-self: center;
   }
@@ -542,8 +542,7 @@ const schema = {
 
   .featured-card__img {
     position: relative;
-    aspect-ratio: 16/10;
-    max-height: 50vh;
+    flex: 0 0 62%;
     overflow: hidden;
   }
   .featured-card__img img {
