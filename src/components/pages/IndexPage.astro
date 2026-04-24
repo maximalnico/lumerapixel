@@ -636,9 +636,12 @@ const schema = {
     border: 1.5px solid var(--text-muted);
     color: var(--text);
     cursor: pointer;
+    background: transparent;
+  }
+  .filter-btn.is-active {
+    border-color: var(--text);
     background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
-  .filter-btn.is-active { border-color: var(--text); }
 
   /* Masonry — CSS Columns */
   .masonry-grid {
@@ -784,7 +787,7 @@ const schema = {
     border-color: rgba(10,10,15,0.35);
     color: rgba(10,10,15,0.85);
   }
-  :global([data-theme="dark"]) .filter-btn,
+  :global([data-theme="dark"]) .filter-btn.is-active,
   :global([data-theme="dark"]) .featured-card__cat,
   :global([data-theme="dark"]) .session-card__cat {
     background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
