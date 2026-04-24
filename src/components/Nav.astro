@@ -20,7 +20,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
       </a>
       <div class="lp-nav__top-actions">
         <button class="lp-nav__settings-btn" id="settingsToggle" aria-label="Settings">
-          <img src="/logos/hiddensettings.svg" class="lp-nav__settings-icon" alt="" />
+          <img src="/logos/hiddensettings.svg" class="lp-nav__settings-icon lp-nav__settings-icon--default" alt="" />
+          <img src="/logos/hiddensettings-rainbow.svg" class="lp-nav__settings-icon lp-nav__settings-icon--rainbow" alt="" />
         </button>
         <button class="lp-nav__burger" id="navBurger" aria-label="Menü öffnen" aria-expanded="false">
           <span></span><span></span><span></span>
@@ -34,7 +35,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
         <a href={legal} class={`lp-nav__link ${isLegalActive ? 'is-active' : ''}`}>{t(lang, 'nav.legal')}</a>
         <a href={privacy} class={`lp-nav__link ${isPrivacyActive ? 'is-active' : ''}`}>{t(lang, 'nav.privacy')}</a>
         <button class="lp-nav__settings-btn lp-nav__settings-btn--desktop" id="settingsToggleDesktop" aria-label="Settings">
-          <img src="/logos/hiddensettings.svg" class="lp-nav__settings-icon" alt="" />
+          <img src="/logos/hiddensettings.svg" class="lp-nav__settings-icon lp-nav__settings-icon--default" alt="" />
+          <img src="/logos/hiddensettings-rainbow.svg" class="lp-nav__settings-icon lp-nav__settings-icon--rainbow" alt="" />
         </button>
       </div>
     </div>
@@ -42,15 +44,15 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   <div class="lp-nav__controls" id="navControls">
     <div class="lp-nav__pill" id="themeToggle" role="group" aria-label="Theme wählen">
       <div class="toggle-indicator" id="toggleIndicator"></div>
-      <button class="toggle-btn" id="btn-dark" data-mode="dark" aria-label="Dark"><img src="/logos/darkmode.svg" class="toggle-icon" alt="" /></button>
-      <button class="toggle-btn" id="btn-auto" data-mode="auto" aria-label="Auto"><img src="/logos/autosetting.svg" class="toggle-icon" alt="" /></button>
-      <button class="toggle-btn" id="btn-light" data-mode="light" aria-label="Light"><img src="/logos/lightmode.svg" class="toggle-icon" alt="" /></button>
+      <button class="toggle-btn" id="btn-dark" data-mode="dark" aria-label="Dark"><img src="/logos/darkmode.svg" class="toggle-icon toggle-icon--default" alt="" /><img src="/logos/darkmode-rainbow.svg" class="toggle-icon toggle-icon--rainbow" alt="" /></button>
+      <button class="toggle-btn" id="btn-auto" data-mode="auto" aria-label="Auto"><img src="/logos/autosetting.svg" class="toggle-icon toggle-icon--default" alt="" /><img src="/logos/autosetting-rainbow.svg" class="toggle-icon toggle-icon--rainbow" alt="" /></button>
+      <button class="toggle-btn" id="btn-light" data-mode="light" aria-label="Light"><img src="/logos/lightmode.svg" class="toggle-icon toggle-icon--default" alt="" /><img src="/logos/lightmode-rainbow.svg" class="toggle-icon toggle-icon--rainbow" alt="" /></button>
     </div>
     <div class="lp-nav__pill" id="langToggle" role="group" aria-label="Language">
       <div class="toggle-indicator" id="langIndicator"></div>
-      <a href="/" class="toggle-btn" id="btn-lang-de" data-lang="de" aria-label="Deutsch"><img src="/logos/lang-de.svg" class="toggle-icon" alt="" /></a>
-      <button class="toggle-btn" id="btn-lang-auto" data-lang="auto" aria-label="Auto"><img src="/logos/autosetting.svg" class="toggle-icon" alt="" /></button>
-      <a href="/en/" class="toggle-btn" id="btn-lang-en" data-lang="en" aria-label="English"><img src="/logos/lang-en.svg" class="toggle-icon" alt="" /></a>
+      <a href="/" class="toggle-btn" id="btn-lang-de" data-lang="de" aria-label="Deutsch"><img src="/logos/lang-de.svg" class="toggle-icon toggle-icon--default" alt="" /><img src="/logos/lang-de-rainbow.svg" class="toggle-icon toggle-icon--rainbow" alt="" /></a>
+      <button class="toggle-btn" id="btn-lang-auto" data-lang="auto" aria-label="Auto"><img src="/logos/autosetting.svg" class="toggle-icon toggle-icon--default" alt="" /><img src="/logos/autosetting-rainbow.svg" class="toggle-icon toggle-icon--rainbow" alt="" /></button>
+      <a href="/en/" class="toggle-btn" id="btn-lang-en" data-lang="en" aria-label="English"><img src="/logos/lang-en.svg" class="toggle-icon toggle-icon--default" alt="" /><img src="/logos/lang-en-rainbow.svg" class="toggle-icon toggle-icon--rainbow" alt="" /></a>
     </div>
   </div>
 </nav>
@@ -132,10 +134,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     white-space: nowrap;
   }
   .lp-nav__link:hover {
-    background-image: var(--rainbow), linear-gradient(rgba(128,128,128,0.08), rgba(128,128,128,0.08));
-    -webkit-background-clip: text, padding-box;
-    background-clip: text, padding-box;
-    -webkit-text-fill-color: transparent;
+    background: rgba(128,128,128,0.10);
   }
   .lp-nav__link.is-active {
     background-image: var(--rainbow), linear-gradient(rgba(128,128,128,0.08), rgba(128,128,128,0.08));
@@ -165,16 +164,17 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     width: 27px;
     height: 27px;
     display: block;
-    filter: invert(39%) sepia(97%) saturate(600%) hue-rotate(72deg) brightness(1.1);
-    opacity: 1;
+    filter: invert(1);
+    opacity: 0.8;
     max-width: none !important;
     max-height: none !important;
     object-fit: contain;
-    transition: opacity 0.2s, filter 0.2s, transform 0.3s ease;
+    transition: transform 0.3s ease;
   }
-  .lp-nav__settings-btn.is-active .lp-nav__settings-icon {
-    transform: rotate(90deg);
-  }
+  .lp-nav__settings-icon--rainbow { display: none; filter: none; opacity: 1; }
+  .lp-nav__settings-btn.is-active .lp-nav__settings-icon { transform: rotate(90deg); }
+  .lp-nav__settings-btn.is-active .lp-nav__settings-icon--default { display: none; }
+  .lp-nav__settings-btn.is-active .lp-nav__settings-icon--rainbow { display: block; }
   .lp-nav__controls {
     display: flex;
     flex-direction: column;
@@ -248,12 +248,15 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     max-height: none !important;
     display: block;
     object-fit: contain;
-    opacity: 0.5;
+    opacity: 0.45;
     filter: invert(1);
-    transition: opacity 0.2s, filter 0.2s;
+    transition: opacity 0.2s;
     pointer-events: none;
     flex-shrink: 0;
   }
+  .toggle-icon--rainbow { display: none; filter: none; opacity: 1; }
+  .toggle-btn.is-active .toggle-icon--default { display: none; }
+  .toggle-btn.is-active .toggle-icon--rainbow { display: block; }
   .lp-nav__burger {
     display: none;
     flex-direction: column;
@@ -349,7 +352,9 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   [data-theme="light"] .lp-nav__link { color: rgba(10,10,15,0.8); }
   [data-theme="dark"] .lp-nav__link { color: rgba(255,255,255,0.9); }
   [data-theme="light"] .lp-nav__link:hover,
-  [data-theme="dark"] .lp-nav__link:hover,
+  [data-theme="dark"] .lp-nav__link:hover {
+    background: rgba(128,128,128,0.10);
+  }
   [data-theme="light"] .lp-nav__link.is-active,
   [data-theme="dark"] .lp-nav__link.is-active {
     background-image: var(--rainbow), linear-gradient(rgba(128,128,128,0.08), rgba(128,128,128,0.08));
@@ -368,7 +373,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   [data-theme="dark"] .toggle-btn { color: rgba(255,255,255,0.6); }
   [data-theme="light"] .toggle-btn { color: rgba(10,10,15,0.6); }
   [data-theme="light"] .lp-nav__burger span { background: rgba(10,10,15,0.55); }
-  [data-theme="light"] .lp-nav__settings-icon { filter: invert(0); }
+  [data-theme="light"] .lp-nav__settings-icon--default { filter: invert(0); }
+  [data-theme="light"] .toggle-icon--default { filter: invert(0); }
   [data-theme="dark"] .lp-nav__burger span { background: rgba(255,255,255,0.55); }
 </style>
 
@@ -382,33 +388,15 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     burger.setAttribute('aria-expanded', String(open));
   });
 
-  const ACCENT_DARK = '#66ff00';
-  const ACCENT_LIGHT = '#9900ff';
   const ind = document.getElementById('toggleIndicator') as HTMLElement;
   const btns = ['dark','auto','light'].map(m => document.getElementById('btn-' + m) as HTMLElement);
 
-  function getNeutralFilter() {
-    return document.documentElement.getAttribute('data-theme') === 'light' ? 'invert(0)' : 'invert(1)';
-  }
-  function getAccentFilter() {
-    return document.documentElement.getAttribute('data-theme') === 'light'
-      ? 'invert(15%) sepia(100%) saturate(3000%) hue-rotate(260deg) brightness(0.8)'
-      : 'invert(39%) sepia(97%) saturate(600%) hue-rotate(72deg) brightness(1.1)';
-  }
-  function refreshIcons() {
-    const f = getNeutralFilter();
-    document.querySelectorAll('.toggle-icon').forEach(el => {
-      (el as HTMLImageElement).style.filter = f;
-      (el as HTMLImageElement).style.opacity = '0.5';
-    });
-  }
   function applyTheme(mode: string) {
     const html = document.documentElement;
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const theme = mode === 'auto' ? (prefersDark ? 'dark' : 'light') : mode;
     html.setAttribute('data-theme', theme);
     (window as any).__updateFavicon?.(theme);
-    refreshIcons();
     updateToggle(currentMode, false);
     updateLangToggle(currentLangMode);
   }
@@ -422,18 +410,10 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     ind.style.width = btnSize + 'px';
     ind.style.left = (idx * btnSize) + 'px';
     if (!animate) requestAnimationFrame(() => { ind.style.transition = ''; });
-    const accent = mode === 'dark' ? ACCENT_DARK : mode === 'light' ? ACCENT_LIGHT : null;
-    ind.style.background = accent ? accent + '33' : 'rgba(128,128,128,0.22)';
-    ind.style.border = accent ? `1px solid ${accent}66` : '1px solid transparent';
+    ind.style.background = 'rgba(128,128,128,0.22)';
+    ind.style.border = '1px solid rgba(128,128,128,0.3)';
     btns.forEach((btn, i) => {
-      const isActive = i === idx;
-      const hasAccent = isActive && !!accent;
       btn.classList.toggle('is-active', i === idx);
-      const icon = btn.querySelector('.toggle-icon') as HTMLImageElement | null;
-      if (icon) {
-        icon.style.filter = hasAccent ? getAccentFilter() : getNeutralFilter();
-        icon.style.opacity = isActive ? '1' : '0.45';
-      }
     });
   }
   let currentMode = localStorage.getItem('lp-theme-mode') || 'auto';
@@ -454,20 +434,10 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     const btnSize = getBtnSize(pill);
     langInd.style.width = btnSize + 'px';
     langInd.style.left = (idx * btnSize) + 'px';
-    const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()
-      || (document.documentElement.getAttribute('data-theme') === 'light' ? '#9900ff' : '#66ff00');
-    const isFixed = mode === 'de' || mode === 'en';
-    langInd.style.background = isFixed ? accent + '33' : 'rgba(128,128,128,0.22)';
-    langInd.style.border = isFixed ? `1px solid ${accent}66` : '1px solid transparent';
+    langInd.style.background = 'rgba(128,128,128,0.22)';
+    langInd.style.border = '1px solid rgba(128,128,128,0.3)';
     langBtns.forEach((btn, i) => {
-      const isActive = i === idx;
-      const hasAccent = isActive && isFixed;
       btn?.classList.toggle('is-active', i === idx);
-      const icon = btn?.querySelector('.toggle-icon') as HTMLImageElement | null;
-      if (icon) {
-        icon.style.filter = hasAccent ? getAccentFilter() : getNeutralFilter();
-        icon.style.opacity = isActive ? '1' : '0.45';
-      }
     });
   }
   let currentLangMode = localStorage.getItem('lp-lang-mode') || 'auto';
@@ -513,31 +483,13 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 
   function openSettings() {
     navControls?.classList.add('is-open');
-    allSettingsBtns.forEach(btn => {
-      btn?.classList.add('is-active');
-      const icon = btn?.querySelector('.lp-nav__settings-icon') as HTMLImageElement;
-      if (icon) {
-        icon.style.filter = document.documentElement.getAttribute('data-theme') === 'light'
-          ? 'invert(15%) sepia(100%) saturate(3000%) hue-rotate(260deg) brightness(0.8)'
-          : 'invert(39%) sepia(97%) saturate(600%) hue-rotate(72deg) brightness(1.1)';
-        icon.style.opacity = '1';
-      }
-    });
+    allSettingsBtns.forEach(btn => btn?.classList.add('is-active'));
     updateToggle(currentMode, false);
     updateLangToggle(currentLangMode);
   }
   function closeSettings() {
     navControls?.classList.remove('is-open');
-    allSettingsBtns.forEach(btn => {
-      btn?.classList.remove('is-active');
-      const icon = btn?.querySelector('.lp-nav__settings-icon') as HTMLImageElement;
-      if (icon) {
-        icon.style.filter = document.documentElement.getAttribute('data-theme') === 'light'
-          ? 'invert(15%) sepia(100%) saturate(3000%) hue-rotate(260deg) brightness(0.8)'
-          : 'invert(39%) sepia(97%) saturate(600%) hue-rotate(72deg) brightness(1.1)';
-        icon.style.opacity = '1';
-      }
-    });
+    allSettingsBtns.forEach(btn => btn?.classList.remove('is-active'));
   }
   allSettingsBtns.forEach(btn => {
     btn?.addEventListener('click', (e) => {
