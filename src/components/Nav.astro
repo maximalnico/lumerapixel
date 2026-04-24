@@ -20,8 +20,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
       </a>
       <div class="lp-nav__top-actions">
         <button class="lp-nav__settings-btn" id="settingsToggle" aria-label="Settings">
-          <img src="/logos/hiddensettings.svg" class="lp-nav__settings-icon lp-nav__settings-icon--default" alt="" />
-          <img src="/logos/hiddensettings-rainbow.svg" class="lp-nav__settings-icon lp-nav__settings-icon--rainbow" alt="" />
+          <img src="/logos/hiddensettings.svg" class="lp-nav__settings-icon" alt="" />
         </button>
         <button class="lp-nav__burger" id="navBurger" aria-label="Menü öffnen" aria-expanded="false">
           <span></span><span></span><span></span>
@@ -35,8 +34,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
         <a href={legal} class={`lp-nav__link ${isLegalActive ? 'is-active' : ''}`}>{t(lang, 'nav.legal')}</a>
         <a href={privacy} class={`lp-nav__link ${isPrivacyActive ? 'is-active' : ''}`}>{t(lang, 'nav.privacy')}</a>
         <button class="lp-nav__settings-btn lp-nav__settings-btn--desktop" id="settingsToggleDesktop" aria-label="Settings">
-          <img src="/logos/hiddensettings.svg" class="lp-nav__settings-icon lp-nav__settings-icon--default" alt="" />
-          <img src="/logos/hiddensettings-rainbow.svg" class="lp-nav__settings-icon lp-nav__settings-icon--rainbow" alt="" />
+          <img src="/logos/hiddensettings.svg" class="lp-nav__settings-icon" alt="" />
         </button>
       </div>
     </div>
@@ -44,15 +42,15 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   <div class="lp-nav__controls" id="navControls">
     <div class="lp-nav__pill" id="themeToggle" role="group" aria-label="Theme wählen">
       <div class="toggle-indicator" id="toggleIndicator"></div>
-      <button class="toggle-btn" id="btn-dark" data-mode="dark" aria-label="Dark"><img src="/logos/darkmode.svg" class="toggle-icon toggle-icon--default" alt="" /><img src="/logos/darkmode-rainbow.svg" class="toggle-icon toggle-icon--rainbow" alt="" /></button>
-      <button class="toggle-btn" id="btn-auto" data-mode="auto" aria-label="Auto"><img src="/logos/autosetting.svg" class="toggle-icon toggle-icon--default" alt="" /><img src="/logos/autosetting-rainbow.svg" class="toggle-icon toggle-icon--rainbow" alt="" /></button>
-      <button class="toggle-btn" id="btn-light" data-mode="light" aria-label="Light"><img src="/logos/lightmode.svg" class="toggle-icon toggle-icon--default" alt="" /><img src="/logos/lightmode-rainbow.svg" class="toggle-icon toggle-icon--rainbow" alt="" /></button>
+      <button class="toggle-btn" id="btn-dark" data-mode="dark" aria-label="Dark"><img src="/logos/darkmode.svg" class="toggle-icon" alt="" /></button>
+      <button class="toggle-btn" id="btn-auto" data-mode="auto" aria-label="Auto"><img src="/logos/autosetting.svg" class="toggle-icon" alt="" /></button>
+      <button class="toggle-btn" id="btn-light" data-mode="light" aria-label="Light"><img src="/logos/lightmode.svg" class="toggle-icon" alt="" /></button>
     </div>
     <div class="lp-nav__pill" id="langToggle" role="group" aria-label="Language">
       <div class="toggle-indicator" id="langIndicator"></div>
-      <a href="/" class="toggle-btn" id="btn-lang-de" data-lang="de" aria-label="Deutsch"><img src="/logos/lang-de.svg" class="toggle-icon toggle-icon--default" alt="" /><img src="/logos/lang-de-rainbow.svg" class="toggle-icon toggle-icon--rainbow" alt="" /></a>
-      <button class="toggle-btn" id="btn-lang-auto" data-lang="auto" aria-label="Auto"><img src="/logos/autosetting.svg" class="toggle-icon toggle-icon--default" alt="" /><img src="/logos/autosetting-rainbow.svg" class="toggle-icon toggle-icon--rainbow" alt="" /></button>
-      <a href="/en/" class="toggle-btn" id="btn-lang-en" data-lang="en" aria-label="English"><img src="/logos/lang-en.svg" class="toggle-icon toggle-icon--default" alt="" /><img src="/logos/lang-en-rainbow.svg" class="toggle-icon toggle-icon--rainbow" alt="" /></a>
+      <a href="/" class="toggle-btn" id="btn-lang-de" data-lang="de" aria-label="Deutsch"><img src="/logos/lang-de.svg" class="toggle-icon" alt="" /></a>
+      <button class="toggle-btn" id="btn-lang-auto" data-lang="auto" aria-label="Auto"><img src="/logos/autosetting.svg" class="toggle-icon" alt="" /></button>
+      <a href="/en/" class="toggle-btn" id="btn-lang-en" data-lang="en" aria-label="English"><img src="/logos/lang-en.svg" class="toggle-icon" alt="" /></a>
     </div>
   </div>
 </nav>
@@ -137,10 +135,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     background: rgba(128,128,128,0.10);
   }
   .lp-nav__link.is-active {
-    background-image: var(--rainbow), linear-gradient(rgba(128,128,128,0.08), rgba(128,128,128,0.08));
-    -webkit-background-clip: text, padding-box;
-    background-clip: text, padding-box;
-    -webkit-text-fill-color: transparent;
+    background: rgba(128,128,128,0.15);
   }
 
   /* Desktop: top-actions (Mobile-only) verstecken */
@@ -171,10 +166,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     object-fit: contain;
     transition: transform 0.3s ease;
   }
-  .lp-nav__settings-icon--rainbow { display: none; filter: none; opacity: 1; }
   .lp-nav__settings-btn.is-active .lp-nav__settings-icon { transform: rotate(90deg); }
-  .lp-nav__settings-btn.is-active .lp-nav__settings-icon--default { display: none; }
-  .lp-nav__settings-btn.is-active .lp-nav__settings-icon--rainbow { display: block; }
   .lp-nav__controls {
     display: flex;
     flex-direction: column;
@@ -219,10 +211,9 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     top: 3px;
     bottom: 3px;
     border-radius: 7px;
-    transition: left 0.22s ease, width 0.22s ease, background 0.22s ease, border 0.22s ease;
+    transition: left 0.22s ease, width 0.22s ease;
     pointer-events: none;
-    background: rgba(128,128,128,0.18);
-    border: 1.5px solid rgba(128,128,128,0.3);
+    background: var(--rainbow);
     z-index: 0;
   }
   .toggle-btn {
@@ -248,15 +239,13 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     max-height: none !important;
     display: block;
     object-fit: contain;
-    opacity: 0.45;
+    opacity: 0.55;
     filter: invert(1);
     transition: opacity 0.2s;
     pointer-events: none;
     flex-shrink: 0;
   }
-  .toggle-icon--rainbow { display: none; filter: none; opacity: 1; }
-  .toggle-btn.is-active .toggle-icon--default { display: none; }
-  .toggle-btn.is-active .toggle-icon--rainbow { display: block; }
+  .toggle-btn.is-active .toggle-icon { opacity: 1; }
   .lp-nav__burger {
     display: none;
     flex-direction: column;
@@ -352,16 +341,9 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   [data-theme="light"] .lp-nav__link { color: rgba(10,10,15,0.8); }
   [data-theme="dark"] .lp-nav__link { color: rgba(255,255,255,0.9); }
   [data-theme="light"] .lp-nav__link:hover,
-  [data-theme="dark"] .lp-nav__link:hover {
-    background: rgba(128,128,128,0.10);
-  }
+  [data-theme="dark"] .lp-nav__link:hover { background: rgba(128,128,128,0.10); }
   [data-theme="light"] .lp-nav__link.is-active,
-  [data-theme="dark"] .lp-nav__link.is-active {
-    background-image: var(--rainbow), linear-gradient(rgba(128,128,128,0.08), rgba(128,128,128,0.08));
-    -webkit-background-clip: text, padding-box;
-    background-clip: text, padding-box;
-    -webkit-text-fill-color: transparent;
-  }
+  [data-theme="dark"] .lp-nav__link.is-active { background: rgba(128,128,128,0.15); }
   [data-theme="light"] .lp-nav__links { border-color: rgba(200,210,220,0.6); }
   @media (max-width: 640px) {
     [data-theme="light"] .lp-nav__links { background: rgba(235,240,245,0.92); }
@@ -373,8 +355,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   [data-theme="dark"] .toggle-btn { color: rgba(255,255,255,0.6); }
   [data-theme="light"] .toggle-btn { color: rgba(10,10,15,0.6); }
   [data-theme="light"] .lp-nav__burger span { background: rgba(10,10,15,0.55); }
-  [data-theme="light"] .lp-nav__settings-icon--default { filter: invert(0); }
-  [data-theme="light"] .toggle-icon--default { filter: invert(0); }
+  [data-theme="light"] .lp-nav__settings-icon { filter: invert(0); }
+  [data-theme="light"] .toggle-icon { filter: invert(0); }
   [data-theme="dark"] .lp-nav__burger span { background: rgba(255,255,255,0.55); }
 </style>
 
@@ -410,8 +392,6 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     ind.style.width = btnSize + 'px';
     ind.style.left = (idx * btnSize) + 'px';
     if (!animate) requestAnimationFrame(() => { ind.style.transition = ''; });
-    ind.style.background = 'rgba(128,128,128,0.22)';
-    ind.style.border = '1px solid rgba(128,128,128,0.3)';
     btns.forEach((btn, i) => {
       btn.classList.toggle('is-active', i === idx);
     });
@@ -434,8 +414,6 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     const btnSize = getBtnSize(pill);
     langInd.style.width = btnSize + 'px';
     langInd.style.left = (idx * btnSize) + 'px';
-    langInd.style.background = 'rgba(128,128,128,0.22)';
-    langInd.style.border = '1px solid rgba(128,128,128,0.3)';
     langBtns.forEach((btn, i) => {
       btn?.classList.toggle('is-active', i === idx);
     });
