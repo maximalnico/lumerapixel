@@ -203,14 +203,14 @@ const canonicalURL = canonical ?? Astro.url.href;
       height: 2px;
       background: var(--rainbow);
       opacity: 0.55;
-      border-radius: 1px;
+      border-radius: 7px;
     }
     .rg-border { position: relative; }
     .rg-border::before {
       content: '';
       position: absolute;
       inset: 0;
-      border-radius: inherit;
+      border-radius: 7px;
       padding: 1.5px;
       background: var(--rainbow);
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -231,7 +231,7 @@ const canonicalURL = canonical ?? Astro.url.href;
     /* ── SCROLLBAR ── */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 2px; }
+    ::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 7px; }
 
     /* ── REVEAL ANIMATION ── */
     .reveal {
