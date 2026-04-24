@@ -7,6 +7,7 @@ const lang = getLangFromUrl(Astro.url);
   <div class="lp-footer__inner">
     <img src="/logos/lplong-rainbow.svg" alt="LumeraPixel" class="lp-footer__logo" />
     <p class="lp-footer__copy">{t(lang, 'footer.copy')}</p>
+    <p class="lp-footer__credits">Typography by <a href="https://fontshare.com/fonts/switzer" target="_blank" rel="noopener">Fontshare</a> · Icons by <a href="https://phosphoricons.com/" target="_blank" rel="noopener">Phosphor</a> (MIT)</p>
   </div>
 </footer>
 
@@ -37,5 +38,20 @@ const lang = getLangFromUrl(Astro.url);
     font-size: clamp(0.88rem, 1.3vw, 1.05rem);
     color: var(--text);
     letter-spacing: 0.06em;
+  }
+  .lp-footer__credits {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 277;
+    font-size: clamp(0.72rem, 0.95vw, 0.82rem);
+    color: var(--text-muted);
+    letter-spacing: 0.03em;
+  }
+  .lp-footer__credits a {
+    color: var(--text-muted);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .lp-footer__credits a:hover {
+    color: var(--text);
   }
 </style>
