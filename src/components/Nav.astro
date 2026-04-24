@@ -229,7 +229,9 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     box-sizing: border-box;
     min-width: 2.4rem;
     min-height: 2rem;
+    transition: background var(--quick);
   }
+  .toggle-btn:hover { background: rgba(128,128,128,0.14); }
   a.toggle-btn { text-decoration: none; }
   .toggle-icon {
     width: 100%;
