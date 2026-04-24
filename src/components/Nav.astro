@@ -15,8 +15,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   <div class="lp-nav__island">
     <div class="lp-nav__row lp-nav__row--top">
       <a href={home} class="lp-nav__brand" aria-label="LumeraPixel Home">
-        <img src="/logos/lplong-dark.svg" alt="LumeraPixel" class="lp-nav__logo logo-dark" />
-        <img src="/logos/lplong-light.svg" alt="LumeraPixel" class="lp-nav__logo logo-light" />
+        <img src="/logos/lplong-rainbow.svg" alt="LumeraPixel" class="lp-nav__logo" />
       </a>
       <div class="lp-nav__top-actions">
         <button class="lp-nav__settings-btn" id="settingsToggle" aria-label="Settings">
@@ -333,9 +332,6 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 </style>
 
 <style is:global>
-  .logo-light { display: none; }
-  [data-theme="light"] .logo-dark { display: none; }
-  [data-theme="light"] .logo-light { display: block; }
   [data-theme="light"] .lp-nav__island { background: rgba(235,240,245,0.92); border-color: rgba(200,210,220,0.6); }
   [data-theme="dark"] .lp-nav__island { background: rgba(6,7,8,0.82); border-color: rgba(0,0,0,0.37); }
   [data-theme="light"] .lp-nav__link { color: rgba(10,10,15,0.8); }

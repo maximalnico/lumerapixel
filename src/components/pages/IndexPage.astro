@@ -124,8 +124,7 @@ const schema = {
 
       <!-- Text rechts -->
       <div class="hero__content">
-        <img src="/logos/lplong-dark.svg" alt="LumeraPixel" class="hero__logo hero__logo--dark" />
-        <img src="/logos/lplong-light.svg" alt="LumeraPixel" class="hero__logo hero__logo--light" />
+        <img src="/logos/lplong-rainbow.svg" alt="LumeraPixel" class="hero__logo" />
         <p class="hero__tagline">{t(lang, 'hero.tagline')}</p>
 
         <!-- Stats inline rechts -->
@@ -192,7 +191,8 @@ const schema = {
                 <span class="featured-card__date">{dateStr}</span>
               </div>
               <div class="featured-card__arrow" aria-hidden="true">
-                <img src="/logos/arrow-right.svg" alt="" width="18" height="18" class="featured-card__arrow-img" />
+                <img src="/logos/arrow-right.svg" alt="" class="featured-card__arrow-img featured-card__arrow-img--default" />
+                <img src="/logos/arrow-right-rainbow.svg" alt="" class="featured-card__arrow-img featured-card__arrow-img--rainbow" />
               </div>
             </a>
           );
@@ -361,9 +361,6 @@ const schema = {
     width: auto;
     opacity: 0.95;
   }
-  .hero__logo--light { display: none; }
-  :global([data-theme="light"]) .hero__logo--dark { display: none; }
-  :global([data-theme="light"]) .hero__logo--light { display: block; }
   .hero__tagline {
     font-family: 'GeneralSans', sans-serif;
     font-weight: 277;
@@ -489,14 +486,12 @@ const schema = {
       border-top: 1px solid var(--border);
     }
     .featured-card__cat {
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: normal;
-      font-weight: 420 !important;
-      background: var(--rainbow) !important;
-      -webkit-background-clip: text !important;
-      background-clip: text !important;
-      -webkit-text-fill-color: transparent !important;
+      font-size: 0.7rem !important;
+      font-weight: 277 !important;
+      background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18)) !important;
+      -webkit-background-clip: initial !important;
+      background-clip: initial !important;
+      -webkit-text-fill-color: initial !important;
     }
     .featured-card__title {
       font-size: 1rem !important;
@@ -567,13 +562,15 @@ const schema = {
   .featured-card__cat {
     font-family: 'GeneralSans', sans-serif;
     font-weight: 277;
-    font-size: 1rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
-    letter-spacing: normal;
-    background: var(--rainbow);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.12em;
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--text-muted);
+    color: var(--text);
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
   .featured-card__title {
     font-family: 'GeneralSans', sans-serif;
@@ -601,19 +598,17 @@ const schema = {
     display: flex;
   }
   .featured-card__arrow-img {
+    width: 26px;
+    height: 26px;
+    display: block;
     filter: invert(1);
-    opacity: 0.4;
-    transition: opacity var(--quick), filter var(--quick);
-  }
-  :global([data-theme="light"]) .featured-card__arrow-img {
-    filter: invert(0);
     opacity: 0.5;
   }
-  .featured-card:hover .featured-card__arrow { transform: translateX(3px); }
-  .featured-card:hover .featured-card__arrow-img {
-    opacity: 0.9;
-    filter: invert(77%) sepia(98%) saturate(1000%) hue-rotate(155deg) brightness(105%);
-  }
+  .featured-card__arrow-img--rainbow { display: none; filter: none; opacity: 1; }
+  :global([data-theme="light"]) .featured-card__arrow-img--default { filter: invert(0); }
+  .featured-card:hover .featured-card__arrow { transform: translateX(4px); }
+  .featured-card:hover .featured-card__arrow-img--default { display: none; }
+  .featured-card:hover .featured-card__arrow-img--rainbow { display: block; }
 
   /* ══ ALL SESSIONS ══ */
   .all-section {
@@ -638,31 +633,12 @@ const schema = {
     letter-spacing: 0.16em;
     padding: 0.55rem 1.4rem;
     border-radius: 999px;
-    border: 1.5px solid var(--text);
+    border: 1.5px solid var(--text-muted);
     color: var(--text);
     cursor: pointer;
-    transition: border-color var(--quick);
-    background: transparent;
-    position: relative;
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
-  .filter-btn::before {
-    content: '';
-    position: absolute;
-    inset: -1.5px;
-    border-radius: 999px;
-    padding: 1.5px;
-    background: var(--rainbow);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: destination-out;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity var(--quick);
-    pointer-events: none;
-  }
-  .filter-btn:hover::before,
-  .filter-btn.is-active::before {
-    opacity: 1;
-  }
+  .filter-btn.is-active { border-color: var(--text); }
 
   /* Masonry — CSS Columns */
   .masonry-grid {
@@ -800,8 +776,18 @@ const schema = {
     border-color: rgba(255,255,255,0.37);
   }
   :global([data-theme="light"]) .filter-btn {
-    border-color: rgba(10,10,15,0.6);
+    border-color: rgba(10,10,15,0.35);
     color: rgba(10,10,15,0.85);
+  }
+  :global([data-theme="light"]) .featured-card__cat,
+  :global([data-theme="light"]) .session-card__cat {
+    border-color: rgba(10,10,15,0.35);
+    color: rgba(10,10,15,0.85);
+  }
+  :global([data-theme="dark"]) .filter-btn,
+  :global([data-theme="dark"]) .featured-card__cat,
+  :global([data-theme="dark"]) .session-card__cat {
+    background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
   }
 
 
