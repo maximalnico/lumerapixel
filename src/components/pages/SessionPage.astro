@@ -111,16 +111,14 @@ const schema = {
       <div class="session-hero__nav">
         {next ? (
           <a href={sessionPath(next.slug)} class="session-hero__nav-btn">
-            <img src="/logos/phosphoricons/caret-left-thin.svg" alt="" aria-hidden="true" class="session-hero__nav-icon session-hero__nav-icon--default" />
-            <svg class="session-hero__nav-icon session-hero__nav-icon--rainbow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><defs><linearGradient id="rg-snl" x1="0" y1="128" x2="256" y2="128" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#ff0040"/><stop offset="33%" stop-color="#ffcc00"/><stop offset="66%" stop-color="#0090ff"/><stop offset="100%" stop-color="#ff2eaa"/></linearGradient></defs><rect width="256" height="256" fill="none"/><polyline points="160 208 80 128 160 48" fill="none" stroke="url(#rg-snl)" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/></svg>
+            <img src="/logos/phosphoricons/caret-left-thin.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
             <span>{navTitle(next)}</span>
           </a>
         ) : <span />}
         {prev ? (
           <a href={sessionPath(prev.slug)} class="session-hero__nav-btn">
             <span>{navTitle(prev)}</span>
-            <img src="/logos/phosphoricons/caret-right-thin.svg" alt="" aria-hidden="true" class="session-hero__nav-icon session-hero__nav-icon--default" />
-            <svg class="session-hero__nav-icon session-hero__nav-icon--rainbow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><defs><linearGradient id="rg-snr" x1="0" y1="128" x2="256" y2="128" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#ff0040"/><stop offset="33%" stop-color="#ffcc00"/><stop offset="66%" stop-color="#0090ff"/><stop offset="100%" stop-color="#ff2eaa"/></linearGradient></defs><rect width="256" height="256" fill="none"/><polyline points="96 48 176 128 96 208" fill="none" stroke="url(#rg-snr)" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/></svg>
+            <img src="/logos/phosphoricons/caret-right-thin.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
           </a>
         ) : <span />}
       </div>
@@ -311,36 +309,21 @@ const schema = {
   .session-hero__nav-btn {
     font-family: 'Switzer', sans-serif;
     font-weight: 277;
-    font-size: clamp(0.82rem, 1.1vw, 1rem);
+    font-size: clamp(0.78rem, 1vw, 0.9rem);
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--text-muted);
+    letter-spacing: 0.16em;
+    color: var(--text);
     text-decoration: none;
-    transition: border-color var(--quick);
     max-width: 36%;
-    padding: 0.55rem 1.1rem;
+    padding: 0.55rem 1.4rem;
     border: 1.5px solid var(--text-muted);
-    border-radius: 10px;
-    background: var(--glass-bg);
+    border-radius: 999px;
+    background: transparent;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    position: relative;
-  }
-  .session-hero__nav-btn::before {
-    content: '';
-    position: absolute;
-    inset: -1.5px;
-    border-radius: 10px;
-    padding: 1.5px;
-    background: var(--rainbow);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: destination-out;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity var(--quick);
-    pointer-events: none;
-    z-index: 1;
+    cursor: pointer;
+    transition: background var(--quick), border-color var(--quick);
   }
   .session-hero__nav-btn span {
     overflow: hidden;
@@ -351,20 +334,13 @@ const schema = {
     width: 18px;
     height: 18px;
     flex-shrink: 0;
+    filter: invert(1);
+    opacity: 0.7;
   }
-  .session-hero__nav-icon--default {
-    opacity: 0.75;
-    filter: var(--icon-filter, invert(1));
-  }
-  .session-hero__nav-icon--rainbow { display: none; }
   .session-hero__nav-btn:hover {
-    border-color: transparent;
+    border-color: var(--text);
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
-  .session-hero__nav-btn:hover::before {
-    opacity: 1;
-  }
-  .session-hero__nav-btn:hover .session-hero__nav-icon--default { display: none; }
-  .session-hero__nav-btn:hover .session-hero__nav-icon--rainbow { display: block; }
   .session-hero__meta {
     display: flex;
     align-items: center;
@@ -679,6 +655,9 @@ const schema = {
     --icon-filter: invert(0);
     --icon-filter-accent: invert(20%) sepia(100%) saturate(1000%) hue-rotate(270deg) brightness(0.9);
   }
+  :global([data-theme="light"]) .session-hero__nav-btn { border-color: rgba(10,10,15,0.35); color: rgba(10,10,15,0.85); }
+  :global([data-theme="light"]) .session-hero__nav-icon { filter: invert(0); }
+  :global([data-theme="dark"]) .session-hero__nav-btn:hover { background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32)); }
   :global([data-theme="light"]) .session-hero__title { color: var(--text); }
   :global([data-theme="light"]) .glass-box {
     background: rgba(255,255,255,0.27);

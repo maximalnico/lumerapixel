@@ -120,36 +120,22 @@ import Footer from '../components/Footer.astro';
     gap: 0.5rem;
     font-family: 'Switzer', sans-serif;
     font-weight: 277;
-    font-size: 0.88rem;
+    font-size: clamp(0.78rem, 1vw, 0.9rem);
     text-transform: uppercase;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.16em;
     color: var(--text);
-    padding: 0.6rem 1.4rem;
-    border: 1.5px solid var(--border-mid);
-    border-radius: 10px;
-    position: relative;
+    padding: 0.55rem 1.4rem;
+    border: 1.5px solid var(--text-muted);
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
     transition: background var(--quick), border-color var(--quick);
     text-decoration: none;
   }
-  .not-found__btn::before {
-    content: '';
-    position: absolute;
-    inset: -1.5px;
-    border-radius: 11px;
-    padding: 1.5px;
-    background: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity var(--quick);
-  }
   .not-found__btn:hover {
-    background: linear-gradient(277deg, rgba(255,0,0,0.14), rgba(255,119,0,0.14), rgba(255,238,0,0.14), rgba(0,204,0,0.14), rgba(0,136,255,0.14), rgba(136,0,255,0.14));
-    border-color: transparent;
+    border-color: var(--text);
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
-  .not-found__btn:hover::before { opacity: 1; }
 
   .not-found__btn-icon {
     width: 1rem;
@@ -160,5 +146,7 @@ import Footer from '../components/Footer.astro';
 </style>
 
 <style is:global>
+  [data-theme="light"] .not-found__btn { border-color: rgba(10,10,15,0.35); color: rgba(10,10,15,0.85); }
+  [data-theme="dark"] .not-found__btn:hover { background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32)); }
   [data-theme="light"] .not-found__btn-icon { filter: invert(0); }
 </style>
