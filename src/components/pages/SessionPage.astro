@@ -179,18 +179,15 @@ const schema = {
 
     <!-- Close oben rechts -->
     <button class="lightbox__close" id="lbClose" aria-label="Schließen">
-      <img src="/logos/phosphoricons/x-thin.svg" alt="" aria-hidden="true" class="lb-icon lb-icon--default" />
-      <svg class="lb-icon lb-icon--rainbow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><defs><linearGradient id="rg-lbc" x1="0" y1="128" x2="256" y2="128" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#ff0040"/><stop offset="33%" stop-color="#ffcc00"/><stop offset="66%" stop-color="#0090ff"/><stop offset="100%" stop-color="#ff2eaa"/></linearGradient></defs><rect width="256" height="256" fill="none"/><line x1="200" y1="56" x2="56" y2="200" stroke="url(#rg-lbc)" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/><line x1="200" y1="200" x2="56" y2="56" stroke="url(#rg-lbc)" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/></svg>
+      <img src="/logos/phosphoricons/x-thin.svg" alt="" aria-hidden="true" class="lb-icon" />
     </button>
 
     <!-- Prev/Next seitlich -->
     <button class="lightbox__btn lightbox__btn--prev" id="lbPrev" aria-label="Vorheriges Foto">
-      <img src="/logos/phosphoricons/caret-left-thin.svg" alt="" aria-hidden="true" class="lb-icon lb-icon--default" />
-      <svg class="lb-icon lb-icon--rainbow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><defs><linearGradient id="rg-lbp" x1="0" y1="128" x2="256" y2="128" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#ff0040"/><stop offset="33%" stop-color="#ffcc00"/><stop offset="66%" stop-color="#0090ff"/><stop offset="100%" stop-color="#ff2eaa"/></linearGradient></defs><rect width="256" height="256" fill="none"/><polyline points="160 208 80 128 160 48" fill="none" stroke="url(#rg-lbp)" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/></svg>
+      <img src="/logos/phosphoricons/caret-left-thin.svg" alt="" aria-hidden="true" class="lb-icon" />
     </button>
     <button class="lightbox__btn lightbox__btn--next" id="lbNext" aria-label="Nächstes Foto">
-      <img src="/logos/phosphoricons/caret-right-thin.svg" alt="" aria-hidden="true" class="lb-icon lb-icon--default" />
-      <svg class="lb-icon lb-icon--rainbow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><defs><linearGradient id="rg-lbn" x1="0" y1="128" x2="256" y2="128" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#ff0040"/><stop offset="33%" stop-color="#ffcc00"/><stop offset="66%" stop-color="#0090ff"/><stop offset="100%" stop-color="#ff2eaa"/></linearGradient></defs><rect width="256" height="256" fill="none"/><polyline points="96 48 176 128 96 208" fill="none" stroke="url(#rg-lbn)" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/></svg>
+      <img src="/logos/phosphoricons/caret-right-thin.svg" alt="" aria-hidden="true" class="lb-icon" />
     </button>
 
     <div class="lightbox__stage">
@@ -527,42 +524,23 @@ const schema = {
     transform: translateY(-50%);
     z-index: 2;
     cursor: pointer;
-    background: rgba(0,0,0,0.27);
-    border: 2.7px solid rgba(0,0,0,0.37);
+    background: transparent;
+    border: 2.7px solid var(--text-muted);
     border-radius: 7px;
     padding: 0.9rem 0.75rem;
-    transition: background var(--quick), border-color var(--quick);
+    transition: background var(--quick);
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .lb-icon--default {
+  .lb-icon {
     width: 28px; height: 28px;
     filter: var(--icon-filter, invert(1));
     opacity: 0.8;
   }
-  .lb-icon--rainbow { display: none; }
-  .lightbox__btn::before {
-    content: '';
-    position: absolute;
-    inset: -2.7px;
-    border-radius: 7px;
-    padding: 2.7px;
-    background: var(--rainbow);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: destination-out;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity var(--quick);
-    pointer-events: none;
-  }
   .lightbox__btn:hover {
-    background: rgba(128,128,128,0.12);
-    border-color: transparent;
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
-  .lightbox__btn:hover::before { opacity: 1; }
-  .lightbox__btn:hover .lb-icon--default { display: none; }
-  .lightbox__btn:hover .lb-icon--rainbow { display: block; width: 28px; height: 28px; }
   .lightbox__btn--prev { left: var(--gap-md); }
   .lightbox__btn--next { right: var(--gap-md); }
 
@@ -573,41 +551,22 @@ const schema = {
     right: var(--gap-md);
     z-index: 2;
     cursor: pointer;
-    background: rgba(0,0,0,0.27);
-    border: 2.7px solid rgba(0,0,0,0.37);
+    background: transparent;
+    border: 2.7px solid var(--text-muted);
     border-radius: 7px;
     padding: 0.6rem;
-    transition: background var(--quick), border-color var(--quick);
+    transition: background var(--quick);
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .lightbox__close .lb-icon--default {
+  .lightbox__close .lb-icon {
     width: 22px; height: 22px;
-    filter: var(--icon-filter, invert(1));
     opacity: 0.75;
   }
-  .lightbox__close::before {
-    content: '';
-    position: absolute;
-    inset: -2.7px;
-    border-radius: 7px;
-    padding: 2.7px;
-    background: var(--rainbow);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: destination-out;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity var(--quick);
-    pointer-events: none;
-  }
   .lightbox__close:hover {
-    background: rgba(128,128,128,0.12);
-    border-color: transparent;
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
-  .lightbox__close:hover::before { opacity: 1; }
-  .lightbox__close:hover .lb-icon--default { display: none; }
-  .lightbox__close:hover .lb-icon--rainbow { display: block; width: 22px; height: 22px; }
 
   /* ── FOOTER ── */
   .lp-footer { padding: var(--gap-lg) var(--page-x) var(--gap-md); }
@@ -666,16 +625,9 @@ const schema = {
   :global([data-theme="light"]) .lightbox__backdrop {
     background: rgba(255,255,255,0.15);
   }
-  :global([data-theme="light"]) .lightbox__counter,
-  :global([data-theme="light"]) .lightbox__btn,
-  :global([data-theme="light"]) .lightbox__close {
-    background: rgba(255,255,255,0.27);
-    border-color: rgba(255,255,255,0.37);
-  }
-  :global([data-theme="light"]) .lightbox__btn:hover,
-  :global([data-theme="light"]) .lightbox__close:hover {
-    background: rgba(128,128,128,0.12);
-    border-color: transparent;
+  :global([data-theme="dark"]) .lightbox__btn:hover,
+  :global([data-theme="dark"]) .lightbox__close:hover {
+    background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
   }
 
 </style>
