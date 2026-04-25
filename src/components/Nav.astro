@@ -308,7 +308,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
       border-radius: 7px;
     }
     .lp-nav__island {
-      flex: 1; padding: 0.35rem 0.9rem;
+      flex: 1; padding: 0;
       background: transparent;
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
@@ -318,7 +318,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     .lp-nav__row--top {
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 0;
+      padding: 0.35rem 0.9rem;
       border-bottom: none;
       margin-bottom: 0;
     }
@@ -426,6 +426,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     const open = burger.classList.toggle('is-open');
     rowBottom?.classList.toggle('is-open', open);
     burger.setAttribute('aria-expanded', String(open));
+    if (open) closeSettings();
   });
 
   const ind = document.getElementById('toggleIndicator') as HTMLElement;
@@ -517,7 +518,13 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 
   const allSettingsBtns = [settingsBtn, settingsBtnDesktop].filter(Boolean);
 
+  function closeBurger() {
+    burger?.classList.remove('is-open');
+    rowBottom?.classList.remove('is-open');
+    burger?.setAttribute('aria-expanded', 'false');
+  }
   function openSettings() {
+    closeBurger();
     navControls?.classList.add('is-open');
     allSettingsBtns.forEach(btn => btn?.classList.add('is-active'));
     updateToggle(currentMode, false);
