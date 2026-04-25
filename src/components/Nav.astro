@@ -209,11 +209,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     gap: 0;
     position: relative;
     box-sizing: border-box;
-    background: var(--glass-bg);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    border: 2.7px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
+    background: transparent;
     border-radius: 7px;
     min-height: 0;
   }
@@ -243,7 +239,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     min-height: 0;
     transition: background var(--quick);
   }
-  .toggle-btn:hover { background: rgba(128,128,128,0.10); }
+  .toggle-btn:hover { background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18)); }
   a.toggle-btn { text-decoration: none; }
   .toggle-icon {
     width: 100%;
@@ -375,6 +371,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
   }
   [data-theme="dark"] .toggle-btn { color: rgba(255,255,255,0.6); }
+  [data-theme="dark"] .toggle-btn:hover { background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32)); }
   [data-theme="light"] .toggle-btn { color: rgba(10,10,15,0.6); }
   [data-theme="light"] .lp-nav__settings-icon { filter: invert(0); }
   [data-theme="light"] .toggle-icon { filter: invert(0); }
