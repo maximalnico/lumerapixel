@@ -273,13 +273,16 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   .toggle-btn.is-active .toggle-label { opacity: 1; }
   .lp-nav__burger {
     display: none;
-    flex-direction: column;
-    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    align-self: stretch;
     cursor: pointer;
-    padding: 0.4rem;
+    padding: 0.25rem;
     border-radius: 7px;
     transition: background var(--quick);
     flex-shrink: 0;
+    box-sizing: border-box;
   }
   .lp-nav__burger-icon {
     width: 27px;
