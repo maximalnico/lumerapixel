@@ -424,10 +424,12 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 </style>
 
 <script>
+  const nav = document.querySelector('.lp-nav') as HTMLElement;
   const burger = document.getElementById('navBurger');
   const links = document.getElementById('navLinks');
   const rowBottom = document.querySelector('.lp-nav__row--bottom') as HTMLElement;
-  burger?.addEventListener('click', () => {
+  burger?.addEventListener('click', (e) => {
+    e.stopPropagation();
     const open = burger.classList.toggle('is-open');
     rowBottom?.classList.toggle('is-open', open);
     burger.setAttribute('aria-expanded', String(open));
@@ -550,6 +552,11 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
       const clickedBtn = allSettingsBtns.some(btn => btn?.contains(e.target as Node));
       if (!navControls.contains(e.target as Node) && !clickedBtn) {
         closeSettings();
+      }
+    }
+    if (rowBottom?.classList.contains('is-open')) {
+      if (!nav?.contains(e.target as Node)) {
+        closeBurger();
       }
     }
   });
