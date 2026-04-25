@@ -305,13 +305,18 @@ const schema = {
     }
     .hero__stats-sep {
       width: 2.7px;
-      height: 50%;
+      height: 1.4rem;
       align-self: center;
       background: linear-gradient(to bottom, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff);
       opacity: 0.7;
     }
-    .hero__stats-num { font-size: clamp(0.9rem, 3.8vw, 1.15rem); }
-    .hero__stats-label { font-size: 0.52rem; letter-spacing: 0.08em; }
+    .hero__stats-item {
+      flex-direction: row;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .hero__stats-num { font-size: 0.8rem; }
+    .hero__stats-label { font-size: 0.7rem; letter-spacing: 0.06em; }
     .scroll-hint {
       position: static;
       transform: none;
