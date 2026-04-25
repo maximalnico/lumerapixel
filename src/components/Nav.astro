@@ -355,7 +355,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
       pointer-events: none;
       flex-direction: column;
       gap: 4px;
-      padding: 4px;
+      padding: 0;
       background: transparent;
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
@@ -369,11 +369,13 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
       opacity: 1;
       transform: translateY(0);
       pointer-events: all;
+      padding: 4px;
       border-top: 2.7px solid var(--glass-border);
     }
     .lp-nav__pill { flex: none; height: 3rem; }
     .toggle-btn { align-items: center; justify-content: center; min-width: 0; min-height: 0; padding: 0; }
-    .toggle-icon { width: 3rem; height: 3rem; flex-shrink: 0; }
+    .toggle-icon { width: 1.8rem; height: 1.8rem; flex-shrink: 0; }
+    .toggle-label { font-size: 1rem; }
     .lp-nav__links {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -388,6 +390,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
       height: 3rem;
       align-content: center;
       padding: 0.5rem 0.4rem;
+      font-size: 1rem;
       letter-spacing: 0.08em;
       border-radius: 7px;
       text-align: center;
