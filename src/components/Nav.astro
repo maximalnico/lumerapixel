@@ -296,8 +296,25 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   .lp-nav__burger.is-open .lp-nav__burger-icon { transform: rotate(90deg); }
 
   @media (max-width: 640px) {
-    .lp-nav { left: var(--gap-xs); right: var(--gap-xs); top: var(--gap-xs); justify-content: stretch; }
-    .lp-nav__island { flex: 1; padding: 0.35rem 0.9rem; }
+    .lp-nav {
+      left: var(--gap-xs); right: var(--gap-xs); top: var(--gap-xs);
+      flex-direction: column;
+      align-items: stretch;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 2.7px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      border-radius: 7px;
+    }
+    .lp-nav__island {
+      flex: 1; padding: 0.35rem 0.9rem;
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: none;
+      box-shadow: none;
+    }
     .lp-nav__row--top {
       justify-content: space-between;
       align-items: center;
@@ -326,10 +343,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
       pointer-events: all;
     }
     .lp-nav__controls {
-      position: fixed;
-      top: calc(var(--gap-xs) + var(--nav-h) + 0.4rem);
-      left: var(--gap-xs);
-      right: var(--gap-xs);
+      position: static;
       width: auto;
       height: auto;
       overflow: hidden;
@@ -341,6 +355,13 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
       flex-direction: column;
       gap: 4px;
       padding: 4px;
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: none;
+      border-top: 2.7px solid var(--glass-border);
+      box-shadow: none;
+      border-radius: 0;
     }
     .lp-nav__controls.is-open {
       max-height: 400px;
