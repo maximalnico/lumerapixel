@@ -310,12 +310,21 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     .lp-nav__logo { height: 1.8rem; }
     .lp-nav__burger { display: flex; }
     .lp-nav__row--bottom {
-      display: none;
-      top: calc(var(--gap-xs) + var(--nav-h) + 0.4rem);
-      left: var(--gap-xs);
-      right: var(--gap-xs);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, transform 0.3s ease;
+      pointer-events: none;
     }
-    .lp-nav__row--bottom.is-open { display: flex; }
+    .lp-nav__row--bottom.is-open {
+      max-height: 400px;
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
     .lp-nav__controls {
       position: fixed;
       top: calc(var(--gap-xs) + var(--nav-h) + 0.4rem);
