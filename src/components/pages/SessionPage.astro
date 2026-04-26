@@ -111,30 +111,32 @@ const schema = {
       <div class="session-hero__nav">
         {next ? (
           <a href={sessionPath(next.slug)} class="session-hero__nav-btn">
-            <img src="/logos/arrow-left.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
+            <img src="/logos/phosphoricons/caret-left-thin.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
             <span>{navTitle(next)}</span>
           </a>
         ) : <span />}
         {prev ? (
           <a href={sessionPath(prev.slug)} class="session-hero__nav-btn">
             <span>{navTitle(prev)}</span>
-            <img src="/logos/arrow-right.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
+            <img src="/logos/phosphoricons/caret-right-thin.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
           </a>
         ) : <span />}
       </div>
 
       <!-- Bild links + Text rechts -->
       <div class="session-hero__body">
-        <div class="session-hero__preview" id="heroSlideshow">
-          {photos.slice(0, 8).map((src, i) => (
-            <img
-              src={src}
-              alt={title}
-              class={`hero-slide ${i === 0 ? 'is-active' : ''}`}
-              loading={i === 0 ? 'eager' : 'lazy'}
-              decoding="async"
-            />
-          ))}
+        <div class="session-hero__preview-wrap">
+          <div class="session-hero__preview" id="heroSlideshow">
+            {photos.slice(0, 8).map((src, i) => (
+              <img
+                src={src}
+                alt={title}
+                class={`hero-slide ${i === 0 ? 'is-active' : ''}`}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+            ))}
+          </div>
         </div>
         <div class="session-hero__text">
           <div class="session-hero__divider" aria-hidden="true"></div>
@@ -177,15 +179,15 @@ const schema = {
 
     <!-- Close oben rechts -->
     <button class="lightbox__close" id="lbClose" aria-label="Schließen">
-      <img src="/logos/cross.svg" alt="" aria-hidden="true" />
+      <img src="/logos/phosphoricons/x-thin.svg" alt="" aria-hidden="true" class="lb-icon" />
     </button>
 
     <!-- Prev/Next seitlich -->
     <button class="lightbox__btn lightbox__btn--prev" id="lbPrev" aria-label="Vorheriges Foto">
-      <img src="/logos/arrow-left.svg" alt="" aria-hidden="true" />
+      <img src="/logos/phosphoricons/caret-left-thin.svg" alt="" aria-hidden="true" class="lb-icon" />
     </button>
     <button class="lightbox__btn lightbox__btn--next" id="lbNext" aria-label="Nächstes Foto">
-      <img src="/logos/arrow-right.svg" alt="" aria-hidden="true" />
+      <img src="/logos/phosphoricons/caret-right-thin.svg" alt="" aria-hidden="true" class="lb-icon" />
     </button>
 
     <div class="lightbox__stage">
@@ -256,17 +258,24 @@ const schema = {
       max-width: 100%;
     }
     .session-hero__nav-btn span { display: none; }
+    .session-hero__nav { margin-top: var(--gap-md); }
     .session-hero__divider {
       align-self: center !important;
     }
   }
   /* Vorschaubild links */
+  .session-hero__preview-wrap {
+    padding: 2.7px;
+    background: var(--rainbow);
+    border-radius: 7px;
+    flex-shrink: 0;
+  }
   .session-hero__preview {
-    border-radius: 14px;
+    border-radius: 7px;
     overflow: hidden;
     aspect-ratio: 4/3;
-    border: 1.5px solid var(--accent);
     position: relative;
+    background: var(--bg);
   }
   .hero-slide {
     position: absolute;
@@ -296,23 +305,23 @@ const schema = {
     gap: var(--gap-md);
   }
   .session-hero__nav-btn {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
-    font-size: clamp(0.82rem, 1.1vw, 1rem);
+    font-size: clamp(0.78rem, 1vw, 0.9rem);
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--text-muted);
+    letter-spacing: 0.16em;
+    color: var(--text);
     text-decoration: none;
-    transition: color var(--quick), border-color var(--quick), background var(--quick);
     max-width: 36%;
-    padding: 0.55rem 1.1rem;
-    border: 1.5px solid var(--text-muted);
-    border-radius: 10px;
-    background: var(--glass-bg);
+    padding: 0.55rem 1.4rem;
+    border: 2.7px solid var(--text-muted);
+    border-radius: 7px;
+    background: transparent;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    overflow: hidden;
+    cursor: pointer;
+    transition: background var(--quick), border-color var(--quick);
   }
   .session-hero__nav-btn span {
     overflow: hidden;
@@ -323,37 +332,40 @@ const schema = {
     width: 18px;
     height: 18px;
     flex-shrink: 0;
-    opacity: 0.75;
-    filter: var(--icon-filter, invert(1));
-    transition: opacity var(--quick), filter var(--quick);
+    filter: invert(1);
+    opacity: 0.7;
   }
   .session-hero__nav-btn:hover {
-    color: var(--accent);
-    border-color: var(--accent);
-    background: rgba(128,128,128,0.08);
-  }
-  .session-hero__nav-btn:hover .session-hero__nav-icon {
-    opacity: 1;
-    filter: var(--icon-filter-accent, invert(1));
-    opacity: 1;
+    border-color: var(--text);
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
   .session-hero__meta {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: 0.5rem;
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
     font-size: 1.05rem;
     text-transform: uppercase;
     letter-spacing: 0.14em;
     color: var(--text-muted);
   }
-  .session-hero__cat { color: var(--accent); }
+  .session-hero__cat {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 7px;
+    border: 2.7px solid var(--text-muted);
+    color: var(--text-muted);
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
+  }
+  :global([data-theme="dark"]) .session-hero__cat {
+    background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
+  }
   .session-hero__sep { opacity: 0.35; }
 
   .session-hero__title {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
     font-size: clamp(2.8rem, 8vw, 7rem);
     line-height: 0.92;
@@ -362,7 +374,7 @@ const schema = {
     max-width: 22ch;
   }
   .session-hero__sub {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
     font-size: clamp(1.1rem, 1.9vw, 1.4rem);
     color: var(--text-muted);
@@ -372,9 +384,9 @@ const schema = {
   }
   .session-hero__divider {
     width: clamp(3rem, 8vw, 6rem);
-    height: 2px;
-    background: var(--accent);
-    border-radius: 1px;
+    height: 2.7px;
+    background: var(--rainbow);
+    border-radius: 7px;
     opacity: 0.75;
     align-self: flex-end;
   }
@@ -392,17 +404,31 @@ const schema = {
     display: block;
     margin-bottom: 0.5rem;
     cursor: zoom-in;
-    border-radius: 8px;
+    border-radius: 7px;
     overflow: hidden;
     padding: 0;
     position: relative;
     transition: transform var(--flow);
-    border: 1.5px solid transparent;
+  }
+  .photo-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 7px;
+    padding: 2.7px;
+    background: var(--rainbow);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity var(--quick);
+    z-index: 2;
+    pointer-events: none;
   }
   .photo-item:hover {
     transform: translateY(-2px);
-    border-color: var(--accent);
   }
+  .photo-item:hover::before { opacity: 1; }
   .photo-item img {
     width: 100%; height: auto; display: block;
     transition: filter var(--flow);
@@ -449,7 +475,7 @@ const schema = {
     max-width: 100%;
     max-height: 88vh;
     object-fit: contain;
-    border-radius: 6px;
+    border-radius: 7px;
     opacity: 0;
     transition: opacity 0.25s ease;
     filter: none;
@@ -464,8 +490,8 @@ const schema = {
   }
   .lightbox__spinner-ring {
     width: 36px; height: 36px;
-    border-radius: 50%;
-    border: 2px solid rgba(128,128,128,0.15);
+    border-radius: 7px;
+    border: 2.7px solid rgba(128,128,128,0.15);
     border-top-color: var(--accent);
     animation: spin 0.8s linear infinite;
   }
@@ -474,21 +500,19 @@ const schema = {
   /* Counter — groß, oben mittig, glass */
   .lightbox__counter {
     position: absolute;
-    top: var(--gap-md);
+    top: var(--gap-sm);
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
     font-size: clamp(0.85rem, 1.6vw, 1.2rem);
     letter-spacing: 0.08em;
     color: var(--text);
     white-space: nowrap;
-    background: rgba(0,0,0,0.27);
-    backdrop-filter: blur(27px);
-    -webkit-backdrop-filter: blur(27px);
-    border: 2.7px solid rgba(0,0,0,0.37);
-    border-radius: 12px;
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
+    border: 2.7px solid var(--text);
+    border-radius: 7px;
     padding: 0.45rem 1.2rem;
   }
 
@@ -499,68 +523,57 @@ const schema = {
     transform: translateY(-50%);
     z-index: 2;
     cursor: pointer;
-    background: rgba(0,0,0,0.27);
-    border: 2.7px solid rgba(0,0,0,0.37);
-    border-radius: 12px;
+    background: transparent;
+    border: 2.7px solid var(--text-muted);
+    border-radius: 7px;
     padding: 0.9rem 0.75rem;
     transition: background var(--quick), border-color var(--quick);
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .lightbox__btn img {
+  .lb-icon {
     width: 28px; height: 28px;
     filter: var(--icon-filter, invert(1));
     opacity: 0.8;
-    transition: opacity var(--quick), filter var(--quick);
   }
   .lightbox__btn:hover {
-    background: rgba(128,128,128,0.12);
-    border-color: var(--accent);
+    border-color: var(--text);
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
-  .lightbox__btn:hover img {
-    opacity: 1;
-    filter: var(--icon-filter-accent, invert(1));
-  }
-  .lightbox__btn--prev { left: var(--gap-md); }
-  .lightbox__btn--next { right: var(--gap-md); }
+  .lightbox__btn--prev { left: var(--page-x); }
+  .lightbox__btn--next { right: var(--page-x); }
 
   /* Close — oben rechts */
   .lightbox__close {
     position: absolute;
-    top: var(--gap-md);
-    right: var(--gap-md);
+    top: var(--gap-sm);
+    right: var(--page-x);
     z-index: 2;
     cursor: pointer;
-    background: rgba(0,0,0,0.27);
-    border: 2.7px solid rgba(0,0,0,0.37);
-    border-radius: 10px;
+    background: transparent;
+    border: 2.7px solid var(--text-muted);
+    border-radius: 7px;
     padding: 0.6rem;
     transition: background var(--quick), border-color var(--quick);
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .lightbox__close img {
+  .lightbox__close .lb-icon {
     width: 22px; height: 22px;
-    filter: var(--icon-filter, invert(1));
     opacity: 0.75;
-    transition: opacity var(--quick), filter var(--quick);
   }
   .lightbox__close:hover {
-    background: rgba(128,128,128,0.12);
-    border-color: var(--accent);
-  }
-  .lightbox__close:hover img {
-    opacity: 1;
-    filter: var(--icon-filter-accent, invert(1));
+    border-color: var(--text);
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
 
   /* ── FOOTER ── */
   .lp-footer { padding: var(--gap-lg) var(--page-x) var(--gap-md); }
   .lp-footer__line {
     height: 1px;
-    background: var(--accent);
+    background: var(--rainbow);
     opacity: 0.5;
     margin-bottom: var(--gap-md);
   }
@@ -569,21 +582,24 @@ const schema = {
     align-items: center; gap: var(--gap-sm); text-align: center;
   }
   .lp-footer__copy {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
     font-size: 0.75rem;
     color: rgba(255,255,255,0.45);
     letter-spacing: 0.04em;
   }
   .lp-footer__mn {
-    color: var(--accent);
     font-weight: 277;
     transition: opacity var(--quick);
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   .lp-footer__mn:hover { opacity: 0.75; }
   .lp-footer__legal {
     display: flex; gap: 0.75rem; align-items: center;
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
     font-size: 0.68rem;
     color: var(--text-dim);
@@ -592,15 +608,16 @@ const schema = {
   .lp-footer__legal a:hover { color: var(--text-muted); }
 
   :global([data-theme="dark"]) {
-    --accent: #66ff00;
     --icon-filter: invert(1);
-    --icon-filter-accent: invert(54%) sepia(100%) saturate(500%) hue-rotate(60deg) brightness(1.1);
+    --icon-filter-accent: invert(54%) sepia(100%) saturate(500%) hue-rotate(72deg) brightness(1.1);
   }
   :global([data-theme="light"]) {
-    --accent: #9900ff;
     --icon-filter: invert(0);
     --icon-filter-accent: invert(20%) sepia(100%) saturate(1000%) hue-rotate(270deg) brightness(0.9);
   }
+  :global([data-theme="light"]) .session-hero__nav-btn { border-color: rgba(10,10,15,0.35); color: rgba(10,10,15,0.85); }
+  :global([data-theme="light"]) .session-hero__nav-icon { filter: invert(0); }
+  :global([data-theme="dark"]) .session-hero__nav-btn:hover { background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32)); }
   :global([data-theme="light"]) .session-hero__title { color: var(--text); }
   :global([data-theme="light"]) .glass-box {
     background: rgba(255,255,255,0.27);
@@ -609,16 +626,12 @@ const schema = {
   :global([data-theme="light"]) .lightbox__backdrop {
     background: rgba(255,255,255,0.15);
   }
-  :global([data-theme="light"]) .lightbox__counter,
-  :global([data-theme="light"]) .lightbox__btn,
-  :global([data-theme="light"]) .lightbox__close {
-    background: rgba(255,255,255,0.27);
-    border-color: rgba(255,255,255,0.37);
+  :global([data-theme="dark"]) .lightbox__counter {
+    background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
   }
-  :global([data-theme="light"]) .lightbox__btn:hover,
-  :global([data-theme="light"]) .lightbox__close:hover {
-    background: rgba(128,128,128,0.12);
-    border-color: var(--accent);
+  :global([data-theme="dark"]) .lightbox__btn:hover,
+  :global([data-theme="dark"]) .lightbox__close:hover {
+    background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
   }
 
 </style>

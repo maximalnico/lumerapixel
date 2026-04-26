@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 657.94 95.18">
   <defs>
+      <linearGradient id="rainbow" gradientUnits="userSpaceOnUse" x1="658.89" y1="88.10" x2="-0.95" y2="7.08">
+    <stop offset="0%" stop-color="#ff0000"/>
+    <stop offset="20%" stop-color="#ff7700"/>
+    <stop offset="40%" stop-color="#ffee00"/>
+    <stop offset="60%" stop-color="#00cc00"/>
+    <stop offset="80%" stop-color="#0088ff"/>
+    <stop offset="100%" stop-color="#8800ff"/>
+  </linearGradient>
     <style>
       .cls-1 {
         stroke-width: 0px;
-        fill: #9900ff;
+        fill: url(#rainbow);
       }
     </style>
   </defs>

@@ -4,7 +4,7 @@ const currentPath = Astro.url.pathname;
 const lang = getLangFromUrl(Astro.url);
 const isEN = lang === 'en';
 const home = isEN ? '/en/' : '/';
-const contact = 'mailto:nico@maximalnico.de';
+const contact = 'mailto:nico@multaenhavo.com';
 const legal = isEN ? '/en/site-notice' : '/impressum';
 const privacy = isEN ? '/en/privacy-policy' : '/datenschutz';
 const isHomActive = currentPath === '/' || currentPath === '/en/' || currentPath === '/en';
@@ -15,15 +15,14 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   <div class="lp-nav__island">
     <div class="lp-nav__row lp-nav__row--top">
       <a href={home} class="lp-nav__brand" aria-label="LumeraPixel Home">
-        <img src="/logos/lplong-dark.svg" alt="LumeraPixel" class="lp-nav__logo logo-dark" />
-        <img src="/logos/lplong-light.svg" alt="LumeraPixel" class="lp-nav__logo logo-light" />
+        <img src="/logos/lplong-rainbow.svg" alt="LumeraPixel" class="lp-nav__logo" />
       </a>
       <div class="lp-nav__top-actions">
         <button class="lp-nav__settings-btn" id="settingsToggle" aria-label="Settings">
-          <img src="/logos/hiddensettings.svg" class="lp-nav__settings-icon" alt="" />
+          <img src="/logos/phosphoricons/gear-six-thin.svg" class="lp-nav__settings-icon" alt="" />
         </button>
         <button class="lp-nav__burger" id="navBurger" aria-label="Menü öffnen" aria-expanded="false">
-          <span></span><span></span><span></span>
+          <img src="/logos/phosphoricons/list.svg" class="lp-nav__burger-icon" alt="" />
         </button>
       </div>
     </div>
@@ -34,7 +33,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
         <a href={legal} class={`lp-nav__link ${isLegalActive ? 'is-active' : ''}`}>{t(lang, 'nav.legal')}</a>
         <a href={privacy} class={`lp-nav__link ${isPrivacyActive ? 'is-active' : ''}`}>{t(lang, 'nav.privacy')}</a>
         <button class="lp-nav__settings-btn lp-nav__settings-btn--desktop" id="settingsToggleDesktop" aria-label="Settings">
-          <img src="/logos/hiddensettings.svg" class="lp-nav__settings-icon" alt="" />
+          <img src="/logos/phosphoricons/gear-six-thin.svg" class="lp-nav__settings-icon" alt="" />
         </button>
       </div>
     </div>
@@ -42,15 +41,15 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   <div class="lp-nav__controls" id="navControls">
     <div class="lp-nav__pill" id="themeToggle" role="group" aria-label="Theme wählen">
       <div class="toggle-indicator" id="toggleIndicator"></div>
-      <button class="toggle-btn" id="btn-dark" data-mode="dark" aria-label="Dark"><img src="/logos/darkmode.svg" class="toggle-icon" alt="" /></button>
-      <button class="toggle-btn" id="btn-auto" data-mode="auto" aria-label="Auto"><img src="/logos/autosetting.svg" class="toggle-icon" alt="" /></button>
-      <button class="toggle-btn" id="btn-light" data-mode="light" aria-label="Light"><img src="/logos/lightmode.svg" class="toggle-icon" alt="" /></button>
+      <button class="toggle-btn" id="btn-dark" data-mode="dark" aria-label="Dark"><img src="/logos/phosphoricons/moon-thin.svg" class="toggle-icon" alt="" /></button>
+      <button class="toggle-btn" id="btn-auto" data-mode="auto" aria-label="Auto"><img src="/logos/phosphoricons/sun-horizon-thin.svg" class="toggle-icon" alt="" /></button>
+      <button class="toggle-btn" id="btn-light" data-mode="light" aria-label="Light"><img src="/logos/phosphoricons/sun-thin.svg" class="toggle-icon" alt="" /></button>
     </div>
     <div class="lp-nav__pill" id="langToggle" role="group" aria-label="Language">
       <div class="toggle-indicator" id="langIndicator"></div>
-      <a href="/" class="toggle-btn" id="btn-lang-de" data-lang="de" aria-label="Deutsch"><img src="/logos/lang-de.svg" class="toggle-icon" alt="" /></a>
-      <button class="toggle-btn" id="btn-lang-auto" data-lang="auto" aria-label="Auto"><img src="/logos/autosetting.svg" class="toggle-icon" alt="" /></button>
-      <a href="/en/" class="toggle-btn" id="btn-lang-en" data-lang="en" aria-label="English"><img src="/logos/lang-en.svg" class="toggle-icon" alt="" /></a>
+      <a href="/" class="toggle-btn" id="btn-lang-de" data-lang="de" aria-label="Deutsch"><span class="toggle-label">DE</span></a>
+      <button class="toggle-btn" id="btn-lang-auto" data-lang="auto" aria-label="Auto"><img src="/logos/phosphoricons/translate-thin.svg" class="toggle-icon" alt="" /></button>
+      <a href="/en/" class="toggle-btn" id="btn-lang-en" data-lang="en" aria-label="English"><span class="toggle-label">EN</span></a>
     </div>
   </div>
 </nav>
@@ -80,12 +79,12 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     align-items: stretch;
     gap: 0;
     padding: 0.55rem 1.4rem;
-    background: rgba(6,7,8,0.82);
-    backdrop-filter: blur(27px);
-    -webkit-backdrop-filter: blur(27px);
-    border-radius: 14px;
-    border: 2.7px solid rgba(0,0,0,0.37);
-    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.27);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-radius: 7px;
+    border: 2.7px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
     transition: background 0.3s ease, border-color 0.3s ease;
     align-self: auto;
     position: relative;
@@ -98,7 +97,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   .lp-nav__row--top {
     justify-content: center;
     padding-bottom: 0.4rem;
-    border-bottom: 1px solid var(--accent);
+    border-bottom: 2.7px solid transparent;
+    border-image: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff) 1;
     margin-bottom: 0.3rem;
   }
   .lp-nav__row--bottom {
@@ -119,19 +119,25 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     justify-content: center;
   }
   .lp-nav__link {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
-    font-size: clamp(0.88rem, 1.1vw, 1.05rem);
+    font-size: clamp(0.78rem, 1vw, 0.9rem);
     text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: rgba(255,255,255,0.9);
-    padding: 0.25rem 0.75rem;
-    border-radius: 6px;
-    transition: color var(--quick), background var(--quick);
+    letter-spacing: 0.16em;
+    color: var(--text);
+    padding: 0.55rem 1.4rem;
+    border-radius: 7px;
+    background: transparent;
+    transition: background var(--quick);
     white-space: nowrap;
+    cursor: pointer;
   }
-  .lp-nav__link:hover { color: var(--accent); background: rgba(128,128,128,0.08); }
-  .lp-nav__link.is-active { color: var(--accent); }
+  .lp-nav__link:hover {
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
+  }
+  .lp-nav__link.is-active {
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
+  }
 
   /* Desktop: top-actions (Mobile-only) verstecken */
   .lp-nav__top-actions { display: none; }
@@ -140,30 +146,31 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     display: flex;
     align-items: center;
     justify-content: center;
-    aspect-ratio: 1;
-    align-self: stretch;
     cursor: pointer;
-    border-radius: 6px;
-    padding: 0.25rem;
+    border-radius: 7px;
+    padding: 0.4rem;
     flex-shrink: 0;
     transition: background var(--quick);
-    box-sizing: border-box;
+    background: transparent;
   }
-  .lp-nav__settings-btn:hover { background: rgba(128,128,128,0.12); }
+  .lp-nav__settings-btn:hover {
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
+  }
+  .lp-nav__settings-btn.is-active {
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
+  }
   .lp-nav__settings-icon {
     width: 27px;
     height: 27px;
     display: block;
-    filter: invert(39%) sepia(97%) saturate(600%) hue-rotate(72deg) brightness(1.1);
-    opacity: 1;
+    filter: invert(1);
+    opacity: 0.8;
     max-width: none !important;
     max-height: none !important;
     object-fit: contain;
-    transition: opacity 0.2s, filter 0.2s, transform 0.3s ease;
+    transition: transform 0.3s ease;
   }
-  .lp-nav__settings-btn.is-active .lp-nav__settings-icon {
-    transform: rotate(90deg);
-  }
+  .lp-nav__settings-btn.is-active .lp-nav__settings-icon { transform: rotate(90deg); }
   .lp-nav__controls {
     display: flex;
     flex-direction: column;
@@ -172,12 +179,12 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     width: 12rem;
     height: var(--nav-h);
     box-sizing: border-box;
-    background: rgba(6,7,8,0.82);
-    backdrop-filter: blur(27px);
-    -webkit-backdrop-filter: blur(27px);
-    border-radius: 14px;
-    border: 2.7px solid rgba(0,0,0,0.37);
-    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.27);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-radius: 7px;
+    border: 2.7px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
     transition: background 0.3s ease, border-color 0.3s ease, opacity 0.2s ease;
     position: fixed;
     top: var(--gap-sm);
@@ -194,13 +201,13 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     flex: 1;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: stretch;
     padding: 3px;
     gap: 0;
     position: relative;
     box-sizing: border-box;
-    background: rgba(255,255,255,0.06);
-    border-radius: 9px;
+    background: transparent;
+    border-radius: 7px;
     min-height: 0;
   }
   .toggle-indicator {
@@ -208,10 +215,9 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     top: 3px;
     bottom: 3px;
     border-radius: 7px;
-    transition: left 0.22s ease, width 0.22s ease, background 0.22s ease, border 0.22s ease;
+    transition: left 0.22s ease, width 0.22s ease;
     pointer-events: none;
-    background: rgba(128,128,128,0.18);
-    border: 1.5px solid rgba(128,128,128,0.3);
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
     z-index: 0;
   }
   .toggle-btn {
@@ -220,15 +226,17 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     position: relative;
     z-index: 1;
     display: flex;
-    align-items: stretch;
+    align-items: center;
     justify-content: center;
     text-decoration: none;
     border-radius: 7px;
     padding: 6px;
     box-sizing: border-box;
     min-width: 2.4rem;
-    min-height: 2rem;
+    min-height: 0;
+    transition: background var(--quick);
   }
+  .toggle-btn:hover { background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18)); }
   a.toggle-btn { text-decoration: none; }
   .toggle-icon {
     width: 100%;
@@ -239,37 +247,76 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     object-fit: contain;
     opacity: 0.5;
     filter: invert(1);
-    transition: opacity 0.2s, filter 0.2s;
+    transition: opacity 0.2s;
     pointer-events: none;
     flex-shrink: 0;
   }
+  .toggle-btn.is-active .toggle-icon { opacity: 1; }
+  .toggle-label {
+    font-family: 'Switzer', sans-serif;
+    font-weight: 277;
+    font-size: 1.3rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #ffffff;
+    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    pointer-events: none;
+    transition: opacity var(--quick);
+  }
+  .toggle-btn.is-active .toggle-label { opacity: 1; }
   .lp-nav__burger {
     display: none;
-    flex-direction: column;
-    gap: 5px;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     padding: 0.4rem;
-    border-radius: 6px;
+    border-radius: 7px;
     transition: background var(--quick);
     flex-shrink: 0;
   }
-  .lp-nav__burger span {
-    display: block; width: 20px; height: 2px;
-    background: var(--accent);
-    border-radius: 1px;
-    transition: transform var(--flow), opacity var(--quick);
+  .lp-nav__burger-icon {
+    width: 27px;
+    height: 27px;
+    display: block;
+    filter: invert(1);
+    opacity: 0.8;
+    transition: transform 0.3s ease;
   }
-  .lp-nav__burger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .lp-nav__burger.is-open span:nth-child(2) { opacity: 0; }
-  .lp-nav__burger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .lp-nav__burger:hover,
+  .lp-nav__burger.is-open {
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
+  }
+  .lp-nav__burger.is-open .lp-nav__burger-icon { transform: rotate(90deg); }
 
   @media (max-width: 640px) {
-    .lp-nav { left: var(--gap-xs); right: var(--gap-xs); top: var(--gap-xs); justify-content: stretch; }
-    .lp-nav__island { flex: 1; padding: 0.35rem 0.9rem; }
+    .lp-nav {
+      left: var(--gap-xs); right: var(--gap-xs); top: var(--gap-xs);
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 2.7px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      border-radius: 7px;
+    }
+    .lp-nav__island {
+      flex: 1; padding: 0;
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: none;
+      box-shadow: none;
+    }
     .lp-nav__row--top {
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 0;
+      padding: 0.35rem 0.9rem;
       border-bottom: none;
       margin-bottom: 0;
     }
@@ -278,118 +325,126 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     .lp-nav__logo { height: 1.8rem; }
     .lp-nav__burger { display: flex; }
     .lp-nav__row--bottom {
-      display: none;
-      top: calc(var(--gap-xs) + var(--nav-h) + 0.4rem);
-      left: var(--gap-xs);
-      right: var(--gap-xs);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-height: 0;
+      max-height: 0;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, transform 0.3s ease;
+      pointer-events: none;
     }
-    .lp-nav__row--bottom.is-open { display: flex; }
+    .lp-nav__row--bottom.is-open {
+      max-height: 400px;
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
     .lp-nav__controls {
-      position: fixed;
-      top: calc(var(--gap-xs) + var(--nav-h) + 0.4rem);
-      left: var(--gap-xs);
-      right: var(--gap-xs);
+      display: flex;
+      position: static;
       width: auto;
       height: auto;
+      min-height: 0;
+      overflow: hidden;
+      max-height: 0;
       opacity: 0;
+      transform: translateY(-8px);
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, transform 0.3s ease;
       pointer-events: none;
       flex-direction: column;
       gap: 4px;
-      padding: 4px;
+      padding: 0;
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+      z-index: auto;
     }
-    .lp-nav__controls.is-open { opacity: 1; pointer-events: all; }
-    .lp-nav__pill { flex: none; height: 3.5rem; }
+    .lp-nav__controls.is-open {
+      max-height: 400px;
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+      padding: 4px;
+      border-top: 2.7px solid var(--glass-border);
+    }
+    .lp-nav__pill { flex: none; height: 3rem; }
     .toggle-btn { align-items: center; justify-content: center; min-width: 0; min-height: 0; padding: 0; }
-    .toggle-icon { width: 3rem; height: 3rem; flex-shrink: 0; }
+    .toggle-icon { width: 1.8rem; height: 1.8rem; flex-shrink: 0; }
+    .toggle-label { font-size: 1rem; }
     .lp-nav__links {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 4px;
       padding: 4px;
-      border-top: none;
+      border-top: 2.7px solid var(--glass-border);
       margin-top: 0.4rem;
       width: 100%;
-      background: rgba(6,7,8,0.82);
-      backdrop-filter: blur(27px);
-      -webkit-backdrop-filter: blur(27px);
-      border-radius: 14px;
-      border: 2.7px solid rgba(0,0,0,0.37);
-      box-shadow: 0 8px 32px 0 rgba(31,38,135,0.27);
       box-sizing: border-box;
     }
     .lp-nav__link {
       height: 3rem;
       align-content: center;
       padding: 0.5rem 0.4rem;
+      font-size: 1rem;
       letter-spacing: 0.08em;
-      border-radius: 9px;
+      border-radius: 7px;
       text-align: center;
-      background: rgba(255,255,255,0.06);
+      background: transparent;
     }
   }
 </style>
 
 <style is:global>
-  .logo-light { display: none; }
-  [data-theme="light"] .logo-dark { display: none; }
-  [data-theme="light"] .logo-light { display: block; }
-  [data-theme="light"] .lp-nav__island { background: rgba(235,240,245,0.92); border-color: rgba(200,210,220,0.6); }
-  [data-theme="dark"] .lp-nav__island { background: rgba(6,7,8,0.82); border-color: rgba(0,0,0,0.37); }
-  [data-theme="light"] .lp-nav__link { color: rgba(10,10,15,0.8); }
-  [data-theme="dark"] .lp-nav__link { color: rgba(255,255,255,0.9); }
-  [data-theme="light"] .lp-nav__link:hover { color: var(--accent); }
-  [data-theme="dark"] .lp-nav__link:hover { color: var(--accent); }
-  [data-theme="light"] .lp-nav__link.is-active { color: var(--accent); }
-  [data-theme="dark"] .lp-nav__link.is-active { color: var(--accent); }
-  [data-theme="light"] .lp-nav__links { background: rgba(235,240,245,0.92); border-color: rgba(200,210,220,0.6); }
-  [data-theme="light"] .lp-nav__controls { background: rgba(235,240,245,0.92); border-color: rgba(200,210,220,0.6); }
-  [data-theme="dark"] .lp-nav__controls { background: rgba(6,7,8,0.82); border-color: rgba(0,0,0,0.37); }
-  [data-theme="light"] .lp-nav__pill { background: rgba(0,0,0,0.06); }
-  [data-theme="dark"] .lp-nav__pill { background: rgba(255,255,255,0.06); }
+  [data-theme="light"] .lp-nav__link { color: rgba(10,10,15,0.85); }
+  [data-theme="light"] .lp-nav__link:hover,
+  [data-theme="light"] .lp-nav__link.is-active { background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18)); }
+  [data-theme="dark"] .lp-nav__link:hover,
+  [data-theme="dark"] .lp-nav__link.is-active { background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32)); }
+  [data-theme="dark"] .lp-nav__settings-btn:hover,
+  [data-theme="dark"] .lp-nav__settings-btn.is-active { background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32)); }
+  [data-theme="light"] .lp-nav__settings-btn:hover,
+  [data-theme="light"] .lp-nav__settings-btn.is-active { background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18)); }
+  [data-theme="dark"] .toggle-indicator {
+    background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
+  }
   [data-theme="dark"] .toggle-btn { color: rgba(255,255,255,0.6); }
+  [data-theme="dark"] .toggle-btn:hover { background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32)); }
   [data-theme="light"] .toggle-btn { color: rgba(10,10,15,0.6); }
-  [data-theme="light"] .lp-nav__burger span { background: rgba(10,10,15,0.55); }
+  [data-theme="dark"] .lp-nav__burger:hover,
+  [data-theme="dark"] .lp-nav__burger.is-open { background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32)); }
+  [data-theme="light"] .lp-nav__burger-icon { filter: invert(0); }
   [data-theme="light"] .lp-nav__settings-icon { filter: invert(0); }
-  [data-theme="dark"] .lp-nav__burger span { background: rgba(255,255,255,0.55); }
+  [data-theme="light"] .toggle-icon { filter: invert(0); }
+  [data-theme="light"] .toggle-label { color: #0a0a0f; }
 </style>
 
 <script>
+  const nav = document.querySelector('.lp-nav') as HTMLElement;
   const burger = document.getElementById('navBurger');
   const links = document.getElementById('navLinks');
   const rowBottom = document.querySelector('.lp-nav__row--bottom') as HTMLElement;
-  burger?.addEventListener('click', () => {
+  burger?.addEventListener('click', (e) => {
+    e.stopPropagation();
     const open = burger.classList.toggle('is-open');
     rowBottom?.classList.toggle('is-open', open);
     burger.setAttribute('aria-expanded', String(open));
+    if (open) closeSettings();
   });
 
-  const ACCENT_DARK = '#66ff00';
-  const ACCENT_LIGHT = '#9900ff';
   const ind = document.getElementById('toggleIndicator') as HTMLElement;
   const btns = ['dark','auto','light'].map(m => document.getElementById('btn-' + m) as HTMLElement);
 
-  function getNeutralFilter() {
-    return document.documentElement.getAttribute('data-theme') === 'light' ? 'invert(0)' : 'invert(1)';
-  }
-  function getAccentFilter() {
-    return document.documentElement.getAttribute('data-theme') === 'light'
-      ? 'invert(15%) sepia(100%) saturate(3000%) hue-rotate(260deg) brightness(0.8)'
-      : 'invert(39%) sepia(97%) saturate(600%) hue-rotate(72deg) brightness(1.1)';
-  }
-  function refreshIcons() {
-    const f = getNeutralFilter();
-    document.querySelectorAll('.toggle-icon').forEach(el => {
-      (el as HTMLImageElement).style.filter = f;
-      (el as HTMLImageElement).style.opacity = '0.5';
-    });
-  }
   function applyTheme(mode: string) {
     const html = document.documentElement;
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const theme = mode === 'auto' ? (prefersDark ? 'dark' : 'light') : mode;
     html.setAttribute('data-theme', theme);
     (window as any).__updateFavicon?.(theme);
-    refreshIcons();
     updateToggle(currentMode, false);
     updateLangToggle(currentLangMode);
   }
@@ -403,18 +458,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     ind.style.width = btnSize + 'px';
     ind.style.left = (idx * btnSize) + 'px';
     if (!animate) requestAnimationFrame(() => { ind.style.transition = ''; });
-    const accent = mode === 'dark' ? ACCENT_DARK : mode === 'light' ? ACCENT_LIGHT : null;
-    ind.style.background = accent ? accent + '33' : 'rgba(128,128,128,0.22)';
-    ind.style.border = accent ? `1px solid ${accent}66` : '1px solid transparent';
     btns.forEach((btn, i) => {
-      const isActive = i === idx;
-      const hasAccent = isActive && !!accent;
       btn.classList.toggle('is-active', i === idx);
-      const icon = btn.querySelector('.toggle-icon') as HTMLImageElement | null;
-      if (icon) {
-        icon.style.filter = hasAccent ? getAccentFilter() : getNeutralFilter();
-        icon.style.opacity = isActive ? '1' : '0.45';
-      }
     });
   }
   let currentMode = localStorage.getItem('lp-theme-mode') || 'auto';
@@ -435,20 +480,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     const btnSize = getBtnSize(pill);
     langInd.style.width = btnSize + 'px';
     langInd.style.left = (idx * btnSize) + 'px';
-    const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()
-      || (document.documentElement.getAttribute('data-theme') === 'light' ? '#9900ff' : '#66ff00');
-    const isFixed = mode === 'de' || mode === 'en';
-    langInd.style.background = isFixed ? accent + '33' : 'rgba(128,128,128,0.22)';
-    langInd.style.border = isFixed ? `1px solid ${accent}66` : '1px solid transparent';
     langBtns.forEach((btn, i) => {
-      const isActive = i === idx;
-      const hasAccent = isActive && isFixed;
       btn?.classList.toggle('is-active', i === idx);
-      const icon = btn?.querySelector('.toggle-icon') as HTMLImageElement | null;
-      if (icon) {
-        icon.style.filter = hasAccent ? getAccentFilter() : getNeutralFilter();
-        icon.style.opacity = isActive ? '1' : '0.45';
-      }
     });
   }
   let currentLangMode = localStorage.getItem('lp-lang-mode') || 'auto';
@@ -492,33 +525,21 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 
   const allSettingsBtns = [settingsBtn, settingsBtnDesktop].filter(Boolean);
 
+  function closeBurger() {
+    burger?.classList.remove('is-open');
+    rowBottom?.classList.remove('is-open');
+    burger?.setAttribute('aria-expanded', 'false');
+  }
   function openSettings() {
+    closeBurger();
     navControls?.classList.add('is-open');
-    allSettingsBtns.forEach(btn => {
-      btn?.classList.add('is-active');
-      const icon = btn?.querySelector('.lp-nav__settings-icon') as HTMLImageElement;
-      if (icon) {
-        icon.style.filter = document.documentElement.getAttribute('data-theme') === 'light'
-          ? 'invert(15%) sepia(100%) saturate(3000%) hue-rotate(260deg) brightness(0.8)'
-          : 'invert(39%) sepia(97%) saturate(600%) hue-rotate(72deg) brightness(1.1)';
-        icon.style.opacity = '1';
-      }
-    });
+    allSettingsBtns.forEach(btn => btn?.classList.add('is-active'));
     updateToggle(currentMode, false);
     updateLangToggle(currentLangMode);
   }
   function closeSettings() {
     navControls?.classList.remove('is-open');
-    allSettingsBtns.forEach(btn => {
-      btn?.classList.remove('is-active');
-      const icon = btn?.querySelector('.lp-nav__settings-icon') as HTMLImageElement;
-      if (icon) {
-        icon.style.filter = document.documentElement.getAttribute('data-theme') === 'light'
-          ? 'invert(15%) sepia(100%) saturate(3000%) hue-rotate(260deg) brightness(0.8)'
-          : 'invert(39%) sepia(97%) saturate(600%) hue-rotate(72deg) brightness(1.1)';
-        icon.style.opacity = '1';
-      }
-    });
+    allSettingsBtns.forEach(btn => btn?.classList.remove('is-active'));
   }
   allSettingsBtns.forEach(btn => {
     btn?.addEventListener('click', (e) => {
@@ -531,6 +552,11 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
       const clickedBtn = allSettingsBtns.some(btn => btn?.contains(e.target as Node));
       if (!navControls.contains(e.target as Node) && !clickedBtn) {
         closeSettings();
+      }
+    }
+    if (rowBottom?.classList.contains('is-open')) {
+      if (!nav?.contains(e.target as Node)) {
+        closeBurger();
       }
     }
   });

@@ -105,49 +105,62 @@ const schema = {
     <section class="hero" aria-label="Hero">
 
       <!-- Slideshow Box links -->
-      <div class="hero__slideshow" id="slideshow">
-        {slideshowSessions.map((s: any, i: number) => {
-          const cover = s.folder + '/000.webp';
-          return (
-            <img
-              src={cover}
-              alt=""
-              class={`hero__slide ${i === 0 ? 'is-active' : ''}`}
-              loading={i === 0 ? 'eager' : 'lazy'}
-              decoding="async"
-            />
-          );
-        })}
+      <div class="hero__slideshow-wrap">
+        <div class="hero__slideshow" id="slideshow">
+          {slideshowSessions.map((s: any, i: number) => {
+            const cover = s.folder + '/000.webp';
+            return (
+              <img
+                src={cover}
+                alt=""
+                class={`hero__slide ${i === 0 ? 'is-active' : ''}`}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+            );
+          })}
+        </div>
       </div>
 
       <!-- Text rechts -->
       <div class="hero__content">
-        <img src="/logos/lplong-dark.svg" alt="LumeraPixel" class="hero__logo hero__logo--dark" />
-        <img src="/logos/lplong-light.svg" alt="LumeraPixel" class="hero__logo hero__logo--light" />
+        <img src="/logos/lplong-rainbow.svg" alt="LumeraPixel" class="hero__logo" />
         <p class="hero__tagline">{t(lang, 'hero.tagline')}</p>
 
         <!-- Stats inline rechts -->
         <div class="hero__stats">
           <div class="hero__stats-item">
-            <span class="hero__stats-num rg">{allSessions.length}</span>
+            <span class="hero__stats-num">{allSessions.length}</span>
             <span class="hero__stats-label">{t(lang, 'stats.sessions')}</span>
           </div>
           <div class="hero__stats-sep" aria-hidden="true"></div>
           <div class="hero__stats-item">
-            <span class="hero__stats-num rg">{totalPhotos.toLocaleString('de-DE')}</span>
+            <span class="hero__stats-num">{totalPhotos.toLocaleString('de-DE')}</span>
             <span class="hero__stats-label">{t(lang, 'stats.photos')}</span>
           </div>
           <div class="hero__stats-sep" aria-hidden="true"></div>
           <div class="hero__stats-item">
-            <span class="hero__stats-num rg">{categories.length}</span>
+            <span class="hero__stats-num">{categories.length}</span>
             <span class="hero__stats-label">{t(lang, 'stats.categories')}</span>
           </div>
         </div>
 
         <!-- Scroll hint -->
         <a href="#featured" class="scroll-hint" aria-label={t(lang, 'hero.tagline')}>
-          <svg class="scroll-hint__arrow" width="52" height="52" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M6 9l6 6 6-6" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <svg class="scroll-hint__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true">
+            <defs>
+              <linearGradient id="arrowGrad" x1="0" y1="128" x2="256" y2="128" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#ff0040"/>
+                <stop offset="16.6%" stop-color="#ff8000"/>
+                <stop offset="33.3%" stop-color="#ffcc00"/>
+                <stop offset="50%" stop-color="#00e85a"/>
+                <stop offset="66.6%" stop-color="#0090ff"/>
+                <stop offset="83.3%" stop-color="#8c3fff"/>
+                <stop offset="100%" stop-color="#ff2eaa"/>
+              </linearGradient>
+            </defs>
+            <rect width="256" height="256" fill="none"/>
+            <polyline points="208 96 128 176 48 96" fill="none" stroke="url(#arrowGrad)" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
           </svg>
         </a>
       </div>
@@ -180,7 +193,7 @@ const schema = {
                 <span class="featured-card__date">{dateStr}</span>
               </div>
               <div class="featured-card__arrow" aria-hidden="true">
-                <img src="/logos/arrow-right.svg" alt="" width="18" height="18" class="featured-card__arrow-img" />
+                <svg class="featured-card__arrow-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><defs><linearGradient id="rg-fc" x1="0" y1="128" x2="256" y2="128" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#ff0000"/><stop offset="20%" stop-color="#ff7700"/><stop offset="40%" stop-color="#ffee00"/><stop offset="60%" stop-color="#00cc00"/><stop offset="80%" stop-color="#0088ff"/><stop offset="100%" stop-color="#8800ff"/></linearGradient></defs><rect width="256" height="256" fill="none"/><polyline points="96 48 176 128 96 208" fill="none" stroke="url(#rg-fc)" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/></svg>
               </div>
             </a>
           );
@@ -213,7 +226,7 @@ const schema = {
               </div>
               <div class="session-card__body glass">
                 <h3 class="session-card__title">{st(s)}</h3>
-                <span class="session-card__cat rg">{sc(s)}</span>
+                <span class="session-card__cat">{sc(s)}</span>
               </div>
             </a>
           );
@@ -269,8 +282,8 @@ const schema = {
       width: 88%;
       margin: 0 auto;
       aspect-ratio: 4/3;
-      border-width: 4px;
-      border-radius: 12px;
+      border-width: 2.7px;
+      border-radius: 7px;
     }
     .hero__content { gap: 0.27rem; margin-top: 2.7rem; align-items: center; text-align: center;}
     .hero__logo { height: clamp(1.4rem, 5.5vw, 1.9rem); }
@@ -282,8 +295,8 @@ const schema = {
     .hero__stats {
       display: flex;
       flex-direction: row !important;
-      border-radius: 10px;
-      border-width: 1.5px;
+      border-radius: 7px;
+      border-width: 2.7px;
     }
     .hero__stats-item {
       flex: 1;
@@ -291,13 +304,19 @@ const schema = {
       gap: 0.06rem;
     }
     .hero__stats-sep {
-      width: 1px;
-      height: 50%;
+      width: 2.7px;
+      height: 1.4rem;
       align-self: center;
-      background: var(--border-mid);
+      background: linear-gradient(to bottom, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff);
+      opacity: 0.7;
     }
-    .hero__stats-num { font-size: clamp(0.9rem, 3.8vw, 1.15rem); }
-    .hero__stats-label { font-size: 0.52rem; letter-spacing: 0.08em; }
+    .hero__stats-item {
+      flex-direction: row;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .hero__stats-num { font-size: 0.8rem; }
+    .hero__stats-label { font-size: 0.7rem; letter-spacing: 0.06em; }
     .scroll-hint {
       position: static;
       transform: none;
@@ -312,12 +331,18 @@ const schema = {
   }
 
   /* Slideshow Box */
+  .hero__slideshow-wrap {
+    padding: 2.7px;
+    background: var(--rainbow);
+    border-radius: 7px;
+    flex-shrink: 0;
+  }
   .hero__slideshow {
     position: relative;
     aspect-ratio: 4/3;
-    border-radius: 16px;
+    border-radius: 7px;
     overflow: hidden;
-    border: 7px solid var(--accent);
+    background: var(--bg);
   }
   .hero__slide {
     position: absolute;
@@ -343,11 +368,8 @@ const schema = {
     width: auto;
     opacity: 0.95;
   }
-  .hero__logo--light { display: none; }
-  :global([data-theme="light"]) .hero__logo--dark { display: none; }
-  :global([data-theme="light"]) .hero__logo--light { display: block; }
   .hero__tagline {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
     font-size: clamp(1.1rem, 2.4vw, 1.7rem);
     letter-spacing: 0.22em;
@@ -363,7 +385,7 @@ const schema = {
     background: rgba(0,0,0,0.27);
     backdrop-filter: blur(27px);
     -webkit-backdrop-filter: blur(27px);
-    border-radius: 14px;
+    border-radius: 7px;
     border: 2.7px solid rgba(0,0,0,0.37);
     box-shadow: 0 8px 32px 0 rgba(31,38,135,0.27);
     width: 100%;
@@ -377,19 +399,21 @@ const schema = {
     gap: 0.2rem;
   }
   .hero__stats-sep {
-    height: 1px;
+    height: 2.7px;
     width: 60%;
-    background: var(--border-mid);
+    background: linear-gradient(to right, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff);
+    opacity: 0.7;
     align-self: center;
   }
   .hero__stats-num {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
     font-size: clamp(1.4rem, 2.5vw, 2rem);
     line-height: 1;
+    color: var(--text-muted);
   }
   .hero__stats-label {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
     font-size: clamp(0.72rem, 0.95vw, 0.85rem);
     text-transform: uppercase;
@@ -430,11 +454,11 @@ const schema = {
     margin-bottom: var(--gap-lg);
   }
   .featured-section__line {
-    height: 1px;
-    background: var(--accent);
+    height: 2.7px;
+    background: var(--rainbow);
   }
   .featured-section__title {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
     font-size: clamp(1.2rem, 2.4vw, 2rem);
     text-transform: uppercase;
@@ -457,7 +481,7 @@ const schema = {
       text-align: center;
     } 
     .featured-card {
-      border-radius: 10px;
+      border-radius: 7px;
     }
     .featured-card__img {
       max-height: unset;
@@ -467,22 +491,24 @@ const schema = {
     .featured-card__img-overlay { display: none; }
     .featured-card__body {
       padding: 0.55rem 0.8rem 0.65rem;
-      border-top: 1px solid var(--border);
+      border-top: 2.7px solid var(--border);
+      align-items: center;
+      text-align: center;
     }
     .featured-card__cat {
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: normal;
-      color: var(--accent) !important;
-      font-weight: 420 !important;
+      font-size: 0.7rem !important;
+      font-weight: 277 !important;
+      align-self: center !important;
+      background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18)) !important;
+      -webkit-background-clip: initial !important;
+      background-clip: initial !important;
+      -webkit-text-fill-color: initial !important;
     }
     .featured-card__title {
       font-size: 1rem !important;
-      font-weight: 277;
       letter-spacing: normal !important;
-      color: var(--accent) !important;
       font-weight: 420 !important;
-
+      color: var(--text) !important;
     }
     .featured-card__date { display: none; }
     .featured-card__arrow { display: none !important; }
@@ -491,13 +517,28 @@ const schema = {
   .featured-card {
     display: flex;
     flex-direction: row-reverse;
-    border-radius: 14px;
+    border-radius: 7px;
     overflow: hidden;
     position: relative;
-    background: var(--bg-card);
-    border: 1.5px solid var(--accent);
-    transition: transform var(--flow), border-color var(--quick);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    box-shadow: var(--glass-shadow);
+    transition: transform var(--flow);
     text-decoration: none;
+  }
+  .featured-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 7px;
+    padding: 2.7px;
+    background: var(--rainbow);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 2;
   }
   .featured-card:hover {
     transform: translateY(-4px);
@@ -506,8 +547,7 @@ const schema = {
 
   .featured-card__img {
     position: relative;
-    aspect-ratio: 16/10;
-    max-height: 50vh;
+    flex: 0 0 60%;
     overflow: hidden;
   }
   .featured-card__img img {
@@ -528,17 +568,25 @@ const schema = {
     flex-direction: column;
     gap: 0.3rem;
     flex: 1;
+    align-items: center;
+    text-align: center;
   }
   .featured-card__cat {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
-    font-size: 1rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
-    letter-spacing: normal;
-    color: var(--accent);
+    letter-spacing: 0.12em;
+    display: inline-block;
+    align-self: center;
+    padding: 0.15rem 0.6rem;
+    border-radius: 7px;
+    border: 2.7px solid var(--text-muted);
+    color: var(--text);
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
   .featured-card__title {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 420;
     font-size: clamp(1.2rem, 2.2vw, 1.7rem);
     letter-spacing: normal;
@@ -546,11 +594,11 @@ const schema = {
     color: var(--text);
   }
   .featured-card__date {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
     font-size: 1.00rem;
-    color: var(--accent);
     letter-spacing: 0.07em;
+    color: var(--text-muted);
   }
   .featured-card__arrow {
     position: absolute;
@@ -560,24 +608,18 @@ const schema = {
     display: flex;
   }
   .featured-card__arrow-img {
-    filter: invert(1);
-    opacity: 0.4;
-    transition: opacity var(--quick), filter var(--quick);
+    width: 36px;
+    height: 36px;
+    display: block;
+    transition: transform var(--quick);
   }
-  :global([data-theme="light"]) .featured-card__arrow-img {
-    filter: invert(0);
-    opacity: 0.5;
-  }
-  .featured-card:hover .featured-card__arrow { transform: translateX(3px); }
-  .featured-card:hover .featured-card__arrow-img {
-    opacity: 0.9;
-    filter: invert(77%) sepia(98%) saturate(1000%) hue-rotate(155deg) brightness(105%);
-  }
+  .featured-card:hover .featured-card__arrow { transform: translateX(4px); }
+  .featured-card:hover .featured-card__arrow-img { transform: scale(1.3); }
 
   /* ══ ALL SESSIONS ══ */
   .all-section {
     padding: var(--gap-md) 0 var(--gap-xl);
-    border-top: 1px solid var(--border);
+    border-top: 2.7px solid var(--border);
   }
 
 
@@ -590,36 +632,22 @@ const schema = {
     margin-bottom: var(--gap-sm);
   }
   .filter-btn {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
     font-size: clamp(0.78rem, 1vw, 0.9rem);
     text-transform: uppercase;
     letter-spacing: 0.16em;
     padding: 0.55rem 1.4rem;
-    border-radius: 999px;
-    border: 1.5px solid var(--text);
+    border-radius: 7px;
+    border: 2.7px solid var(--text-muted);
     color: var(--text);
     cursor: pointer;
-    transition: all var(--quick);
     background: transparent;
   }
-  .filter-btn:hover {
-    border-color: var(--accent);
-    background: var(--accent);
-    color: #000000;
-    -webkit-text-fill-color: #000000;
-  }
+  .filter-btn:hover,
   .filter-btn.is-active {
-    font-weight: 277;
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #000000;
-    -webkit-text-fill-color: #000000;
-  }
-  :global([data-theme="light"]) .filter-btn:hover,
-  :global([data-theme="light"]) .filter-btn.is-active {
-    color: #ffffff;
-    -webkit-text-fill-color: #ffffff;
+    border-color: var(--text);
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
 
   /* Masonry — CSS Columns */
@@ -658,7 +686,7 @@ const schema = {
   /* Session Card */
   .session-card {
     display: block;
-    border-radius: 10px;
+    border-radius: 7px;
     overflow: hidden;
     position: relative;
     transition: transform var(--flow);
@@ -669,9 +697,9 @@ const schema = {
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: 10px;
-    padding: 1.5px;
-    background: var(--accent);
+    border-radius: 7px;
+    padding: 2.7px;
+    background: var(--rainbow);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: destination-out;
     mask-composite: exclude;
@@ -693,11 +721,14 @@ const schema = {
   }
   .session-card__body {
     padding: 0.55rem 0.8rem 0.65rem;
-    border-top: 1px solid var(--border);
-    border-radius: 0 0 10px 10px;
+    border-top: 2.7px solid var(--border);
+    border-radius: 7px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
   }
   .session-card__title {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
     font-size: clamp(0.95rem, 1.6vw, 1.2rem);
     letter-spacing: -0.01em;
@@ -706,13 +737,17 @@ const schema = {
     margin-bottom: 0.18rem;
   }
   .session-card__cat {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
-    font-size: 0.84rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    background-size: 200% 100%;
-    animation: rainbow-shift 3s linear infinite;
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 7px;
+    border: 2.7px solid var(--text-muted);
+    color: var(--text);
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
 
   /* Footer */
@@ -723,7 +758,7 @@ const schema = {
   }
   .lp-footer__logo { height: 1.8rem; width: auto; opacity: 0.35; }
   .lp-footer__copy {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
     font-size: 0.75rem;
     color: var(--text-dim);
@@ -731,12 +766,10 @@ const schema = {
   }
   .lp-footer__mn {
     font-weight: 277;
-    background-size: 200% 100%;
-    animation: rainbow-shift 3s linear infinite;
   }
   .lp-footer__legal {
     display: flex; gap: 0.75rem; align-items: center;
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
     font-size: 0.68rem;
     color: var(--text-dim);
@@ -744,43 +777,45 @@ const schema = {
   .lp-footer__legal a { transition: color var(--quick); }
   .lp-footer__legal a:hover { color: var(--text-muted); }
 
-  /* ── Akzentfarbe via var(--accent) ── */
-  .rg {
-    background: none;
-    -webkit-background-clip: unset;
-    background-clip: unset;
-    -webkit-text-fill-color: var(--accent);
-    color: var(--accent);
-    animation: none;
-  }
-  .rg-line { background: var(--accent); animation: none; }
-  .rg-border::before { background: var(--accent); }
-
   :global([data-theme="light"]) .hero__stats {
     background: rgba(255,255,255,0.27);
     border-color: rgba(255,255,255,0.37);
   }
-  :global([data-theme="light"]) .featured-card {
-    background: rgba(255,255,255,0.27);
-  }
   :global([data-theme="light"]) .session-card__body {
-    background: rgba(255,255,255,0.27);
     border-color: rgba(255,255,255,0.37);
   }
   :global([data-theme="light"]) .filter-btn {
-    border-color: rgba(10,10,15,0.6);
+    border-color: rgba(10,10,15,0.35);
     color: rgba(10,10,15,0.85);
   }
+  :global([data-theme="light"]) .featured-card__cat,
+  :global([data-theme="light"]) .session-card__cat {
+    border-color: rgba(10,10,15,0.35);
+    color: rgba(10,10,15,0.85);
+  }
+  :global([data-theme="dark"]) .filter-btn:hover,
+  :global([data-theme="dark"]) .filter-btn.is-active,
+  :global([data-theme="dark"]) .featured-card__cat,
+  :global([data-theme="dark"]) .session-card__cat {
+    background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
+  }
 
 
-  :global([data-theme="dark"]) {
-    --accent: #66ff00;
-  }
-  :global([data-theme="light"]) {
-    --accent: #9900ff;
-  }
   :global([data-theme="light"]) .featured-card__title { color: rgba(10,10,15,0.9); }
-  :global([data-theme="light"]) .featured-card__date { color: rgba(10,10,15,0.6); }
+
+  @media (max-width: 700px) {
+    .filter-bar {
+      justify-content: center;
+    }
+    .filter-btn {
+      font-size: 0.7rem;
+      padding: 0.35rem 0.85rem;
+      letter-spacing: 0.12em;
+    }
+    .session-card__body {
+      text-align: center;
+    }
+  }
 
 </style>
 

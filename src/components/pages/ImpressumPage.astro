@@ -34,7 +34,7 @@ const enUrl = `${siteUrl}/en/site-notice`;
       {isEN ? (
         <>
           <div class="glass-box">
-            <h2 class="glass-box__title">Information according to § 5 TMG</h2>
+            <h2 class="glass-box__title section-num">Information according to § 5 TMG</h2>
             <p>
               Nico Thomas Henkel<br />
               MultaEnhavo<br />
@@ -44,28 +44,28 @@ const enUrl = `${siteUrl}/en/site-notice`;
           </div>
 
           <div class="glass-box">
-            <h2 class="glass-box__title">Contact</h2>
+            <h2 class="glass-box__title section-num">Contact</h2>
             <p>
               Phone: <a href="tel:+4915122268995">+49-151-22268995</a><br />
-              E-mail: <a href="mailto:hello@multaenhavo.com">hello@multaenhavo.com</a>
+              E-mail: <a href="mailto:nico@multaenhavo.com">nico@multaenhavo.com</a>
             </p>
           </div>
 
           <div class="glass-box">
-            <h2 class="glass-box__title">VAT ID</h2>
+            <h2 class="glass-box__title section-num">VAT ID</h2>
             <p>Sales tax identification number according to Sect. 27 a of the Sales Tax Law:</p>
             <p class="ust-id">DE459009808</p>
           </div>
 
           <div class="glass-box">
-            <h2 class="glass-box__title">Dispute Resolution</h2>
+            <h2 class="glass-box__title section-num">Dispute Resolution</h2>
             <p>We are not willing or obliged to participate in dispute resolution proceedings in front of a consumer arbitration board.</p>
           </div>
         </>
       ) : (
         <>
           <div class="glass-box">
-            <h2 class="glass-box__title">Angaben gemäß § 5 TMG</h2>
+            <h2 class="glass-box__title section-num">Angaben gemäß § 5 TMG</h2>
             <p>
               Nico Thomas Henkel<br />
               MultaEnhavo<br />
@@ -75,21 +75,21 @@ const enUrl = `${siteUrl}/en/site-notice`;
           </div>
 
           <div class="glass-box">
-            <h2 class="glass-box__title">Kontakt</h2>
+            <h2 class="glass-box__title section-num">Kontakt</h2>
             <p>
               Telefon: <a href="tel:+4915122268995">+49-151-22268995</a><br />
-              E-Mail: <a href="mailto:hello@multaenhavo.com">hello@multaenhavo.com</a>
+              E-Mail: <a href="mailto:nico@multaenhavo.com">nico@multaenhavo.com</a>
             </p>
           </div>
 
           <div class="glass-box">
-            <h2 class="glass-box__title">Umsatzsteuer-ID</h2>
+            <h2 class="glass-box__title section-num">Umsatzsteuer-ID</h2>
             <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:</p>
             <p class="ust-id">DE459009808</p>
           </div>
 
           <div class="glass-box">
-            <h2 class="glass-box__title">Verbraucherstreit&shy;beilegung / Universal&shy;schlichtungs&shy;stelle</h2>
+            <h2 class="glass-box__title section-num">Verbraucherstreit&shy;beilegung / Universal&shy;schlichtungs&shy;stelle</h2>
             <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
           </div>
         </>
@@ -123,14 +123,14 @@ const enUrl = `${siteUrl}/en/site-notice`;
   }
   .legal-header__divider {
     width: clamp(3rem, 8vw, 5rem);
-    height: 2px;
-    background: var(--accent);
-    border-radius: 1px;
+    height: 2.7px;
+    background: var(--rainbow);
+    border-radius: 7px;
     opacity: 0.9;
     margin-bottom: 0.2rem;
   }
   .legal-header__title {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
     font-size: clamp(2.8rem, 8vw, 6rem);
     line-height: 0.9;
@@ -144,7 +144,7 @@ const enUrl = `${siteUrl}/en/site-notice`;
     -webkit-backdrop-filter: blur(27px);
     border: 2.7px solid rgba(0,0,0,0.37);
     box-shadow: 0 8px 32px 0 rgba(31,38,135,0.27);
-    border-radius: 16px;
+    border-radius: 7px;
     padding: var(--gap-md) var(--gap-lg);
     display: grid;
     gap: 0.6rem;
@@ -152,20 +152,26 @@ const enUrl = `${siteUrl}/en/site-notice`;
     justify-items: center;
   }
   .glass-box__title {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
     font-size: 1.1rem;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: var(--accent);
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(128,128,128,0.25);
-    margin-bottom: 0.2rem;
+    color: var(--text);
     text-align: center;
     width: 100%;
   }
+  .section-num {
+    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
+    border-radius: 7px;
+    border: 2.7px solid var(--text-muted);
+    padding: 0.55rem 1.4rem;
+  }
+  :global([data-theme="dark"]) .section-num {
+    background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
+  }
   .glass-box p {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
     color: var(--text-muted);
     line-height: 1.8;
@@ -174,24 +180,24 @@ const enUrl = `${siteUrl}/en/site-notice`;
   }
   .glass-box a {
     color: var(--text-muted);
-    border-bottom: 1px solid var(--border-mid);
+    border-bottom: 2.7px solid var(--border-mid);
     transition: color var(--quick), border-color var(--quick);
   }
   .glass-box a:hover {
-    color: var(--accent);
-    border-color: var(--accent);
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border-image: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff) 1;
   }
 
   .ust-id {
-    font-family: 'GeneralSans', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
     font-size: clamp(1.2rem, 2.5vw, 1.8rem);
     letter-spacing: 0.08em;
-    color: var(--accent);
+    color: var(--text-muted);
   }
-
-  :global([data-theme="dark"]) { --accent: #66ff00; }
-  :global([data-theme="light"]) { --accent: #9900ff; }
 
   :global([data-theme="light"]) .glass-box {
     background: rgba(255,255,255,0.27);
@@ -202,7 +208,10 @@ const enUrl = `${siteUrl}/en/site-notice`;
     color: var(--text-muted);
   }
   :global([data-theme="light"]) .glass-box a:hover {
-    color: var(--accent);
-    border-color: var(--accent);
+    background: var(--rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border-image: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff) 1;
   }
 </style>

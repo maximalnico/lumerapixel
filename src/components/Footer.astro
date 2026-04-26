@@ -5,10 +5,9 @@ const lang = getLangFromUrl(Astro.url);
 <footer class="lp-footer">
   <div class="lp-footer__line"></div>
   <div class="lp-footer__inner">
-    <img src="/logos/lplong-dark.svg" alt="LumeraPixel" class="lp-footer__logo logo-dark" />
-    <img src="/logos/lplong-light.svg" alt="LumeraPixel" class="lp-footer__logo logo-light" />
-    <p class="lp-footer__tagline">{t(lang, 'footer.tagline')}</p>
+    <img src="/logos/lplong-rainbow.svg" alt="LumeraPixel" class="lp-footer__logo" />
     <p class="lp-footer__copy">{t(lang, 'footer.copy')}</p>
+    <p class="lp-footer__credits">Typography by <a href="https://fontshare.com/fonts/switzer" target="_blank" rel="noopener">Fontshare</a> · Icons by <a href="https://phosphoricons.com/" target="_blank" rel="noopener">Phosphor</a> (MIT)</p>
   </div>
 </footer>
 
@@ -17,8 +16,8 @@ const lang = getLangFromUrl(Astro.url);
     padding: var(--gap-sm) var(--page-x) var(--gap-sm);
   }
   .lp-footer__line {
-    height: 1px;
-    background: var(--accent);
+    height: 2.7px;
+    background: var(--rainbow);
     margin-bottom: var(--gap-sm);
   }
   .lp-footer__inner {
@@ -33,24 +32,26 @@ const lang = getLangFromUrl(Astro.url);
     width: auto;
     margin-bottom: 0.1rem;
   }
-  .lp-footer__tagline {
-    font-family: 'GeneralSans', sans-serif;
+  .lp-footer__copy {
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
     font-size: clamp(0.88rem, 1.3vw, 1.05rem);
     color: var(--text);
     letter-spacing: 0.06em;
   }
-  .lp-footer__copy {
-    font-family: 'GeneralSans', sans-serif;
+  .lp-footer__credits {
+    font-family: 'Switzer', sans-serif;
     font-weight: 277;
-    font-size: clamp(0.82rem, 1.1vw, 0.95rem);
+    font-size: clamp(0.78rem, 1.05vw, 0.88rem);
     color: var(--text-muted);
     letter-spacing: 0.03em;
   }
-</style>
-
-<style is:global>
-  .logo-light { display: none; }
-  [data-theme="light"] .logo-dark { display: none; }
-  [data-theme="light"] .logo-light { display: block; }
+  .lp-footer__credits a {
+    color: var(--text-muted);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .lp-footer__credits a:hover {
+    color: var(--text);
+  }
 </style>
