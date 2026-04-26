@@ -400,12 +400,21 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 </style>
 
 <style is:global>
+  [data-theme="dark"] .lp-nav {
+    --eye-nav-cut: 12px;
+    --eye-nav-shape: polygon(var(--eye-nav-cut) 0, 100% 0, 100% calc(100% - var(--eye-nav-cut)), calc(100% - var(--eye-nav-cut)) 100%, 0 100%, 0 var(--eye-nav-cut));
+  }
   [data-theme="dark"] .lp-nav__island,
   [data-theme="dark"] .lp-nav__controls {
     background: rgba(0,0,0,0.86);
     border-color: rgba(255,255,255,0.22);
-    clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+    clip-path: var(--eye-nav-shape);
     border-radius: 0 18px 0 18px;
+  }
+  [data-theme="dark"] .lp-nav__pill,
+  [data-theme="dark"] .toggle-indicator {
+    clip-path: var(--eye-nav-shape);
+    border-radius: 0 12px 0 12px;
   }
   [data-theme="dark"] .lp-nav__row--top {
     border-image: linear-gradient(90deg, rgba(255,255,255,0.35), rgba(227,28,141,0.7), rgba(255,255,255,0.35)) 1;
@@ -414,7 +423,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   [data-theme="dark"] .lp-nav__settings-btn,
   [data-theme="dark"] .toggle-btn,
   [data-theme="dark"] .lp-nav__burger {
-    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+    clip-path: var(--eye-nav-shape);
     border-radius: 0 12px 0 12px;
   }
   [data-theme="dark"] .lp-nav__link:hover,
