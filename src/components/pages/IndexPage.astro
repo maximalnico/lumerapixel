@@ -236,6 +236,8 @@ const schema = {
   main {
     position: relative;
     isolation: isolate;
+    --eye-cut: 14px;
+    --eye-shape: polygon(var(--eye-cut) 0, 100% 0, 100% calc(100% - var(--eye-cut)), calc(100% - var(--eye-cut)) 100%, 0 100%, 0 var(--eye-cut));
   }
 
   .hero,
@@ -266,7 +268,8 @@ const schema = {
   .hero__slideshow-wrap {
     padding: 1px;
     background: linear-gradient(140deg, rgba(255,255,255,0.34), rgba(255,255,255,0.06));
-    clip-path: polygon(0 4%, 4% 0, 100% 0, 100% 96%, 97% 100%, 0 100%);
+    clip-path: var(--eye-shape);
+    border-radius: 0 20px 0 20px;
     box-shadow: 0 18px 50px rgba(0,0,0,0.7);
   }
 
@@ -275,7 +278,8 @@ const schema = {
     aspect-ratio: 16/9;
     overflow: hidden;
     background: #020202;
-    clip-path: polygon(0 2%, 2% 0, 100% 0, 100% 98%, 98% 100%, 0 100%);
+    clip-path: var(--eye-shape);
+    border-radius: 0 18px 0 18px;
   }
 
   .hero__slide {
@@ -312,7 +316,8 @@ const schema = {
     padding: clamp(0.8rem, 2vw, 1.2rem);
     background: rgba(0,0,0,0.72);
     border: 1px solid rgba(255,255,255,0.2);
-    clip-path: polygon(0 5%, 5% 0, 100% 0, 100% 95%, 94% 100%, 0 100%);
+    clip-path: var(--eye-shape);
+    border-radius: 0 20px 0 20px;
     box-shadow: 0 14px 34px rgba(0,0,0,0.62);
   }
 
@@ -336,7 +341,8 @@ const schema = {
     gap: 1px;
     padding: 1px;
     background: linear-gradient(125deg, rgba(255,255,255,0.32), rgba(255,255,255,0.08));
-    clip-path: polygon(0 7%, 4% 0, 100% 0, 100% 93%, 96% 100%, 0 100%);
+    clip-path: var(--eye-shape);
+    border-radius: 0 14px 0 14px;
   }
   .hero__stats-item {
     background: rgba(0,0,0,0.88);
@@ -376,7 +382,8 @@ const schema = {
     border: 1px solid rgba(255,255,255,0.2);
     background: linear-gradient(130deg, rgba(8,8,8,0.94), rgba(2,2,2,0.9));
     overflow: hidden;
-    clip-path: polygon(0 3%, 3% 0, 100% 0, 100% 97%, 96% 100%, 0 100%);
+    clip-path: var(--eye-shape);
+    border-radius: 0 20px 0 20px;
     transition: transform var(--flow), box-shadow var(--flow), border-color var(--flow);
     box-shadow: 0 8px 26px rgba(0,0,0,0.44);
   }
@@ -400,7 +407,8 @@ const schema = {
     color: #f8f8f8;
     padding: 0.24rem 0.72rem;
     border: 1px solid rgba(255,255,255,0.34);
-    clip-path: polygon(0 21%, 12% 0, 100% 0, 100% 80%, 88% 100%, 0 100%);
+    clip-path: var(--eye-shape);
+    border-radius: 0 12px 0 12px;
     background: rgba(0,0,0,0.8);
   }
 
@@ -430,7 +438,8 @@ const schema = {
     letter-spacing: 0.22em;
     text-transform: uppercase;
     padding: 0.58rem 1rem;
-    clip-path: polygon(0 17%, 10% 0, 100% 0, 100% 83%, 90% 100%, 0 100%);
+    clip-path: var(--eye-shape);
+    border-radius: 0 16px 0 16px;
     transition: transform var(--quick), border-color var(--quick), box-shadow var(--quick), background var(--quick);
     box-shadow: 0 2px 7px rgba(0,0,0,0.45);
   }
@@ -451,7 +460,8 @@ const schema = {
     border: 1px solid rgba(255,255,255,0.17);
     background: linear-gradient(160deg, rgba(10,10,10,0.94), rgba(1,1,1,0.92));
     overflow: hidden;
-    clip-path: polygon(0 2.4%, 2.6% 0, 100% 0, 100% 97.2%, 96.8% 100%, 0 100%);
+    clip-path: var(--eye-shape);
+    border-radius: 0 18px 0 18px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.42);
     transition: transform var(--flow), box-shadow var(--flow), border-color var(--flow);
   }
