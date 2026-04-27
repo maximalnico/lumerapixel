@@ -83,14 +83,16 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.35rem 0.55rem;
+    height: 3rem;
+    padding: 0 0.55rem;
     border-radius: 10px 0 10px 0;
     background: transparent;
     flex-shrink: 0;
+    box-sizing: border-box;
   }
 
   .lp-nav__logo {
-    height: 2.35rem;
+    height: 1.95rem;
     width: auto;
     opacity: 0.92;
     display: block;
@@ -112,7 +114,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     letter-spacing: 0.12em;
     color: var(--text);
     width: 100%;
-    padding: 0.26rem 0.5rem;
+    height: 3rem;
+    padding: 0 0.5rem;
     border-radius: 10px 0 10px 0;
     background: rgba(255, 255, 255, 0.06);
     transition: background var(--quick);
@@ -121,7 +124,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 2.7rem;
+    box-sizing: border-box;
   }
 
   .lp-nav__link:hover,
@@ -142,12 +145,13 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     align-items: center;
     justify-content: center;
     min-width: 3rem;
-    min-height: 3rem;
-    padding: 0.5rem 0.6rem;
+    height: 3rem;
+    padding: 0 0.6rem;
     border-radius: 10px 0 10px 0;
     background: rgba(255,255,255,0.06);
     transition: background var(--quick);
     cursor: pointer;
+    box-sizing: border-box;
   }
   .lp-nav__quick-btn:hover {
     background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
