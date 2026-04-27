@@ -96,9 +96,10 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   }
 
   .lp-nav__links {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.24rem;
     flex: 1;
   }
 
@@ -109,7 +110,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: var(--text);
-    padding: 0.32rem 0.46rem;
+    padding: 0.28rem 0.36rem;
     border-radius: 10px 0 10px 0;
     background: rgba(255, 255, 255, 0.06);
     transition: background var(--quick);
@@ -189,6 +190,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     }
 
     .lp-nav__links {
+      display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
