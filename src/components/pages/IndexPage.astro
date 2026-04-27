@@ -279,8 +279,12 @@ const schema = {
     masonryCards.forEach((card) => {
       const image = card.querySelector('img');
       if (!image) return;
-      const cardHeight = image.getBoundingClientRect().height;
-      const span = Math.ceil((cardHeight + rowGap) / (rowHeight + rowGap));
+      const cardWidth = card.getBoundingClientRect().width;
+      const hasNaturalSize = image.naturalWidth > 0 && image.naturalHeight > 0;
+      const cardHeight = hasNaturalSize
+        ? cardWidth * (image.naturalHeight / image.naturalWidth)
+        : image.getBoundingClientRect().height;
+      const span = Math.ceil((cardHeight + rowGap + 2) / (rowHeight + rowGap));
       card.style.gridRowEnd = `span ${Math.max(span, 1)}`;
     });
   }
