@@ -19,10 +19,22 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     </a>
 
     <div class="lp-nav__links" id="navLinks">
-      <a href={home} class={`lp-nav__link ${isHomeActive ? 'is-active' : ''}`}>{t(lang, 'nav.home')}</a>
-      <a href={contact} class="lp-nav__link">{t(lang, 'nav.contact')}</a>
-      <a href={legal} class={`lp-nav__link ${isLegalActive ? 'is-active' : ''}`}>{t(lang, 'nav.legal')}</a>
-      <a href={privacy} class={`lp-nav__link ${isPrivacyActive ? 'is-active' : ''}`}>{t(lang, 'nav.privacy')}</a>
+      <a href={home} class={`lp-nav__link ${isHomeActive ? 'is-active' : ''}`}>
+        <img src="/logos/phosphoricons/caret-right-thin.svg" class="lp-nav__link-icon" alt="" />
+        <span>{t(lang, 'nav.home')}</span>
+      </a>
+      <a href={contact} class="lp-nav__link">
+        <img src="/logos/phosphoricons/caret-right-thin.svg" class="lp-nav__link-icon" alt="" />
+        <span>{t(lang, 'nav.contact')}</span>
+      </a>
+      <a href={legal} class={`lp-nav__link ${isLegalActive ? 'is-active' : ''}`}>
+        <img src="/logos/phosphoricons/caret-right-thin.svg" class="lp-nav__link-icon" alt="" />
+        <span>{t(lang, 'nav.legal')}</span>
+      </a>
+      <a href={privacy} class={`lp-nav__link ${isPrivacyActive ? 'is-active' : ''}`}>
+        <img src="/logos/phosphoricons/caret-right-thin.svg" class="lp-nav__link-icon" alt="" />
+        <span>{t(lang, 'nav.privacy')}</span>
+      </a>
     </div>
   </div>
 
@@ -100,7 +112,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   }
 
   .lp-nav__logo {
-    height: 1.7rem;
+    height: 2.35rem;
     width: auto;
     opacity: 0.92;
     display: block;
@@ -126,6 +138,18 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     transition: background var(--quick);
     white-space: nowrap;
     text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.38rem;
+  }
+
+  .lp-nav__link-icon {
+    width: 0.95rem;
+    height: 0.95rem;
+    opacity: 0.82;
+    filter: invert(1);
+    flex-shrink: 0;
   }
 
   .lp-nav__link:hover,
@@ -284,6 +308,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 
   [data-theme="light"] .toggle-icon { filter: invert(0); }
   [data-theme="light"] .toggle-label { color: #0a0a0f; }
+  [data-theme="light"] .lp-nav__link-icon { filter: invert(0); }
 </style>
 
 <script>
