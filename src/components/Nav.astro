@@ -56,7 +56,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     justify-content: center;
     gap: 0;
     pointer-events: none;
-    width: min(95vw, 72rem);
+    width: max-content;
+    max-width: calc(100vw - (2 * var(--gap-sm)));
   }
 
   .lp-nav__island {
@@ -64,9 +65,9 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   }
 
   .lp-nav__island {
-    width: 100%;
+    width: auto;
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-columns: auto auto auto;
     align-items: center;
     gap: 0.34rem;
     padding: 0.32rem 0.38rem;
