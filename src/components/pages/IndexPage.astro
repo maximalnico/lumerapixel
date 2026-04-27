@@ -213,21 +213,23 @@ const schema = {
     position: absolute;
     inset: 0;
     pointer-events: none;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 0.7rem;
+    padding: 0.8rem;
   }
 
   .masonry-card__pill {
-    position: absolute;
-    left: 0.75rem;
-    right: auto;
-    max-width: calc(100% - 1.5rem);
+    position: relative;
+    max-width: min(92%, 30rem);
     backdrop-filter: blur(14px) saturate(1.05);
     -webkit-backdrop-filter: blur(14px) saturate(1.05);
     border: 1px solid rgba(255,255,255,0.34);
     background: linear-gradient(165deg, rgba(9,12,20,0.66), rgba(9,12,20,0.38));
-    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
     border-radius: 14px 0 14px 0;
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(8px);
     transition: opacity 280ms ease, transform 280ms ease;
     white-space: nowrap;
     overflow: hidden;
@@ -235,7 +237,6 @@ const schema = {
   }
 
   .masonry-card__pill--cat {
-    top: 0.75rem;
     padding: 0.42rem 0.72rem;
     font-size: 0.66rem;
     text-transform: uppercase;
@@ -245,13 +246,11 @@ const schema = {
   }
 
   .masonry-card__pill--title {
-    bottom: 0.75rem;
     padding: 0.58rem 0.86rem;
     font-size: clamp(0.76rem, 1vw, 0.92rem);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: #fff;
-    transform: translateY(8px);
   }
 
   .masonry-card:hover img {
