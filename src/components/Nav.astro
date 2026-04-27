@@ -403,13 +403,17 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   [data-theme="dark"] .lp-nav {
     --eye-nav-cut: 12px;
     --eye-nav-shape: polygon(var(--eye-nav-cut) 0, 100% 0, 100% calc(100% - var(--eye-nav-cut)), calc(100% - var(--eye-nav-cut)) 100%, 0 100%, 0 var(--eye-nav-cut));
+    --military-nav-1: rgba(28, 36, 26, 0.95);
+    --military-nav-2: rgba(13, 18, 12, 0.96);
+    --pinky-nav: rgba(227, 28, 141, 0.62);
   }
   [data-theme="dark"] .lp-nav__island,
   [data-theme="dark"] .lp-nav__controls {
-    background: rgba(0,0,0,0.86);
+    background: linear-gradient(165deg, var(--military-nav-1), var(--military-nav-2));
     border-color: rgba(255,255,255,0.22);
     clip-path: var(--eye-nav-shape);
     border-radius: 0 18px 0 18px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.45);
   }
   [data-theme="dark"] .lp-nav__pill,
   [data-theme="dark"] .toggle-indicator {
@@ -433,27 +437,27 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   [data-theme="dark"] .toggle-btn:hover,
   [data-theme="dark"] .lp-nav__burger:hover,
   [data-theme="dark"] .lp-nav__burger.is-open {
-    background: linear-gradient(155deg, rgba(32, 0, 18, 0.86), rgba(8, 8, 8, 0.92));
-    box-shadow: inset 0 0 0 1px rgba(227,28,141,0.52), 0 6px 15px rgba(0,0,0,0.45);
+    background: linear-gradient(155deg, rgba(44, 9, 30, 0.86), rgba(18, 21, 17, 0.92));
+    box-shadow: inset 0 0 0 1px var(--pinky-nav), 0 6px 15px rgba(0,0,0,0.45);
   }
   [data-theme="dark"] .toggle-indicator {
-    background: linear-gradient(145deg, rgba(227,28,141,0.45), rgba(255,255,255,0.08));
+    background: linear-gradient(145deg, rgba(227,28,141,0.48), rgba(255,255,255,0.12));
   }
   [data-theme="light"] .lp-nav__link { color: rgba(10,10,15,0.85); }
   [data-theme="light"] .lp-nav__link:hover,
   [data-theme="light"] .lp-nav__link.is-active { background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18)); }
   [data-theme="dark"] .lp-nav__link:hover,
-  [data-theme="dark"] .lp-nav__link.is-active { background: linear-gradient(155deg, rgba(32, 0, 18, 0.86), rgba(8, 8, 8, 0.92)); }
+  [data-theme="dark"] .lp-nav__link.is-active { background: linear-gradient(155deg, rgba(44, 9, 30, 0.86), rgba(18, 21, 17, 0.92)); }
   [data-theme="dark"] .lp-nav__settings-btn:hover,
-  [data-theme="dark"] .lp-nav__settings-btn.is-active { background: linear-gradient(155deg, rgba(32, 0, 18, 0.86), rgba(8, 8, 8, 0.92)); }
+  [data-theme="dark"] .lp-nav__settings-btn.is-active { background: linear-gradient(155deg, rgba(44, 9, 30, 0.86), rgba(18, 21, 17, 0.92)); }
   [data-theme="light"] .lp-nav__settings-btn:hover,
   [data-theme="light"] .lp-nav__settings-btn.is-active { background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18)); }
-  [data-theme="dark"] .toggle-indicator { background: linear-gradient(145deg, rgba(227,28,141,0.45), rgba(255,255,255,0.08)); }
+  [data-theme="dark"] .toggle-indicator { background: linear-gradient(145deg, rgba(227,28,141,0.48), rgba(255,255,255,0.12)); }
   [data-theme="dark"] .toggle-btn { color: rgba(255,255,255,0.6); }
-  [data-theme="dark"] .toggle-btn:hover { background: linear-gradient(155deg, rgba(32, 0, 18, 0.86), rgba(8, 8, 8, 0.92)); }
+  [data-theme="dark"] .toggle-btn:hover { background: linear-gradient(155deg, rgba(44, 9, 30, 0.86), rgba(18, 21, 17, 0.92)); }
   [data-theme="light"] .toggle-btn { color: rgba(10,10,15,0.6); }
   [data-theme="dark"] .lp-nav__burger:hover,
-  [data-theme="dark"] .lp-nav__burger.is-open { background: linear-gradient(155deg, rgba(32, 0, 18, 0.86), rgba(8, 8, 8, 0.92)); }
+  [data-theme="dark"] .lp-nav__burger.is-open { background: linear-gradient(155deg, rgba(44, 9, 30, 0.86), rgba(18, 21, 17, 0.92)); }
   [data-theme="light"] .lp-nav__burger-icon { filter: invert(0); }
   [data-theme="light"] .lp-nav__settings-icon { filter: invert(0); }
   [data-theme="light"] .toggle-icon { filter: invert(0); }
