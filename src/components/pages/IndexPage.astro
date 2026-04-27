@@ -18,6 +18,8 @@ const allSessions: any[] = Array.isArray(sessionsData)
   : (sessionsData as any).sessions ?? Object.values(sessionsData);
 
 const sorted = [...allSessions].sort((a, b) => parseDMY(b.date) - parseDMY(a.date));
+const headerSession = sorted[0];
+const headerImage = headerSession ? `${headerSession.folder}/000.webp` : '';
 const totalPhotos = allSessions.reduce((s: number, ses: any) => s + (ses.images || 0), 0);
 const categories = [...new Set(allSessions.map((s: any) => s.category))];
 
@@ -112,6 +114,14 @@ const schema = {
         <a class="masonry-home__cta" href="#">{isEN ? 'View Work' : 'Galerie'}</a>
       </header>
 
+      <section class="fullscreen-header" aria-label="Header">
+        {headerImage && <img class="fullscreen-header__image" src={headerImage} alt={st(headerSession)} loading="eager" decoding="async" />}
+        <div class="fullscreen-header__overlay">
+          <img src="/logos/lplong-rainbow.svg" alt="LumeraPixel" class="fullscreen-header__logo" />
+          <p class="fullscreen-header__sub">{t(lang, 'hero.tagline')}</p>
+        </div>
+      </section>
+
       <div class="masonry-home__grid">
         {sorted.map((s: any, i: number) => {
           const cover = `${s.folder}/000.webp`;
@@ -186,6 +196,47 @@ const schema = {
     transition: background 220ms ease;
   }
   .masonry-home__cta:hover { background: rgba(255,255,255,0.08); }
+
+  .fullscreen-header {
+    position: relative;
+    min-height: calc(100svh - 72px);
+    overflow: hidden;
+    margin: 0 var(--masonry-gap);
+    margin-bottom: var(--masonry-gap);
+    background: #090b12;
+  }
+
+  .fullscreen-header__image {
+    width: 100%;
+    height: 100%;
+    min-height: calc(100svh - 72px);
+    object-fit: cover;
+    filter: brightness(0.62) contrast(1.05);
+  }
+
+  .fullscreen-header__overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    text-align: center;
+    gap: 1rem;
+    background: linear-gradient(180deg, rgba(8,10,16,0.18), rgba(8,10,16,0.56));
+    padding: 1.2rem;
+  }
+
+  .fullscreen-header__logo {
+    width: clamp(240px, 40vw, 620px);
+    height: auto;
+  }
+
+  .fullscreen-header__sub {
+    font-size: clamp(0.82rem, 1.2vw, 1.08rem);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.82);
+  }
 
   .masonry-home__grid {
     columns: 4;
@@ -268,6 +319,10 @@ const schema = {
       gap: var(--masonry-gap);
     }
     .masonry-home__menu { flex-wrap: wrap; }
+    .fullscreen-header,
+    .fullscreen-header__image {
+      min-height: calc(100svh - 130px);
+    }
     .masonry-home__grid { columns: 3; }
   }
 
