@@ -15,7 +15,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 <nav class="lp-nav" aria-label="Main navigation">
   <div class="lp-nav__island">
     <a href={home} class="lp-nav__brand" aria-label="LumeraPixel Home">
-      <img src="/logos/lplogo.svg" alt="LumeraPixel" class="lp-nav__logo" />
+      <img src="/logos/lplogo.svg" alt="LumeraPixel" class="lp-nav__logo" id="navBrandLogo" />
     </a>
 
     <div class="lp-nav__links" id="navLinks">
@@ -114,7 +114,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: var(--text);
-    padding: 0.58rem 0.8rem;
+    padding: 0.44rem 0.65rem;
     border-radius: 10px 0 10px 0;
     background: rgba(255, 255, 255, 0.06);
     transition: background var(--quick);
@@ -239,6 +239,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 <script>
   const themeBtn = document.getElementById('themeQuickToggle') as HTMLButtonElement;
   const themeIcon = document.getElementById('themeQuickIcon') as HTMLImageElement;
+  const navBrandLogo = document.getElementById('navBrandLogo') as HTMLImageElement;
   const langBtn = document.getElementById('langQuickToggle') as HTMLButtonElement;
   const langLabel = document.getElementById('langQuickLabel') as HTMLElement;
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -257,6 +258,9 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     document.documentElement.setAttribute('data-theme', mode);
     (window as any).__updateFavicon?.(mode);
     updateThemeButton(mode);
+    if (navBrandLogo) {
+      navBrandLogo.src = mode === 'dark' ? '/logos/lplogo-white.svg' : '/logos/lplogo.svg';
+    }
   }
 
   function toggleMode() {
