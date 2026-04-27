@@ -113,18 +113,21 @@ const schema = {
       </section>
 
       <section class="featured-split" aria-label="Featured Sessions">
-        {featuredSessions.map((s: any) => {
-          const cover = `${s.folder}/000.webp`;
-          return (
-            <a href={sessionPath(s.slug)} class="featured-split__item">
-              <img src={cover} alt={st(s)} loading="lazy" decoding="async" />
-              <span class="featured-split__overlay">
-                <span class="featured-split__cat">{sc(s)}</span>
-                <span class="featured-split__title">{st(s)}</span>
-              </span>
-            </a>
-          );
-        })}
+        <h2 class="featured-split__heading">Featured Sessions</h2>
+        <div class="featured-split__grid">
+          {featuredSessions.map((s: any) => {
+            const cover = `${s.folder}/000.webp`;
+            return (
+              <a href={sessionPath(s.slug)} class="featured-split__item">
+                <img src={cover} alt={st(s)} loading="lazy" decoding="async" />
+                <span class="featured-split__overlay">
+                  <span class="featured-split__cat">{sc(s)}</span>
+                  <span class="featured-split__title">{st(s)}</span>
+                </span>
+              </a>
+            );
+          })}
+        </div>
         <a class="fullscreen-header__scroll-indicator featured-split__scroll-indicator" href="#masonry-grid" aria-label="Zum Grid scrollen">
           <img src="/logos/phosphoricons/caret-down-thin.svg" alt="" />
         </a>
@@ -269,9 +272,23 @@ const schema = {
     margin: var(--masonry-gap);
     min-height: calc(100svh - (var(--masonry-gap) * 2));
     display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 0.8rem;
+    position: relative;
+  }
+  .featured-split__heading {
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(1.05rem, 1.9vw, 1.65rem);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .featured-split__grid {
+    display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--masonry-gap);
-    position: relative;
+    min-height: 0;
   }
 
   .featured-split__item {
@@ -280,7 +297,7 @@ const schema = {
     border-radius: 0 14px 0 14px;
     border: 1px solid #E31C8D;
     background: #000000;
-    min-height: 100%;
+    min-height: 0;
     display: block;
   }
   .featured-split__item img {
@@ -407,8 +424,10 @@ const schema = {
 
   @media (max-width: 700px) {
     .featured-split {
-      grid-template-columns: 1fr;
       min-height: auto;
+    }
+    .featured-split__grid {
+      grid-template-columns: 1fr;
     }
     .featured-split__item {
       min-height: 60svh;
