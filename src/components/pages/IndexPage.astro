@@ -128,14 +128,30 @@ const schema = {
         <img src="/logos/lplong.svg" alt="LumeraPixel" class="hero__logo" />
         <p class="hero__tagline">{t(lang, 'hero.tagline')}</p>
 
-        <!-- Scroll hint -->
-        <a href="#featured" class="scroll-hint" aria-label={t(lang, 'hero.tagline')}>
-          <svg class="scroll-hint__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true">
-            <rect width="256" height="256" fill="none"/>
-            <polyline points="208 96 128 176 48 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
-          </svg>
-        </a>
+        <!-- Stats -->
+        <div class="hero__stats">
+          <div class="hero__stats-item">
+            <span class="hero__stats-num">{allSessions.length}</span>
+            <span class="hero__stats-label">{t(lang, 'stats.sessions')}</span>
+          </div>
+          <div class="hero__stats-item">
+            <span class="hero__stats-num">{totalPhotos.toLocaleString('de-DE')}</span>
+            <span class="hero__stats-label">{t(lang, 'stats.photos')}</span>
+          </div>
+          <div class="hero__stats-item">
+            <span class="hero__stats-num">{categories.length}</span>
+            <span class="hero__stats-label">{t(lang, 'stats.categories')}</span>
+          </div>
+        </div>
       </div>
+
+      <!-- Scroll hint -->
+      <a href="#featured" class="scroll-hint" aria-label={t(lang, 'hero.tagline')}>
+        <svg class="scroll-hint__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true">
+          <rect width="256" height="256" fill="none"/>
+          <polyline points="208 96 128 176 48 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+        </svg>
+      </a>
 
     </section>
 
@@ -236,8 +252,9 @@ const schema = {
 
   .hero {
     min-height: 100svh;
-    padding: calc(var(--nav-h) + 0.6rem) var(--page-x) 1.2rem;
-    display: block;
+    padding: calc(var(--nav-h) + 0.5rem) var(--page-x) clamp(3.2rem, 8vh, 5.5rem);
+    display: grid;
+    place-items: center;
     overflow: hidden;
   }
 
@@ -300,7 +317,7 @@ const schema = {
     z-index: 2;
     max-width: min(760px, 92vw);
     margin-inline: auto;
-    margin-top: clamp(3.5rem, 10vh, 7rem);
+    margin-top: 0;
     place-items: center;
     display: grid;
     justify-items: center;
@@ -334,7 +351,7 @@ const schema = {
   .hero__stats-num { display: block; font-weight: 700; font-size: clamp(1.2rem, 2.8vw, 2rem); line-height: 1; }
   .hero__stats-label { font-size: clamp(0.62rem, 0.9vw, 0.78rem); letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
 
-  .scroll-hint { position: absolute; bottom: max(0.85rem, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); color: var(--accent); z-index: 3; }
+  .scroll-hint { position: absolute; bottom: max(0.9rem, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); color: var(--accent); z-index: 3; }
   .scroll-hint__arrow { width: 1.8rem; height: 1.8rem; }
 
   .featured-section { padding: var(--gap-md) var(--page-x); }
@@ -452,9 +469,9 @@ const schema = {
   }
 
   @media (max-width: 940px) {
-    .hero { padding-top: calc(var(--nav-h) + 0.4rem); }
+    .hero { padding-top: calc(var(--nav-h) + 0.4rem); padding-bottom: 3.6rem; }
     .hero__stats { grid-template-columns: 1fr; }
-    .hero__content { margin-top: clamp(2.5rem, 10vh, 5rem); }
+    .hero__content { margin-top: 0; }
     .featured-card { grid-template-columns: 1fr; }
     .featured-card__img { min-height: 190px; }
     .masonry-grid { columns: 2; }
