@@ -155,19 +155,23 @@ const schema = {
 
   .masonry-home__topbar {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: var(--masonry-gap);
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - (var(--masonry-gap) * 2));
+    max-width: 1880px;
     z-index: 40;
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
     gap: var(--masonry-gap);
     padding: var(--masonry-gap);
-    background: rgba(11, 13, 20, 0.95);
-    border-bottom: 1px solid rgba(255,255,255,0.12);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: linear-gradient(165deg, rgba(9,12,20,0.72), rgba(9,12,20,0.42));
+    border: 1px solid rgba(255,255,255,0.34);
+    border-radius: 14px 0 14px 0;
+    backdrop-filter: blur(14px) saturate(1.05);
+    -webkit-backdrop-filter: blur(14px) saturate(1.05);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.34);
   }
 
   .masonry-home__brand img {
@@ -317,6 +321,7 @@ const schema = {
 
   @media (max-width: 1100px) {
     .masonry-home__topbar {
+      width: calc(100% - (var(--masonry-gap) * 2));
       grid-template-columns: 1fr;
       justify-items: center;
       gap: var(--masonry-gap);
