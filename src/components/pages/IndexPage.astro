@@ -20,7 +20,8 @@ const allSessions: any[] = Array.isArray(sessionsData)
 
 const sorted = [...allSessions].sort((a, b) => parseDMY(b.date) - parseDMY(a.date));
 const headerSession = sorted[0];
-const headerImage = headerSession ? `${headerSession.folder}/000.webp` : '';
+const headerSlides = sorted.slice(0, 8).map((s: any) => `${s.folder}/000.webp`);
+const headerImage = headerSlides[0] || '';
 const totalPhotos = allSessions.reduce((s: number, ses: any) => s + (ses.images || 0), 0);
 
 // Lang helpers
@@ -95,7 +96,7 @@ const schema = {
     <section class="masonry-home">
       <section class="fullscreen-header" aria-label="Header">
         <div class="fullscreen-header__frame">
-          {headerImage && <img class="fullscreen-header__image" src={headerImage} alt={st(headerSession)} loading="eager" decoding="async" />}
+          {headerImage && <img id="heroSlideshowImage" class="fullscreen-header__image" src={headerImage} data-slides={headerSlides.join('|')} alt={st(headerSession)} loading="eager" decoding="async" />}
           <div class="fullscreen-header__overlay">
             <div class="fullscreen-header__glasslab">
               <img src="/logos/lplong-rainbow.svg" alt="LumeraPixel" class="fullscreen-header__logo" />
@@ -144,6 +145,7 @@ const schema = {
     overflow: hidden;
     background: #090b12;
     border-radius: 0 14px 0 14px;
+    border: 1px solid #E31C8D;
   }
 
   .fullscreen-header__frame {
@@ -159,7 +161,8 @@ const schema = {
     height: 100%;
     min-height: 100%;
     object-fit: cover;
-    filter: contrast(1.04) saturate(1.03);
+    filter: grayscale(1) contrast(1.06);
+    transition: opacity 500ms ease;
   }
 
   .fullscreen-header__overlay {
@@ -170,7 +173,7 @@ const schema = {
     align-content: center;
     text-align: center;
     gap: 1rem;
-    background: linear-gradient(90deg, rgba(227, 28, 141, 0.34) 0%, rgba(227, 28, 141, 0.0) 22%, rgba(227, 28, 141, 0.0) 78%, rgba(227, 28, 141, 0.34) 100%);
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0.12) 22%, rgba(0, 0, 0, 0.12) 78%, rgba(0, 0, 0, 0.42) 100%);
     padding: 1.2rem;
   }
 
@@ -180,7 +183,7 @@ const schema = {
     justify-items: center;
     padding: clamp(1rem, 2.3vw, 1.8rem) clamp(1.2rem, 3vw, 2.3rem);
     background: linear-gradient(165deg, rgba(6, 8, 14, 0.82), rgba(5, 6, 11, 0.62));
-    border: 1px solid #E31C8D;
+    border: 1px solid rgba(255,255,255,0.24);
     backdrop-filter: blur(18px) saturate(1.18);
     -webkit-backdrop-filter: blur(18px) saturate(1.18);
     box-shadow: 0 14px 28px rgba(0,0,0,0.5);
@@ -294,5 +297,24 @@ const schema = {
 </style>
 
 <script>
-  // Simple CSS-columns masonry, no custom sorting or JS layout logic.
+  // Simple hero slideshow + CSS-columns masonry.
+  const heroImg = document.getElementById('heroSlideshowImage') as HTMLImageElement | null;
+  if (heroImg) {
+    const slides = (heroImg.dataset.slides || '')
+      .split('|')
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    if (slides.length > 1) {
+      let idx = 0;
+      setInterval(() => {
+        idx = (idx + 1) % slides.length;
+        heroImg.style.opacity = '0.45';
+        setTimeout(() => {
+          heroImg.src = slides[idx];
+          heroImg.style.opacity = '1';
+        }, 220);
+      }, 4200);
+    }
+  }
 </script>
