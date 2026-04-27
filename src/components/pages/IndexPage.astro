@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Footer from '../Footer.astro';
+import Nav from '../Nav.astro';
 import sessionsData from '/public/data/sessions.json';
 import { t, type Lang } from '../../i18n';
 
@@ -21,15 +22,6 @@ const sorted = [...allSessions].sort((a, b) => parseDMY(b.date) - parseDMY(a.dat
 const headerSession = sorted[0];
 const headerImage = headerSession ? `${headerSession.folder}/000.webp` : '';
 const totalPhotos = allSessions.reduce((s: number, ses: any) => s + (ses.images || 0), 0);
-const categories = [...new Set(allSessions.map((s: any) => s.category))];
-
-const featured = allSessions.filter((s: any) => s.featured).length >= 1
-  ? allSessions.filter((s: any) => s.featured).slice(0, 3)
-  : sorted.slice(0, 3);
-
-const slideshowSessions = [...allSessions]
-  .sort(() => Math.random() - 0.5)
-  .slice(0, 8);
 
 // Lang helpers
 const st = (s: any) => isEN ? (s.title_en || s.title_de) : (s.title_de || s.title_en);
@@ -98,22 +90,9 @@ const schema = {
   hreflangDe={`${siteUrl}/`}
   hreflangEn={`${siteUrl}/en/`}
 >
+  <Nav />
   <main>
     <section class="masonry-home">
-      <header class="masonry-home__topbar">
-        <a href={isEN ? '/en/' : '/'} class="masonry-home__brand">
-          <img src="/logos/lplogo.svg" alt="LumeraPixel" />
-        </a>
-        <nav class="masonry-home__menu" aria-label="Main Navigation">
-          <a href="#">{t(lang, 'nav.home')}</a>
-          <a href="#">{t(lang, 'section.highlights')}</a>
-          <a href="#">{t(lang, 'nav.contact')}</a>
-          <a href="#">{t(lang, 'nav.legal')}</a>
-          <a href="#">{t(lang, 'nav.privacy')}</a>
-        </nav>
-        <a class="masonry-home__cta" href="#">{isEN ? 'View Work' : 'Galerie'}</a>
-      </header>
-
       <section class="fullscreen-header" aria-label="Header">
         {headerImage && <img class="fullscreen-header__image" src={headerImage} alt={st(headerSession)} loading="eager" decoding="async" />}
         <div class="fullscreen-header__overlay">
@@ -152,56 +131,6 @@ const schema = {
     color: #f6f6f6;
     --masonry-gap: 7px;
   }
-
-  .masonry-home__topbar {
-    position: fixed;
-    top: var(--masonry-gap);
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - (var(--masonry-gap) * 2));
-    max-width: 1880px;
-    z-index: 40;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: var(--masonry-gap);
-    padding: var(--masonry-gap);
-    background: linear-gradient(165deg, rgba(9,12,20,0.72), rgba(9,12,20,0.42));
-    border: 1px solid rgba(255,255,255,0.34);
-    border-radius: 14px 0 14px 0;
-    backdrop-filter: blur(14px) saturate(1.05);
-    -webkit-backdrop-filter: blur(14px) saturate(1.05);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.34);
-  }
-
-  .masonry-home__brand img {
-    width: clamp(44px, 5vw, 62px);
-    height: auto;
-  }
-
-  .masonry-home__menu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: var(--masonry-gap);
-    text-transform: uppercase;
-    letter-spacing: 0.24em;
-    font-size: clamp(0.58rem, 0.9vw, 0.72rem);
-  }
-  .masonry-home__menu a { color: rgba(255,255,255,0.86); }
-  .masonry-home__menu a::after { content: '•'; margin-left: var(--masonry-gap); color: #f7be1f; }
-  .masonry-home__menu a:last-child::after { display: none; }
-
-  .masonry-home__cta {
-    border: 1px solid rgba(255,255,255,0.28);
-    color: #fff;
-    padding: 0.62rem 1.1rem;
-    text-transform: uppercase;
-    font-size: 0.72rem;
-    letter-spacing: 0.16em;
-    transition: background 220ms ease;
-  }
-  .masonry-home__cta:hover { background: rgba(255,255,255,0.08); }
 
   .fullscreen-header {
     position: relative;
@@ -320,13 +249,6 @@ const schema = {
   }
 
   @media (max-width: 1100px) {
-    .masonry-home__topbar {
-      width: calc(100% - (var(--masonry-gap) * 2));
-      grid-template-columns: 1fr;
-      justify-items: center;
-      gap: var(--masonry-gap);
-    }
-    .masonry-home__menu { flex-wrap: wrap; }
     .fullscreen-header,
     .fullscreen-header__image {
       min-height: 100svh;
@@ -341,7 +263,6 @@ const schema = {
 
   @media (max-width: 480px) {
     .masonry-home__grid { columns: 1; }
-    .masonry-home__cta { width: 100%; text-align: center; }
   }
 
   :global([data-theme="light"]) main,
