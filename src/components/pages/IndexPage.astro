@@ -213,7 +213,7 @@ const schema = {
     height: 100svh;
     min-height: 100svh;
     object-fit: cover;
-    filter: brightness(0.62) contrast(1.05);
+    filter: contrast(1.04) saturate(1.03);
   }
 
   .fullscreen-header__overlay {
@@ -224,7 +224,8 @@ const schema = {
     align-content: center;
     text-align: center;
     gap: 1rem;
-    background: linear-gradient(180deg, rgba(8,10,16,0.18), rgba(8,10,16,0.56));
+    background:
+      linear-gradient(90deg, rgba(227, 28, 141, 0.34) 0%, rgba(227, 28, 141, 0.0) 22%, rgba(227, 28, 141, 0.0) 78%, rgba(227, 28, 141, 0.34) 100%);
     padding: 1.2rem;
   }
 
