@@ -125,6 +125,9 @@ const schema = {
             </a>
           );
         })}
+        <a class="fullscreen-header__scroll-indicator featured-split__scroll-indicator" href="#masonry-grid" aria-label="Zum Grid scrollen">
+          <img src="/logos/phosphoricons/caret-down-thin.svg" alt="" />
+        </a>
       </section>
 
       <div class="masonry-home__grid" id="masonry-grid">
@@ -203,10 +206,10 @@ const schema = {
     gap: 1rem;
     justify-items: center;
     padding: clamp(1rem, 2.3vw, 1.8rem) clamp(1.2rem, 3vw, 2.3rem);
-    background: linear-gradient(165deg, rgba(6, 8, 14, 0.82), rgba(5, 6, 11, 0.62));
+    background: #000000;
     border: 1px solid #E31C8D;
-    backdrop-filter: blur(18px) saturate(1.18);
-    -webkit-backdrop-filter: blur(18px) saturate(1.18);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     box-shadow: 0 14px 28px rgba(0,0,0,0.5);
     border-radius: 0 14px 0 14px;
     max-width: min(92vw, 52rem);
@@ -220,10 +223,10 @@ const schema = {
     width: 4.6rem;
     height: 4.6rem;
     border-radius: 0 10px 0 10px;
-    border: 1px solid #626977;
-    background: linear-gradient(165deg, rgba(6, 8, 14, 0.82), rgba(5, 6, 11, 0.62));
-    backdrop-filter: blur(18px) saturate(1.18);
-    -webkit-backdrop-filter: blur(18px) saturate(1.18);
+    border: 1px solid #808080;
+    background: #000000;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     display: grid;
     place-items: center;
     box-shadow: 0 8px 20px rgba(0,0,0,0.42);
@@ -252,7 +255,7 @@ const schema = {
     font-size: clamp(1rem, 1.6vw, 1.4rem);
     letter-spacing: 0.24em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.82);
+    color: #ffffff;
   }
 
   .masonry-home__grid {
@@ -268,6 +271,7 @@ const schema = {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--masonry-gap);
+    position: relative;
   }
 
   .featured-split__item {
@@ -275,7 +279,7 @@ const schema = {
     overflow: hidden;
     border-radius: 0 14px 0 14px;
     border: 1px solid #E31C8D;
-    background: #0b0d13;
+    background: #000000;
     min-height: 100%;
     display: block;
   }
@@ -290,22 +294,23 @@ const schema = {
     position: absolute;
     inset: 0;
     display: grid;
-    align-content: end;
+    align-content: center;
+    justify-items: center;
     gap: 0.45rem;
     padding: 1rem;
     background: linear-gradient(180deg, rgba(0,0,0,0.08) 32%, rgba(0,0,0,0.72) 100%);
   }
   .featured-split__cat,
   .featured-split__title {
-    width: fit-content;
-    max-width: 94%;
+    width: min(90%, max-content);
+    text-align: center;
     border-radius: 0 10px 0 10px;
     border: 1px solid #E31C8D;
-    background: linear-gradient(165deg, rgba(6, 8, 14, 0.82), rgba(5, 6, 11, 0.62));
-    backdrop-filter: blur(18px) saturate(1.18);
-    -webkit-backdrop-filter: blur(18px) saturate(1.18);
+    background: #000000;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     text-transform: uppercase;
-    color: #fff;
+    color: #ffffff;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -323,6 +328,10 @@ const schema = {
   .featured-split__item:hover img {
     transform: scale(1.03);
     filter: brightness(0.86) contrast(1.06);
+  }
+
+  .featured-split__scroll-indicator {
+    bottom: 0.75rem;
   }
 
   .masonry-card {
@@ -380,7 +389,7 @@ const schema = {
     font-size: clamp(0.76rem, 1vw, 0.92rem);
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #fff;
+    color: #ffffff;
   }
 
   .masonry-card:hover img {
