@@ -128,24 +128,6 @@ const schema = {
         <img src="/logos/lplong.svg" alt="LumeraPixel" class="hero__logo" />
         <p class="hero__tagline">{t(lang, 'hero.tagline')}</p>
 
-        <!-- Stats inline rechts -->
-        <div class="hero__stats">
-          <div class="hero__stats-item">
-            <span class="hero__stats-num">{allSessions.length}</span>
-            <span class="hero__stats-label">{t(lang, 'stats.sessions')}</span>
-          </div>
-          <div class="hero__stats-sep" aria-hidden="true"></div>
-          <div class="hero__stats-item">
-            <span class="hero__stats-num">{totalPhotos.toLocaleString('de-DE')}</span>
-            <span class="hero__stats-label">{t(lang, 'stats.photos')}</span>
-          </div>
-          <div class="hero__stats-sep" aria-hidden="true"></div>
-          <div class="hero__stats-item">
-            <span class="hero__stats-num">{categories.length}</span>
-            <span class="hero__stats-label">{t(lang, 'stats.categories')}</span>
-          </div>
-        </div>
-
         <!-- Scroll hint -->
         <a href="#featured" class="scroll-hint" aria-label={t(lang, 'hero.tagline')}>
           <svg class="scroll-hint__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true">
@@ -319,6 +301,7 @@ const schema = {
     max-width: min(760px, 92vw);
     margin-inline: auto;
     margin-top: clamp(3.5rem, 10vh, 7rem);
+    place-items: center;
     display: grid;
     justify-items: center;
     text-align: center;
@@ -332,8 +315,8 @@ const schema = {
     box-shadow: var(--shadow-2);
   }
 
-  .hero__logo { height: clamp(2.8rem, 7vw, 5.8rem); filter: brightness(1.85); }
-  .hero__tagline { font-size: clamp(0.84rem, 1.6vw, 1.14rem); letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); }
+  .hero__logo { height: clamp(3.2rem, 8vw, 6.5rem); filter: brightness(1.85); }
+  .hero__tagline { font-size: clamp(1rem, 2.2vw, 1.45rem); letter-spacing: 0.26em; text-transform: uppercase; color: var(--text-muted); }
 
   .hero__stats {
     width: 100%;
@@ -351,7 +334,7 @@ const schema = {
   .hero__stats-num { display: block; font-weight: 700; font-size: clamp(1.2rem, 2.8vw, 2rem); line-height: 1; }
   .hero__stats-label { font-size: clamp(0.62rem, 0.9vw, 0.78rem); letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
 
-  .scroll-hint { position: absolute; bottom: 0.7rem; left: 50%; transform: translateX(-50%); color: var(--accent); }
+  .scroll-hint { position: absolute; bottom: max(0.85rem, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); color: var(--accent); z-index: 3; }
   .scroll-hint__arrow { width: 1.8rem; height: 1.8rem; }
 
   .featured-section { padding: var(--gap-md) var(--page-x); }
