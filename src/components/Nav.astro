@@ -34,25 +34,12 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     </div>
 
     <div class="lp-nav__controls">
-      <div class="lp-nav__pill" id="themeToggle" role="group" aria-label="Theme wählen">
-        <div class="toggle-indicator" id="toggleIndicator"></div>
-        <button class="toggle-btn" id="btn-dark" data-mode="dark" aria-label="Dark">
-          <img src="/logos/phosphoricons/moon-thin.svg" class="toggle-icon" alt="" />
-        </button>
-        <button class="toggle-btn" id="btn-light" data-mode="light" aria-label="Light">
-          <img src="/logos/phosphoricons/sun-thin.svg" class="toggle-icon" alt="" />
-        </button>
-      </div>
-
-      <div class="lp-nav__pill" id="langToggle" role="group" aria-label="Language">
-        <div class="toggle-indicator" id="langIndicator"></div>
-        <a href="/" class="toggle-btn" id="btn-lang-de" data-lang="de" aria-label="Deutsch">
-          <span class="toggle-label">DE</span>
-        </a>
-        <a href="/en/" class="toggle-btn" id="btn-lang-en" data-lang="en" aria-label="English">
-          <span class="toggle-label">EN</span>
-        </a>
-      </div>
+      <button class="lp-nav__quick-btn" id="themeQuickToggle" aria-label="Theme wechseln">
+        <img src="/logos/phosphoricons/moon-thin.svg" class="lp-nav__quick-icon" id="themeQuickIcon" alt="" />
+      </button>
+      <button class="lp-nav__quick-btn" id="langQuickToggle" aria-label="Sprache wechseln">
+        <span class="lp-nav__quick-label" id="langQuickLabel">DE</span>
+      </button>
     </div>
   </div>
 </nav>
@@ -142,71 +129,45 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   }
 
   .lp-nav__controls {
-    width: 8.6rem;
+    width: auto;
     display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
+    flex-direction: row;
+    gap: 0.35rem;
     padding: 0;
   }
 
-  .lp-nav__pill {
-    display: flex;
-    align-items: stretch;
-    position: relative;
-    padding: 2px;
-    border-radius: 10px 0 10px 0;
-    background: rgba(255,255,255,0.06);
-  }
-
-  .toggle-indicator {
-    position: absolute;
-    top: 2px;
-    bottom: 2px;
-    border-radius: 10px 0 10px 0;
-    transition: left 0.2s ease, width 0.2s ease;
-    pointer-events: none;
-    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
-    z-index: 0;
-  }
-
-  .toggle-btn {
-    flex: 1;
-    min-width: 0;
+  .lp-nav__quick-btn {
     display: flex;
     align-items: center;
     justify-content: center;
+    min-width: 3rem;
+    min-height: 3rem;
+    padding: 0.5rem 0.6rem;
     border-radius: 10px 0 10px 0;
-    padding: 0.45rem;
-    position: relative;
-    z-index: 1;
-    text-decoration: none;
+    background: rgba(255,255,255,0.06);
+    transition: background var(--quick);
   }
-
-  .toggle-btn:hover {
+  .lp-nav__quick-btn:hover {
     background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
 
-  .toggle-icon {
+  .lp-nav__quick-icon {
     width: 1.15rem;
     height: 1.15rem;
-    opacity: 0.55;
+    opacity: 0.9;
     filter: invert(1);
     pointer-events: none;
   }
 
-  .toggle-label {
+  .lp-nav__quick-label {
     font-family: 'Switzer', sans-serif;
     font-weight: 277;
     font-size: 0.95rem;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: #fff;
-    opacity: 0.6;
+    opacity: 0.9;
     pointer-events: none;
-  }
-
-  .toggle-btn.is-active .toggle-icon,
-  .toggle-btn.is-active .toggle-label {
-    opacity: 1;
   }
 
   @media (max-width: 820px) {
@@ -238,13 +199,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     }
 
     .lp-nav__controls {
-      width: 100%;
+      width: auto;
       flex-direction: row;
-      padding-top: 0.15rem;
-    }
-
-    .lp-nav__pill {
-      flex: 1;
     }
   }
 </style>
@@ -265,118 +221,86 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 
   [data-theme="dark"] .lp-nav__brand,
   [data-theme="dark"] .lp-nav__link,
-  [data-theme="dark"] .lp-nav__pill,
-  [data-theme="dark"] .toggle-btn,
-  [data-theme="dark"] .toggle-indicator {
+  [data-theme="dark"] .lp-nav__quick-btn {
     border-radius: 10px 0 10px 0;
   }
 
   [data-theme="dark"] .lp-nav__link:hover,
   [data-theme="dark"] .lp-nav__link.is-active,
-  [data-theme="dark"] .toggle-btn:hover {
+  [data-theme="dark"] .lp-nav__quick-btn:hover {
     background: linear-gradient(155deg, rgba(46, 10, 35, 0.88), rgba(18, 20, 34, 0.93));
     box-shadow: inset 0 0 0 1px var(--pinky-nav), 0 6px 15px rgba(0,0,0,0.45);
   }
 
-  [data-theme="dark"] .toggle-indicator {
-    background: linear-gradient(145deg, rgba(227,28,141,0.48), rgba(255,255,255,0.12));
-  }
-
-  [data-theme="light"] .toggle-icon { filter: invert(0); }
-  [data-theme="light"] .toggle-label { color: #0a0a0f; }
+  [data-theme="light"] .lp-nav__quick-icon { filter: invert(0); }
+  [data-theme="light"] .lp-nav__quick-label { color: #0a0a0f; }
 </style>
 
 <script>
-  const ind = document.getElementById('toggleIndicator') as HTMLElement;
-  const btns = ['dark', 'light'].map((mode) => document.getElementById(`btn-${mode}`) as HTMLElement);
-
-  function getBtnSize(pill: HTMLElement) {
-    return pill.offsetWidth / 2;
-  }
-
-  function updateToggle(mode: string, animate = true) {
-    const idx = ['dark', 'light'].indexOf(mode);
-    const pill = document.getElementById('themeToggle') as HTMLElement;
-    if (!pill || idx < 0) return;
-    const btnSize = getBtnSize(pill);
-    if (!animate) ind.style.transition = 'none';
-    ind.style.width = `${btnSize}px`;
-    ind.style.left = `${idx * btnSize}px`;
-    if (!animate) requestAnimationFrame(() => { ind.style.transition = ''; });
-    btns.forEach((btn, i) => btn.classList.toggle('is-active', i === idx));
-  }
-
+  const themeBtn = document.getElementById('themeQuickToggle') as HTMLButtonElement;
+  const themeIcon = document.getElementById('themeQuickIcon') as HTMLImageElement;
+  const langBtn = document.getElementById('langQuickToggle') as HTMLButtonElement;
+  const langLabel = document.getElementById('langQuickLabel') as HTMLElement;
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   let currentMode = (localStorage.getItem('lp-theme-mode') || (prefersDark ? 'dark' : 'light'));
   if (!['dark', 'light'].includes(currentMode)) currentMode = prefersDark ? 'dark' : 'light';
 
+  function updateThemeButton(mode: string) {
+    if (!themeBtn || !themeIcon) return;
+    themeIcon.src = mode === 'dark'
+      ? '/logos/phosphoricons/moon-thin.svg'
+      : '/logos/phosphoricons/sun-thin.svg';
+    themeBtn.setAttribute('aria-label', mode === 'dark' ? 'Dark Mode aktiv' : 'Light Mode aktiv');
+  }
+
   function applyTheme(mode: string) {
     document.documentElement.setAttribute('data-theme', mode);
     (window as any).__updateFavicon?.(mode);
-    updateToggle(mode, false);
+    updateThemeButton(mode);
   }
 
-  function setMode(mode: string) {
-    currentMode = mode;
-    localStorage.setItem('lp-theme-mode', mode);
-    applyTheme(mode);
-    updateToggle(mode);
+  function toggleMode() {
+    currentMode = currentMode === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('lp-theme-mode', currentMode);
+    applyTheme(currentMode);
   }
-
-  btns.forEach((btn, i) => {
-    btn?.addEventListener('click', () => setMode(['dark', 'light'][i]));
-  });
-
-  const langInd = document.getElementById('langIndicator') as HTMLElement;
-  const langBtns = ['de', 'en'].map((langCode) => document.getElementById(`btn-lang-${langCode}`) as HTMLElement);
-
-  function updateLangToggle(mode: string) {
-    const idx = ['de', 'en'].indexOf(mode);
-    const pill = document.getElementById('langToggle') as HTMLElement;
-    if (!pill || !langInd || idx < 0) return;
-    const btnSize = getBtnSize(pill);
-    langInd.style.width = `${btnSize}px`;
-    langInd.style.left = `${idx * btnSize}px`;
-    langBtns.forEach((btn, i) => btn?.classList.toggle('is-active', i === idx));
-  }
+  themeBtn?.addEventListener('click', toggleMode);
 
   let currentLangMode = localStorage.getItem('lp-lang-mode') || (window.location.pathname.startsWith('/en') ? 'en' : 'de');
   if (!['de', 'en'].includes(currentLangMode)) currentLangMode = window.location.pathname.startsWith('/en') ? 'en' : 'de';
 
-  updateLangToggle(currentLangMode);
+  function updateLangButton(mode: string) {
+    if (!langLabel || !langBtn) return;
+    langLabel.textContent = mode.toUpperCase();
+    langBtn.setAttribute('aria-label', mode === 'de' ? 'Deutsch aktiv' : 'English active');
+  }
+  updateLangButton(currentLangMode);
 
-  langBtns.forEach((btn, i) => {
-    btn?.addEventListener('click', (e) => {
-      e.preventDefault();
-      const mode = ['de', 'en'][i];
-      localStorage.setItem('lp-lang-mode', mode);
-      currentLangMode = mode;
-      updateLangToggle(mode);
+  langBtn?.addEventListener('click', () => {
+    const mode = currentLangMode === 'de' ? 'en' : 'de';
+    localStorage.setItem('lp-lang-mode', mode);
+    currentLangMode = mode;
+    updateLangButton(mode);
 
-      const path = window.location.pathname;
-      const isPathEN = path.startsWith('/en');
-      const enToDe: Record<string, string> = {
-        '/en/': '/',
-        '/en/site-notice': '/impressum',
-        '/en/privacy-policy': '/datenschutz'
-      };
-      const deToEn: Record<string, string> = {
-        '/': '/en/',
-        '/impressum': '/en/site-notice',
-        '/datenschutz': '/en/privacy-policy'
-      };
+    const path = window.location.pathname;
+    const isPathEN = path.startsWith('/en');
+    const enToDe: Record<string, string> = {
+      '/en/': '/',
+      '/en/site-notice': '/impressum',
+      '/en/privacy-policy': '/datenschutz'
+    };
+    const deToEn: Record<string, string> = {
+      '/': '/en/',
+      '/impressum': '/en/site-notice',
+      '/datenschutz': '/en/privacy-policy'
+    };
 
-      if (mode === 'en' && !isPathEN) {
-        window.location.href = deToEn[path] ?? `/en${path === '/' ? '/' : path}`;
-      } else if (mode === 'de' && isPathEN) {
-        window.location.href = enToDe[path] ?? (path.replace(/^\/en/, '') || '/');
-      }
-    });
+    if (mode === 'en' && !isPathEN) {
+      window.location.href = deToEn[path] ?? `/en${path === '/' ? '/' : path}`;
+    } else if (mode === 'de' && isPathEN) {
+      window.location.href = enToDe[path] ?? (path.replace(/^\/en/, '') || '/');
+    }
   });
 
   applyTheme(currentMode);
-  requestAnimationFrame(() => {
-    updateToggle(currentMode, false);
-    updateLangToggle(currentLangMode);
-  });
 </script>
