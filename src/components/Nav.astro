@@ -46,6 +46,9 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 
 <style>
   .lp-nav {
+    --lp-glass-black-bg: linear-gradient(165deg, rgba(6, 8, 14, 0.82), rgba(5, 6, 11, 0.62));
+    --lp-glass-black-border: rgba(255,255,255,0.24);
+    --lp-glass-black-shadow: 0 14px 28px rgba(0,0,0,0.5);
     position: fixed;
     top: var(--gap-sm);
     left: 50%;
@@ -71,12 +74,12 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     align-items: center;
     gap: 0.34rem;
     padding: 0.32rem 0.38rem;
-    background: var(--glass-bg);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
+    background: var(--lp-glass-black-bg);
+    backdrop-filter: blur(18px) saturate(1.18);
+    -webkit-backdrop-filter: blur(18px) saturate(1.18);
     border-radius: 0 10px 0 10px;
-    border: 2.7px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
+    border: 1px solid var(--lp-glass-black-border);
+    box-shadow: var(--lp-glass-black-shadow);
   }
 
   .lp-nav__brand {
@@ -117,7 +120,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     height: 3rem;
     padding: 0 0.5rem;
     border-radius: 0 10px 0 10px;
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--lp-glass-black-bg);
+    border: 1px solid var(--lp-glass-black-border);
     transition: background var(--quick);
     white-space: nowrap;
     text-align: center;
@@ -148,7 +152,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     height: 3rem;
     padding: 0 0.6rem;
     border-radius: 0 10px 0 10px;
-    background: rgba(255,255,255,0.06);
+    background: var(--lp-glass-black-bg);
+    border: 1px solid var(--lp-glass-black-border);
     transition: background var(--quick);
     cursor: pointer;
     box-sizing: border-box;
@@ -220,10 +225,10 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   }
 
   [data-theme="dark"] .lp-nav__island {
-    background: linear-gradient(165deg, var(--nav-surface-1), var(--nav-surface-2));
-    border-color: rgba(255,255,255,0.22);
+    background: var(--lp-glass-black-bg);
+    border-color: var(--lp-glass-black-border);
     border-radius: 0 14px 0 14px;
-    box-shadow: 0 14px 28px rgba(0,0,0,0.45);
+    box-shadow: var(--lp-glass-black-shadow);
   }
 
   [data-theme="dark"] .lp-nav__brand,
