@@ -150,8 +150,8 @@ const schema = {
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
-    gap: 1rem;
-    padding: 1rem clamp(0.8rem, 2vw, 2rem);
+    gap: var(--masonry-gap);
+    padding: var(--masonry-gap);
     background: rgba(11, 13, 20, 0.95);
     border-bottom: 1px solid rgba(255,255,255,0.12);
     backdrop-filter: blur(10px);
@@ -167,13 +167,13 @@ const schema = {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: clamp(0.6rem, 1.2vw, 1rem);
+    gap: var(--masonry-gap);
     text-transform: uppercase;
     letter-spacing: 0.24em;
     font-size: clamp(0.58rem, 0.9vw, 0.72rem);
   }
   .masonry-home__menu a { color: rgba(255,255,255,0.86); }
-  .masonry-home__menu a::after { content: '•'; margin-left: clamp(0.6rem, 1vw, 0.9rem); color: #f7be1f; }
+  .masonry-home__menu a::after { content: '•'; margin-left: var(--masonry-gap); color: #f7be1f; }
   .masonry-home__menu a:last-child::after { display: none; }
 
   .masonry-home__cta {
@@ -245,7 +245,7 @@ const schema = {
     .masonry-home__topbar {
       grid-template-columns: 1fr;
       justify-items: center;
-      gap: 0.6rem;
+      gap: var(--masonry-gap);
     }
     .masonry-home__menu { flex-wrap: wrap; }
     .masonry-home__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
