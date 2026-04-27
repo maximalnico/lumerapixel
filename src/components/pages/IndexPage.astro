@@ -253,12 +253,10 @@ const schema = {
   .all-section { position: relative; }
 
   .hero {
-    min-height: calc(100svh - var(--nav-h));
-    padding: calc(var(--nav-h) + var(--gap-md)) var(--page-x) var(--gap-lg);
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
-    gap: clamp(1rem, 2.5vw, 2rem);
-    align-items: center;
+    min-height: 100svh;
+    padding: calc(var(--nav-h) + 0.6rem) var(--page-x) 1.2rem;
+    display: block;
+    overflow: hidden;
   }
 
   .hero::before {
@@ -273,17 +271,20 @@ const schema = {
   }
 
   .hero__slideshow-wrap {
+    position: absolute;
+    inset: 0;
     border-radius: var(--radius-lg);
-    padding: 1px;
-    background: linear-gradient(150deg, color-mix(in srgb, #fff 35%, transparent), color-mix(in srgb, #fff 8%, transparent));
-    box-shadow: var(--shadow-2);
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
   }
 
   .hero__slideshow {
     position: relative;
-    aspect-ratio: 16/10;
+    height: 100%;
+    width: 100%;
     overflow: hidden;
-    border-radius: calc(var(--radius-lg) - 2px);
+    border-radius: 0;
     background: #07080c;
   }
 
@@ -295,7 +296,7 @@ const schema = {
     object-fit: cover;
     opacity: 0;
     transition: opacity 600ms ease;
-    filter: grayscale(0.3) contrast(1.1) brightness(0.72);
+    filter: grayscale(0.26) contrast(1.08) brightness(0.64);
   }
   .hero__slide.is-active { opacity: 1; }
 
@@ -313,37 +314,42 @@ const schema = {
   .hero__vhs-glitch.is-glitch { animation: vhs-glitch 320ms steps(4, end) 1; }
 
   .hero__content {
+    position: relative;
+    z-index: 2;
+    max-width: min(760px, 92vw);
+    margin-inline: auto;
+    margin-top: clamp(3.5rem, 10vh, 7rem);
     display: grid;
     justify-items: center;
     text-align: center;
-    gap: 0.9rem;
-    padding: clamp(0.9rem, 2vw, 1.4rem);
-    border: 1px solid var(--surface-border);
-    border-radius: var(--radius-lg);
+    gap: 1.2rem;
+    padding: clamp(1.2rem, 3.2vw, 2.5rem);
+    border: 1px solid color-mix(in srgb, #fff 34%, transparent);
+    border-radius: var(--radius-md);
     background: linear-gradient(165deg, color-mix(in srgb, var(--panel) 95%, transparent), color-mix(in srgb, var(--panel-2) 95%, transparent));
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    box-shadow: var(--shadow-1);
+    backdrop-filter: blur(18px) saturate(1.1);
+    -webkit-backdrop-filter: blur(18px) saturate(1.1);
+    box-shadow: var(--shadow-2);
   }
 
-  .hero__logo { height: clamp(2.1rem, 4vw, 3.4rem); filter: brightness(1.7); }
-  .hero__tagline { font-size: clamp(0.76rem, 1.2vw, 0.94rem); letter-spacing: 0.24em; text-transform: uppercase; color: var(--text-muted); }
+  .hero__logo { height: clamp(2.8rem, 7vw, 5.8rem); filter: brightness(1.85); }
+  .hero__tagline { font-size: clamp(0.84rem, 1.6vw, 1.14rem); letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); }
 
   .hero__stats {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.4rem;
+    gap: 0.7rem;
   }
   .hero__stats-item {
-    padding: 0.65rem 0.5rem;
+    padding: clamp(0.8rem, 1.8vw, 1.1rem) 0.6rem;
     border: 1px solid var(--surface-border);
     border-radius: var(--radius-sm);
     background: color-mix(in srgb, var(--panel-2) 92%, transparent);
   }
   .hero__stats-sep { display: none; }
-  .hero__stats-num { display: block; font-weight: 700; font-size: clamp(1rem, 2vw, 1.48rem); line-height: 1; }
-  .hero__stats-label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
+  .hero__stats-num { display: block; font-weight: 700; font-size: clamp(1.2rem, 2.8vw, 2rem); line-height: 1; }
+  .hero__stats-label { font-size: clamp(0.62rem, 0.9vw, 0.78rem); letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
 
   .scroll-hint { position: absolute; bottom: 0.7rem; left: 50%; transform: translateX(-50%); color: var(--accent); }
   .scroll-hint__arrow { width: 1.8rem; height: 1.8rem; }
@@ -463,8 +469,9 @@ const schema = {
   }
 
   @media (max-width: 940px) {
-    .hero { grid-template-columns: 1fr; }
+    .hero { padding-top: calc(var(--nav-h) + 0.4rem); }
     .hero__stats { grid-template-columns: 1fr; }
+    .hero__content { margin-top: clamp(2.5rem, 10vh, 5rem); }
     .featured-card { grid-template-columns: 1fr; }
     .featured-card__img { min-height: 190px; }
     .masonry-grid { columns: 2; }
