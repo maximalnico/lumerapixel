@@ -56,7 +56,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     justify-content: center;
     gap: 0;
     pointer-events: none;
-    width: min(97vw, 78rem);
+    width: min(95vw, 72rem);
   }
 
   .lp-nav__island {
@@ -68,8 +68,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
-    gap: 0.42rem;
-    padding: 0.35rem 0.45rem;
+    gap: 0.34rem;
+    padding: 0.32rem 0.38rem;
     background: var(--glass-bg);
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
@@ -96,11 +96,11 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   }
 
   .lp-nav__links {
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(7.4rem, 8.4rem));
     justify-content: center;
-    gap: 0.24rem;
-    flex: 1;
+    gap: 0.22rem;
+    flex: none;
   }
 
   .lp-nav__link {
@@ -110,7 +110,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: var(--text);
-    padding: 0.28rem 0.36rem;
+    width: 100%;
+    padding: 0.26rem 0.32rem;
     border-radius: 10px 0 10px 0;
     background: rgba(255, 255, 255, 0.06);
     transition: background var(--quick);
