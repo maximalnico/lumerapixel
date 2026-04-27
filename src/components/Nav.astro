@@ -79,7 +79,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     background: var(--glass-bg);
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
-    border-radius: 7px;
+    border-radius: 10px 0 10px 0;
     border: 2.7px solid var(--glass-border);
     box-shadow: var(--glass-shadow);
   }
@@ -89,7 +89,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     align-items: center;
     justify-content: center;
     padding: 0.35rem 0.55rem;
-    border-radius: 7px;
+    border-radius: 10px 0 10px 0;
     background: rgba(255, 255, 255, 0.06);
     transition: background var(--quick);
     flex-shrink: 0;
@@ -121,7 +121,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     letter-spacing: 0.12em;
     color: var(--text);
     padding: 0.58rem 0.8rem;
-    border-radius: 7px;
+    border-radius: 10px 0 10px 0;
     background: rgba(255, 255, 255, 0.06);
     transition: background var(--quick);
     white-space: nowrap;
@@ -142,7 +142,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     background: var(--glass-bg);
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
-    border-radius: 7px;
+    border-radius: 10px 0 10px 0;
     border: 2.7px solid var(--glass-border);
     box-shadow: var(--glass-shadow);
   }
@@ -152,7 +152,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     align-items: stretch;
     position: relative;
     padding: 2px;
-    border-radius: 7px;
+    border-radius: 10px 0 10px 0;
     background: rgba(255,255,255,0.06);
   }
 
@@ -160,7 +160,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     position: absolute;
     top: 2px;
     bottom: 2px;
-    border-radius: 7px;
+    border-radius: 10px 0 10px 0;
     transition: left 0.2s ease, width 0.2s ease;
     pointer-events: none;
     background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
@@ -173,7 +173,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 7px;
+    border-radius: 10px 0 10px 0;
     padding: 0.45rem;
     position: relative;
     z-index: 1;
@@ -250,8 +250,6 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 
 <style is:global>
   [data-theme="dark"] .lp-nav {
-    --eye-nav-cut: 12px;
-    --eye-nav-shape: polygon(var(--eye-nav-cut) 0, 100% 0, 100% calc(100% - var(--eye-nav-cut)), calc(100% - var(--eye-nav-cut)) 100%, 0 100%, 0 var(--eye-nav-cut));
     --nav-surface-1: rgba(20, 24, 34, 0.95);
     --nav-surface-2: rgba(11, 13, 21, 0.96);
     --pinky-nav: rgba(227, 28, 141, 0.62);
@@ -261,8 +259,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   [data-theme="dark"] .lp-nav__controls {
     background: linear-gradient(165deg, var(--nav-surface-1), var(--nav-surface-2));
     border-color: rgba(255,255,255,0.22);
-    clip-path: var(--eye-nav-shape);
-    border-radius: 0 18px 0 18px;
+    border-radius: 14px 0 14px 0;
     box-shadow: 0 14px 28px rgba(0,0,0,0.45);
   }
 
@@ -271,8 +268,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   [data-theme="dark"] .lp-nav__pill,
   [data-theme="dark"] .toggle-btn,
   [data-theme="dark"] .toggle-indicator {
-    clip-path: var(--eye-nav-shape);
-    border-radius: 0 12px 0 12px;
+    border-radius: 10px 0 10px 0;
   }
 
   [data-theme="dark"] .lp-nav__link:hover,
