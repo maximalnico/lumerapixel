@@ -90,7 +90,6 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     padding: 0 0.55rem;
     border-radius: 0 10px 0 10px;
     background: var(--lp-glass-black-bg);
-    border: 1px solid var(--lp-glass-black-border);
     flex-shrink: 0;
     box-sizing: border-box;
   }
@@ -122,7 +121,6 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     padding: 0 0.5rem;
     border-radius: 0 10px 0 10px;
     background: var(--lp-glass-black-bg);
-    border: 1px solid var(--lp-glass-black-border);
     transition: background var(--quick);
     white-space: nowrap;
     text-align: center;
@@ -135,8 +133,10 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   .lp-nav__link:hover,
   .lp-nav__link.is-active {
     background: linear-gradient(165deg, rgba(9, 11, 18, 0.92), rgba(6, 8, 14, 0.74));
-    border-color: #E31C8D;
     box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
+  }
+  .lp-nav__link.is-active {
+    border: 1px solid #E31C8D;
   }
 
   .lp-nav__controls {
@@ -156,14 +156,12 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     padding: 0 0.6rem;
     border-radius: 0 10px 0 10px;
     background: var(--lp-glass-black-bg);
-    border: 1px solid var(--lp-glass-black-border);
     transition: background var(--quick);
     cursor: pointer;
     box-sizing: border-box;
   }
   .lp-nav__quick-btn:hover {
     background: linear-gradient(165deg, rgba(9, 11, 18, 0.92), rgba(6, 8, 14, 0.74));
-    border-color: #E31C8D;
     box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
   }
 
