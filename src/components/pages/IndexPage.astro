@@ -187,8 +187,11 @@ const schema = {
   .masonry-home__cta:hover { background: rgba(255,255,255,0.08); }
 
   .masonry-home__grid {
-    columns: 4;
-    column-gap: 6px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: 8px;
+    grid-auto-flow: row;
+    gap: 6px;
     padding: 6px;
     background: #0f1118;
   }
@@ -198,8 +201,6 @@ const schema = {
     overflow: hidden;
     display: block;
     background: #111;
-    margin-bottom: 6px;
-    break-inside: avoid;
   }
   .masonry-card img {
     width: 100%;
@@ -247,15 +248,15 @@ const schema = {
       gap: 0.6rem;
     }
     .masonry-home__menu { flex-wrap: wrap; }
-    .masonry-home__grid { columns: 3; }
+    .masonry-home__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
 
   @media (max-width: 700px) {
-    .masonry-home__grid { columns: 2; }
+    .masonry-home__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 
   @media (max-width: 480px) {
-    .masonry-home__grid { columns: 1; }
+    .masonry-home__grid { grid-template-columns: 1fr; }
     .masonry-home__cta { width: 100%; text-align: center; }
   }
 
@@ -267,5 +268,27 @@ const schema = {
 </style>
 
 <script>
-  // Masonry landing page uses pure CSS interactions.
+  const masonryGrid = document.querySelector('.masonry-home__grid') as HTMLElement | null;
+  const masonryCards = document.querySelectorAll<HTMLElement>('.masonry-card');
+
+  function layoutMasonry() {
+    if (!masonryGrid || !masonryCards.length) return;
+    const styles = getComputedStyle(masonryGrid);
+    const rowHeight = parseFloat(styles.getPropertyValue('grid-auto-rows'));
+    const rowGap = parseFloat(styles.getPropertyValue('gap'));
+    masonryCards.forEach((card) => {
+      const image = card.querySelector('img');
+      if (!image) return;
+      const cardHeight = image.getBoundingClientRect().height;
+      const span = Math.ceil((cardHeight + rowGap) / (rowHeight + rowGap));
+      card.style.gridRowEnd = `span ${Math.max(span, 1)}`;
+    });
+  }
+
+  window.addEventListener('load', layoutMasonry);
+  window.addEventListener('resize', layoutMasonry);
+  masonryCards.forEach((card) => {
+    const image = card.querySelector('img');
+    image?.addEventListener('load', layoutMasonry);
+  });
 </script>
