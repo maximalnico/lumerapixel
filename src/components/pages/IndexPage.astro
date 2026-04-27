@@ -113,7 +113,7 @@ const schema = {
       </header>
 
       <div class="masonry-home__grid">
-        {allSessions.map((s: any, i: number) => {
+        {sorted.map((s: any, i: number) => {
           const cover = `${s.folder}/000.webp`;
           return (
             <a href={sessionPath(s.slug)} class="masonry-card">
