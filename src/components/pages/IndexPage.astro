@@ -18,6 +18,11 @@ const allSessions: any[] = Array.isArray(sessionsData)
   : (sessionsData as any).sessions ?? Object.values(sessionsData);
 
 const sorted = [...allSessions].sort((a, b) => parseDMY(b.date) - parseDMY(a.date));
+const masonryOrdered = [...sorted];
+const oberstaufenIndex = masonryOrdered.findIndex((s: any) => String(s.slug || '').toLowerCase().includes('oberstaufen'));
+if (oberstaufenIndex > 0) {
+  [masonryOrdered[oberstaufenIndex - 1], masonryOrdered[oberstaufenIndex]] = [masonryOrdered[oberstaufenIndex], masonryOrdered[oberstaufenIndex - 1]];
+}
 const totalPhotos = allSessions.reduce((s: number, ses: any) => s + (ses.images || 0), 0);
 const categories = [...new Set(allSessions.map((s: any) => s.category))];
 
@@ -113,7 +118,7 @@ const schema = {
       </header>
 
       <div class="masonry-home__grid">
-        {sorted.map((s: any, i: number) => {
+        {masonryOrdered.map((s: any, i: number) => {
           const cover = `${s.folder}/000.webp`;
           return (
             <a href={sessionPath(s.slug)} class="masonry-card">
@@ -188,8 +193,11 @@ const schema = {
   .masonry-home__cta:hover { background: rgba(255,255,255,0.08); }
 
   .masonry-home__grid {
-    columns: 4;
-    column-gap: var(--masonry-gap);
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: 1px;
+    grid-auto-flow: row;
+    gap: var(--masonry-gap);
     padding: var(--masonry-gap);
     background: #0f1118;
   }
@@ -199,8 +207,6 @@ const schema = {
     overflow: hidden;
     display: block;
     background: #111;
-    break-inside: avoid;
-    margin-bottom: var(--masonry-gap);
   }
   .masonry-card img {
     width: 100%;
@@ -247,15 +253,15 @@ const schema = {
       gap: var(--masonry-gap);
     }
     .masonry-home__menu { flex-wrap: wrap; }
-    .masonry-home__grid { columns: 3; }
+    .masonry-home__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
 
   @media (max-width: 700px) {
-    .masonry-home__grid { columns: 2; }
+    .masonry-home__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 
   @media (max-width: 480px) {
-    .masonry-home__grid { columns: 1; }
+    .masonry-home__grid { grid-template-columns: 1fr; }
     .masonry-home__cta { width: 100%; text-align: center; }
   }
 
@@ -267,5 +273,32 @@ const schema = {
 </style>
 
 <script>
-  // CSS-columns Masonry: full images + equal spacing without runtime reflow math.
+  const masonryGrid = document.querySelector('.masonry-home__grid') as HTMLElement | null;
+  const masonryCards = document.querySelectorAll<HTMLElement>('.masonry-card');
+
+  function layoutMasonry() {
+    if (!masonryGrid || !masonryCards.length) return;
+    const styles = getComputedStyle(masonryGrid);
+    const rowHeight = parseFloat(styles.getPropertyValue('grid-auto-rows'));
+    const rowGap = parseFloat(styles.getPropertyValue('gap'));
+
+    masonryCards.forEach((card) => {
+      const image = card.querySelector('img');
+      if (!image) return;
+      const cardWidth = card.getBoundingClientRect().width;
+      const hasNaturalSize = image.naturalWidth > 0 && image.naturalHeight > 0;
+      const cardHeight = hasNaturalSize
+        ? cardWidth * (image.naturalHeight / image.naturalWidth)
+        : image.getBoundingClientRect().height;
+      const span = Math.ceil((cardHeight + rowGap + 2) / (rowHeight + rowGap));
+      card.style.gridRowEnd = `span ${Math.max(span, 1)}`;
+    });
+  }
+
+  window.addEventListener('load', layoutMasonry);
+  window.addEventListener('resize', layoutMasonry);
+  masonryCards.forEach((card) => {
+    const image = card.querySelector('img');
+    image?.addEventListener('load', layoutMasonry);
+  });
 </script>
