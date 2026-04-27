@@ -119,8 +119,8 @@ const schema = {
             <a href={sessionPath(s.slug)} class="masonry-card">
               <img src={cover} alt={st(s)} loading={i < 4 ? 'eager' : 'lazy'} decoding="async" />
               <span class="masonry-card__overlay">
-                <span class="masonry-card__cat">{sc(s)}</span>
-                <span class="masonry-card__title">{st(s)}</span>
+                <span class="masonry-card__pill masonry-card__pill--cat">{sc(s)}</span>
+                <span class="masonry-card__pill masonry-card__pill--title">{st(s)}</span>
               </span>
             </a>
           );
@@ -212,33 +212,56 @@ const schema = {
   .masonry-card__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(10,12,18,0.02), rgba(10,12,18,0.78));
+    pointer-events: none;
+  }
+
+  .masonry-card__pill {
+    position: absolute;
+    left: 0.75rem;
+    right: auto;
+    max-width: calc(100% - 1.5rem);
+    backdrop-filter: blur(14px) saturate(1.05);
+    -webkit-backdrop-filter: blur(14px) saturate(1.05);
+    border: 1px solid rgba(255,255,255,0.34);
+    background: linear-gradient(165deg, rgba(9,12,20,0.66), rgba(9,12,20,0.38));
+    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+    border-radius: 14px 0 14px 0;
     opacity: 0;
-    transition: opacity 320ms ease;
-    display: grid;
-    align-content: center;
-    justify-items: center;
-    text-align: center;
-    padding: 1rem;
-    gap: 0.5rem;
+    transform: translateY(-8px);
+    transition: opacity 280ms ease, transform 280ms ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .masonry-card__cat {
-    font-size: 0.7rem;
+
+  .masonry-card__pill--cat {
+    top: 0.75rem;
+    padding: 0.42rem 0.72rem;
+    font-size: 0.66rem;
     text-transform: uppercase;
-    letter-spacing: 0.3em;
-    color: #f7be1f;
+    letter-spacing: 0.24em;
+    color: #E31C8D;
+    max-width: max-content;
   }
-  .masonry-card__title {
-    font-size: clamp(0.8rem, 1.1vw, 1rem);
-    letter-spacing: 0.18em;
+
+  .masonry-card__pill--title {
+    bottom: 0.75rem;
+    padding: 0.58rem 0.86rem;
+    font-size: clamp(0.76rem, 1vw, 0.92rem);
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: #fff;
+    transform: translateY(8px);
   }
 
   .masonry-card:hover img {
-    filter: brightness(0.45) contrast(1.12);
+    filter: brightness(0.82) contrast(1.05);
   }
-  .masonry-card:hover .masonry-card__overlay { opacity: 1; }
+  .masonry-card:hover .masonry-card__pill--cat,
+  .masonry-card:hover .masonry-card__pill--title {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
   @media (max-width: 1100px) {
     .masonry-home__topbar {
