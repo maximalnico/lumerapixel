@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 657.94 95.18">
   <defs>
-      <linearGradient id="rainbow" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="657.94" y2="0">
-    <stop offset="0%"    stop-color="#ff0040"/>
-    <stop offset="16.6%" stop-color="#ff8000"/>
-    <stop offset="33.3%" stop-color="#ffcc00"/>
-    <stop offset="50%"   stop-color="#00e85a"/>
-    <stop offset="66.6%" stop-color="#0090ff"/>
-    <stop offset="83.3%" stop-color="#8c3fff"/>
-    <stop offset="100%"  stop-color="#ff2eaa"/>
-  </linearGradient>
+      
     <style>
       .cls-1 {
         stroke-width: 0px;
-        fill: url(#rainbow);
+        fill: #E31C8D;
       }
     </style>
   </defs>
