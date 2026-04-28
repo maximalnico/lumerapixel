@@ -143,7 +143,9 @@ const schema = {
         aria-label={isEN ? 'Open latest session' : 'Neueste Session öffnen'}
       >
         <img src={`${headerSession.folder}/000.webp`} alt={st(headerSession)} loading="lazy" decoding="async" />
-        <span class="latest-session-strip__label">{isEN ? 'LATEST SESSION' : 'NEUESTE SESSION'}</span>
+        <span class="latest-session-strip__heading-lab">
+          <span class="latest-session-strip__heading">{isEN ? 'LATEST SESSION' : 'NEUESTE SESSION'}</span>
+        </span>
       </a>
 
       <section class="masonry-home__filters" aria-label="Session Filter">
@@ -319,19 +321,26 @@ const schema = {
     object-fit: cover;
     filter: brightness(0.72) contrast(1.04);
   }
-  .latest-session-strip__label {
+  .latest-session-strip__heading-lab {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     border: 1px solid #E31C8D;
     background: #000000;
-    color: #ffffff;
     border-radius: 0 14px 0 14px;
-    padding: 0.6rem 1.1rem;
-    text-transform: uppercase;
+    padding: 0.7rem 1.3rem;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .latest-session-strip__heading {
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(1.12rem, 2.25vw, 1.75rem);
     letter-spacing: 0.14em;
-    font-size: clamp(0.86rem, 1.15vw, 1.1rem);
+    text-transform: uppercase;
+    text-align: center;
     white-space: nowrap;
   }
 
