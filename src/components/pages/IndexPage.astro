@@ -255,7 +255,7 @@ const schema = {
     transform: translateX(-50%);
     width: 4.6rem;
     height: 4.6rem;
-    border-radius: 0 10px 0 10px;
+    border-radius: 0 14px 0 14px;
     border: 1px solid #808080;
     background: #000000;
     backdrop-filter: none;
@@ -305,6 +305,13 @@ const schema = {
     border: 1px solid #E31C8D;
     border-radius: 0 14px 0 14px;
     scroll-margin-top: calc(var(--nav-h) + 1.2rem);
+    outline: none;
+  }
+  .latest-session-strip:focus,
+  .latest-session-strip:focus-visible,
+  .latest-session-strip:target {
+    outline: none;
+    box-shadow: none;
   }
   .latest-session-strip img {
     width: 100%;
@@ -320,7 +327,7 @@ const schema = {
     border: 1px solid #E31C8D;
     background: #000000;
     color: #ffffff;
-    border-radius: 0 12px 0 12px;
+    border-radius: 0 14px 0 14px;
     padding: 0.6rem 1.1rem;
     text-transform: uppercase;
     letter-spacing: 0.14em;
@@ -363,7 +370,7 @@ const schema = {
     border: 1px solid #808080;
     background: #000000;
     color: #ffffff;
-    border-radius: 0 10px 0 10px;
+    border-radius: 0 14px 0 14px;
     padding: 0.5rem 0.9rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -443,7 +450,7 @@ const schema = {
   .featured-split__title {
     width: min(90%, max-content);
     text-align: center;
-    border-radius: 0 10px 0 10px;
+    border-radius: 0 14px 0 14px;
     border: 1px solid #E31C8D;
     background: #000000;
     backdrop-filter: none;
