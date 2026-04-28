@@ -20,8 +20,8 @@ const allSessions: any[] = Array.isArray(sessionsData)
 
 const sorted = [...allSessions].sort((a, b) => parseDMY(b.date) - parseDMY(a.date));
 const headerSession = sorted[0];
-const headerSlides = sorted.slice(0, 8).map((s: any) => `${s.folder}/000.webp`);
-const headerImage = headerSlides[0] || '';
+const headerImage = 'https://lumerapixel.b-cdn.net/collage.webp';
+const allSessionCovers = sorted.map((s: any) => `${s.folder}/000.webp`).filter(Boolean);
 const totalPhotos = allSessions.reduce((s: number, ses: any) => s + (ses.images || 0), 0);
 const featuredSessions = allSessions.filter((s: any) => s.featured).length >= 2
   ? allSessions.filter((s: any) => s.featured).slice(0, 2)
@@ -100,7 +100,7 @@ const schema = {
     <section class="masonry-home">
       <section class="fullscreen-header" aria-label="Header">
         <div class="fullscreen-header__frame">
-          {headerImage && <img id="heroSlideshowImage" class="fullscreen-header__image" src={headerImage} data-slides={headerSlides.join('|')} alt={st(headerSession)} loading="eager" decoding="async" />}
+          {headerImage && <img class="fullscreen-header__image" src={headerImage} alt={st(headerSession)} loading="eager" decoding="async" />}
           <div class="fullscreen-header__overlay">
             <div class="fullscreen-header__glasslab">
               <img src="/logos/lplong-white.svg" alt="LumeraPixel" class="fullscreen-header__logo" />
@@ -142,7 +142,7 @@ const schema = {
         href={sessionPath(headerSession.slug)}
         aria-label={isEN ? 'Open latest session' : 'Neueste Session öffnen'}
       >
-        <img src={`${headerSession.folder}/000.webp`} alt={st(headerSession)} loading="lazy" decoding="async" />
+        <img id="allSessionsSlideshowImage" src={`${headerSession.folder}/000.webp`} data-slides={allSessionCovers.join('|')} alt={st(headerSession)} loading="lazy" decoding="async" />
         <div class="masonry-home__filters-lab latest-session-strip__heading-lab">
           <h2 class="masonry-home__filters-title">{isEN ? 'ALL SESSIONS' : 'ALLE SESSIONS'}</h2>
         </div>
@@ -575,24 +575,23 @@ const schema = {
 </style>
 
 <script>
-  // Simple hero slideshow + CSS-columns masonry.
-  const heroImg = document.getElementById('heroSlideshowImage') as HTMLImageElement | null;
-  if (heroImg) {
-    const slides = (heroImg.dataset.slides || '')
+  // Random slideshow for the "All Sessions" strip.
+  const allSessionsImg = document.getElementById('allSessionsSlideshowImage') as HTMLImageElement | null;
+  if (allSessionsImg) {
+    const slides = (allSessionsImg.dataset.slides || '')
       .split('|')
       .map((s) => s.trim())
       .filter(Boolean);
 
     if (slides.length > 1) {
-      let idx = 0;
+      let current = allSessionsImg.src;
       setInterval(() => {
-        idx = (idx + 1) % slides.length;
-        heroImg.style.opacity = '0.45';
-        setTimeout(() => {
-          heroImg.src = slides[idx];
-          heroImg.style.opacity = '1';
-        }, 220);
-      }, 4200);
+        const choices = slides.filter((slide) => !current.endsWith(slide));
+        const nextPool = choices.length ? choices : slides;
+        const next = nextPool[Math.floor(Math.random() * nextPool.length)];
+        current = next;
+        allSessionsImg.src = next;
+      }, 2700);
     }
   }
 
