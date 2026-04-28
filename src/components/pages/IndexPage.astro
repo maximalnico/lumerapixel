@@ -143,15 +143,12 @@ const schema = {
         aria-label={isEN ? 'Open latest session' : 'Neueste Session öffnen'}
       >
         <img src={`${headerSession.folder}/000.webp`} alt={st(headerSession)} loading="lazy" decoding="async" />
-        <span class="latest-session-strip__heading-lab">
-          <span class="latest-session-strip__heading">{isEN ? 'LATEST SESSION' : 'NEUESTE SESSION'}</span>
-        </span>
+        <div class="masonry-home__filters-lab latest-session-strip__heading-lab">
+          <h2 class="masonry-home__filters-title">{isEN ? 'ALL SESSIONS' : 'ALLE SESSIONS'}</h2>
+        </div>
       </a>
 
       <section class="masonry-home__filters" aria-label="Session Filter">
-        <div class="masonry-home__filters-lab">
-          <h2 class="masonry-home__filters-title">{isEN ? 'ALL SESSIONS' : 'ALLE SESSIONS'}</h2>
-        </div>
         <div class="masonry-home__filters-controls">
           <button class="masonry-home__filter-btn is-active" data-session-filter="all" type="button">
             {isEN ? 'All' : 'Alle'}
@@ -326,22 +323,8 @@ const schema = {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    border: 1px solid #E31C8D;
-    background: #000000;
-    border-radius: 0 14px 0 14px;
-    padding: 0.7rem 1.3rem;
     z-index: 1;
     pointer-events: none;
-  }
-
-  .latest-session-strip__heading {
-    margin: 0;
-    color: #ffffff;
-    font-size: clamp(1.12rem, 2.25vw, 1.75rem);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    text-align: center;
-    white-space: nowrap;
   }
 
   .masonry-home__filters {
