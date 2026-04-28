@@ -620,14 +620,12 @@ const schema = {
   });
 
   const heroToFeaturedIndicator = document.getElementById('heroToFeaturedIndicator') as HTMLAnchorElement | null;
-  const featuredSection = document.getElementById('featured-sessions');
-  const nav = document.querySelector<HTMLElement>('.lp-nav');
+  const firstFeaturedCard = document.querySelector<HTMLElement>('.featured-split__item');
 
   heroToFeaturedIndicator?.addEventListener('click', (event) => {
-    if (!featuredSection) return;
+    if (!firstFeaturedCard) return;
     event.preventDefault();
-    const navHeight = nav?.getBoundingClientRect().height ?? 0;
-    const top = featuredSection.getBoundingClientRect().top + window.scrollY - navHeight - 12;
+    const top = firstFeaturedCard.getBoundingClientRect().top + window.scrollY;
     window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   });
 
