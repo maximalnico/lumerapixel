@@ -216,7 +216,7 @@ const schema = {
     height: 100%;
     min-height: 100%;
     object-fit: cover;
-    filter: grayscale(1) contrast(1.06);
+    filter: grayscale(1) brightness(0.72) contrast(1.06);
   }
 
   .fullscreen-header__overlay {
@@ -488,16 +488,17 @@ const schema = {
     width: 100%;
     height: auto;
     object-fit: cover;
-    transition: filter 320ms ease;
+    filter: grayscale(1) brightness(0.72) contrast(1.05);
+    transition: filter 320ms ease, transform 320ms ease;
   }
 
   .masonry-card__overlay {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    padding: 1rem;
+    padding: 0.9rem;
     display: grid;
-    align-content: center;
+    align-content: end;
     justify-items: center;
     gap: 0.45rem;
   }
@@ -508,9 +509,9 @@ const schema = {
     border: 1px solid #E31C8D;
     background: #000000;
     border-radius: 0 14px 0 14px;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 280ms ease, transform 280ms ease;
+    opacity: 1;
+    transform: translateY(0);
+    transition: none;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -544,12 +545,8 @@ const schema = {
   }
 
   .masonry-card:hover img {
-    filter: brightness(0.82) contrast(1.05);
-  }
-  .masonry-card:hover .masonry-card__pill--cat,
-  .masonry-card:hover .masonry-card__pill--title {
-    opacity: 1;
-    transform: translateY(0);
+    filter: grayscale(0) brightness(1) contrast(1.02);
+    transform: scale(1.1);
   }
 
   @media (max-width: 1100px) {
