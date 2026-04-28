@@ -458,8 +458,11 @@ const schema = {
   .featured-split__cat {
     font-size: 0.66rem;
     font-weight: 300;
-    letter-spacing: 0.22em;
-    padding: 0.44rem 0.72rem;
+    letter-spacing: 0.1em;
+    padding: 0.5rem 0.9rem;
+    border-color: #808080;
+    background: #000000;
+    color: #ffffff;
   }
   .featured-split__title {
     font-size: clamp(0.78rem, 1vw, 0.98rem);
@@ -470,6 +473,10 @@ const schema = {
   .featured-split__item:hover img {
     transform: scale(1.03);
     filter: brightness(0.86) contrast(1.06);
+  }
+  .featured-split__item:hover .featured-split__cat,
+  .masonry-card:hover .masonry-card__pill--cat {
+    border-color: #E31C8D;
   }
 
   .featured-split__scroll-indicator {
@@ -519,20 +526,13 @@ const schema = {
 
   .masonry-card__pill--cat {
     font-weight: 300;
-    padding: 0.42rem 0.72rem;
+    padding: 0.5rem 0.9rem;
     font-size: 0.66rem;
     text-transform: uppercase;
-    letter-spacing: 0.24em;
-    color: #E31C8D;
-  }
-
-  :global([data-theme="dark"]) .featured-split__cat,
-  :global([data-theme="dark"]) .masonry-card__pill--cat {
-    border-color: #e31c8d;
+    letter-spacing: 0.1em;
+    border-color: #808080;
     background: #000000;
-    color: #e31c8d;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+    color: #ffffff;
   }
 
   .masonry-card__pill--title {
@@ -546,6 +546,8 @@ const schema = {
 
   .masonry-card:hover img {
     filter: grayscale(0) brightness(1) contrast(1.02);
+  }
+  .masonry-card:hover .masonry-card__pill {
     transform: scale(1.1);
   }
 
