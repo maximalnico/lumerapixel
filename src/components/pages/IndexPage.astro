@@ -587,11 +587,12 @@ const schema = {
     event.preventDefault();
 
     const navHeight = nav?.getBoundingClientRect().height ?? 0;
+    const desiredTopSpacing = 20;
     const viewportTopGap = navHeight + 12;
     const featuredBottomY = featuredSection.getBoundingClientRect().bottom + window.scrollY;
     const sessionsTopY = sessionsSection.getBoundingClientRect().top + window.scrollY;
 
-    const minToHideFeatured = featuredBottomY - navHeight;
+    const minToHideFeatured = featuredBottomY - navHeight - desiredTopSpacing;
     const targetY = Math.max(sessionsTopY - viewportTopGap, minToHideFeatured);
     window.scrollTo({ top: targetY, behavior: 'smooth' });
     history.replaceState(null, '', '#masonry-grid');
