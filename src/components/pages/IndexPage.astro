@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
-import Nav from '../Nav.astro';
 import Footer from '../Footer.astro';
+import Nav from '../Nav.astro';
 import sessionsData from '/public/data/sessions.json';
 import { t, type Lang } from '../../i18n';
 
@@ -19,16 +19,13 @@ const allSessions: any[] = Array.isArray(sessionsData)
   : (sessionsData as any).sessions ?? Object.values(sessionsData);
 
 const sorted = [...allSessions].sort((a, b) => parseDMY(b.date) - parseDMY(a.date));
+const headerSession = sorted[0];
+const headerSlides = sorted.slice(0, 8).map((s: any) => `${s.folder}/000.webp`);
+const headerImage = headerSlides[0] || '';
 const totalPhotos = allSessions.reduce((s: number, ses: any) => s + (ses.images || 0), 0);
-const categories = [...new Set(allSessions.map((s: any) => s.category))];
-
-const featured = allSessions.filter((s: any) => s.featured).length >= 1
-  ? allSessions.filter((s: any) => s.featured).slice(0, 3)
-  : sorted.slice(0, 3);
-
-const slideshowSessions = [...allSessions]
-  .sort(() => Math.random() - 0.5)
-  .slice(0, 8);
+const featuredSessions = allSessions.filter((s: any) => s.featured).length >= 2
+  ? allSessions.filter((s: any) => s.featured).slice(0, 2)
+  : sorted.slice(0, 2);
 
 // Lang helpers
 const st = (s: any) => isEN ? (s.title_en || s.title_de) : (s.title_de || s.title_en);
@@ -36,6 +33,7 @@ const ss = (s: any) => isEN ? (s.subtitle_en || s.subtitle_de) : (s.subtitle_de 
 const sc = (s: any) => isEN ? (s.category_en || s.category) : (s.category_de || s.category);
 const sessionPath = (slug: string) => isEN ? `/en/sessions/${slug}` : `/sessions/${slug}`;
 const dateLocale = isEN ? 'en-US' : 'de-DE';
+const sessionCategories = Array.from(new Set(sorted.map((s: any) => sc(s)).filter(Boolean)));
 
 // SEO
 const siteUrl = 'https://lumerapixel.com';
@@ -98,141 +96,77 @@ const schema = {
   hreflangEn={`${siteUrl}/en/`}
 >
   <Nav />
-
   <main>
+    <section class="masonry-home">
+      <section class="fullscreen-header" aria-label="Header">
+        <div class="fullscreen-header__frame">
+          {headerImage && <img id="heroSlideshowImage" class="fullscreen-header__image" src={headerImage} data-slides={headerSlides.join('|')} alt={st(headerSession)} loading="eager" decoding="async" />}
+          <div class="fullscreen-header__overlay">
+            <div class="fullscreen-header__glasslab">
+              <img src="/logos/lplong-white.svg" alt="LumeraPixel" class="fullscreen-header__logo" />
+              <p class="fullscreen-header__sub">{t(lang, 'hero.tagline')}</p>
+            </div>
+          </div>
+        </div>
+        <a class="fullscreen-header__scroll-indicator" href="#masonry-grid" aria-label="Zum Grid scrollen">
+          <img src="/logos/phosphoricons/white/caret-down-thin.svg" alt="" />
+        </a>
+      </section>
 
-    <!-- ══ HERO ══ -->
-    <section class="hero" aria-label="Hero">
-
-      <!-- Slideshow Box links -->
-      <div class="hero__slideshow-wrap">
-        <div class="hero__slideshow" id="slideshow">
-          {slideshowSessions.map((s: any, i: number) => {
-            const cover = s.folder + '/000.webp';
+      <section class="featured-split" aria-label="Featured Sessions">
+        <div class="featured-split__heading-lab">
+          <h2 class="featured-split__heading">Featured Sessions</h2>
+        </div>
+        <div class="featured-split__grid">
+          {featuredSessions.map((s: any) => {
+            const cover = `${s.folder}/000.webp`;
             return (
-              <img
-                src={cover}
-                alt=""
-                class={`hero__slide ${i === 0 ? 'is-active' : ''}`}
-                loading={i === 0 ? 'eager' : 'lazy'}
-                decoding="async"
-              />
+              <a href={sessionPath(s.slug)} class="featured-split__item">
+                <img src={cover} alt={st(s)} loading="lazy" decoding="async" />
+                <span class="featured-split__overlay">
+                  <span class="featured-split__cat">{sc(s)}</span>
+                  <span class="featured-split__title">{st(s)}</span>
+                </span>
+              </a>
             );
           })}
         </div>
-      </div>
-
-      <!-- Text rechts -->
-      <div class="hero__content">
-        <img src="/logos/lplong-rainbow.svg" alt="LumeraPixel" class="hero__logo" />
-        <p class="hero__tagline">{t(lang, 'hero.tagline')}</p>
-
-        <!-- Stats inline rechts -->
-        <div class="hero__stats">
-          <div class="hero__stats-item">
-            <span class="hero__stats-num">{allSessions.length}</span>
-            <span class="hero__stats-label">{t(lang, 'stats.sessions')}</span>
-          </div>
-          <div class="hero__stats-sep" aria-hidden="true"></div>
-          <div class="hero__stats-item">
-            <span class="hero__stats-num">{totalPhotos.toLocaleString('de-DE')}</span>
-            <span class="hero__stats-label">{t(lang, 'stats.photos')}</span>
-          </div>
-          <div class="hero__stats-sep" aria-hidden="true"></div>
-          <div class="hero__stats-item">
-            <span class="hero__stats-num">{categories.length}</span>
-            <span class="hero__stats-label">{t(lang, 'stats.categories')}</span>
-          </div>
-        </div>
-
-        <!-- Scroll hint -->
-        <a href="#featured" class="scroll-hint" aria-label={t(lang, 'hero.tagline')}>
-          <svg class="scroll-hint__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true">
-            <defs>
-              <linearGradient id="arrowGrad" x1="0" y1="128" x2="256" y2="128" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#ff0040"/>
-                <stop offset="16.6%" stop-color="#ff8000"/>
-                <stop offset="33.3%" stop-color="#ffcc00"/>
-                <stop offset="50%" stop-color="#00e85a"/>
-                <stop offset="66.6%" stop-color="#0090ff"/>
-                <stop offset="83.3%" stop-color="#8c3fff"/>
-                <stop offset="100%" stop-color="#ff2eaa"/>
-              </linearGradient>
-            </defs>
-            <rect width="256" height="256" fill="none"/>
-            <polyline points="208 96 128 176 48 96" fill="none" stroke="url(#arrowGrad)" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
-          </svg>
+        <a class="fullscreen-header__scroll-indicator featured-split__scroll-indicator" href="#masonry-grid" aria-label="Zum Grid scrollen">
+          <img src="/logos/phosphoricons/white/caret-down-thin.svg" alt="" />
         </a>
-      </div>
+      </section>
 
-    </section>
+      <section class="masonry-home__filters" id="masonry-grid" aria-label="Session Filter">
+        <div class="masonry-home__filters-lab">
+          <h2 class="masonry-home__filters-title">{isEN ? 'ALL SESSIONS' : 'ALLE SESSIONS'}</h2>
+        </div>
+        <div class="masonry-home__filters-controls">
+          <button class="masonry-home__filter-btn is-active" data-session-filter="all" type="button">
+            {isEN ? 'All' : 'Alle'}
+          </button>
+          {sessionCategories.map((category) => (
+            <button class="masonry-home__filter-btn" data-session-filter={category} type="button">
+              {category}
+            </button>
+          ))}
+        </div>
+      </section>
 
-    <!-- ══ FEATURED SESSIONS ══ -->
-    <section class="featured-section" id="featured" aria-label="Featured Sessions">
-      <div class="featured-section__head">
-        <div class="featured-section__line" aria-hidden="true"></div>
-        <h2 class="featured-section__title">{t(lang, 'section.highlights')}</h2>
-        <div class="featured-section__line" aria-hidden="true"></div>
-      </div>
-
-      <div class="featured-grid">
-        {featured.map((s: any) => {
-          const folder = s.folder;
-          const cover = `${folder}/000.webp`;
-          const [d, m, y] = s.date.split('.');
-          const dateStr = new Date(+y, +m - 1, +d).toLocaleDateString(dateLocale, { month: 'long', year: 'numeric' });
+      <div class="masonry-home__grid">
+        {sorted.map((s: any, i: number) => {
+          const cover = `${s.folder}/000.webp`;
+          const category = sc(s);
           return (
-            <a href={sessionPath(s.slug)} class="featured-card">
-              <div class="featured-card__img">
-                <img src={cover} alt={s.title} loading="lazy" decoding="async" />
-                <div class="featured-card__img-overlay"></div>
-              </div>
-              <div class="featured-card__body">
-                <span class="featured-card__cat">{sc(s)}</span>
-                <h3 class="featured-card__title">{st(s)}</h3>
-                <span class="featured-card__date">{dateStr}</span>
-              </div>
-              <div class="featured-card__arrow" aria-hidden="true">
-                <svg class="featured-card__arrow-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true"><defs><linearGradient id="rg-fc" x1="0" y1="128" x2="256" y2="128" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#ff0000"/><stop offset="20%" stop-color="#ff7700"/><stop offset="40%" stop-color="#ffee00"/><stop offset="60%" stop-color="#00cc00"/><stop offset="80%" stop-color="#0088ff"/><stop offset="100%" stop-color="#8800ff"/></linearGradient></defs><rect width="256" height="256" fill="none"/><polyline points="96 48 176 128 96 208" fill="none" stroke="url(#rg-fc)" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/></svg>
-              </div>
+            <a href={sessionPath(s.slug)} class="masonry-card" data-category={category}>
+              <img src={cover} alt={st(s)} loading={i < 4 ? 'eager' : 'lazy'} decoding="async" />
+              <span class="masonry-card__overlay">
+                <span class="masonry-card__pill masonry-card__pill--cat">{category}</span>
+                <span class="masonry-card__pill masonry-card__pill--title">{st(s)}</span>
+              </span>
             </a>
           );
         })}
       </div>
-    </section>
-
-    <!-- ══ ALLE SESSIONS + FILTER + MASONRY ══ -->
-    <section class="all-section" id="sessions" aria-label="Alle Sessions">
-
-      <!-- Filter -->
-      <div class="filter-bar reveal" id="filterBar">
-        <button class="filter-btn is-active" data-cat="all">{t(lang, 'filter.all')}</button>
-        {categories.map((cat: string) => (
-          <button class="filter-btn" data-cat={cat}>{cat}</button>
-        ))}
-      </div>
-
-      <div class="rg-line reveal" style="margin: 0 var(--page-x) var(--gap-md);"></div>
-
-      <!-- Masonry Grid -->
-      <div class="masonry-grid" id="masonryGrid">
-        {sorted.map((s: any) => {
-          const folder = s.folder;
-          const cover = `${folder}/000.webp`;
-          return (
-            <a href={sessionPath(s.slug)} class="session-card reveal" data-cat={s.category}>
-              <div class="session-card__img">
-                <img src={cover} alt={s.title} loading="lazy" decoding="async" />
-              </div>
-              <div class="session-card__body glass">
-                <h3 class="session-card__title">{st(s)}</h3>
-                <span class="session-card__cat">{sc(s)}</span>
-              </div>
-            </a>
-          );
-        })}
-      </div>
-
     </section>
 
   </main>
@@ -243,615 +177,403 @@ const schema = {
 </Base>
 
 <style>
-  /* ══ GLOBAL BG ══ */
+  main {
+    background: #0f1118;
+    min-height: 100svh;
+    color: #f6f6f6;
+    --masonry-gap: 7px;
+  }
 
-
-  /* ══ HERO ══ */
-  .hero {
+  .fullscreen-header {
     position: relative;
-    height: 100svh;
-    min-height: 560px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
+    height: calc(100svh - (var(--masonry-gap) * 2));
+    min-height: calc(100svh - (var(--masonry-gap) * 2));
+    margin: var(--masonry-gap);
     overflow: hidden;
+    background: #090b12;
+    border-radius: 0 14px 0 14px;
+    border: 1px solid #E31C8D;
   }
 
-  /* ══ HERO — Slideshow links, Text+Stats rechts ══ */
-  .hero {
-    min-height: calc(100svh - var(--nav-h));
-    padding: calc(var(--nav-h) + var(--gap-sm) + var(--gap-sm)) var(--page-x) var(--gap-lg);
-    display: grid;
-    grid-template-columns: 7fr 5fr;
-    gap: var(--gap-lg);
-    align-items: center;
+  .fullscreen-header__frame {
     position: relative;
-  }
-  @media (max-width: 768px) {
-    .hero {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: var(--nav-h) var(--page-x) 0.3rem;
-      gap: 0.27rem;
-      min-height: 100svh;
-    }
-    .hero__slideshow {
-      width: 88%;
-      margin: 0 auto;
-      aspect-ratio: 4/3;
-      border-width: 2.7px;
-      border-radius: 7px;
-    }
-    .hero__content { gap: 0.27rem; margin-top: 2.7rem; align-items: center; text-align: center;}
-    .hero__logo { height: clamp(1.4rem, 5.5vw, 1.9rem); }
-    .hero__tagline {
-      font-size: clamp(0.6rem, 2.5vw, 0.78rem);
-      margin-bottom: 0;
-      letter-spacing: 0.14em;
-    }
-    .hero__stats {
-      display: flex;
-      flex-direction: row !important;
-      border-radius: 7px;
-      border-width: 2.7px;
-    }
-    .hero__stats-item {
-      flex: 1;
-      padding: 0.3rem 0.2rem;
-      gap: 0.06rem;
-    }
-    .hero__stats-sep {
-      width: 2.7px;
-      height: 1.4rem;
-      align-self: center;
-      background: linear-gradient(to bottom, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff);
-      opacity: 0.7;
-    }
-    .hero__stats-item {
-      flex-direction: row;
-      align-items: center;
-      gap: 0.3rem;
-    }
-    .hero__stats-num { font-size: 0.8rem; }
-    .hero__stats-label { font-size: 0.7rem; letter-spacing: 0.06em; }
-    .scroll-hint {
-      position: static;
-      transform: none;
-      animation: bob-mobile 2.5s ease-in-out infinite;
-      margin-top: 0.15rem;
-    }
-    .scroll-hint__arrow { width: 26px; height: 26px; }
-  }
-  @keyframes bob-mobile {
-    0%, 100% { transform: translateY(0); }
-    50%       { transform: translateY(5px); }
-  }
-
-  /* Slideshow Box */
-  .hero__slideshow-wrap {
-    padding: 2.7px;
-    background: var(--rainbow);
-    border-radius: 7px;
-    flex-shrink: 0;
-  }
-  .hero__slideshow {
-    position: relative;
-    aspect-ratio: 4/3;
-    border-radius: 7px;
-    overflow: hidden;
-    background: var(--bg);
-  }
-  .hero__slide {
-    position: absolute;
-    inset: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 1.2s ease-in-out;
-    filter: brightness(0.88) contrast(1.04);
-  }
-  .hero__slide.is-active { opacity: 1; }
-
-  /* Text rechts */
-  .hero__content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 1.2rem;
-  }
-  .hero__logo {
-    height: clamp(2.8rem, 6vw, 4.5rem);
-    width: auto;
-    opacity: 0.95;
-  }
-  .hero__tagline {
-    font-family: 'Switzer', sans-serif;
-    font-weight: 277;
-    font-size: clamp(1.1rem, 2.4vw, 1.7rem);
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: var(--gap-sm);
-  }
-
-  /* Stats unter Text rechts */
-  .hero__stats {
-    display: flex;
-    flex-direction: column;
-    background: rgba(0,0,0,0.27);
-    backdrop-filter: blur(27px);
-    -webkit-backdrop-filter: blur(27px);
-    border-radius: 7px;
-    border: 2.7px solid rgba(0,0,0,0.37);
-    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.27);
     width: 100%;
-  }
-  .hero__stats-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: clamp(0.6rem, 1.4vw, 1rem) clamp(0.8rem, 2vw, 1.5rem);
-    gap: 0.2rem;
-  }
-  .hero__stats-sep {
-    height: 2.7px;
-    width: 60%;
-    background: linear-gradient(to right, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff);
-    opacity: 0.7;
-    align-self: center;
-  }
-  .hero__stats-num {
-    font-family: 'Switzer', sans-serif;
-    font-weight: 277;
-    font-size: clamp(1.4rem, 2.5vw, 2rem);
-    line-height: 1;
-    color: var(--text-muted);
-  }
-  .hero__stats-label {
-    font-family: 'Switzer', sans-serif;
-    font-weight: 277;
-    font-size: clamp(0.72rem, 0.95vw, 0.85rem);
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: var(--text-muted);
+    height: 100%;
+    overflow: hidden;
+    border-radius: inherit;
   }
 
-  /* Scroll hint */
-  .scroll-hint {
+  .fullscreen-header__image {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.06);
+    transition: opacity 500ms ease;
+  }
+
+  .fullscreen-header__overlay {
     position: absolute;
-    bottom: var(--gap-md);
+    inset: 0;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    text-align: center;
+    gap: 1rem;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0.12) 22%, rgba(0, 0, 0, 0.12) 78%, rgba(0, 0, 0, 0.42) 100%);
+    padding: 1.2rem;
+  }
+
+  .fullscreen-header__glasslab {
+    display: grid;
+    gap: 1rem;
+    justify-items: center;
+    padding: clamp(1rem, 2.3vw, 1.8rem) clamp(1.2rem, 3vw, 2.3rem);
+    background: #000000;
+    border: 1px solid #E31C8D;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.5);
+    border-radius: 0 14px 0 14px;
+    max-width: min(92vw, 52rem);
+  }
+
+  .fullscreen-header__scroll-indicator {
+    position: absolute;
     left: 50%;
+    bottom: 0.85rem;
     transform: translateX(-50%);
+    width: 4.6rem;
+    height: 4.6rem;
+    border-radius: 0 10px 0 10px;
+    border: 1px solid #808080;
+    background: #000000;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.42);
     z-index: 3;
-    display: flex;
-    align-items: center;
-    animation: bob 2.5s ease-in-out infinite;
-    transition: opacity 0.4s ease;
-    text-decoration: none;
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
   }
-  .scroll-hint:hover { opacity: 0.7; }
-  .scroll-hint__arrow { width: 52px; height: 52px; opacity: 0.85; }
-  .scroll-hint--hidden { opacity: 0 !important; pointer-events: none; }
-  @keyframes bob {
-    0%,100% { transform: translateX(-50%) translateY(0); }
-    50%      { transform: translateX(-50%) translateY(6px); }
+  .fullscreen-header__scroll-indicator:hover {
+    transform: translateX(-50%) scale(1.1);
+    border-color: #E31C8D;
+    box-shadow: 0 12px 26px rgba(0,0,0,0.5);
   }
-
-  /* ══ FEATURED ══ */
-  .featured-section {
-    padding: var(--gap-lg) var(--page-x) var(--gap-md);
-  }
-  .featured-section__head {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    gap: var(--gap-md);
-    margin-bottom: var(--gap-lg);
-  }
-  .featured-section__line {
-    height: 2.7px;
-    background: var(--rainbow);
-  }
-  .featured-section__title {
-    font-family: 'Switzer', sans-serif;
-    font-weight: 277;
-    font-size: clamp(1.2rem, 2.4vw, 2rem);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--text);
-    white-space: nowrap;
-    text-align: center;
-  }
-
-  /* Featured Grid — 3 Karten */
-  .featured-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--gap-sm);
-  }
-  @media (max-width: 768px) { 
-    .featured-grid { 
-      display: flex;
-      flex-direction: row;
-      text-align: center;
-    } 
-    .featured-card {
-      border-radius: 7px;
-    }
-    .featured-card__img {
-      max-height: unset;
-      aspect-ratio: 16/10;
-      display: none;
-    }
-    .featured-card__img-overlay { display: none; }
-    .featured-card__body {
-      padding: 0.55rem 0.8rem 0.65rem;
-      border-top: 2.7px solid var(--border);
-      align-items: center;
-      text-align: center;
-    }
-    .featured-card__cat {
-      font-size: 0.7rem !important;
-      font-weight: 277 !important;
-      align-self: center !important;
-      background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18)) !important;
-      -webkit-background-clip: initial !important;
-      background-clip: initial !important;
-      -webkit-text-fill-color: initial !important;
-    }
-    .featured-card__title {
-      font-size: 1rem !important;
-      letter-spacing: normal !important;
-      font-weight: 420 !important;
-      color: var(--text) !important;
-    }
-    .featured-card__date { display: none; }
-    .featured-card__arrow { display: none !important; }
-  }
-
-  .featured-card {
-    display: flex;
-    flex-direction: row-reverse;
-    border-radius: 7px;
-    overflow: hidden;
-    position: relative;
-    background: var(--glass-bg);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    box-shadow: var(--glass-shadow);
-    transition: transform var(--flow);
-    text-decoration: none;
-  }
-  .featured-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 7px;
-    padding: 2.7px;
-    background: var(--rainbow);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: destination-out;
-    mask-composite: exclude;
-    pointer-events: none;
-    z-index: 2;
-  }
-  .featured-card:hover {
-    transform: translateY(-4px);
-  }
-
-
-  .featured-card__img {
-    position: relative;
-    flex: 0 0 60%;
-    overflow: hidden;
-  }
-  .featured-card__img img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    transition: transform var(--flow);
-    filter: brightness(1) contrast(1.02) saturate(1);
-  }
-  .featured-card__img-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(10,10,15,0.85) 0%, transparent 50%);
-  }
-
-  .featured-card__body {
-    padding: var(--gap-sm) var(--gap-md) var(--gap-sm);
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    flex: 1;
-    align-items: center;
-    text-align: center;
-  }
-  .featured-card__cat {
-    font-family: 'Switzer', sans-serif;
-    font-weight: 277;
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    display: inline-block;
-    align-self: center;
-    padding: 0.15rem 0.6rem;
-    border-radius: 7px;
-    border: 2.7px solid var(--text-muted);
-    color: var(--text);
-    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
-  }
-  .featured-card__title {
-    font-family: 'Switzer', sans-serif;
-    font-weight: 420;
-    font-size: clamp(1.2rem, 2.2vw, 1.7rem);
-    letter-spacing: normal;
-    line-height: 1.15;
-    color: var(--text);
-  }
-  .featured-card__date {
-    font-family: 'Switzer', sans-serif;
-    font-weight: 277;
-    font-size: 1.00rem;
-    letter-spacing: 0.07em;
-    color: var(--text-muted);
-  }
-  .featured-card__arrow {
-    position: absolute;
-    bottom: var(--gap-sm);
-    left: var(--gap-md);
-    transition: transform var(--quick);
-    display: flex;
-  }
-  .featured-card__arrow-img {
-    width: 36px;
-    height: 36px;
-    display: block;
-    transition: transform var(--quick);
-  }
-  .featured-card:hover .featured-card__arrow { transform: translateX(4px); }
-  .featured-card:hover .featured-card__arrow-img { transform: scale(1.3); }
-
-  /* ══ ALL SESSIONS ══ */
-  .all-section {
-    padding: var(--gap-md) 0 var(--gap-xl);
-    border-top: 2.7px solid var(--border);
-  }
-
-
-  /* Filter */
-  .filter-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    padding: 0 var(--page-x);
-    margin-bottom: var(--gap-sm);
-  }
-  .filter-btn {
-    font-family: 'Switzer', sans-serif;
-    font-weight: 277;
-    font-size: clamp(0.78rem, 1vw, 0.9rem);
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    padding: 0.55rem 1.4rem;
-    border-radius: 7px;
-    border: 2.7px solid var(--text-muted);
-    color: var(--text);
-    cursor: pointer;
-    background: transparent;
-  }
-  .filter-btn:hover,
-  .filter-btn.is-active {
-    border-color: var(--text);
-    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
-  }
-
-  /* Masonry — CSS Columns */
-  .masonry-grid {
-    columns: 4;
-    column-gap: 0.6rem;
-    padding: 0 var(--page-x);
-  }
-  .masonry-grid .session-card {
-    break-inside: avoid;
-    margin-bottom: 0.6rem;
+  .fullscreen-header__scroll-indicator img {
+    width: 2.9rem;
+    height: 2.9rem;
     display: block;
   }
-  @media (max-width: 1100px) { .masonry-grid { columns: 3; } }
-  @media (max-width: 700px)  { 
-    .masonry-grid { 
-      columns: 2; 
-    } 
-    .session-card__img img {
-      height: auto;
-      aspect-ratio: 16/10;
-      object-fit: cover;
-    }
-  }
-  @media (max-width: 440px) { 
-    .masonry-grid { 
-      columns: 2; 
-    } 
-    .session-card__img img {
+
+  .fullscreen-header__logo {
+    width: clamp(240px, 40vw, 620px);
     height: auto;
-    aspect-ratio: 16/10;
-    object-fit: cover;
-    }
   }
 
-  /* Session Card */
-  .session-card {
-    display: block;
-    border-radius: 7px;
-    overflow: hidden;
-    position: relative;
-    transition: transform var(--flow);
-    text-decoration: none;
+  .fullscreen-header__sub {
+    font-size: clamp(1rem, 1.6vw, 1.4rem);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: #ffffff;
   }
-  .session-card:hover { transform: translateY(-2px); }
-  .session-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 7px;
-    padding: 2.7px;
-    background: var(--rainbow);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: destination-out;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity var(--quick);
-    z-index: 2;
-    pointer-events: none;
-  }
-  .session-card:hover::before { opacity: 1; }
 
-  .session-card__img { overflow: hidden; }
-  .session-card__img img {
-    width: 100%; height: auto; display: block;
-    transition: transform var(--flow), filter var(--flow);
-    filter: brightness(0.95) contrast(1.04);
+  .masonry-home__grid {
+    columns: 4;
+    column-gap: var(--masonry-gap);
+    padding: var(--masonry-gap);
+    background: #0f1118;
   }
-  .session-card:hover .session-card__img img {
-    filter: brightness(1.02) contrast(1.02);
+
+  .masonry-home__filters {
+    margin: var(--masonry-gap);
+    margin-top: clamp(2.2rem, 6vw, 4.2rem);
+    display: grid;
+    justify-items: center;
+    gap: 0.6rem;
+    scroll-margin-top: calc(var(--nav-h) + 0.4rem);
   }
-  .session-card__body {
-    padding: 0.55rem 0.8rem 0.65rem;
-    border-top: 2.7px solid var(--border);
-    border-radius: 7px;
-    background: var(--glass-bg);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
+
+  .masonry-home__filters-lab {
+    border: 1px solid #E31C8D;
+    background: #000000;
+    border-radius: 0 14px 0 14px;
+    padding: 0.7rem 1.3rem;
   }
-  .session-card__title {
-    font-family: 'Switzer', sans-serif;
-    font-weight: 277;
-    font-size: clamp(0.95rem, 1.6vw, 1.2rem);
-    letter-spacing: -0.01em;
-    line-height: 1.25;
-    color: var(--text);
-    margin-bottom: 0.18rem;
-  }
-  .session-card__cat {
-    font-family: 'Switzer', sans-serif;
-    font-weight: 277;
-    font-size: 0.72rem;
+
+  .masonry-home__filters-title {
+    margin: 0;
+    font-size: clamp(1.12rem, 2.25vw, 1.75rem);
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    display: inline-block;
-    padding: 0.15rem 0.6rem;
-    border-radius: 7px;
-    border: 2.7px solid var(--text-muted);
-    color: var(--text);
-    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
+    color: #ffffff;
+    text-align: center;
   }
 
-  /* Footer */
-  .lp-footer { padding: var(--gap-lg) var(--page-x) var(--gap-md); }
-  .lp-footer__inner {
-    display: flex; flex-direction: column;
-    align-items: center; gap: var(--gap-sm); text-align: center;
-  }
-  .lp-footer__logo { height: 1.8rem; width: auto; opacity: 0.35; }
-  .lp-footer__copy {
-    font-family: 'Switzer', sans-serif;
-    font-weight: 277;
-    font-size: 0.75rem;
-    color: var(--text-dim);
-    letter-spacing: 0.04em;
-  }
-  .lp-footer__mn {
-    font-weight: 277;
-  }
-  .lp-footer__legal {
-    display: flex; gap: 0.75rem; align-items: center;
-    font-family: 'Switzer', sans-serif;
-    font-weight: 277;
-    font-size: 0.68rem;
-    color: var(--text-dim);
-  }
-  .lp-footer__legal a { transition: color var(--quick); }
-  .lp-footer__legal a:hover { color: var(--text-muted); }
-
-  :global([data-theme="light"]) .hero__stats {
-    background: rgba(255,255,255,0.27);
-    border-color: rgba(255,255,255,0.37);
-  }
-  :global([data-theme="light"]) .session-card__body {
-    border-color: rgba(255,255,255,0.37);
-  }
-  :global([data-theme="light"]) .filter-btn {
-    border-color: rgba(10,10,15,0.35);
-    color: rgba(10,10,15,0.85);
-  }
-  :global([data-theme="light"]) .featured-card__cat,
-  :global([data-theme="light"]) .session-card__cat {
-    border-color: rgba(10,10,15,0.35);
-    color: rgba(10,10,15,0.85);
-  }
-  :global([data-theme="dark"]) .filter-btn:hover,
-  :global([data-theme="dark"]) .filter-btn.is-active,
-  :global([data-theme="dark"]) .featured-card__cat,
-  :global([data-theme="dark"]) .session-card__cat {
-    background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
+  .masonry-home__filters-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.45rem;
   }
 
+  .masonry-home__filter-btn {
+    border: 1px solid #808080;
+    background: #000000;
+    color: #ffffff;
+    border-radius: 0 10px 0 10px;
+    padding: 0.5rem 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.76rem;
+    cursor: pointer;
+  }
 
-  :global([data-theme="light"]) .featured-card__title { color: rgba(10,10,15,0.9); }
+  .masonry-home__filter-btn:hover,
+  .masonry-home__filter-btn.is-active {
+    border-color: #E31C8D;
+  }
+
+  .featured-split {
+    margin: var(--masonry-gap);
+    height: calc(100svh - (var(--masonry-gap) * 2));
+    display: block;
+    position: relative;
+    overflow: hidden;
+  }
+  .featured-split__heading {
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(1.12rem, 2.25vw, 1.75rem);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .featured-split__heading-lab {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 0 14px 0 14px;
+    border: 1px solid #E31C8D;
+    background: #000000;
+    padding: 0.7rem 1.3rem;
+    z-index: 4;
+    pointer-events: none;
+  }
+  .featured-split__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: var(--masonry-gap);
+    min-height: 0;
+    height: 100%;
+  }
+
+  .featured-split__item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0 14px 0 14px;
+    border: 1px solid #E31C8D;
+    background: #000000;
+    min-height: 0;
+    height: 100%;
+    display: block;
+  }
+  .featured-split__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: contrast(1.04) saturate(1.02);
+    transition: transform 420ms ease, filter 320ms ease;
+  }
+  .featured-split__overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 0.45rem;
+    padding: 1rem;
+    background: linear-gradient(180deg, rgba(0,0,0,0.08) 32%, rgba(0,0,0,0.72) 100%);
+  }
+  .featured-split__cat,
+  .featured-split__title {
+    width: min(90%, max-content);
+    text-align: center;
+    border-radius: 0 10px 0 10px;
+    border: 1px solid #E31C8D;
+    background: #000000;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    text-transform: uppercase;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .featured-split__cat {
+    font-size: 0.66rem;
+    letter-spacing: 0.22em;
+    padding: 0.44rem 0.72rem;
+  }
+  .featured-split__title {
+    font-size: clamp(0.78rem, 1vw, 0.98rem);
+    letter-spacing: 0.12em;
+    padding: 0.58rem 0.86rem;
+  }
+  .featured-split__item:hover img {
+    transform: scale(1.03);
+    filter: brightness(0.86) contrast(1.06);
+  }
+
+  .featured-split__scroll-indicator {
+    bottom: 0.75rem;
+  }
+
+  .masonry-card {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    background: #111;
+    break-inside: avoid;
+    margin-bottom: var(--masonry-gap);
+  }
+  .masonry-card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: filter 320ms ease;
+  }
+
+  .masonry-card__overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    padding: 0.8rem;
+  }
+
+  .masonry-card__pill {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    max-width: min(92%, 30rem);
+    backdrop-filter: blur(14px) saturate(1.05);
+    -webkit-backdrop-filter: blur(14px) saturate(1.05);
+    border: 1px solid #E31C8D;
+    background: linear-gradient(165deg, rgba(9,12,20,0.66), rgba(9,12,20,0.38));
+    border-radius: 14px 0 14px 0;
+    opacity: 0;
+    transition: opacity 280ms ease, transform 280ms ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .masonry-card__pill--cat {
+    top: 0.75rem;
+    padding: 0.42rem 0.72rem;
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    color: #E31C8D;
+    max-width: max-content;
+  }
+
+  :global([data-theme="dark"]) .featured-split__cat,
+  :global([data-theme="dark"]) .masonry-card__pill--cat {
+    border-color: #e31c8d;
+    background: #000000;
+    color: #e31c8d;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .masonry-card__pill--title {
+    bottom: 0.75rem;
+    padding: 0.58rem 0.86rem;
+    font-size: clamp(0.76rem, 1vw, 0.92rem);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #ffffff;
+  }
+
+  .masonry-card:hover img {
+    filter: brightness(0.82) contrast(1.05);
+  }
+  .masonry-card:hover .masonry-card__pill--cat,
+  .masonry-card:hover .masonry-card__pill--title {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  @media (max-width: 1100px) {
+    .masonry-home__grid { columns: 3; }
+  }
 
   @media (max-width: 700px) {
-    .filter-bar {
-      justify-content: center;
+    .featured-split {
+      height: auto;
     }
-    .filter-btn {
-      font-size: 0.7rem;
-      padding: 0.35rem 0.85rem;
-      letter-spacing: 0.12em;
+    .featured-split__grid { grid-template-columns: 1fr; }
+    .featured-split__item {
+      min-height: 60svh;
     }
-    .session-card__body {
-      text-align: center;
-    }
+    .masonry-home__grid { columns: 2; }
   }
 
+  @media (max-width: 480px) {
+    .masonry-home__grid { columns: 1; }
+  }
+
+  :global([data-theme="light"]) main,
+  :global([data-theme="dark"]) main {
+    background: #0f1118;
+    color: #f6f6f6;
+  }
 </style>
 
 <script>
-  // ── Scroll hint ──
-  const scrollHint = document.querySelector('.scroll-hint') as HTMLElement;
-  if (scrollHint) {
-    window.addEventListener('scroll', () => {
-      scrollHint.classList.toggle('scroll-hint--hidden', window.scrollY > 80);
-    }, { passive: true });
+  // Simple hero slideshow + CSS-columns masonry.
+  const heroImg = document.getElementById('heroSlideshowImage') as HTMLImageElement | null;
+  if (heroImg) {
+    const slides = (heroImg.dataset.slides || '')
+      .split('|')
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    if (slides.length > 1) {
+      let idx = 0;
+      setInterval(() => {
+        idx = (idx + 1) % slides.length;
+        heroImg.style.opacity = '0.45';
+        setTimeout(() => {
+          heroImg.src = slides[idx];
+          heroImg.style.opacity = '1';
+        }, 220);
+      }, 4200);
+    }
   }
 
-  // ── Slideshow ──
-  const slides = document.querySelectorAll<HTMLElement>('.hero__slide');
-  let current = 0;
-  if (slides.length > 1) {
-    setInterval(() => {
-      slides[current].classList.remove('is-active');
-      current = (current + 1) % slides.length;
-      slides[current].classList.add('is-active');
-    }, 5000);
+  const filterButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('.masonry-home__filter-btn'));
+  const masonryCards = Array.from(document.querySelectorAll<HTMLElement>('.masonry-card'));
+
+  function applySessionFilter(filterValue: string) {
+    masonryCards.forEach((card) => {
+      const category = card.dataset.category;
+      const isVisible = filterValue === 'all' || category === filterValue;
+      card.style.display = isVisible ? 'block' : 'none';
+    });
+
+    filterButtons.forEach((btn) => {
+      btn.classList.toggle('is-active', btn.dataset.sessionFilter === filterValue);
+    });
   }
 
-  // ── Filter ──
-  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
-  const cards = document.querySelectorAll<HTMLElement>('.session-card');
-
-  filterBtns.forEach(btn => {
+  filterButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      const cat = btn.dataset.cat;
-      cards.forEach(card => {
-        const match = cat === 'all' || card.dataset.cat === cat;
-        card.style.display = match ? 'block' : 'none';
-      });
+      applySessionFilter(btn.dataset.sessionFilter || 'all');
     });
   });
 </script>
