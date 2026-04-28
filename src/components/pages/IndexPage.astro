@@ -272,11 +272,12 @@ const schema = {
 
   .featured-split {
     margin: var(--masonry-gap);
-    min-height: calc(100svh - (var(--masonry-gap) * 2));
+    height: calc(100svh - (var(--masonry-gap) * 2));
     display: grid;
-    grid-template-rows: auto 1fr;
-    gap: 0.8rem;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 0.55rem;
     position: relative;
+    overflow: hidden;
   }
   .featured-split__heading {
     margin: 0;
@@ -296,9 +297,10 @@ const schema = {
   .featured-split__grid {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: var(--masonry-gap);
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
     min-height: 0;
+    height: 100%;
   }
 
   .featured-split__item {
@@ -308,6 +310,7 @@ const schema = {
     border: 1px solid #E31C8D;
     background: #000000;
     min-height: 0;
+    height: 100%;
     display: block;
   }
   .featured-split__item img {
@@ -434,7 +437,7 @@ const schema = {
 
   @media (max-width: 700px) {
     .featured-split {
-      min-height: auto;
+      height: auto;
     }
     .featured-split__grid { grid-template-columns: 1fr; }
     .featured-split__item {
