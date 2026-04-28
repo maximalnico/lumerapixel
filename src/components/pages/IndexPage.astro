@@ -273,32 +273,35 @@ const schema = {
   .featured-split {
     margin: var(--masonry-gap);
     height: calc(100svh - (var(--masonry-gap) * 2));
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
-    gap: 0.55rem;
+    display: block;
     position: relative;
     overflow: hidden;
   }
   .featured-split__heading {
     margin: 0;
     color: #ffffff;
-    font-size: clamp(1.35rem, 2.8vw, 2.2rem);
+    font-size: clamp(1rem, 2vw, 1.5rem);
     letter-spacing: 0.14em;
     text-transform: uppercase;
     text-align: center;
   }
   .featured-split__heading-lab {
-    justify-self: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 0 14px 0 14px;
     border: 1px solid #E31C8D;
     background: #000000;
     padding: 0.7rem 1.3rem;
+    z-index: 4;
+    pointer-events: none;
   }
   .featured-split__grid {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(2, minmax(0, 1fr));
-    gap: 0.55rem;
+    gap: var(--masonry-gap);
     min-height: 0;
     height: 100%;
   }
