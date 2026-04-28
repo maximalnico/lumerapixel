@@ -100,7 +100,7 @@ const schema = {
     <section class="masonry-home">
       <section class="fullscreen-header" aria-label="Header">
         <div class="fullscreen-header__frame">
-          {headerImage && <img class="fullscreen-header__image" src={headerImage} alt={st(headerSession)} loading="eager" decoding="async" />}
+          <div class="fullscreen-header__image" role="img" aria-label={st(headerSession)} style={`background-image: url('${headerImage}');`}></div>
           <div class="fullscreen-header__overlay">
             <div class="fullscreen-header__glasslab">
               <img src="/logos/lplong-white.svg" alt="LumeraPixel" class="fullscreen-header__logo" />
@@ -214,10 +214,13 @@ const schema = {
   }
 
   .fullscreen-header__image {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    min-height: 100%;
-    object-fit: cover;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     filter: grayscale(1) contrast(1.06);
   }
 
