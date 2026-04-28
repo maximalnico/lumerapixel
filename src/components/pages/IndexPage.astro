@@ -416,6 +416,15 @@ const schema = {
     max-width: max-content;
   }
 
+  :global([data-theme="dark"]) .featured-split__cat,
+  :global([data-theme="dark"]) .masonry-card__pill--cat {
+    border-color: #e31c8d;
+    background: #000000;
+    color: #e31c8d;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   .masonry-card__pill--title {
     bottom: 0.75rem;
     padding: 0.58rem 0.86rem;
