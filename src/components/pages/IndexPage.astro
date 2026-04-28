@@ -131,7 +131,7 @@ const schema = {
             );
           })}
         </div>
-        <a class="fullscreen-header__scroll-indicator featured-split__scroll-indicator" href="#latest-session-strip" aria-label="Zu Sessions scrollen">
+        <a id="featuredToLatestIndicator" class="fullscreen-header__scroll-indicator featured-split__scroll-indicator" href="#" aria-label="Zur neuesten Session scrollen">
           <img src="/logos/phosphoricons/white/caret-down-thin.svg" alt="" />
         </a>
       </section>
@@ -300,7 +300,7 @@ const schema = {
     margin: var(--masonry-gap);
     position: relative;
     display: block;
-    min-height: clamp(40px, 6svh, 64px);
+    min-height: calc(100svh / 3);
     overflow: hidden;
     border: 1px solid #E31C8D;
     border-radius: 0 14px 0 14px;
@@ -621,6 +621,8 @@ const schema = {
 
   const heroToFeaturedIndicator = document.getElementById('heroToFeaturedIndicator') as HTMLAnchorElement | null;
   const firstFeaturedCard = document.querySelector<HTMLElement>('.featured-split__item');
+  const featuredToLatestIndicator = document.getElementById('featuredToLatestIndicator') as HTMLAnchorElement | null;
+  const latestSessionStrip = document.getElementById('latest-session-strip');
 
   heroToFeaturedIndicator?.addEventListener('click', (event) => {
     if (!firstFeaturedCard) return;
@@ -629,6 +631,16 @@ const schema = {
     const masonryGapRaw = getComputedStyle(mainEl || document.documentElement).getPropertyValue('--masonry-gap');
     const masonryGap = Number.parseFloat(masonryGapRaw) || 0;
     const top = firstFeaturedCard.getBoundingClientRect().top + window.scrollY - masonryGap;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+  });
+
+  featuredToLatestIndicator?.addEventListener('click', (event) => {
+    if (!latestSessionStrip) return;
+    event.preventDefault();
+    const mainEl = document.querySelector('main');
+    const masonryGapRaw = getComputedStyle(mainEl || document.documentElement).getPropertyValue('--masonry-gap');
+    const masonryGap = Number.parseFloat(masonryGapRaw) || 0;
+    const top = latestSessionStrip.getBoundingClientRect().top + window.scrollY - masonryGap;
     window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   });
 
