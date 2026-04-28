@@ -110,7 +110,7 @@ const schema = {
         </div>
         <a id="heroToFeaturedIndicator" class="fullscreen-header__scroll-indicator" href="#" aria-label="Zu Featured Sessions scrollen">
           <img src="/logos/phosphoricons/white/caret-down-thin.svg" alt="" />
-        </a>
+        </div>
       </section>
 
       <section class="featured-split" id="featured-sessions" aria-label="Featured Sessions">
@@ -136,17 +136,16 @@ const schema = {
         </a>
       </section>
 
-      <a
+      <div
         id="latest-session-strip"
         class="latest-session-strip"
-        href={sessionPath(headerSession.slug)}
-        aria-label={isEN ? 'Open latest session' : 'Neueste Session öffnen'}
+        aria-label={isEN ? 'All sessions preview' : 'Alle Sessions Vorschau'}
       >
         <img id="allSessionsSlideshowImage" src={`${headerSession.folder}/000.webp`} data-slides={allSessionCovers.join('|')} alt={st(headerSession)} loading="lazy" decoding="async" />
         <div class="masonry-home__filters-lab latest-session-strip__heading-lab">
           <h2 class="masonry-home__filters-title">{isEN ? 'ALL SESSIONS' : 'ALLE SESSIONS'}</h2>
         </div>
-      </a>
+      </div>
 
       <section class="masonry-home__filters" aria-label="Session Filter">
         <div class="masonry-home__filters-controls">
@@ -496,20 +495,21 @@ const schema = {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    padding: 0.8rem;
+    padding: 1rem;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 0.45rem;
   }
 
   .masonry-card__pill {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%) translateY(8px);
-    max-width: min(92%, 30rem);
-    backdrop-filter: blur(14px) saturate(1.05);
-    -webkit-backdrop-filter: blur(14px) saturate(1.05);
+    width: min(90%, max-content);
+    text-align: center;
     border: 1px solid #E31C8D;
-    background: linear-gradient(165deg, rgba(9,12,20,0.66), rgba(9,12,20,0.38));
-    border-radius: 14px 0 14px 0;
+    background: #000000;
+    border-radius: 0 14px 0 14px;
     opacity: 0;
+    transform: translateY(8px);
     transition: opacity 280ms ease, transform 280ms ease;
     white-space: nowrap;
     overflow: hidden;
@@ -517,14 +517,12 @@ const schema = {
   }
 
   .masonry-card__pill--cat {
-    top: 0.75rem;
     font-weight: 300;
     padding: 0.42rem 0.72rem;
     font-size: 0.66rem;
     text-transform: uppercase;
     letter-spacing: 0.24em;
     color: #E31C8D;
-    max-width: max-content;
   }
 
   :global([data-theme="dark"]) .featured-split__cat,
@@ -537,7 +535,6 @@ const schema = {
   }
 
   .masonry-card__pill--title {
-    bottom: 0.75rem;
     font-weight: 450;
     padding: 0.58rem 0.86rem;
     font-size: clamp(0.76rem, 1vw, 0.92rem);
@@ -552,7 +549,7 @@ const schema = {
   .masonry-card:hover .masonry-card__pill--cat,
   .masonry-card:hover .masonry-card__pill--title {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: translateY(0);
   }
 
   @media (max-width: 1100px) {
