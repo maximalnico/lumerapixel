@@ -105,8 +105,8 @@ const canonicalURL = canonical ?? Astro.url.href;
     /* ── DARK TOKENS ── */
     :root,
     [data-theme="dark"] {
-      --accent: #808080;
-      --accent: #808080;
+      --accent: #404040;
+      --accent: #404040;
       --bg:            #000000;
       --bg-card:       rgba(255,255,255,0.04);
       --bg-card-hover: rgba(255,255,255,0.07);
@@ -145,7 +145,7 @@ const canonicalURL = canonical ?? Astro.url.href;
     /* ── SPACING & TRANSITIONS (theme-unabhängig) ── */
     :root {
       color-scheme: light dark;
-      --rainbow: linear-gradient(277deg, #808080, #808080, #ffffff, #808080, #808080, #808080);
+      --rainbow: linear-gradient(277deg, #404040, #404040, #ffffff, #404040, #404040, #404040);
       --gap-xs:  clamp(0.25rem, 1vw,  0.5rem);
       --gap-sm:  clamp(0.5rem,  2vw,  1rem);
       --gap-md:  clamp(1rem,    3vw,  2rem);
@@ -230,7 +230,7 @@ const canonicalURL = canonical ?? Astro.url.href;
     }
 
     /* ── TYPOGRAPHY ── */
-    .font-display { font-family: 'Satoshi'; font-weight: 700; letter-spacing: -0.02em; }
+    .font-display { font-family: 'Satoshi'; font-weight: 750; letter-spacing: -0.02em; }
     .t-micro {
       font-family: 'Satoshi'; font-weight: 600;
       font-size: clamp(0.65rem, 1vw, 0.8rem);
@@ -257,13 +257,13 @@ const canonicalURL = canonical ?? Astro.url.href;
       100% { background-position: 200% 50%; }
     }
     @keyframes rainbow-glow {
-      0%   { box-shadow: 0 0 0 1.5px #808080, 0 0 16px rgba(255,0,0,0.25); }
-      16%  { box-shadow: 0 0 0 1.5px #808080, 0 0 16px rgba(255,119,0,0.25); }
+      0%   { box-shadow: 0 0 0 1.5px #404040, 0 0 16px rgba(255,0,0,0.25); }
+      16%  { box-shadow: 0 0 0 1.5px #404040, 0 0 16px rgba(255,119,0,0.25); }
       33%  { box-shadow: 0 0 0 1.5px #ffffff, 0 0 16px rgba(255,238,0,0.25); }
-      50%  { box-shadow: 0 0 0 1.5px #808080, 0 0 16px rgba(0,204,0,0.25); }
-      66%  { box-shadow: 0 0 0 1.5px #808080, 0 0 16px rgba(0,136,255,0.25); }
-      83%  { box-shadow: 0 0 0 1.5px #808080, 0 0 16px rgba(136,0,255,0.25); }
-      100% { box-shadow: 0 0 0 1.5px #808080, 0 0 16px rgba(255,0,0,0.25); }
+      50%  { box-shadow: 0 0 0 1.5px #404040, 0 0 16px rgba(0,204,0,0.25); }
+      66%  { box-shadow: 0 0 0 1.5px #404040, 0 0 16px rgba(0,136,255,0.25); }
+      83%  { box-shadow: 0 0 0 1.5px #404040, 0 0 16px rgba(136,0,255,0.25); }
+      100% { box-shadow: 0 0 0 1.5px #404040, 0 0 16px rgba(255,0,0,0.25); }
     }
     @keyframes bob {
       0%, 100% { transform: translateX(-50%) translateY(0); }

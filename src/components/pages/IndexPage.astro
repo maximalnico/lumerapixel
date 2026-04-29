@@ -258,7 +258,7 @@ const schema = {
     width: 4.6rem;
     height: 4.6rem;
     border-radius: 0 14px 0 14px;
-    border: 2.7px solid #808080;
+    border: 2.7px solid #404040;
     background: #000000;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -286,7 +286,7 @@ const schema = {
 
   .fullscreen-header__sub {
     font-size: clamp(1rem, 1.6vw, 1.4rem);
-    font-weight: 450;
+    font-weight: 550;
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: #ffffff;
@@ -349,7 +349,7 @@ const schema = {
 
   .masonry-home__filters-title {
     margin: 0;
-    font-weight: 700;
+    font-weight: 750;
     font-size: clamp(1.12rem, 2.25vw, 1.75rem);
     text-transform: uppercase;
     letter-spacing: 0.14em;
@@ -365,8 +365,8 @@ const schema = {
   }
 
   .masonry-home__filter-btn {
-    border: 2.7px solid #808080;
-    font-weight: 450;
+    border: 2.7px solid #404040;
+    font-weight: 550;
     background: #000000;
     color: #ffffff;
     border-radius: 0 14px 0 14px;
@@ -391,7 +391,7 @@ const schema = {
   }
   .featured-split__heading {
     margin: 0;
-    font-weight: 700;
+    font-weight: 750;
     color: #ffffff;
     font-size: clamp(1.12rem, 2.25vw, 1.75rem);
     letter-spacing: 0.14em;
@@ -461,7 +461,7 @@ const schema = {
     transform-origin: center center;
     text-align: center;
     border-radius: 0 14px 0 14px;
-    border: 2.7px solid #808080;
+    border: 2.7px solid #404040;
     background: #000000;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -473,16 +473,16 @@ const schema = {
   }
   .featured-split__cat {
     font-size: 0.62rem;
-    font-weight: 300;
+    font-weight: 500;
     letter-spacing: 0.09em;
     padding: 0.42rem 0.78rem;
-    border-color: #808080;
+    border-color: #404040;
     background: #000000;
     color: #ffffff;
   }
   .featured-split__title {
     font-size: clamp(0.72rem, 0.92vw, 0.9rem);
-    font-weight: 450;
+    font-weight: 550;
     letter-spacing: 0.11em;
     padding: 0.5rem 0.76rem;
   }
@@ -504,7 +504,7 @@ const schema = {
     overflow: hidden;
     display: block;
     background: #000000;
-    border: 2.7px solid #808080;
+    border: 2.7px solid #404040;
     border-radius: 0 14px 0 14px;
     break-inside: avoid;
     margin-bottom: var(--masonry-gap);
@@ -533,7 +533,7 @@ const schema = {
   .masonry-card__pill {
     width: min(90%, max-content);
     text-align: center;
-    border: 2.7px solid #808080;
+    border: 2.7px solid #404040;
     background: #000000;
     border-radius: 0 14px 0 14px;
     opacity: 1;
@@ -547,18 +547,18 @@ const schema = {
   }
 
   .masonry-card__pill--cat {
-    font-weight: 300;
+    font-weight: 500;
     padding: 0.42rem 0.78rem;
     font-size: 0.62rem;
     text-transform: uppercase;
     letter-spacing: 0.09em;
-    border-color: #808080;
+    border-color: #404040;
     background: #000000;
     color: #ffffff;
   }
 
   .masonry-card__pill--title {
-    font-weight: 450;
+    font-weight: 550;
     padding: 0.5rem 0.76rem;
     font-size: clamp(0.72rem, 0.92vw, 0.9rem);
     letter-spacing: 0.11em;
@@ -623,7 +623,7 @@ const schema = {
   :global([data-theme="light"]) .featured-split__title,
   :global([data-theme="light"]) .masonry-home__filter-btn,
   :global([data-theme="light"]) .fullscreen-header__scroll-indicator {
-    border-color: #808080;
+    border-color: #404040;
   }
   :global([data-theme="light"]) .masonry-home__filter-btn.is-active,
   :global([data-theme="light"]) .masonry-home__filter-btn:hover,
@@ -649,6 +649,13 @@ const schema = {
   }
   :global([data-theme="light"]) .masonry-card__overlay {
     background: transparent;
+  }
+
+  :global([data-theme="light"]) .fullscreen-header__image,
+  :global([data-theme="light"]) .latest-session-strip img,
+  :global([data-theme="light"]) .featured-split__item img,
+  :global([data-theme="light"]) .masonry-card img {
+    filter: grayscale(1) contrast(1.05);
   }
 
 </style>
