@@ -688,9 +688,13 @@ const schema = {
     document.querySelector<HTMLElement>('.featured-split'),
     document.querySelector<HTMLElement>('#latest-session-strip'),
   ].filter(Boolean) as HTMLElement[];
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const LOCK_RELEASE_OFFSET = 24;
+  const SNAP_COOLDOWN_MS = 460;
   let isSnapping = false;
   let wheelBurstLock = false;
   let wheelBurstTimer: number | undefined;
+  let lastSnapAt = 0;
 
   function masonryGapPx() {
     const mainEl = document.querySelector('main');
@@ -720,23 +724,35 @@ const schema = {
   function snapTo(anchors: number[], index: number) {
     const clamped = Math.max(0, Math.min(index, anchors.length - 1));
     isSnapping = true;
+    lastSnapAt = Date.now();
     window.scrollTo({ top: anchors[clamped], behavior: 'smooth' });
     window.setTimeout(() => { isSnapping = false; }, 420);
   }
 
   function handleLockStep(direction: 1 | -1, event?: Event) {
+    if (prefersReducedMotion) return;
     const anchors = getAnchors();
     if (anchors.length < 3) return;
     const latestAnchor = anchors[2];
     const y = window.scrollY;
+    const now = Date.now();
+    const activeElement = document.activeElement as HTMLElement | null;
+    const isTyping = !!activeElement && (
+      activeElement.tagName === 'INPUT' ||
+      activeElement.tagName === 'TEXTAREA' ||
+      activeElement.tagName === 'SELECT' ||
+      activeElement.isContentEditable
+    );
+    if (isTyping) return;
 
-    if (isSnapping) {
+    if (isSnapping || now - lastSnapAt < SNAP_COOLDOWN_MS) {
       event?.preventDefault();
       return;
     }
 
     // Free downward scroll once we're at/under latest section.
-    if (direction > 0 && y >= latestAnchor - 1) return;
+    if (direction > 0 && y >= latestAnchor - LOCK_RELEASE_OFFSET) return;
+    if (direction < 0 && y <= anchors[0] + 1) return;
 
     event?.preventDefault();
 
