@@ -683,14 +683,17 @@ const schema = {
   // Direction-aware scroll lock for hero -> featured -> all-sessions.
   const rootEl = document.documentElement;
   const bodyEl = document.body;
-  let previousScrollY = window.scrollY;
+  const lockTargets = Array.from(document.querySelectorAll<HTMLElement>('.scroll-lock-target'));
 
-  function getScrollLockLimit() {
-    if (!latestSessionStrip) return 0;
+  function getMasonryGap() {
     const mainEl = document.querySelector('main');
     const masonryGapRaw = getComputedStyle(mainEl || document.documentElement).getPropertyValue('--masonry-gap');
-    const masonryGap = Number.parseFloat(masonryGapRaw) || 0;
-    return Math.max(0, latestSessionStrip.getBoundingClientRect().top + window.scrollY - masonryGap);
+    return Number.parseFloat(masonryGapRaw) || 0;
+  }
+
+  function getLockAnchors() {
+    const gap = getMasonryGap();
+    return lockTargets.map((el) => Math.max(0, el.getBoundingClientRect().top + window.scrollY - gap));
   }
 
   function setScrollLockState(enabled: boolean) {
@@ -698,29 +701,58 @@ const schema = {
     bodyEl.classList.toggle('lp-scroll-lock', enabled);
   }
 
-  function handleDirectionalScrollLock() {
-    const currentY = window.scrollY;
-    const lockLimit = getScrollLockLimit();
-    const scrollingUp = currentY < previousScrollY;
-
-    if (currentY <= lockLimit + 1) {
-      setScrollLockState(true);
-    } else {
-      setScrollLockState(false);
-    }
-
-    // When returning from below: stay free-scrolling until just above the all-sessions strip,
-    // then re-engage lock by snapping back to the strip (+gap).
-    if (scrollingUp && previousScrollY > lockLimit + 24 && currentY <= lockLimit + 24 && currentY > lockLimit - 2) {
-      window.scrollTo({ top: lockLimit, behavior: 'smooth' });
-      setScrollLockState(true);
-    }
-
-    previousScrollY = currentY;
+  function getCurrentAnchorIndex(anchors: number[]) {
+    const y = window.scrollY;
+    let nearest = 0;
+    let dist = Infinity;
+    anchors.forEach((a, i) => {
+      const d = Math.abs(a - y);
+      if (d < dist) { dist = d; nearest = i; }
+    });
+    return nearest;
   }
 
-  handleDirectionalScrollLock();
-  window.addEventListener('scroll', handleDirectionalScrollLock, { passive: true });
-  window.addEventListener('resize', handleDirectionalScrollLock);
+  function updateDirectionalLockState() {
+    const anchors = getLockAnchors();
+    const lastAnchor = anchors[anchors.length - 1] || 0;
+    const currentY = window.scrollY;
+    setScrollLockState(currentY <= lastAnchor + 1);
+  }
+
+  function handleWheelLock(event: WheelEvent) {
+    const anchors = getLockAnchors();
+    if (!anchors.length) return;
+
+    const lastAnchor = anchors[anchors.length - 1];
+    const y = window.scrollY;
+    const scrollingDown = event.deltaY > 0;
+
+    // free scroll below all-sessions when moving down
+    if (scrollingDown && y >= lastAnchor + 1) {
+      setScrollLockState(false);
+      return;
+    }
+
+    // free scroll from below when moving up until all-sessions anchor is reached
+    if (!scrollingDown && y > lastAnchor + 24) {
+      setScrollLockState(false);
+      return;
+    }
+
+    event.preventDefault();
+    setScrollLockState(true);
+
+    const currentIdx = getCurrentAnchorIndex(anchors);
+    const targetIdx = scrollingDown
+      ? Math.min(currentIdx + 1, anchors.length - 1)
+      : Math.max(currentIdx - 1, 0);
+
+    window.scrollTo({ top: anchors[targetIdx], behavior: 'smooth' });
+  }
+
+  updateDirectionalLockState();
+  window.addEventListener('wheel', handleWheelLock, { passive: false });
+  window.addEventListener('scroll', updateDirectionalLockState, { passive: true });
+  window.addEventListener('resize', updateDirectionalLockState);
 
 </script>
