@@ -32,6 +32,7 @@ const canonicalURL = canonical ?? Astro.url.href;
   <meta name="author" content="Nico Henkel" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href={canonicalURL} />
+  <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
 
   <!-- OpenGraph -->
   <meta property="og:title" content={title} />
@@ -51,7 +52,6 @@ const canonicalURL = canonical ?? Astro.url.href;
   <meta name="twitter:image" content={ogImage} />
 
   <!-- Performance -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="dns-prefetch" href="https://lumerapixel.com" />
 
   <!-- hreflang -->

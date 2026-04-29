@@ -100,7 +100,7 @@ const schema = {
     <section class="masonry-home">
       <section class="fullscreen-header motion-safe:animate-in motion-safe:fade-in" aria-label="Header">
         <div class="fullscreen-header__frame">
-          {headerImage && <img class="fullscreen-header__image" src={headerImage} alt={st(headerSession)} loading="eager" decoding="async" />}
+          {headerImage && <img class="fullscreen-header__image" src={headerImage} alt={st(headerSession)} loading="eager" fetchpriority="high" decoding="async" />}
           <div class="fullscreen-header__overlay">
             <div class="fullscreen-header__glasslab">
               <img src="/logos/lplong-white.svg" alt="LumeraPixel" class="fullscreen-header__logo" />
@@ -688,9 +688,16 @@ const schema = {
     document.querySelector<HTMLElement>('.featured-split'),
     document.querySelector<HTMLElement>('#latest-session-strip'),
   ].filter(Boolean) as HTMLElement[];
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isDesktopViewport = window.matchMedia('(min-width: 1024px)').matches;
+  const LOCK_RELEASE_OFFSET = 24;
+  const SNAP_COOLDOWN_MS = 460;
+  const WHEEL_GESTURE_GAP_MS = 220;
   let isSnapping = false;
-  let wheelBurstLock = false;
-  let wheelBurstTimer: number | undefined;
+  let lastSnapAt = 0;
+  let currentLockIndex = 0;
+  let wheelGestureDirection: 1 | -1 | 0 = 0;
+  let wheelGestureTimer: number | undefined;
 
   function masonryGapPx() {
     const mainEl = document.querySelector('main');
@@ -719,47 +726,65 @@ const schema = {
 
   function snapTo(anchors: number[], index: number) {
     const clamped = Math.max(0, Math.min(index, anchors.length - 1));
+    currentLockIndex = clamped;
     isSnapping = true;
+    lastSnapAt = Date.now();
     window.scrollTo({ top: anchors[clamped], behavior: 'smooth' });
     window.setTimeout(() => { isSnapping = false; }, 420);
   }
 
   function handleLockStep(direction: 1 | -1, event?: Event) {
+    if (prefersReducedMotion || !isDesktopViewport) return;
     const anchors = getAnchors();
     if (anchors.length < 3) return;
     const latestAnchor = anchors[2];
     const y = window.scrollY;
+    const now = Date.now();
+    const activeElement = document.activeElement as HTMLElement | null;
+    const isTyping = !!activeElement && (
+      activeElement.tagName === 'INPUT' ||
+      activeElement.tagName === 'TEXTAREA' ||
+      activeElement.tagName === 'SELECT' ||
+      activeElement.isContentEditable
+    );
+    if (isTyping) return;
 
-    if (isSnapping) {
+    if (isSnapping || now - lastSnapAt < SNAP_COOLDOWN_MS) {
       event?.preventDefault();
       return;
     }
 
     // Free downward scroll once we're at/under latest section.
-    if (direction > 0 && y >= latestAnchor - 1) return;
+    if (direction > 0 && y >= latestAnchor - LOCK_RELEASE_OFFSET) return;
+    // Free upward scroll while far below the lock zone (masonry area).
+    if (direction < 0 && y > latestAnchor + LOCK_RELEASE_OFFSET) return;
+    if (direction < 0 && y <= anchors[0] + 1) return;
 
     event?.preventDefault();
 
-    // While far below grid area and scrolling up, first catch latest anchor.
-    if (direction < 0 && y > latestAnchor + 1) {
-      snapTo(anchors, 2);
-      return;
+    const nearest = nearestIndex(anchors);
+    if (Math.abs(anchors[nearest] - y) < 28) {
+      currentLockIndex = nearest;
     }
-
-    const current = nearestIndex(anchors);
-    const target = direction > 0 ? Math.min(current + 1, 2) : Math.max(current - 1, 0);
+    const target = direction > 0
+      ? Math.min(currentLockIndex + 1, 2)
+      : Math.max(currentLockIndex - 1, 0);
     snapTo(anchors, target);
   }
 
   function onWheel(event: WheelEvent) {
     const direction: 1 | -1 = event.deltaY > 0 ? 1 : -1;
-    if (wheelBurstTimer) window.clearTimeout(wheelBurstTimer);
-    wheelBurstTimer = window.setTimeout(() => { wheelBurstLock = false; }, 90);
-    if (wheelBurstLock) {
+    if (wheelGestureTimer) window.clearTimeout(wheelGestureTimer);
+    wheelGestureTimer = window.setTimeout(() => {
+      wheelGestureDirection = 0;
+    }, WHEEL_GESTURE_GAP_MS);
+
+    if (wheelGestureDirection === direction) {
       event.preventDefault();
       return;
     }
-    wheelBurstLock = true;
+
+    wheelGestureDirection = direction;
     handleLockStep(direction, event);
   }
 
@@ -780,6 +805,13 @@ const schema = {
     if (Math.abs(delta) < 8) return;
     handleLockStep(delta > 0 ? 1 : -1, event);
     touchStartY = currentY;
+  }
+
+  if (isDesktopViewport && !prefersReducedMotion) {
+    const initialAnchors = getAnchors();
+    if (initialAnchors.length >= 3 && window.scrollY > initialAnchors[0] + 1 && window.scrollY < initialAnchors[2] - 1) {
+      window.scrollTo({ top: initialAnchors[0], behavior: 'auto' });
+    }
   }
 
   window.addEventListener('wheel', onWheel, { passive: false });
