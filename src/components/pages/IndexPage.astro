@@ -671,6 +671,10 @@ const schema = {
   });
 
   // Option A (reset): pure JS lock-state machine for hero -> featured -> all-sessions.
+  const rootEl = document.documentElement;
+  const bodyEl = document.body;
+  rootEl.style.overflowY = '';
+  bodyEl.style.overflowY = '';
   const lockTargets = Array.from(document.querySelectorAll<HTMLElement>('.scroll-lock-target'));
   let isTransitioning = false;
   let lockUntil = 0;
@@ -769,6 +773,7 @@ const schema = {
     // free downward scrolling at/under all-sessions, or upward far below catch range
     if (!shouldLockHandle) {
       wheelGestureConsumed = false;
+      if (wheelIdleTimer) window.clearTimeout(wheelIdleTimer);
       return;
     }
 
