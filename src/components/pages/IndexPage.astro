@@ -190,6 +190,8 @@ const schema = {
     min-height: 100svh;
     color: #f6f6f6;
     --masonry-gap: 7px;
+    --badge-gap: 0.5rem;
+    --badge-gap-hover: 0.65rem;
   }
 
   .fullscreen-header {
@@ -355,7 +357,7 @@ const schema = {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.5rem;
+    gap: var(--badge-gap);
   }
 
   .masonry-home__filter-btn {
@@ -436,7 +438,7 @@ const schema = {
     display: grid;
     align-content: center;
     justify-items: center;
-    gap: 0.5rem;
+    gap: var(--badge-gap);
     padding: 1rem;
     background: linear-gradient(180deg, rgba(0,0,0,0.08) 32%, rgba(0,0,0,0.72) 100%);
   }
@@ -480,9 +482,9 @@ const schema = {
     transform: scale(1.03);
     filter: brightness(0.86) contrast(1.06);
   }
-  .featured-split__item:hover .featured-split__cat,
-  .masonry-card:hover .masonry-card__pill--cat {
-    border-color: #E31C8D;
+  .featured-split__item:hover .featured-split__overlay,
+  .masonry-card:hover .masonry-card__overlay {
+    gap: var(--badge-gap-hover);
   }
 
   .featured-split__scroll-indicator {
@@ -513,7 +515,7 @@ const schema = {
     display: grid;
     align-content: end;
     justify-items: center;
-    gap: 0.5rem;
+    gap: var(--badge-gap);
   }
 
   .masonry-card__pill {
@@ -536,7 +538,7 @@ const schema = {
     font-size: 0.66rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    border-color: #808080;
+    border-color: #E31C8D;
     background: #000000;
     color: #ffffff;
   }
