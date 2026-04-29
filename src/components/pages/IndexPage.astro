@@ -266,7 +266,7 @@ const schema = {
     transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
   }
   .fullscreen-header__scroll-indicator:hover {
-    transform: translateX(-50%) scale(1.1);
+    transform: translateX(-50%) scale(1.07);
     border-color: #E31C8D;
     box-shadow: 0 12px 26px rgba(0,0,0,0.5);
   }
@@ -331,7 +331,7 @@ const schema = {
 
   .masonry-home__filters {
     margin: var(--masonry-gap);
-    margin-top: clamp(0.9rem, 2vw, 1.5rem);
+    margin-top: var(--masonry-gap);
     display: grid;
     justify-items: center;
     gap: 0.6rem;
@@ -495,7 +495,7 @@ const schema = {
   .featured-split__item:hover .featured-split__cat,
   .featured-split__item:hover .featured-split__title,
   .masonry-card:hover .masonry-card__pill {
-    transform: scale(1.1);
+    transform: scale(1.07);
   }
 
   .featured-split__scroll-indicator {
