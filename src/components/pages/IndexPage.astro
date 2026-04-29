@@ -185,16 +185,6 @@ const schema = {
 </Base>
 
 <style>
-  :global(html.lp-scroll-lock),
-  :global(body.lp-scroll-lock) {
-    scroll-snap-type: y mandatory;
-  }
-
-  .scroll-lock-target {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-  }
-
   main {
     background: #0f1118;
     min-height: 100svh;
@@ -680,13 +670,10 @@ const schema = {
     window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   });
 
-  // Hard directional scroll lock for hero -> featured -> all-sessions.
-  const rootEl = document.documentElement;
-  const bodyEl = document.body;
+  // Option A: pure JS state-machine section lock (hero -> featured -> all-sessions).
   const lockTargets = Array.from(document.querySelectorAll<HTMLElement>('.scroll-lock-target'));
   let lockIndex = 0;
-  let isAnimatingLockScroll = false;
-  let unlockPending = false;
+  let isTransitioning = false;
 
   function getMasonryGap() {
     const mainEl = document.querySelector('main');
@@ -697,13 +684,6 @@ const schema = {
   function getAnchors() {
     const gap = getMasonryGap();
     return lockTargets.map((el) => Math.max(0, el.getBoundingClientRect().top + window.scrollY - gap));
-  }
-
-  function setLock(enabled: boolean) {
-    rootEl.classList.toggle('lp-scroll-lock', enabled);
-    bodyEl.classList.toggle('lp-scroll-lock', enabled);
-    rootEl.style.overflowY = enabled ? 'hidden' : '';
-    bodyEl.style.overflowY = enabled ? 'hidden' : '';
   }
 
   function nearestAnchorIndex(anchors: number[]) {
@@ -717,59 +697,55 @@ const schema = {
     return nearest;
   }
 
-  function snapToAnchor(anchors: number[], index: number) {
-    isAnimatingLockScroll = true;
-    lockIndex = Math.max(0, Math.min(index, anchors.length - 1));
-    window.scrollTo({ top: anchors[lockIndex], behavior: 'smooth' });
-    window.setTimeout(() => { isAnimatingLockScroll = false; }, 380);
+  function inLockZone(anchors: number[]) {
+    if (anchors.length < 3) return false;
+    return window.scrollY <= anchors[2] + 1;
   }
 
-  function stepLock(direction: 1 | -1, event?: Event) {
+  function scrollToAnchor(anchors: number[], idx: number) {
+    isTransitioning = true;
+    lockIndex = Math.max(0, Math.min(idx, anchors.length - 1));
+    window.scrollTo({ top: anchors[lockIndex], behavior: 'smooth' });
+    window.setTimeout(() => { isTransitioning = false; }, 420);
+  }
+
+  function handleStep(direction: 1 | -1, event?: Event) {
     const anchors = getAnchors();
     if (anchors.length < 3) return;
-    const lastAnchor = anchors[2];
-    const y = window.scrollY;
 
-    if (isAnimatingLockScroll) {
+    if (isTransitioning) {
       event?.preventDefault();
       return;
     }
 
-    const scrollingDown = direction > 0;
+    const atOrAboveAllSessions = inLockZone(anchors);
+    const belowAllSessions = !atOrAboveAllSessions;
 
-    if (!scrollingDown && y > lastAnchor + 1) {
+    // From below: first upward step must catch at all-sessions (+gap).
+    if (direction < 0 && belowAllSessions) {
       event?.preventDefault();
-      unlockPending = false;
-      setLock(true);
-      snapToAnchor(anchors, 2);
+      scrollToAnchor(anchors, 2);
       return;
     }
 
-    if (y <= lastAnchor + 1) {
+    // Within lock zone: one input = one hard step.
+    if (atOrAboveAllSessions) {
       event?.preventDefault();
-      setLock(true);
-      if (scrollingDown) {
+      lockIndex = nearestAnchorIndex(anchors);
+
+      if (direction > 0) {
         if (lockIndex < 2) {
-          unlockPending = false;
-          snapToAnchor(anchors, lockIndex + 1);
-        } else {
-          // unlock on next downward input so user can continue into masonry naturally
-          unlockPending = true;
-          lockIndex = 2;
-          setLock(false);
-          return;
-        }
+          scrollToAnchor(anchors, lockIndex + 1);
+        } // else: at all-sessions -> next down input is free (no preventDefault)
       } else if (lockIndex > 0) {
-        snapToAnchor(anchors, lockIndex - 1);
+        scrollToAnchor(anchors, lockIndex - 1);
       }
       return;
     }
-
-    setLock(false);
   }
 
   function handleWheelLock(event: WheelEvent) {
-    stepLock(event.deltaY > 0 ? 1 : -1, event);
+    handleStep(event.deltaY > 0 ? 1 : -1, event);
   }
 
   let touchStartY = 0;
@@ -779,13 +755,8 @@ const schema = {
   function handleTouchMove(event: TouchEvent) {
     const currentY = event.touches[0]?.clientY || 0;
     const delta = touchStartY - currentY;
-    const anchors = getAnchors();
-    const lastAnchor = anchors[2] || 0;
-    if (window.scrollY <= lastAnchor + 1) {
-      event.preventDefault();
-    }
     if (Math.abs(delta) < 8) return;
-    stepLock(delta > 0 ? 1 : -1, event);
+    handleStep(delta > 0 ? 1 : -1, event);
     touchStartY = currentY;
   }
 
@@ -793,25 +764,9 @@ const schema = {
     const downKeys = ['ArrowDown', 'PageDown', ' ', 'Spacebar'];
     const upKeys = ['ArrowUp', 'PageUp'];
     if (downKeys.includes(event.key)) {
-      stepLock(1, event);
+      handleStep(1, event);
     } else if (upKeys.includes(event.key)) {
-      stepLock(-1, event);
-    }
-  }
-
-  function syncLockStateOnScroll() {
-    const anchors = getAnchors();
-    if (anchors.length < 3) return;
-    const lastAnchor = anchors[2];
-
-    if (window.scrollY > lastAnchor + 20) {
-      unlockPending = false;
-      setLock(false);
-      return;
-    }
-
-    if (!unlockPending) {
-      setLock(true);
+      handleStep(-1, event);
     }
   }
 
@@ -819,12 +774,10 @@ const schema = {
   if (initAnchors.length >= 3) {
     lockIndex = nearestAnchorIndex(initAnchors);
   }
-  syncLockStateOnScroll();
+
   window.addEventListener('wheel', handleWheelLock, { passive: false });
   window.addEventListener('touchstart', handleTouchStart, { passive: true });
   window.addEventListener('touchmove', handleTouchMove, { passive: false });
   window.addEventListener('keydown', handleKeyScroll);
-  window.addEventListener('scroll', syncLockStateOnScroll, { passive: true });
-  window.addEventListener('resize', syncLockStateOnScroll);
 
 </script>
