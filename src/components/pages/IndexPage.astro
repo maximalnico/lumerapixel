@@ -593,12 +593,6 @@ const schema = {
     .masonry-home__grid { columns: 1; }
   }
 
-  :global([data-theme="light"]) main,
-  :global([data-theme="dark"]) main {
-    background: #000000;
-    color: #ffffff;
-  }
-
   .fullscreen-header__logo--light { display: none; }
   :global([data-theme="light"]) .fullscreen-header__logo--dark { display: none; }
   :global([data-theme="light"]) .fullscreen-header__logo--light { display: block; }
@@ -607,19 +601,53 @@ const schema = {
     background: #ffffff;
     color: #000000;
   }
+  :global([data-theme="light"]) .masonry-home__grid,
   :global([data-theme="light"]) .fullscreen-header,
-  :global([data-theme="light"]) .featured-split,
-  :global([data-theme="light"]) .latest-session-strip,
-  :global([data-theme="light"]) .masonry-home__filters,
-  :global([data-theme="light"]) .masonry-card__overlay,
+  :global([data-theme="light"]) .featured-split__item,
+  :global([data-theme="light"]) .masonry-card,
+  :global([data-theme="light"]) .fullscreen-header__glasslab,
+  :global([data-theme="light"]) .masonry-home__filters-lab,
+  :global([data-theme="light"]) .featured-split__heading-lab,
   :global([data-theme="light"]) .masonry-home__filter-btn,
   :global([data-theme="light"]) .masonry-card__pill,
+  :global([data-theme="light"]) .featured-split__cat,
+  :global([data-theme="light"]) .featured-split__title,
   :global([data-theme="light"]) .fullscreen-header__scroll-indicator {
     background: #ffffff;
     color: #000000;
   }
+  :global([data-theme="light"]) .masonry-card,
+  :global([data-theme="light"]) .masonry-card__pill,
+  :global([data-theme="light"]) .featured-split__cat,
+  :global([data-theme="light"]) .featured-split__title,
+  :global([data-theme="light"]) .masonry-home__filter-btn,
+  :global([data-theme="light"]) .fullscreen-header__scroll-indicator {
+    border-color: #808080;
+  }
+  :global([data-theme="light"]) .masonry-home__filter-btn.is-active,
+  :global([data-theme="light"]) .masonry-home__filter-btn:hover,
+  :global([data-theme="light"]) .masonry-card:hover,
+  :global([data-theme="light"]) .masonry-card:hover .masonry-card__pill,
+  :global([data-theme="light"]) .featured-split__item:hover .featured-split__cat,
+  :global([data-theme="light"]) .featured-split__item:hover .featured-split__title,
+  :global([data-theme="light"]) .fullscreen-header__scroll-indicator:hover {
+    border-color: #E31C8D;
+  }
+  :global([data-theme="light"]) .masonry-home__filters-title,
+  :global([data-theme="light"]) .featured-split__heading,
+  :global([data-theme="light"]) .featured-split__cat,
+  :global([data-theme="light"]) .featured-split__title,
+  :global([data-theme="light"]) .masonry-card__pill--cat,
+  :global([data-theme="light"]) .masonry-card__pill--title,
+  :global([data-theme="light"]) .fullscreen-header__sub,
+  :global([data-theme="light"]) .masonry-home__filter-btn {
+    color: #000000;
+  }
   :global([data-theme="light"]) .fullscreen-header__scroll-indicator img {
     filter: invert(1);
+  }
+  :global([data-theme="light"]) .masonry-card__overlay {
+    background: transparent;
   }
 
 </style>
