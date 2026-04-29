@@ -487,7 +487,7 @@ const schema = {
     padding: 0.5rem 0.76rem;
   }
   .featured-split__item:hover img {
-    filter: grayscale(0) brightness(1) contrast(1.02);
+    filter: grayscale(1) brightness(0.72) contrast(1.05);
   }
   .featured-split__item:hover .featured-split__cat,
   .featured-split__item:hover .featured-split__title,
@@ -567,7 +567,7 @@ const schema = {
   }
 
   .masonry-card:hover img {
-    filter: grayscale(0) brightness(1) contrast(1.02);
+    filter: grayscale(1) brightness(0.72) contrast(1.05);
   }
   .masonry-card:hover {
     border-color: #E31C8D;
@@ -658,6 +658,15 @@ const schema = {
     filter: grayscale(1) contrast(1.05);
   }
 
+  :global([data-theme="dark"]) .fullscreen-header__image,
+  :global([data-theme="dark"]) .latest-session-strip img,
+  :global([data-theme="dark"]) .featured-split__item img,
+  :global([data-theme="dark"]) .masonry-card img,
+  :global([data-theme="dark"]) .featured-split__item:hover img,
+  :global([data-theme="dark"]) .masonry-card:hover img {
+    filter: grayscale(1) brightness(0.72) contrast(1.05);
+  }
+
 </style>
 
 <script>
@@ -676,7 +685,7 @@ const schema = {
         const nextPool = choices.length ? choices : slides;
         const next = nextPool[Math.floor(Math.random() * nextPool.length)];
         allSessionsImg.style.opacity = '0.3';
-        allSessionsImg.style.filter = 'grayscale(1) brightness(0.62) contrast(1.02)';
+        allSessionsImg.style.filter = 'grayscale(1) brightness(0.72) contrast(1.02)';
         setTimeout(() => {
           current = next;
           allSessionsImg.src = next;
