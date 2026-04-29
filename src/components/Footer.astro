@@ -5,7 +5,8 @@ const lang = getLangFromUrl(Astro.url);
 <footer class="lp-footer">
   <div class="lp-footer__line"></div>
   <div class="lp-footer__inner">
-    <img src="/logos/lplong-white.svg" alt="LumeraPixel" class="lp-footer__logo" />
+    <img src="/logos/lplong-white.svg" alt="LumeraPixel" class="lp-footer__logo lp-footer__logo--dark" />
+    <img src="/logos/lplong-black.svg" alt="LumeraPixel" class="lp-footer__logo lp-footer__logo--light" />
     <p class="lp-footer__copy">{t(lang, 'footer.copy')}</p>
     <p class="lp-footer__credits">Typography by <a href="https://fontshare.com/fonts/switzer" target="_blank" rel="noopener">Fontshare</a> · Icons by <a href="https://phosphoricons.com/" target="_blank" rel="noopener">Phosphor</a> (MIT)</p>
   </div>
@@ -32,6 +33,10 @@ const lang = getLangFromUrl(Astro.url);
     width: auto;
     margin-bottom: 0.1rem;
   }
+
+  .lp-footer__logo--light { display: none; }
+  :global([data-theme="light"]) .lp-footer__logo--dark { display: none; }
+  :global([data-theme="light"]) .lp-footer__logo--light { display: block; }
   .lp-footer__copy {
     font-family: 'Satoshi';
     font-weight: 400;
