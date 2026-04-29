@@ -692,9 +692,12 @@ const schema = {
   const isDesktopViewport = window.matchMedia('(min-width: 1024px)').matches;
   const LOCK_RELEASE_OFFSET = 24;
   const SNAP_COOLDOWN_MS = 460;
+  const WHEEL_GESTURE_GAP_MS = 220;
   let isSnapping = false;
   let lastSnapAt = 0;
   let currentLockIndex = 0;
+  let wheelGestureDirection: 1 | -1 | 0 = 0;
+  let wheelGestureTimer: number | undefined;
 
   function masonryGapPx() {
     const mainEl = document.querySelector('main');
@@ -771,6 +774,17 @@ const schema = {
 
   function onWheel(event: WheelEvent) {
     const direction: 1 | -1 = event.deltaY > 0 ? 1 : -1;
+    if (wheelGestureTimer) window.clearTimeout(wheelGestureTimer);
+    wheelGestureTimer = window.setTimeout(() => {
+      wheelGestureDirection = 0;
+    }, WHEEL_GESTURE_GAP_MS);
+
+    if (wheelGestureDirection === direction) {
+      event.preventDefault();
+      return;
+    }
+
+    wheelGestureDirection = direction;
     handleLockStep(direction, event);
   }
 
