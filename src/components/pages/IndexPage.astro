@@ -673,6 +673,7 @@ const schema = {
   // Option A (reset): pure JS lock-state machine for hero -> featured -> all-sessions.
   const lockTargets = Array.from(document.querySelectorAll<HTMLElement>('.scroll-lock-target'));
   let isTransitioning = false;
+  let lockUntil = 0;
 
   function getMasonryGap() {
     const mainEl = document.querySelector('main');
@@ -700,6 +701,7 @@ const schema = {
     isTransitioning = true;
     const clamped = Math.max(0, Math.min(idx, anchors.length - 1));
     window.scrollTo({ top: anchors[clamped], behavior: 'smooth' });
+    lockUntil = Date.now() + 620;
     window.setTimeout(() => { isTransitioning = false; }, 430);
   }
 
@@ -716,6 +718,12 @@ const schema = {
     }
 
     const scrollingDown = direction > 0;
+    const now = Date.now();
+
+    if (now < lockUntil) {
+      event?.preventDefault();
+      return;
+    }
 
     if (scrollingDown) {
       // Downward: hard lock only until all-sessions anchor; below it = free scroll.
@@ -728,6 +736,11 @@ const schema = {
     }
 
     // Upward from below: free scroll until all-sessions + gap is reached, then hard-catch.
+    const catchBuffer = Math.max(90, window.innerHeight * 0.08);
+    if (y > allSessionsAnchor + catchBuffer) {
+      // free upward scroll until near all-sessions anchor region
+      return;
+    }
     if (y > allSessionsAnchor + 1) {
       event?.preventDefault();
       lockToAnchor(anchors, 2);
