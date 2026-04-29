@@ -98,7 +98,7 @@ const schema = {
   <Nav />
   <main>
     <section class="masonry-home">
-      <section class="fullscreen-header scroll-lock-target" aria-label="Header">
+      <section class="fullscreen-header motion-safe:animate-in motion-safe:fade-in" aria-label="Header">
         <div class="fullscreen-header__frame">
           {headerImage && <img class="fullscreen-header__image" src={headerImage} alt={st(headerSession)} loading="eager" decoding="async" />}
           <div class="fullscreen-header__overlay">
@@ -113,7 +113,7 @@ const schema = {
         </a>
       </section>
 
-      <section class="featured-split scroll-lock-target" id="featured-sessions" aria-label="Featured Sessions">
+      <section class="featured-split motion-safe:animate-in motion-safe:slide-in-from-bottom-4" id="featured-sessions" aria-label="Featured Sessions">
         <div class="featured-split__heading-lab">
           <h2 class="featured-split__heading">Featured Sessions</h2>
         </div>
@@ -138,7 +138,7 @@ const schema = {
 
       <div
         id="latest-session-strip"
-        class="latest-session-strip scroll-lock-target"
+        class="latest-session-strip"
         aria-label={isEN ? 'All sessions preview' : 'Alle Sessions Vorschau'}
       >
         <img id="allSessionsSlideshowImage" src={`${headerSession.folder}/000.webp`} data-slides={allSessionCovers.join('|')} alt={st(headerSession)} loading="lazy" decoding="async" />
@@ -192,6 +192,18 @@ const schema = {
     --masonry-gap: 7px;
     --badge-gap: 0.5rem;
     --badge-gap-hover: 0.65rem;
+    scroll-behavior: smooth;
+  }
+
+  .masonry-home {
+    scroll-snap-type: y proximity;
+  }
+
+  .fullscreen-header,
+  .featured-split,
+  .latest-session-strip {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
   }
 
   .fullscreen-header {
@@ -670,122 +682,6 @@ const schema = {
     window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   });
 
-  // Rebuilt strict section-step controller (hero -> featured -> all-sessions).
-  const lockTargets = Array.from(document.querySelectorAll<HTMLElement>('.scroll-lock-target'));
-  let isTransitioning = false;
-  let wheelGestureConsumed = false;
-  let wheelIdleTimer: number | undefined;
-  let currentIndex = 0;
-
-  function getMasonryGap() {
-    const mainEl = document.querySelector('main');
-    const masonryGapRaw = getComputedStyle(mainEl || document.documentElement).getPropertyValue('--masonry-gap');
-    return Number.parseFloat(masonryGapRaw) || 0;
-  }
-
-  function getAnchors() {
-    const gap = getMasonryGap();
-    return lockTargets.map((el) => Math.max(0, el.getBoundingClientRect().top + window.scrollY - gap));
-  }
-
-  function nearestAnchorIndex(anchors: number[]) {
-    const y = window.scrollY;
-    let nearest = 0;
-    let dist = Infinity;
-    anchors.forEach((a, i) => {
-      const d = Math.abs(y - a);
-      if (d < dist) { dist = d; nearest = i; }
-    });
-    return nearest;
-  }
-
-  function snapToIndex(anchors: number[], idx: number) {
-    isTransitioning = true;
-    currentIndex = Math.max(0, Math.min(idx, anchors.length - 1));
-    window.scrollTo({ top: anchors[currentIndex], behavior: 'smooth' });
-    window.setTimeout(() => { isTransitioning = false; }, 420);
-  }
-
-  function handleStep(direction: 1 | -1, event?: Event) {
-    const anchors = getAnchors();
-    if (anchors.length < 3) return;
-
-    const allSessionsAnchor = anchors[2];
-    const y = window.scrollY;
-
-    if (isTransitioning) {
-      event?.preventDefault();
-      return;
-    }
-
-    if (direction > 0) {
-      if (y < allSessionsAnchor - 1) {
-        event?.preventDefault();
-        currentIndex = nearestAnchorIndex(anchors);
-        snapToIndex(anchors, Math.min(currentIndex + 1, 2));
-      }
-      return;
-    }
-
-    if (y > allSessionsAnchor + 1) {
-      event?.preventDefault();
-      snapToIndex(anchors, 2);
-      return;
-    }
-
-    event?.preventDefault();
-    currentIndex = nearestAnchorIndex(anchors);
-    snapToIndex(anchors, Math.max(currentIndex - 1, 0));
-  }
-
-  function handleWheelLock(event: WheelEvent) {
-    const anchors = getAnchors();
-    const allSessionsAnchor = anchors[2] || 0;
-    const y = window.scrollY;
-    const direction: 1 | -1 = event.deltaY > 0 ? 1 : -1;
-    const shouldHandle = direction > 0 ? y < allSessionsAnchor - 1 : true;
-
-    if (!shouldHandle) {
-      wheelGestureConsumed = false;
-      if (wheelIdleTimer) window.clearTimeout(wheelIdleTimer);
-      return;
-    }
-
-    if (wheelIdleTimer) window.clearTimeout(wheelIdleTimer);
-    wheelIdleTimer = window.setTimeout(() => { wheelGestureConsumed = false; }, 95);
-
-    event.preventDefault();
-    if (wheelGestureConsumed) return;
-
-    wheelGestureConsumed = true;
-    handleStep(direction, event);
-  }
-
-  let touchStartY = 0;
-  function handleTouchStart(event: TouchEvent) {
-    touchStartY = event.touches[0]?.clientY || 0;
-  }
-  function handleTouchMove(event: TouchEvent) {
-    const currentY = event.touches[0]?.clientY || 0;
-    const delta = touchStartY - currentY;
-    if (Math.abs(delta) < 8) return;
-    handleStep(delta > 0 ? 1 : -1, event);
-    touchStartY = currentY;
-  }
-
-  function handleKeyScroll(event: KeyboardEvent) {
-    const downKeys = ['ArrowDown', 'PageDown', ' ', 'Spacebar'];
-    const upKeys = ['ArrowUp', 'PageUp'];
-    if (downKeys.includes(event.key)) handleStep(1, event);
-    else if (upKeys.includes(event.key)) handleStep(-1, event);
-  }
-
-  const initAnchors = getAnchors();
-  if (initAnchors.length >= 3) currentIndex = nearestAnchorIndex(initAnchors);
-
-  window.addEventListener('wheel', handleWheelLock, { passive: false });
-  window.addEventListener('touchstart', handleTouchStart, { passive: true });
-  window.addEventListener('touchmove', handleTouchMove, { passive: false });
-  window.addEventListener('keydown', handleKeyScroll);
+  // Native scrolling only: no wheel/touch/key interception.
 
 </script>
