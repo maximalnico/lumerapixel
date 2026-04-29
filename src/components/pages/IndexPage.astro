@@ -674,8 +674,8 @@ const schema = {
   const lockTargets = Array.from(document.querySelectorAll<HTMLElement>('.scroll-lock-target'));
   let isTransitioning = false;
   let lockUntil = 0;
-  let wheelGestureActive = false;
-  let wheelGestureTimer: number | undefined;
+  let wheelAccum = 0;
+  let wheelIdleTimer: number | undefined;
 
   function getMasonryGap() {
     const mainEl = document.querySelector('main');
@@ -759,26 +759,33 @@ const schema = {
     const anchors = getAnchors();
     const allSessionsAnchor = anchors[2] || 0;
     const y = window.scrollY;
-    const direction: 1 | -1 = event.deltaY > 0 ? 1 : -1;
     const inLockRange = y <= allSessionsAnchor + 1;
 
-    // Outside lock range and scrolling down: never block native scrolling.
-    if (!inLockRange && direction > 0) {
-      wheelGestureActive = false;
+    // Below all-sessions and scrolling down: keep native free scroll.
+    if (!inLockRange && event.deltaY > 0) {
       return;
     }
 
-    if (wheelGestureTimer) window.clearTimeout(wheelGestureTimer);
+    // In lock range (or upward catch path), consume wheel and step only on deliberate delta.
+    event.preventDefault();
 
-    if (wheelGestureActive && inLockRange) {
-      event.preventDefault();
-      wheelGestureTimer = window.setTimeout(() => { wheelGestureActive = false; }, 120);
+    if (isTransitioning) return;
+
+    wheelAccum += event.deltaY;
+
+    const STEP_THRESHOLD = 58;
+    if (Math.abs(wheelAccum) < STEP_THRESHOLD) {
+      if (wheelIdleTimer) window.clearTimeout(wheelIdleTimer);
+      wheelIdleTimer = window.setTimeout(() => { wheelAccum = 0; }, 140);
       return;
     }
 
-    wheelGestureActive = true;
+    const direction: 1 | -1 = wheelAccum > 0 ? 1 : -1;
+    wheelAccum = 0;
     handleStep(direction, event);
-    wheelGestureTimer = window.setTimeout(() => { wheelGestureActive = false; }, 120);
+
+    if (wheelIdleTimer) window.clearTimeout(wheelIdleTimer);
+    wheelIdleTimer = window.setTimeout(() => { wheelAccum = 0; }, 140);
   }
 
   let touchStartY = 0;
