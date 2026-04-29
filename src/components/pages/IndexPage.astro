@@ -694,6 +694,7 @@ const schema = {
   const SNAP_COOLDOWN_MS = 460;
   let isSnapping = false;
   let lastSnapAt = 0;
+  let currentLockIndex = 0;
 
   function masonryGapPx() {
     const mainEl = document.querySelector('main');
@@ -722,6 +723,7 @@ const schema = {
 
   function snapTo(anchors: number[], index: number) {
     const clamped = Math.max(0, Math.min(index, anchors.length - 1));
+    currentLockIndex = clamped;
     isSnapping = true;
     lastSnapAt = Date.now();
     window.scrollTo({ top: anchors[clamped], behavior: 'smooth' });
@@ -751,18 +753,19 @@ const schema = {
 
     // Free downward scroll once we're at/under latest section.
     if (direction > 0 && y >= latestAnchor - LOCK_RELEASE_OFFSET) return;
+    // Free upward scroll while far below the lock zone (masonry area).
+    if (direction < 0 && y > latestAnchor + LOCK_RELEASE_OFFSET) return;
     if (direction < 0 && y <= anchors[0] + 1) return;
 
     event?.preventDefault();
 
-    // While far below grid area and scrolling up, first catch latest anchor.
-    if (direction < 0 && y > latestAnchor + 1) {
-      snapTo(anchors, 2);
-      return;
+    const nearest = nearestIndex(anchors);
+    if (Math.abs(anchors[nearest] - y) < 28) {
+      currentLockIndex = nearest;
     }
-
-    const current = nearestIndex(anchors);
-    const target = direction > 0 ? Math.min(current + 1, 2) : Math.max(current - 1, 0);
+    const target = direction > 0
+      ? Math.min(currentLockIndex + 1, 2)
+      : Math.max(currentLockIndex - 1, 0);
     snapTo(anchors, target);
   }
 
