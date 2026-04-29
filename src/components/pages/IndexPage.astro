@@ -185,8 +185,8 @@ const schema = {
 </Base>
 
 <style>
-  :global(html),
-  :global(body) {
+  :global(html.lp-scroll-lock),
+  :global(body.lp-scroll-lock) {
     scroll-snap-type: y mandatory;
   }
 
@@ -679,5 +679,48 @@ const schema = {
     const top = latestSessionStrip.getBoundingClientRect().top + window.scrollY - masonryGap;
     window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   });
+
+  // Direction-aware scroll lock for hero -> featured -> all-sessions.
+  const rootEl = document.documentElement;
+  const bodyEl = document.body;
+  let previousScrollY = window.scrollY;
+
+  function getScrollLockLimit() {
+    if (!latestSessionStrip) return 0;
+    const mainEl = document.querySelector('main');
+    const masonryGapRaw = getComputedStyle(mainEl || document.documentElement).getPropertyValue('--masonry-gap');
+    const masonryGap = Number.parseFloat(masonryGapRaw) || 0;
+    return Math.max(0, latestSessionStrip.getBoundingClientRect().top + window.scrollY - masonryGap);
+  }
+
+  function setScrollLockState(enabled: boolean) {
+    rootEl.classList.toggle('lp-scroll-lock', enabled);
+    bodyEl.classList.toggle('lp-scroll-lock', enabled);
+  }
+
+  function handleDirectionalScrollLock() {
+    const currentY = window.scrollY;
+    const lockLimit = getScrollLockLimit();
+    const scrollingUp = currentY < previousScrollY;
+
+    if (currentY <= lockLimit + 1) {
+      setScrollLockState(true);
+    } else {
+      setScrollLockState(false);
+    }
+
+    // When returning from below: stay free-scrolling until just above the all-sessions strip,
+    // then re-engage lock by snapping back to the strip (+gap).
+    if (scrollingUp && previousScrollY > lockLimit + 24 && currentY <= lockLimit + 24 && currentY > lockLimit - 2) {
+      window.scrollTo({ top: lockLimit, behavior: 'smooth' });
+      setScrollLockState(true);
+    }
+
+    previousScrollY = currentY;
+  }
+
+  handleDirectionalScrollLock();
+  window.addEventListener('scroll', handleDirectionalScrollLock, { passive: true });
+  window.addEventListener('resize', handleDirectionalScrollLock);
 
 </script>
