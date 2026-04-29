@@ -686,6 +686,7 @@ const schema = {
   const lockTargets = Array.from(document.querySelectorAll<HTMLElement>('.scroll-lock-target'));
   let lockIndex = 0;
   let isAnimatingLockScroll = false;
+  let unlockPending = false;
 
   function getMasonryGap() {
     const mainEl = document.querySelector('main');
@@ -738,6 +739,7 @@ const schema = {
 
     if (!scrollingDown && y > lastAnchor + 1) {
       event?.preventDefault();
+      unlockPending = false;
       setLock(true);
       snapToAnchor(anchors, 2);
       return;
@@ -746,15 +748,15 @@ const schema = {
     if (y <= lastAnchor + 1) {
       event?.preventDefault();
       setLock(true);
-      lockIndex = nearestAnchorIndex(anchors);
-
       if (scrollingDown) {
         if (lockIndex < 2) {
+          unlockPending = false;
           snapToAnchor(anchors, lockIndex + 1);
         } else {
+          // unlock on next downward input so user can continue into masonry naturally
+          unlockPending = true;
           setLock(false);
-          isAnimatingLockScroll = true;
-          window.setTimeout(() => { isAnimatingLockScroll = false; }, 90);
+          return;
         }
       } else if (lockIndex > 0) {
         snapToAnchor(anchors, lockIndex - 1);
@@ -800,7 +802,13 @@ const schema = {
     const anchors = getAnchors();
     if (anchors.length < 3) return;
     const lastAnchor = anchors[2];
-    if (window.scrollY <= lastAnchor + 1) {
+    if (window.scrollY > lastAnchor + 20) {
+      unlockPending = false;
+      setLock(false);
+      return;
+    }
+
+    if (window.scrollY <= lastAnchor + 1 && !unlockPending) {
       setLock(true);
       lockIndex = nearestAnchorIndex(anchors);
     } else {
