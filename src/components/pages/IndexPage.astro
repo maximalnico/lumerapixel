@@ -100,7 +100,7 @@ const schema = {
     <section class="masonry-home">
       <section class="fullscreen-header motion-safe:animate-in motion-safe:fade-in" aria-label="Header">
         <div class="fullscreen-header__frame">
-          {headerImage && <img class="fullscreen-header__image" src={headerImage} alt={st(headerSession)} loading="eager" decoding="async" />}
+          {headerImage && <img class="fullscreen-header__image" src={headerImage} alt={st(headerSession)} loading="eager" fetchpriority="high" decoding="async" />}
           <div class="fullscreen-header__overlay">
             <div class="fullscreen-header__glasslab">
               <img src="/logos/lplong-white.svg" alt="LumeraPixel" class="fullscreen-header__logo" />
@@ -689,6 +689,7 @@ const schema = {
     document.querySelector<HTMLElement>('#latest-session-strip'),
   ].filter(Boolean) as HTMLElement[];
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isDesktopViewport = window.matchMedia('(min-width: 1024px)').matches;
   const LOCK_RELEASE_OFFSET = 24;
   const SNAP_COOLDOWN_MS = 460;
   let isSnapping = false;
@@ -730,7 +731,7 @@ const schema = {
   }
 
   function handleLockStep(direction: 1 | -1, event?: Event) {
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || !isDesktopViewport) return;
     const anchors = getAnchors();
     if (anchors.length < 3) return;
     const latestAnchor = anchors[2];
@@ -796,6 +797,13 @@ const schema = {
     if (Math.abs(delta) < 8) return;
     handleLockStep(delta > 0 ? 1 : -1, event);
     touchStartY = currentY;
+  }
+
+  if (isDesktopViewport && !prefersReducedMotion) {
+    const initialAnchors = getAnchors();
+    if (initialAnchors.length >= 3 && window.scrollY > initialAnchors[0] + 1 && window.scrollY < initialAnchors[2] - 1) {
+      window.scrollTo({ top: initialAnchors[0], behavior: 'auto' });
+    }
   }
 
   window.addEventListener('wheel', onWheel, { passive: false });
