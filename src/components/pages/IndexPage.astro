@@ -266,7 +266,7 @@ const schema = {
     transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
   }
   .fullscreen-header__scroll-indicator:hover {
-    transform: translateX(-50%) scale(1.07);
+    transform: translateX(-50%);
     border-color: #E31C8D;
     box-shadow: 0 12px 26px rgba(0,0,0,0.5);
   }
@@ -303,7 +303,6 @@ const schema = {
     height: calc(100svh / 3);
     overflow: hidden;
     border: 1px solid #E31C8D;
-    box-shadow: inset 0 0 0 1px rgba(227, 28, 141, 0.55);
     border-radius: 0 14px 0 14px;
     scroll-margin-top: calc(var(--nav-h) + 1.2rem);
     outline: none;
@@ -333,7 +332,6 @@ const schema = {
   .masonry-home__filters {
     margin: var(--masonry-gap);
     margin-top: var(--masonry-gap);
-    margin-bottom: var(--masonry-gap);
     padding: 0;
     display: grid;
     justify-items: center;
@@ -455,7 +453,7 @@ const schema = {
   .featured-split__cat,
   .featured-split__title {
     width: min(90%, max-content);
-    transition: transform 180ms ease, border-color 180ms ease;
+    transition: border-color 180ms ease;
     transform-origin: center center;
     will-change: transform;
     transform-origin: center center;
@@ -495,12 +493,6 @@ const schema = {
     border-color: #E31C8D;
   }
 
-  .featured-split__item:hover .featured-split__cat,
-  .featured-split__item:hover .featured-split__title,
-  .masonry-card:hover .masonry-card__pill {
-    transform: scale(1.07);
-  }
-
   .featured-split__scroll-indicator {
     bottom: 0.75rem;
   }
@@ -511,13 +503,12 @@ const schema = {
     display: block;
     background: #111;
     border: 1px solid #808080;
-    box-shadow: inset 0 0 0 1px rgba(128, 128, 128, 0.55);
     border-radius: 0 14px 0 14px;
     break-inside: avoid;
-    margin-bottom: var(--masonry-gap);
     transition: border-color 180ms ease;
   }
   .masonry-card img {
+    display: block;
     width: 100%;
     height: auto;
     object-fit: cover;
@@ -544,7 +535,7 @@ const schema = {
     border-radius: 0 14px 0 14px;
     opacity: 1;
     transform: translateY(0);
-    transition: transform 180ms ease, border-color 180ms ease;
+    transition: border-color 180ms ease;
     transform-origin: center center;
     will-change: transform;
     white-space: nowrap;
@@ -577,7 +568,6 @@ const schema = {
   }
   .masonry-card:hover {
     border-color: #E31C8D;
-    box-shadow: inset 0 0 0 1px rgba(227, 28, 141, 0.55);
   }
 
 
