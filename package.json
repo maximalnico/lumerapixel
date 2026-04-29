@@ -15,7 +15,9 @@
     "astro": "^6.1.4"
   },
   "devDependencies": {
+    "@astrojs/sitemap": "^3.6.0",
     "@tailwindcss/vite": "^4.2.4",
+    "astro-compress": "^2.4.1",
     "tailwindcss": "^4.2.4",
     "tailwindcss-motion": "^1.1.1"
   }

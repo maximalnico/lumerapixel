@@ -100,10 +100,11 @@ const schema = {
     <section class="masonry-home">
       <section class="fullscreen-header motion-safe:animate-in motion-safe:fade-in" aria-label="Header">
         <div class="fullscreen-header__frame">
-          {headerImage && <img class="fullscreen-header__image" src={headerImage} alt={st(headerSession)} loading="eager" decoding="async" />}
+          {headerImage && <img class="fullscreen-header__image" src={headerImage} alt={st(headerSession)} loading="eager" fetchpriority="high" decoding="async" />}
           <div class="fullscreen-header__overlay">
             <div class="fullscreen-header__glasslab">
-              <img src="/logos/lplong-white.svg" alt="LumeraPixel" class="fullscreen-header__logo" />
+              <img src="/logos/lplong-white.svg" alt="LumeraPixel" class="fullscreen-header__logo fullscreen-header__logo--dark" />
+              <img src="/logos/lplong-black.svg" alt="LumeraPixel" class="fullscreen-header__logo fullscreen-header__logo--light" />
               <p class="fullscreen-header__sub">{t(lang, 'hero.tagline')}</p>
             </div>
           </div>
@@ -186,25 +187,15 @@ const schema = {
 
 <style>
   main {
-    background: #0f1118;
+    background: #000000;
     min-height: 100svh;
-    color: #f6f6f6;
+    color: #ffffff;
     --masonry-gap: 7px;
     --badge-gap: 0.5rem;
     --badge-gap-hover: 0.65rem;
     scroll-behavior: smooth;
   }
 
-  .masonry-home {
-    scroll-snap-type: y proximity;
-  }
-
-  .fullscreen-header,
-  .featured-split,
-  .latest-session-strip {
-    scroll-snap-align: start;
-    scroll-snap-stop: normal;
-  }
 
   .fullscreen-header {
     position: relative;
@@ -212,9 +203,9 @@ const schema = {
     min-height: calc(100svh - (var(--masonry-gap) * 2));
     margin: var(--masonry-gap);
     overflow: hidden;
-    background: #090b12;
+    background: #000000;
     border-radius: 0 14px 0 14px;
-    border: 1px solid #E31C8D;
+    border: 2.7px solid #E31C8D;
   }
 
   .fullscreen-header__frame {
@@ -251,7 +242,7 @@ const schema = {
     justify-items: center;
     padding: clamp(1rem, 2.3vw, 1.8rem) clamp(1.2rem, 3vw, 2.3rem);
     background: #000000;
-    border: 1px solid #E31C8D;
+    border: 2.7px solid #E31C8D;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     box-shadow: 0 14px 28px rgba(0,0,0,0.5);
@@ -267,7 +258,7 @@ const schema = {
     width: 4.6rem;
     height: 4.6rem;
     border-radius: 0 14px 0 14px;
-    border: 1px solid #808080;
+    border: 2.7px solid #404040;
     background: #000000;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -295,7 +286,7 @@ const schema = {
 
   .fullscreen-header__sub {
     font-size: clamp(1rem, 1.6vw, 1.4rem);
-    font-weight: 450;
+    font-weight: 550;
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: #ffffff;
@@ -305,7 +296,7 @@ const schema = {
     columns: 4;
     column-gap: var(--masonry-gap);
     padding: var(--masonry-gap);
-    background: #0f1118;
+    background: #000000;
   }
 
   .latest-session-strip {
@@ -314,7 +305,7 @@ const schema = {
     display: block;
     height: calc(100svh / 3);
     overflow: hidden;
-    border: 1px solid #E31C8D;
+    border: 2.7px solid #E31C8D;
     border-radius: 0 14px 0 14px;
     scroll-margin-top: calc(var(--nav-h) + 1.2rem);
     outline: none;
@@ -350,7 +341,7 @@ const schema = {
   }
 
   .masonry-home__filters-lab {
-    border: 1px solid #E31C8D;
+    border: 2.7px solid #E31C8D;
     background: #000000;
     border-radius: 0 14px 0 14px;
     padding: 0.7rem 1.3rem;
@@ -358,7 +349,7 @@ const schema = {
 
   .masonry-home__filters-title {
     margin: 0;
-    font-weight: 700;
+    font-weight: 750;
     font-size: clamp(1.12rem, 2.25vw, 1.75rem);
     text-transform: uppercase;
     letter-spacing: 0.14em;
@@ -374,8 +365,8 @@ const schema = {
   }
 
   .masonry-home__filter-btn {
-    border: 1px solid #808080;
-    font-weight: 450;
+    border: 2.7px solid #404040;
+    font-weight: 550;
     background: #000000;
     color: #ffffff;
     border-radius: 0 14px 0 14px;
@@ -400,7 +391,7 @@ const schema = {
   }
   .featured-split__heading {
     margin: 0;
-    font-weight: 700;
+    font-weight: 750;
     color: #ffffff;
     font-size: clamp(1.12rem, 2.25vw, 1.75rem);
     letter-spacing: 0.14em;
@@ -413,7 +404,7 @@ const schema = {
     top: 50%;
     transform: translate(-50%, -50%);
     border-radius: 0 14px 0 14px;
-    border: 1px solid #E31C8D;
+    border: 2.7px solid #E31C8D;
     background: #000000;
     padding: 0.7rem 1.3rem;
     z-index: 4;
@@ -432,7 +423,7 @@ const schema = {
     position: relative;
     overflow: hidden;
     border-radius: 0 14px 0 14px;
-    border: 1px solid #E31C8D;
+    border: 2.7px solid #E31C8D;
     background: #000000;
     min-height: 0;
     height: 100%;
@@ -470,7 +461,7 @@ const schema = {
     transform-origin: center center;
     text-align: center;
     border-radius: 0 14px 0 14px;
-    border: 1px solid #808080;
+    border: 2.7px solid #404040;
     background: #000000;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -482,21 +473,21 @@ const schema = {
   }
   .featured-split__cat {
     font-size: 0.62rem;
-    font-weight: 300;
+    font-weight: 500;
     letter-spacing: 0.09em;
     padding: 0.42rem 0.78rem;
-    border-color: #808080;
+    border-color: #404040;
     background: #000000;
     color: #ffffff;
   }
   .featured-split__title {
     font-size: clamp(0.72rem, 0.92vw, 0.9rem);
-    font-weight: 450;
+    font-weight: 550;
     letter-spacing: 0.11em;
     padding: 0.5rem 0.76rem;
   }
   .featured-split__item:hover img {
-    filter: grayscale(0) brightness(1) contrast(1.02);
+    filter: grayscale(1) brightness(0.72) contrast(1.05);
   }
   .featured-split__item:hover .featured-split__cat,
   .featured-split__item:hover .featured-split__title,
@@ -512,8 +503,8 @@ const schema = {
     position: relative;
     overflow: hidden;
     display: block;
-    background: #111;
-    border: 1px solid #808080;
+    background: #000000;
+    border: 2.7px solid #404040;
     border-radius: 0 14px 0 14px;
     break-inside: avoid;
     margin-bottom: var(--masonry-gap);
@@ -542,7 +533,7 @@ const schema = {
   .masonry-card__pill {
     width: min(90%, max-content);
     text-align: center;
-    border: 1px solid #808080;
+    border: 2.7px solid #404040;
     background: #000000;
     border-radius: 0 14px 0 14px;
     opacity: 1;
@@ -556,18 +547,18 @@ const schema = {
   }
 
   .masonry-card__pill--cat {
-    font-weight: 300;
+    font-weight: 500;
     padding: 0.42rem 0.78rem;
     font-size: 0.62rem;
     text-transform: uppercase;
     letter-spacing: 0.09em;
-    border-color: #808080;
+    border-color: #404040;
     background: #000000;
     color: #ffffff;
   }
 
   .masonry-card__pill--title {
-    font-weight: 450;
+    font-weight: 550;
     padding: 0.5rem 0.76rem;
     font-size: clamp(0.72rem, 0.92vw, 0.9rem);
     letter-spacing: 0.11em;
@@ -576,7 +567,7 @@ const schema = {
   }
 
   .masonry-card:hover img {
-    filter: grayscale(0) brightness(1) contrast(1.02);
+    filter: grayscale(1) brightness(0.72) contrast(1.05);
   }
   .masonry-card:hover {
     border-color: #E31C8D;
@@ -602,11 +593,80 @@ const schema = {
     .masonry-home__grid { columns: 1; }
   }
 
-  :global([data-theme="light"]) main,
-  :global([data-theme="dark"]) main {
-    background: #0f1118;
-    color: #f6f6f6;
+  .fullscreen-header__logo--light { display: none; }
+  :global([data-theme="light"]) .fullscreen-header__logo--dark { display: none; }
+  :global([data-theme="light"]) .fullscreen-header__logo--light { display: block; }
+
+  :global([data-theme="light"]) main {
+    background: #ffffff;
+    color: #000000;
   }
+
+  :global([data-theme="light"]) .masonry-home__grid,
+  :global([data-theme="light"]) .fullscreen-header,
+  :global([data-theme="light"]) .featured-split__item,
+  :global([data-theme="light"]) .masonry-card,
+  :global([data-theme="light"]) .fullscreen-header__glasslab,
+  :global([data-theme="light"]) .masonry-home__filters-lab,
+  :global([data-theme="light"]) .featured-split__heading-lab,
+  :global([data-theme="light"]) .masonry-home__filter-btn,
+  :global([data-theme="light"]) .masonry-card__pill,
+  :global([data-theme="light"]) .featured-split__cat,
+  :global([data-theme="light"]) .featured-split__title,
+  :global([data-theme="light"]) .fullscreen-header__scroll-indicator {
+    background: #ffffff;
+    color: #000000;
+  }
+  :global([data-theme="light"]) .masonry-card,
+  :global([data-theme="light"]) .masonry-card__pill,
+  :global([data-theme="light"]) .featured-split__cat,
+  :global([data-theme="light"]) .featured-split__title,
+  :global([data-theme="light"]) .masonry-home__filter-btn,
+  :global([data-theme="light"]) .fullscreen-header__scroll-indicator {
+    border-color: #404040;
+  }
+  :global([data-theme="light"]) .masonry-home__filter-btn.is-active,
+  :global([data-theme="light"]) .masonry-home__filter-btn:hover,
+  :global([data-theme="light"]) .masonry-card:hover,
+  :global([data-theme="light"]) .masonry-card:hover .masonry-card__pill,
+  :global([data-theme="light"]) .featured-split__item:hover .featured-split__cat,
+  :global([data-theme="light"]) .featured-split__item:hover .featured-split__title,
+  :global([data-theme="light"]) .fullscreen-header__scroll-indicator:hover {
+    border-color: #E31C8D;
+  }
+  :global([data-theme="light"]) .masonry-home__filters-title,
+  :global([data-theme="light"]) .featured-split__heading,
+  :global([data-theme="light"]) .featured-split__cat,
+  :global([data-theme="light"]) .featured-split__title,
+  :global([data-theme="light"]) .masonry-card__pill--cat,
+  :global([data-theme="light"]) .masonry-card__pill--title,
+  :global([data-theme="light"]) .fullscreen-header__sub,
+  :global([data-theme="light"]) .masonry-home__filter-btn {
+    color: #000000;
+  }
+  :global([data-theme="light"]) .fullscreen-header__scroll-indicator img {
+    filter: invert(1);
+  }
+  :global([data-theme="light"]) .masonry-card__overlay {
+    background: transparent;
+  }
+
+  :global([data-theme="light"]) .fullscreen-header__image,
+  :global([data-theme="light"]) .latest-session-strip img,
+  :global([data-theme="light"]) .featured-split__item img,
+  :global([data-theme="light"]) .masonry-card img {
+    filter: grayscale(1) contrast(1.05);
+  }
+
+  :global([data-theme="dark"]) .fullscreen-header__image,
+  :global([data-theme="dark"]) .latest-session-strip img,
+  :global([data-theme="dark"]) .featured-split__item img,
+  :global([data-theme="dark"]) .masonry-card img,
+  :global([data-theme="dark"]) .featured-split__item:hover img,
+  :global([data-theme="dark"]) .masonry-card:hover img {
+    filter: grayscale(1) brightness(0.72) contrast(1.05);
+  }
+
 </style>
 
 <script>
@@ -625,7 +685,7 @@ const schema = {
         const nextPool = choices.length ? choices : slides;
         const next = nextPool[Math.floor(Math.random() * nextPool.length)];
         allSessionsImg.style.opacity = '0.3';
-        allSessionsImg.style.filter = 'grayscale(1) brightness(0.62) contrast(1.02)';
+        allSessionsImg.style.filter = 'grayscale(1) brightness(0.72) contrast(1.02)';
         setTimeout(() => {
           current = next;
           allSessionsImg.src = next;
@@ -682,109 +742,6 @@ const schema = {
     window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   });
 
-  // Lightweight section lock (hero -> featured -> latest), then free scroll in the grid.
-  const lockTargets = [
-    document.querySelector<HTMLElement>('.fullscreen-header'),
-    document.querySelector<HTMLElement>('.featured-split'),
-    document.querySelector<HTMLElement>('#latest-session-strip'),
-  ].filter(Boolean) as HTMLElement[];
-  let isSnapping = false;
-  let wheelBurstLock = false;
-  let wheelBurstTimer: number | undefined;
 
-  function masonryGapPx() {
-    const mainEl = document.querySelector('main');
-    const masonryGapRaw = getComputedStyle(mainEl || document.documentElement).getPropertyValue('--masonry-gap');
-    return Number.parseFloat(masonryGapRaw) || 0;
-  }
-
-  function getAnchors() {
-    const gap = masonryGapPx();
-    return lockTargets.map((el) => Math.max(0, el.getBoundingClientRect().top + window.scrollY - gap));
-  }
-
-  function nearestIndex(anchors: number[]) {
-    const y = window.scrollY;
-    let nearest = 0;
-    let dist = Infinity;
-    anchors.forEach((anchor, i) => {
-      const d = Math.abs(anchor - y);
-      if (d < dist) {
-        dist = d;
-        nearest = i;
-      }
-    });
-    return nearest;
-  }
-
-  function snapTo(anchors: number[], index: number) {
-    const clamped = Math.max(0, Math.min(index, anchors.length - 1));
-    isSnapping = true;
-    window.scrollTo({ top: anchors[clamped], behavior: 'smooth' });
-    window.setTimeout(() => { isSnapping = false; }, 420);
-  }
-
-  function handleLockStep(direction: 1 | -1, event?: Event) {
-    const anchors = getAnchors();
-    if (anchors.length < 3) return;
-    const latestAnchor = anchors[2];
-    const y = window.scrollY;
-
-    if (isSnapping) {
-      event?.preventDefault();
-      return;
-    }
-
-    // Free downward scroll once we're at/under latest section.
-    if (direction > 0 && y >= latestAnchor - 1) return;
-
-    event?.preventDefault();
-
-    // While far below grid area and scrolling up, first catch latest anchor.
-    if (direction < 0 && y > latestAnchor + 1) {
-      snapTo(anchors, 2);
-      return;
-    }
-
-    const current = nearestIndex(anchors);
-    const target = direction > 0 ? Math.min(current + 1, 2) : Math.max(current - 1, 0);
-    snapTo(anchors, target);
-  }
-
-  function onWheel(event: WheelEvent) {
-    const direction: 1 | -1 = event.deltaY > 0 ? 1 : -1;
-    if (wheelBurstTimer) window.clearTimeout(wheelBurstTimer);
-    wheelBurstTimer = window.setTimeout(() => { wheelBurstLock = false; }, 90);
-    if (wheelBurstLock) {
-      event.preventDefault();
-      return;
-    }
-    wheelBurstLock = true;
-    handleLockStep(direction, event);
-  }
-
-  function onKeyDown(event: KeyboardEvent) {
-    const downKeys = ['ArrowDown', 'PageDown', ' ', 'Spacebar'];
-    const upKeys = ['ArrowUp', 'PageUp'];
-    if (downKeys.includes(event.key)) handleLockStep(1, event);
-    if (upKeys.includes(event.key)) handleLockStep(-1, event);
-  }
-
-  let touchStartY = 0;
-  function onTouchStart(event: TouchEvent) {
-    touchStartY = event.touches[0]?.clientY || 0;
-  }
-  function onTouchMove(event: TouchEvent) {
-    const currentY = event.touches[0]?.clientY || 0;
-    const delta = touchStartY - currentY;
-    if (Math.abs(delta) < 8) return;
-    handleLockStep(delta > 0 ? 1 : -1, event);
-    touchStartY = currentY;
-  }
-
-  window.addEventListener('wheel', onWheel, { passive: false });
-  window.addEventListener('keydown', onKeyDown);
-  window.addEventListener('touchstart', onTouchStart, { passive: true });
-  window.addEventListener('touchmove', onTouchMove, { passive: false });
 
 </script>

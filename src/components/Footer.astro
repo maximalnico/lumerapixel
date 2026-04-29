@@ -5,7 +5,7 @@ const lang = getLangFromUrl(Astro.url);
 <footer class="lp-footer">
   <div class="lp-footer__line"></div>
   <div class="lp-footer__inner">
-    <img src="/logos/lplong-rainbow.svg" alt="LumeraPixel" class="lp-footer__logo" />
+    <img src="/logos/lplong-white.svg" alt="LumeraPixel" class="lp-footer__logo" id="footerBrandLogo" />
     <p class="lp-footer__copy">{t(lang, 'footer.copy')}</p>
     <p class="lp-footer__credits">Typography by <a href="https://fontshare.com/fonts/switzer" target="_blank" rel="noopener">Fontshare</a> · Icons by <a href="https://phosphoricons.com/" target="_blank" rel="noopener">Phosphor</a> (MIT)</p>
   </div>
@@ -17,7 +17,7 @@ const lang = getLangFromUrl(Astro.url);
   }
   .lp-footer__line {
     height: 2.7px;
-    background: var(--rainbow);
+    background: #E31C8D;
     margin-bottom: var(--gap-sm);
   }
   .lp-footer__inner {
@@ -32,16 +32,18 @@ const lang = getLangFromUrl(Astro.url);
     width: auto;
     margin-bottom: 0.1rem;
   }
+
+
   .lp-footer__copy {
     font-family: 'Satoshi';
-    font-weight: 400;
+    font-weight: 500;
     font-size: clamp(0.88rem, 1.3vw, 1.05rem);
     color: var(--text);
     letter-spacing: 0.06em;
   }
   .lp-footer__credits {
     font-family: 'Satoshi';
-    font-weight: 400;
+    font-weight: 500;
     font-size: clamp(0.78rem, 1.05vw, 0.88rem);
     color: var(--text-muted);
     letter-spacing: 0.03em;
@@ -55,3 +57,18 @@ const lang = getLangFromUrl(Astro.url);
     color: var(--text);
   }
 </style>
+
+
+<script>
+  const footerBrandLogo = document.getElementById('footerBrandLogo') as HTMLImageElement | null;
+
+  function applyFooterLogo() {
+    if (!footerBrandLogo) return;
+    const mode = document.documentElement.getAttribute('data-theme') || 'dark';
+    footerBrandLogo.src = mode === 'dark' ? '/logos/lplong-white.svg' : '/logos/lplong-black.svg';
+  }
+
+  applyFooterLogo();
+  const themeObserver = new MutationObserver(applyFooterLogo);
+  themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+</script>

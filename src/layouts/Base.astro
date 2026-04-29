@@ -32,6 +32,7 @@ const canonicalURL = canonical ?? Astro.url.href;
   <meta name="author" content="Nico Henkel" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href={canonicalURL} />
+  <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
 
   <!-- OpenGraph -->
   <meta property="og:title" content={title} />
@@ -51,7 +52,6 @@ const canonicalURL = canonical ?? Astro.url.href;
   <meta name="twitter:image" content={ogImage} />
 
   <!-- Performance -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="dns-prefetch" href="https://lumerapixel.com" />
 
   <!-- hreflang -->
@@ -63,8 +63,8 @@ const canonicalURL = canonical ?? Astro.url.href;
   {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
 
   <!-- Favicon -->
-  <link rel="icon" id="favicon" href="/logos/lplogo-rainbow.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="/logos/lplogo-rainbow.svg" />
+  <link rel="icon" id="favicon" href="/logos/lplogo-black.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/logos/lplogo-black.svg" />
 
   <!-- Theme init: vor render setzen um FOUC zu verhindern -->
   <script is:inline>
@@ -73,6 +73,14 @@ const canonicalURL = canonical ?? Astro.url.href;
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const theme = mode === 'auto' ? (prefersDark ? 'dark' : 'light') : mode;
       document.documentElement.setAttribute('data-theme', theme);
+
+      const updateFavicon = (mode) => {
+        const favicon = document.getElementById('favicon');
+        if (favicon) favicon.setAttribute('href', mode === 'dark' ? '/logos/lplogo-white.svg' : '/logos/lplogo-black.svg');
+      };
+
+      window.__updateFavicon = updateFavicon;
+      updateFavicon(theme);
     })();
   </script>
 
@@ -97,9 +105,9 @@ const canonicalURL = canonical ?? Astro.url.href;
     /* ── DARK TOKENS ── */
     :root,
     [data-theme="dark"] {
-      --accent: #66ff00;
-      --accent: #66ff00;
-      --bg:            #0a0a0f;
+      --accent: #404040;
+      --accent: #404040;
+      --bg:            #000000;
       --bg-card:       rgba(255,255,255,0.04);
       --bg-card-hover: rgba(255,255,255,0.07);
       --border:        rgba(255,255,255,0.09);
@@ -117,13 +125,13 @@ const canonicalURL = canonical ?? Astro.url.href;
 
     /* ── LIGHT TOKENS ── */
     [data-theme="light"] {
-      --accent: #9900ff;
-      --bg:            #f0f4f8;
+      --accent: #E31C8D;
+      --bg:            #ffffff;
       --bg-card:       rgba(0,0,0,0.04);
       --bg-card-hover: rgba(0,0,0,0.07);
       --border:        rgba(0,0,0,0.09);
       --border-mid:    rgba(0,0,0,0.18);
-      --text:          #0a0a0f;
+      --text:          #000000;
       --text-muted:    rgba(10,10,15,0.65);
       --text-dim:      rgba(10,10,15,0.35);
       --glass-bg:      rgba(255,255,255,0.27);
@@ -137,7 +145,7 @@ const canonicalURL = canonical ?? Astro.url.href;
     /* ── SPACING & TRANSITIONS (theme-unabhängig) ── */
     :root {
       color-scheme: light dark;
-      --rainbow: linear-gradient(277deg, #ff0000, #ff7700, #ffee00, #00cc00, #0088ff, #8800ff);
+      --rainbow: linear-gradient(277deg, #404040, #404040, #ffffff, #404040, #404040, #404040);
       --gap-xs:  clamp(0.25rem, 1vw,  0.5rem);
       --gap-sm:  clamp(0.5rem,  2vw,  1rem);
       --gap-md:  clamp(1rem,    3vw,  2rem);
@@ -215,14 +223,14 @@ const canonicalURL = canonical ?? Astro.url.href;
       border-radius: 7px;
       padding: 1.5px;
       background: var(--rainbow);
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask: linear-gradient(#ffffff 0 0) content-box, linear-gradient(#ffffff 0 0);
       -webkit-mask-composite: destination-out;
       mask-composite: exclude;
       pointer-events: none;
     }
 
     /* ── TYPOGRAPHY ── */
-    .font-display { font-family: 'Satoshi'; font-weight: 700; letter-spacing: -0.02em; }
+    .font-display { font-family: 'Satoshi'; font-weight: 750; letter-spacing: -0.02em; }
     .t-micro {
       font-family: 'Satoshi'; font-weight: 600;
       font-size: clamp(0.65rem, 1vw, 0.8rem);
@@ -249,13 +257,13 @@ const canonicalURL = canonical ?? Astro.url.href;
       100% { background-position: 200% 50%; }
     }
     @keyframes rainbow-glow {
-      0%   { box-shadow: 0 0 0 1.5px #ff0000, 0 0 16px rgba(255,0,0,0.25); }
-      16%  { box-shadow: 0 0 0 1.5px #ff7700, 0 0 16px rgba(255,119,0,0.25); }
-      33%  { box-shadow: 0 0 0 1.5px #ffee00, 0 0 16px rgba(255,238,0,0.25); }
-      50%  { box-shadow: 0 0 0 1.5px #00cc00, 0 0 16px rgba(0,204,0,0.25); }
-      66%  { box-shadow: 0 0 0 1.5px #0088ff, 0 0 16px rgba(0,136,255,0.25); }
-      83%  { box-shadow: 0 0 0 1.5px #8800ff, 0 0 16px rgba(136,0,255,0.25); }
-      100% { box-shadow: 0 0 0 1.5px #ff0000, 0 0 16px rgba(255,0,0,0.25); }
+      0%   { box-shadow: 0 0 0 1.5px #404040, 0 0 16px rgba(255,0,0,0.25); }
+      16%  { box-shadow: 0 0 0 1.5px #404040, 0 0 16px rgba(255,119,0,0.25); }
+      33%  { box-shadow: 0 0 0 1.5px #ffffff, 0 0 16px rgba(255,238,0,0.25); }
+      50%  { box-shadow: 0 0 0 1.5px #404040, 0 0 16px rgba(0,204,0,0.25); }
+      66%  { box-shadow: 0 0 0 1.5px #404040, 0 0 16px rgba(0,136,255,0.25); }
+      83%  { box-shadow: 0 0 0 1.5px #404040, 0 0 16px rgba(136,0,255,0.25); }
+      100% { box-shadow: 0 0 0 1.5px #404040, 0 0 16px rgba(255,0,0,0.25); }
     }
     @keyframes bob {
       0%, 100% { transform: translateX(-50%) translateY(0); }
@@ -291,7 +299,7 @@ const canonicalURL = canonical ?? Astro.url.href;
       });
     };
 
-    window.__updateFavicon = function(_theme: string) {};
+    window.__updateFavicon = window.__updateFavicon || function(_theme: string) {};
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
       if (!localStorage.getItem('lp-theme')) {
         const theme = e.matches ? 'dark' : 'light';
