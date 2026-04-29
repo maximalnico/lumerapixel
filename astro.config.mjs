@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
+import compress from 'astro-compress';
 import sessionsData from './public/data/sessions.json' with { type: 'json' };
 
 const allSessions = Array.isArray(sessionsData)
@@ -21,6 +22,7 @@ const sessionLastModBySlug = new Map(
 
 export default defineConfig({
   integrations: [
+    compress(),
     sitemap({
       filter: (page) => !page.endsWith('/404'),
       i18n: { defaultLocale: 'de' },
