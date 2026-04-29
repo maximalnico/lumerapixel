@@ -202,7 +202,7 @@ const schema = {
     overflow: hidden;
     background: #090b12;
     border-radius: 0 14px 0 14px;
-    border: 1px solid #E31C8D;
+    border: 1px solid #808080;
   }
 
   .fullscreen-header__frame {
@@ -239,7 +239,7 @@ const schema = {
     justify-items: center;
     padding: clamp(1rem, 2.3vw, 1.8rem) clamp(1.2rem, 3vw, 2.3rem);
     background: #000000;
-    border: 1px solid #E31C8D;
+    border: 1px solid #808080;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     box-shadow: 0 14px 28px rgba(0,0,0,0.5);
@@ -429,8 +429,8 @@ const schema = {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: contrast(1.04) saturate(1.02);
-    transition: transform 420ms ease, filter 320ms ease;
+    filter: grayscale(1) brightness(0.72) contrast(1.05);
+    transition: filter 320ms ease;
   }
   .featured-split__overlay {
     position: absolute;
@@ -453,7 +453,7 @@ const schema = {
     width: min(90%, max-content);
     text-align: center;
     border-radius: 0 14px 0 14px;
-    border: 1px solid #E31C8D;
+    border: 1px solid #808080;
     background: #000000;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -468,7 +468,7 @@ const schema = {
     font-weight: 300;
     letter-spacing: 0.09em;
     padding: 0.42rem 0.78rem;
-    border-color: #E31C8D;
+    border-color: #808080;
     background: #000000;
     color: #ffffff;
   }
@@ -479,12 +479,17 @@ const schema = {
     padding: 0.5rem 0.76rem;
   }
   .featured-split__item:hover img {
-    transform: scale(1.03);
-    filter: brightness(0.86) contrast(1.06);
+    filter: grayscale(0) brightness(1) contrast(1.02);
   }
   .featured-split__item:hover .featured-split__overlay,
   .masonry-card:hover .masonry-card__overlay {
     gap: var(--badge-gap-hover);
+  }
+
+  .featured-split__item:hover .featured-split__cat,
+  .featured-split__item:hover .featured-split__title,
+  .masonry-card:hover .masonry-card__pill {
+    border-color: #E31C8D;
   }
 
   .featured-split__item:hover .featured-split__cat,
@@ -527,7 +532,7 @@ const schema = {
   .masonry-card__pill {
     width: min(90%, max-content);
     text-align: center;
-    border: 1px solid #E31C8D;
+    border: 1px solid #808080;
     background: #000000;
     border-radius: 0 14px 0 14px;
     opacity: 1;
@@ -543,8 +548,8 @@ const schema = {
     padding: 0.42rem 0.78rem;
     font-size: 0.62rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    border-color: #E31C8D;
+    letter-spacing: 0.09em;
+    border-color: #808080;
     background: #000000;
     color: #ffffff;
   }
