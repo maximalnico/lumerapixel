@@ -670,9 +670,8 @@ const schema = {
     window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   });
 
-  // Option A: pure JS state-machine section lock (hero -> featured -> all-sessions).
+  // Option A (reset): pure JS lock-state machine for hero -> featured -> all-sessions.
   const lockTargets = Array.from(document.querySelectorAll<HTMLElement>('.scroll-lock-target'));
-  let lockIndex = 0;
   let isTransitioning = false;
 
   function getMasonryGap() {
@@ -697,51 +696,48 @@ const schema = {
     return nearest;
   }
 
-  function inLockZone(anchors: number[]) {
-    if (anchors.length < 3) return false;
-    return window.scrollY <= anchors[2] + 1;
-  }
-
-  function scrollToAnchor(anchors: number[], idx: number) {
+  function lockToAnchor(anchors: number[], idx: number) {
     isTransitioning = true;
-    lockIndex = Math.max(0, Math.min(idx, anchors.length - 1));
-    window.scrollTo({ top: anchors[lockIndex], behavior: 'smooth' });
-    window.setTimeout(() => { isTransitioning = false; }, 420);
+    const clamped = Math.max(0, Math.min(idx, anchors.length - 1));
+    window.scrollTo({ top: anchors[clamped], behavior: 'smooth' });
+    window.setTimeout(() => { isTransitioning = false; }, 430);
   }
 
   function handleStep(direction: 1 | -1, event?: Event) {
     const anchors = getAnchors();
     if (anchors.length < 3) return;
 
+    const allSessionsAnchor = anchors[2];
+    const y = window.scrollY;
+
     if (isTransitioning) {
       event?.preventDefault();
       return;
     }
 
-    const atOrAboveAllSessions = inLockZone(anchors);
-    const belowAllSessions = !atOrAboveAllSessions;
+    const scrollingDown = direction > 0;
 
-    // From below: first upward step must catch at all-sessions (+gap).
-    if (direction < 0 && belowAllSessions) {
-      event?.preventDefault();
-      scrollToAnchor(anchors, 2);
-      return;
-    }
-
-    // Within lock zone: one input = one hard step.
-    if (atOrAboveAllSessions) {
-      event?.preventDefault();
-      lockIndex = nearestAnchorIndex(anchors);
-
-      if (direction > 0) {
-        if (lockIndex < 2) {
-          scrollToAnchor(anchors, lockIndex + 1);
-        } // else: at all-sessions -> next down input is free (no preventDefault)
-      } else if (lockIndex > 0) {
-        scrollToAnchor(anchors, lockIndex - 1);
+    if (scrollingDown) {
+      // Downward: hard lock only until all-sessions anchor; below it = free scroll.
+      if (y < allSessionsAnchor - 1) {
+        event?.preventDefault();
+        const idx = nearestAnchorIndex(anchors);
+        lockToAnchor(anchors, Math.min(idx + 1, 2));
       }
       return;
     }
+
+    // Upward from below: free scroll until all-sessions + gap is reached, then hard-catch.
+    if (y > allSessionsAnchor + 1) {
+      event?.preventDefault();
+      lockToAnchor(anchors, 2);
+      return;
+    }
+
+    // Upward inside lock range: step back one section per input.
+    event?.preventDefault();
+    const idx = nearestAnchorIndex(anchors);
+    lockToAnchor(anchors, Math.max(idx - 1, 0));
   }
 
   function handleWheelLock(event: WheelEvent) {
@@ -768,11 +764,6 @@ const schema = {
     } else if (upKeys.includes(event.key)) {
       handleStep(-1, event);
     }
-  }
-
-  const initAnchors = getAnchors();
-  if (initAnchors.length >= 3) {
-    lockIndex = nearestAnchorIndex(initAnchors);
   }
 
   window.addEventListener('wheel', handleWheelLock, { passive: false });
