@@ -318,7 +318,7 @@ const schema = {
     height: 100%;
     object-fit: cover;
     filter: grayscale(1) brightness(0.72) contrast(1.04);
-    transition: opacity 360ms ease;
+    transition: opacity 560ms ease, filter 560ms ease;
   }
   .latest-session-strip__heading-lab {
     position: absolute;
@@ -452,6 +452,10 @@ const schema = {
   .featured-split__cat,
   .featured-split__title {
     width: min(90%, max-content);
+    transition: transform 280ms ease, border-color 220ms ease;
+    transform-origin: center center;
+    will-change: transform;
+    transform-origin: center center;
     text-align: center;
     border-radius: 0 14px 0 14px;
     border: 1px solid #808080;
@@ -482,11 +486,6 @@ const schema = {
   .featured-split__item:hover img {
     filter: grayscale(0) brightness(1) contrast(1.02);
   }
-  .featured-split__item:hover .featured-split__overlay,
-  .masonry-card:hover .masonry-card__overlay {
-    gap: var(--badge-gap-hover);
-  }
-
   .featured-split__item:hover .featured-split__cat,
   .featured-split__item:hover .featured-split__title,
   .masonry-card:hover .masonry-card__pill {
@@ -539,6 +538,8 @@ const schema = {
     opacity: 1;
     transform: translateY(0);
     transition: transform 280ms ease, border-color 220ms ease;
+    transform-origin: center center;
+    will-change: transform;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -610,12 +611,14 @@ const schema = {
         const choices = slides.filter((slide) => !current.endsWith(slide));
         const nextPool = choices.length ? choices : slides;
         const next = nextPool[Math.floor(Math.random() * nextPool.length)];
-        allSessionsImg.style.opacity = '0.5';
+        allSessionsImg.style.opacity = '0.3';
+        allSessionsImg.style.filter = 'grayscale(1) brightness(0.62) contrast(1.02)';
         setTimeout(() => {
           current = next;
           allSessionsImg.src = next;
           allSessionsImg.style.opacity = '1';
-        }, 180);
+          allSessionsImg.style.filter = 'grayscale(1) brightness(0.72) contrast(1.04)';
+        }, 280);
       }, 2700);
     }
   }
