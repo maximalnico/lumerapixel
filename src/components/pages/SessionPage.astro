@@ -111,14 +111,14 @@ const schema = {
       <div class="session-hero__nav">
         {next ? (
           <a href={sessionPath(next.slug)} class="session-hero__nav-btn">
-            <img src="/logos/phosphoricons/caret-left-thin.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
+            <img src="/logos/phosphoricons/white/caret-left-thin.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
             <span>{navTitle(next)}</span>
           </a>
         ) : <span />}
         {prev ? (
           <a href={sessionPath(prev.slug)} class="session-hero__nav-btn">
             <span>{navTitle(prev)}</span>
-            <img src="/logos/phosphoricons/caret-right-thin.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
+            <img src="/logos/phosphoricons/white/caret-right-thin.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
           </a>
         ) : <span />}
       </div>
@@ -179,15 +179,15 @@ const schema = {
 
     <!-- Close oben rechts -->
     <button class="lightbox__close" id="lbClose" aria-label="Schließen">
-      <img src="/logos/phosphoricons/x-thin.svg" alt="" aria-hidden="true" class="lb-icon" />
+      <img src="/logos/phosphoricons/white/x-thin.svg" alt="" aria-hidden="true" class="lb-icon" />
     </button>
 
     <!-- Prev/Next seitlich -->
     <button class="lightbox__btn lightbox__btn--prev" id="lbPrev" aria-label="Vorheriges Foto">
-      <img src="/logos/phosphoricons/caret-left-thin.svg" alt="" aria-hidden="true" class="lb-icon" />
+      <img src="/logos/phosphoricons/white/caret-left-thin.svg" alt="" aria-hidden="true" class="lb-icon" />
     </button>
     <button class="lightbox__btn lightbox__btn--next" id="lbNext" aria-label="Nächstes Foto">
-      <img src="/logos/phosphoricons/caret-right-thin.svg" alt="" aria-hidden="true" class="lb-icon" />
+      <img src="/logos/phosphoricons/white/caret-right-thin.svg" alt="" aria-hidden="true" class="lb-icon" />
     </button>
 
     <div class="lightbox__stage">
@@ -305,8 +305,8 @@ const schema = {
     gap: var(--gap-md);
   }
   .session-hero__nav-btn {
-    font-family: 'Switzer', sans-serif;
-    font-weight: 277;
+    font-family: 'Satoshi';
+    font-weight: 400;
     font-size: clamp(0.78rem, 1vw, 0.9rem);
     text-transform: uppercase;
     letter-spacing: 0.16em;
@@ -344,8 +344,8 @@ const schema = {
     align-items: center;
     justify-content: flex-end;
     gap: 0.5rem;
-    font-family: 'Switzer', sans-serif;
-    font-weight: 277;
+    font-family: 'Satoshi';
+    font-weight: 400;
     font-size: 1.05rem;
     text-transform: uppercase;
     letter-spacing: 0.14em;
@@ -360,13 +360,15 @@ const schema = {
     background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
   }
   :global([data-theme="dark"]) .session-hero__cat {
-    background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
+    border-color: #e31c8d;
+    background: #000000;
+    color: #e31c8d;
   }
   .session-hero__sep { opacity: 0.35; }
 
   .session-hero__title {
-    font-family: 'Switzer', sans-serif;
-    font-weight: 277;
+    font-family: 'Satoshi';
+    font-weight: 400;
     font-size: clamp(2.8rem, 8vw, 7rem);
     line-height: 0.92;
     letter-spacing: -0.025em;
@@ -374,8 +376,8 @@ const schema = {
     max-width: 22ch;
   }
   .session-hero__sub {
-    font-family: 'Switzer', sans-serif;
-    font-weight: 277;
+    font-family: 'Satoshi';
+    font-weight: 400;
     font-size: clamp(1.1rem, 1.9vw, 1.4rem);
     color: var(--text-muted);
     max-width: 52ch;
@@ -504,8 +506,8 @@ const schema = {
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
-    font-family: 'Switzer', sans-serif;
-    font-weight: 277;
+    font-family: 'Satoshi';
+    font-weight: 400;
     font-size: clamp(0.85rem, 1.6vw, 1.2rem);
     letter-spacing: 0.08em;
     color: var(--text);
@@ -582,14 +584,14 @@ const schema = {
     align-items: center; gap: var(--gap-sm); text-align: center;
   }
   .lp-footer__copy {
-    font-family: 'Switzer', sans-serif;
-    font-weight: 277;
+    font-family: 'Satoshi';
+    font-weight: 400;
     font-size: 0.75rem;
     color: rgba(255,255,255,0.45);
     letter-spacing: 0.04em;
   }
   .lp-footer__mn {
-    font-weight: 277;
+    font-weight: 400;
     transition: opacity var(--quick);
     background: var(--rainbow);
     -webkit-background-clip: text;
@@ -599,8 +601,8 @@ const schema = {
   .lp-footer__mn:hover { opacity: 0.75; }
   .lp-footer__legal {
     display: flex; gap: 0.75rem; align-items: center;
-    font-family: 'Switzer', sans-serif;
-    font-weight: 277;
+    font-family: 'Satoshi';
+    font-weight: 400;
     font-size: 0.68rem;
     color: var(--text-dim);
   }
