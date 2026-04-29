@@ -368,7 +368,7 @@ const schema = {
     border-radius: 0 14px 0 14px;
     padding: 0.5rem 0.9rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.09em;
     font-size: 0.76rem;
     cursor: pointer;
   }
@@ -464,19 +464,19 @@ const schema = {
     text-overflow: ellipsis;
   }
   .featured-split__cat {
-    font-size: 0.66rem;
+    font-size: 0.62rem;
     font-weight: 300;
-    letter-spacing: 0.1em;
-    padding: 0.5rem 0.9rem;
+    letter-spacing: 0.09em;
+    padding: 0.42rem 0.78rem;
     border-color: #E31C8D;
     background: #000000;
     color: #ffffff;
   }
   .featured-split__title {
-    font-size: clamp(0.78rem, 1vw, 0.98rem);
+    font-size: clamp(0.72rem, 0.92vw, 0.9rem);
     font-weight: 450;
-    letter-spacing: 0.12em;
-    padding: 0.58rem 0.86rem;
+    letter-spacing: 0.11em;
+    padding: 0.5rem 0.76rem;
   }
   .featured-split__item:hover img {
     transform: scale(1.03);
@@ -485,6 +485,12 @@ const schema = {
   .featured-split__item:hover .featured-split__overlay,
   .masonry-card:hover .masonry-card__overlay {
     gap: var(--badge-gap-hover);
+  }
+
+  .featured-split__item:hover .featured-split__cat,
+  .featured-split__item:hover .featured-split__title,
+  .masonry-card:hover .masonry-card__pill {
+    transform: scale(1.07);
   }
 
   .featured-split__scroll-indicator {
@@ -534,8 +540,8 @@ const schema = {
 
   .masonry-card__pill--cat {
     font-weight: 300;
-    padding: 0.5rem 0.9rem;
-    font-size: 0.66rem;
+    padding: 0.42rem 0.78rem;
+    font-size: 0.62rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     border-color: #E31C8D;
@@ -545,9 +551,9 @@ const schema = {
 
   .masonry-card__pill--title {
     font-weight: 450;
-    padding: 0.58rem 0.86rem;
-    font-size: clamp(0.76rem, 1vw, 0.92rem);
-    letter-spacing: 0.12em;
+    padding: 0.5rem 0.76rem;
+    font-size: clamp(0.72rem, 0.92vw, 0.9rem);
+    letter-spacing: 0.11em;
     text-transform: uppercase;
     color: #ffffff;
   }
@@ -555,9 +561,7 @@ const schema = {
   .masonry-card:hover img {
     filter: grayscale(0) brightness(1) contrast(1.02);
   }
-  .masonry-card:hover .masonry-card__pill {
-    transform: scale(1.1);
-  }
+
 
   @media (max-width: 1100px) {
     .masonry-home__grid { columns: 3; }
