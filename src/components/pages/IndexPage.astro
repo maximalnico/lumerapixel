@@ -674,6 +674,8 @@ const schema = {
   const lockTargets = Array.from(document.querySelectorAll<HTMLElement>('.scroll-lock-target'));
   let isTransitioning = false;
   let lockUntil = 0;
+  let lastSnapDirection: 1 | -1 | 0 = 0;
+  let momentumBlockUntil = 0;
 
   function getMasonryGap() {
     const mainEl = document.querySelector('main');
@@ -697,11 +699,13 @@ const schema = {
     return nearest;
   }
 
-  function lockToAnchor(anchors: number[], idx: number) {
+  function lockToAnchor(anchors: number[], idx: number, direction: 1 | -1) {
     isTransitioning = true;
     const clamped = Math.max(0, Math.min(idx, anchors.length - 1));
     window.scrollTo({ top: anchors[clamped], behavior: 'smooth' });
     lockUntil = Date.now() + 620;
+    lastSnapDirection = direction;
+    momentumBlockUntil = Date.now() + 1500;
     window.setTimeout(() => { isTransitioning = false; }, 430);
   }
 
@@ -718,9 +722,17 @@ const schema = {
     }
 
     const scrollingDown = direction > 0;
+    if (direction !== lastSnapDirection) {
+      momentumBlockUntil = 0;
+    }
     const now = Date.now();
 
     if (now < lockUntil) {
+      event?.preventDefault();
+      return;
+    }
+
+    if (now < momentumBlockUntil && direction === lastSnapDirection) {
       event?.preventDefault();
       return;
     }
@@ -730,7 +742,7 @@ const schema = {
       if (y < allSessionsAnchor - 1) {
         event?.preventDefault();
         const idx = nearestAnchorIndex(anchors);
-        lockToAnchor(anchors, Math.min(idx + 1, 2));
+        lockToAnchor(anchors, Math.min(idx + 1, 2), 1);
       }
       return;
     }
@@ -743,14 +755,14 @@ const schema = {
     }
     if (y > allSessionsAnchor + 1) {
       event?.preventDefault();
-      lockToAnchor(anchors, 2);
+      lockToAnchor(anchors, 2, -1);
       return;
     }
 
     // Upward inside lock range: step back one section per input.
     event?.preventDefault();
     const idx = nearestAnchorIndex(anchors);
-    lockToAnchor(anchors, Math.max(idx - 1, 0));
+    lockToAnchor(anchors, Math.max(idx - 1, 0), -1);
   }
 
   function handleWheelLock(event: WheelEvent) {
