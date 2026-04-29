@@ -674,7 +674,7 @@ const schema = {
   const lockTargets = Array.from(document.querySelectorAll<HTMLElement>('.scroll-lock-target'));
   let isTransitioning = false;
   let lockUntil = 0;
-  let wheelAccum = 0;
+  let wheelGestureConsumed = false;
   let wheelIdleTimer: number | undefined;
 
   function getMasonryGap() {
@@ -759,34 +759,37 @@ const schema = {
     const anchors = getAnchors();
     const allSessionsAnchor = anchors[2] || 0;
     const y = window.scrollY;
+    const direction: 1 | -1 = event.deltaY > 0 ? 1 : -1;
+    const catchBuffer = Math.max(90, window.innerHeight * 0.08);
+
     const inLockRange = y <= allSessionsAnchor + 1;
+    const inUpCatchRange = direction < 0 && y <= allSessionsAnchor + catchBuffer;
+    const shouldLockHandle = inLockRange || inUpCatchRange;
 
-    // Below all-sessions and scrolling down: keep native free scroll.
-    if (!inLockRange && event.deltaY > 0) {
+    // free downward scrolling below all-sessions
+    if (!shouldLockHandle && direction > 0) {
+      wheelGestureConsumed = false;
       return;
     }
-
-    // In lock range (or upward catch path), consume wheel and step only on deliberate delta.
-    event.preventDefault();
-
-    if (isTransitioning) return;
-
-    wheelAccum += event.deltaY;
-
-    const STEP_THRESHOLD = 58;
-    if (Math.abs(wheelAccum) < STEP_THRESHOLD) {
-      if (wheelIdleTimer) window.clearTimeout(wheelIdleTimer);
-      wheelIdleTimer = window.setTimeout(() => { wheelAccum = 0; }, 140);
-      return;
-    }
-
-    const direction: 1 | -1 = wheelAccum > 0 ? 1 : -1;
-    wheelAccum = 0;
-    handleStep(direction, event);
 
     if (wheelIdleTimer) window.clearTimeout(wheelIdleTimer);
-    wheelIdleTimer = window.setTimeout(() => { wheelAccum = 0; }, 140);
+    wheelIdleTimer = window.setTimeout(() => { wheelGestureConsumed = false; }, 90);
+
+    if (!shouldLockHandle) {
+      return;
+    }
+
+    event.preventDefault();
+
+    // one gesture burst = one step only
+    if (wheelGestureConsumed) {
+      return;
+    }
+
+    wheelGestureConsumed = true;
+    handleStep(direction, event);
   }
+
 
   let touchStartY = 0;
   function handleTouchStart(event: TouchEvent) {
