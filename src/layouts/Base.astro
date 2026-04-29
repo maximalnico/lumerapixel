@@ -63,8 +63,8 @@ const canonicalURL = canonical ?? Astro.url.href;
   {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
 
   <!-- Favicon -->
-  <link rel="icon" id="favicon" href="/logos/lplogo.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="/logos/lplogo.svg" />
+  <link rel="icon" id="favicon" href="/logos/lplogo-black.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/logos/lplogo-black.svg" />
 
   <!-- Theme init: vor render setzen um FOUC zu verhindern -->
   <script is:inline>
@@ -76,7 +76,7 @@ const canonicalURL = canonical ?? Astro.url.href;
 
       const updateFavicon = (mode) => {
         const favicon = document.getElementById('favicon');
-        if (favicon) favicon.setAttribute('href', mode === 'dark' ? '/logos/lplogo-white.svg' : '/logos/lplogo.svg');
+        if (favicon) favicon.setAttribute('href', mode === 'dark' ? '/logos/lplogo-white.svg' : '/logos/lplogo-black.svg');
       };
 
       window.__updateFavicon = updateFavicon;
