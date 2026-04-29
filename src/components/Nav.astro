@@ -15,7 +15,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 <nav class="lp-nav" aria-label="Main navigation">
   <div class="lp-nav__island">
     <a href={home} class="lp-nav__brand" aria-label="LumeraPixel Home">
-      <img src="/logos/lplogo.svg" alt="LumeraPixel" class="lp-nav__logo" id="navBrandLogo" />
+      <img src="/logos/lplogo-black.svg" alt="LumeraPixel" class="lp-nav__logo" id="navBrandLogo" />
     </a>
 
     <div class="lp-nav__links" id="navLinks">
@@ -271,7 +271,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     (window as any).__updateFavicon?.(mode);
     updateThemeButton(mode);
     if (navBrandLogo) {
-      navBrandLogo.src = mode === 'dark' ? '/logos/lplogo-white.svg' : '/logos/lplogo.svg';
+      navBrandLogo.src = mode === 'dark' ? '/logos/lplogo-white.svg' : '/logos/lplogo-black.svg';
     }
   }
 

@@ -103,7 +103,8 @@ const schema = {
           {headerImage && <img class="fullscreen-header__image" src={headerImage} alt={st(headerSession)} loading="eager" fetchpriority="high" decoding="async" />}
           <div class="fullscreen-header__overlay">
             <div class="fullscreen-header__glasslab">
-              <img src="/logos/lplong-white.svg" alt="LumeraPixel" class="fullscreen-header__logo" />
+              <img src="/logos/lplong-white.svg" alt="LumeraPixel" class="fullscreen-header__logo fullscreen-header__logo--dark" />
+              <img src="/logos/lplong-black.svg" alt="LumeraPixel" class="fullscreen-header__logo fullscreen-header__logo--light" />
               <p class="fullscreen-header__sub">{t(lang, 'hero.tagline')}</p>
             </div>
           </div>
@@ -597,6 +598,30 @@ const schema = {
     background: #000000;
     color: #ffffff;
   }
+
+  .fullscreen-header__logo--light { display: none; }
+  :global([data-theme="light"]) .fullscreen-header__logo--dark { display: none; }
+  :global([data-theme="light"]) .fullscreen-header__logo--light { display: block; }
+
+  :global([data-theme="light"]) main {
+    background: #ffffff;
+    color: #000000;
+  }
+  :global([data-theme="light"]) .fullscreen-header,
+  :global([data-theme="light"]) .featured-split,
+  :global([data-theme="light"]) .latest-session-strip,
+  :global([data-theme="light"]) .masonry-home__filters,
+  :global([data-theme="light"]) .masonry-card__overlay,
+  :global([data-theme="light"]) .masonry-home__filter-btn,
+  :global([data-theme="light"]) .masonry-card__pill,
+  :global([data-theme="light"]) .fullscreen-header__scroll-indicator {
+    background: #ffffff;
+    color: #000000;
+  }
+  :global([data-theme="light"]) .fullscreen-header__scroll-indicator img {
+    filter: invert(1);
+  }
+
 </style>
 
 <script>
