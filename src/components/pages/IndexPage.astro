@@ -98,7 +98,7 @@ const schema = {
   <Nav />
   <main>
     <section class="masonry-home">
-      <section class="fullscreen-header" aria-label="Header">
+      <section class="fullscreen-header scroll-lock-target" aria-label="Header">
         <div class="fullscreen-header__frame">
           {headerImage && <img class="fullscreen-header__image" src={headerImage} alt={st(headerSession)} loading="eager" decoding="async" />}
           <div class="fullscreen-header__overlay">
@@ -113,7 +113,7 @@ const schema = {
         </a>
       </section>
 
-      <section class="featured-split" id="featured-sessions" aria-label="Featured Sessions">
+      <section class="featured-split scroll-lock-target" id="featured-sessions" aria-label="Featured Sessions">
         <div class="featured-split__heading-lab">
           <h2 class="featured-split__heading">Featured Sessions</h2>
         </div>
@@ -138,7 +138,7 @@ const schema = {
 
       <div
         id="latest-session-strip"
-        class="latest-session-strip"
+        class="latest-session-strip scroll-lock-target"
         aria-label={isEN ? 'All sessions preview' : 'Alle Sessions Vorschau'}
       >
         <img id="allSessionsSlideshowImage" src={`${headerSession.folder}/000.webp`} data-slides={allSessionCovers.join('|')} alt={st(headerSession)} loading="lazy" decoding="async" />
@@ -185,6 +185,16 @@ const schema = {
 </Base>
 
 <style>
+  :global(html),
+  :global(body) {
+    scroll-snap-type: y mandatory;
+  }
+
+  .scroll-lock-target {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
   main {
     background: #0f1118;
     min-height: 100svh;
@@ -330,7 +340,6 @@ const schema = {
   }
 
   .masonry-home__filters {
-    margin: var(--masonry-gap);
     margin-top: var(--masonry-gap);
     padding: 0;
     display: grid;
