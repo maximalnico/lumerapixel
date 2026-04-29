@@ -63,8 +63,8 @@ const canonicalURL = canonical ?? Astro.url.href;
   {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
 
   <!-- Favicon -->
-  <link rel="icon" id="favicon" href="/logos/lplogo-rainbow.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="/logos/lplogo-rainbow.svg" />
+  <link rel="icon" id="favicon" href="/logos/lplogo.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/logos/lplogo.svg" />
 
   <!-- Theme init: vor render setzen um FOUC zu verhindern -->
   <script is:inline>
@@ -73,6 +73,14 @@ const canonicalURL = canonical ?? Astro.url.href;
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const theme = mode === 'auto' ? (prefersDark ? 'dark' : 'light') : mode;
       document.documentElement.setAttribute('data-theme', theme);
+
+      const updateFavicon = (mode) => {
+        const favicon = document.getElementById('favicon');
+        if (favicon) favicon.setAttribute('href', mode === 'dark' ? '/logos/lplogo-white.svg' : '/logos/lplogo.svg');
+      };
+
+      window.__updateFavicon = updateFavicon;
+      updateFavicon(theme);
     })();
   </script>
 
@@ -291,7 +299,7 @@ const canonicalURL = canonical ?? Astro.url.href;
       });
     };
 
-    window.__updateFavicon = function(_theme: string) {};
+    window.__updateFavicon = window.__updateFavicon || function(_theme: string) {};
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
       if (!localStorage.getItem('lp-theme')) {
         const theme = e.matches ? 'dark' : 'light';
