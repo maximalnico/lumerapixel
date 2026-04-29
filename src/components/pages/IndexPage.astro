@@ -680,10 +680,12 @@ const schema = {
     window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   });
 
-  // Direction-aware scroll lock for hero -> featured -> all-sessions.
+  // Hard directional scroll lock for hero -> featured -> all-sessions.
   const rootEl = document.documentElement;
   const bodyEl = document.body;
   const lockTargets = Array.from(document.querySelectorAll<HTMLElement>('.scroll-lock-target'));
+  let lockIndex = 0;
+  let isAnimatingLockScroll = false;
 
   function getMasonryGap() {
     const mainEl = document.querySelector('main');
@@ -691,68 +693,97 @@ const schema = {
     return Number.parseFloat(masonryGapRaw) || 0;
   }
 
-  function getLockAnchors() {
+  function getAnchors() {
     const gap = getMasonryGap();
     return lockTargets.map((el) => Math.max(0, el.getBoundingClientRect().top + window.scrollY - gap));
   }
 
-  function setScrollLockState(enabled: boolean) {
+  function setLock(enabled: boolean) {
     rootEl.classList.toggle('lp-scroll-lock', enabled);
     bodyEl.classList.toggle('lp-scroll-lock', enabled);
   }
 
-  function getCurrentAnchorIndex(anchors: number[]) {
+  function nearestAnchorIndex(anchors: number[]) {
     const y = window.scrollY;
     let nearest = 0;
     let dist = Infinity;
     anchors.forEach((a, i) => {
-      const d = Math.abs(a - y);
+      const d = Math.abs(y - a);
       if (d < dist) { dist = d; nearest = i; }
     });
     return nearest;
   }
 
-  function updateDirectionalLockState() {
-    const anchors = getLockAnchors();
-    const lastAnchor = anchors[anchors.length - 1] || 0;
-    const currentY = window.scrollY;
-    setScrollLockState(currentY <= lastAnchor + 1);
+  function snapToAnchor(anchors: number[], index: number) {
+    isAnimatingLockScroll = true;
+    lockIndex = Math.max(0, Math.min(index, anchors.length - 1));
+    window.scrollTo({ top: anchors[lockIndex], behavior: 'smooth' });
+    window.setTimeout(() => { isAnimatingLockScroll = false; }, 380);
   }
 
   function handleWheelLock(event: WheelEvent) {
-    const anchors = getLockAnchors();
-    if (!anchors.length) return;
-
-    const lastAnchor = anchors[anchors.length - 1];
+    const anchors = getAnchors();
+    if (anchors.length < 3) return;
+    const lastAnchor = anchors[2];
     const y = window.scrollY;
+
+    if (isAnimatingLockScroll) {
+      event.preventDefault();
+      return;
+    }
+
     const scrollingDown = event.deltaY > 0;
 
-    // free scroll below all-sessions when moving down
-    if (scrollingDown && y >= lastAnchor + 1) {
-      setScrollLockState(false);
+    // From below: first upward wheel must re-lock exactly at "All Sessions + gap".
+    if (!scrollingDown && y > lastAnchor + 1) {
+      event.preventDefault();
+      setLock(true);
+      snapToAnchor(anchors, 2);
       return;
     }
 
-    // free scroll from below when moving up until all-sessions anchor is reached
-    if (!scrollingDown && y > lastAnchor + 24) {
-      setScrollLockState(false);
+    // Above/at lock region: force lock-step snapping through the 3 anchors.
+    if (y <= lastAnchor + 1) {
+      event.preventDefault();
+      setLock(true);
+      lockIndex = nearestAnchorIndex(anchors);
+
+      if (scrollingDown) {
+        if (lockIndex < 2) {
+          snapToAnchor(anchors, lockIndex + 1);
+        } else {
+          // leaving all-sessions downward unlocks and resumes free scrolling
+          setLock(false);
+          isAnimatingLockScroll = true;
+          window.setTimeout(() => { isAnimatingLockScroll = false; }, 90);
+        }
+      } else {
+        if (lockIndex > 0) {
+          snapToAnchor(anchors, lockIndex - 1);
+        }
+      }
       return;
     }
 
-    event.preventDefault();
-    setScrollLockState(true);
-
-    const currentIdx = getCurrentAnchorIndex(anchors);
-    const targetIdx = scrollingDown
-      ? Math.min(currentIdx + 1, anchors.length - 1)
-      : Math.max(currentIdx - 1, 0);
-
-    window.scrollTo({ top: anchors[targetIdx], behavior: 'smooth' });
+    // Free scroll below all-sessions.
+    setLock(false);
   }
 
-  updateDirectionalLockState();
+  function syncLockStateOnScroll() {
+    const anchors = getAnchors();
+    if (anchors.length < 3) return;
+    const lastAnchor = anchors[2];
+    if (window.scrollY <= lastAnchor + 1) {
+      setLock(true);
+      lockIndex = nearestAnchorIndex(anchors);
+    } else {
+      setLock(false);
+    }
+  }
+
+  syncLockStateOnScroll();
   window.addEventListener('wheel', handleWheelLock, { passive: false });
-  window.addEventListener('scroll', updateDirectionalLockState, { passive: true });
-  window.addEventListener('resize', updateDirectionalLockState);
+  window.addEventListener('scroll', syncLockStateOnScroll, { passive: true });
+  window.addEventListener('resize', syncLockStateOnScroll);
 
 </script>
