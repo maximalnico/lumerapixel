@@ -15,11 +15,16 @@ const siteUrl = 'https://lumerapixel.com';
   <Nav />
 
   <main class="legal-page">
-    <div class="legal-wrap">
 
-      <div class="legal-header">
-        <h1 class="legal-header__title">Impressum</h1>
+    <div class="legal-hero">
+      <div class="legal-hero__body">
+        <div class="legal-hero__inner">
+          <h1 class="legal-hero__title">Impressum</h1>
+        </div>
       </div>
+    </div>
+
+    <div class="legal-sections">
 
       <div class="legal-box">
         <span class="legal-box__label">Angaben gemäß § 5 TMG</span>
@@ -51,6 +56,7 @@ const siteUrl = 'https://lumerapixel.com';
       </div>
 
     </div>
+
   </main>
 
   <Footer />
@@ -61,32 +67,43 @@ const siteUrl = 'https://lumerapixel.com';
     background: #000;
     min-height: 100svh;
     color: #fff;
+    --gap: 7px;
   }
 
-  .legal-wrap {
-    max-width: 64ch;
-    margin: 0 auto;
-    padding: calc(var(--nav-h) + clamp(3rem, 8vh, 6rem)) var(--page-x) var(--gap-xl);
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
+  /* ── Hero ── */
+  .legal-hero {
+    margin: var(--gap);
   }
-
-  .legal-header {
-    display: flex;
-    justify-content: center;
-    padding-bottom: clamp(1.5rem, 4vh, 3rem);
+  .legal-hero__body {
+    height: calc(100svh - (var(--gap) * 2));
+    border: 2.7px solid #E31C8D;
+    border-radius: 0 14px 0 14px;
+    background: #000;
+    display: grid;
+    place-items: center;
   }
-  .legal-header__title {
+  .legal-hero__inner {
     border: 2.7px solid #E31C8D;
     border-radius: 0 14px 0 14px;
     background: #000;
     padding: clamp(0.8rem, 1.8vw, 1.2rem) clamp(1.2rem, 3vw, 2.2rem);
+    text-align: center;
+  }
+  .legal-hero__title {
     font-weight: 750;
     font-size: clamp(1.9rem, 5vw, 3.7rem);
     line-height: 0.95;
     letter-spacing: -0.02em;
     color: #fff;
+  }
+
+  /* ── Sections ── */
+  .legal-sections {
+    padding: var(--gap);
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
   }
 
   .legal-box {
@@ -144,8 +161,11 @@ const siteUrl = 'https://lumerapixel.com';
     color: #fff !important;
   }
 
+  /* ── Light theme ── */
   :global([data-theme="light"]) .legal-page { background: #fff; color: #000; }
-  :global([data-theme="light"]) .legal-header__title { background: #fff; color: #000; }
+  :global([data-theme="light"]) .legal-hero__body { background: #fff; }
+  :global([data-theme="light"]) .legal-hero__inner { background: #fff; }
+  :global([data-theme="light"]) .legal-hero__title { color: #000; }
   :global([data-theme="light"]) .legal-box { background: #fff; }
   :global([data-theme="light"]) .legal-box__label { background: #fff; color: #000; }
   :global([data-theme="light"]) .legal-box p { color: #404040; }
