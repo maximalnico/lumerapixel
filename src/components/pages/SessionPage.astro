@@ -147,7 +147,17 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
     text-align: center;
   }
   .session-hero__meta { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; font-size: .82rem; font-weight: 550; text-transform: uppercase; letter-spacing: .08em; color: #d0d0d0; }
-  .session-hero__cat { border: 2.7px solid var(--session-border); border-radius: 0 14px 0 14px; padding: .05rem .5rem; color: #fff; font-weight: 550; }
+  .session-hero__cat {
+    border: 2.7px solid var(--session-border);
+    border-radius: 0 14px 0 14px;
+    padding: 0.42rem 0.78rem;
+    color: #fff;
+    font-weight: 500;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    background: #000;
+  }
   .session-hero__title { font-size: clamp(1.9rem, 5vw, 3.7rem); line-height: .95; margin-top: .5rem; font-weight: 750; }
   .session-hero__sub { margin-top: .45rem; color: #ddd; max-width: 52ch; margin-inline: auto; font-weight: 550; }
   .session-hero__scroll-indicator {
