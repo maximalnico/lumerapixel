@@ -25,15 +25,13 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
 
   <main class="legal-page">
 
-    <div class="legal-hero">
-      <div class="legal-hero__body">
-        <div class="legal-hero__inner">
-          <h1 class="legal-hero__title">{isEN ? 'Privacy Policy' : 'Datenschutz'}</h1>
-        </div>
-      </div>
-    </div>
+    <div class="legal-wrap">
 
-    <div class="legal-sections">
+      <div class="legal-header">
+        <h1 class="legal-header__title">{isEN ? 'Privacy Policy' : 'Datenschutz'}</h1>
+      </div>
+
+      <div class="legal-sections">
 
       {isEN ? (
         <>
@@ -280,7 +278,8 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
         </>
       )}
 
-    </div><!-- legal-sections -->
+      </div>
+    </div>
   </main>
 
   <Footer />
@@ -295,38 +294,35 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
     --gap: 7px;
   }
 
-  /* ── Hero ── */
-  .legal-hero {
-    margin: var(--gap);
+  /* ── Wrap + Header ── */
+  .legal-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: calc(var(--nav-h, 5rem) + clamp(3rem, 8vh, 6rem)) var(--page-x, 1.5rem) var(--gap-xl, 4rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
   }
-  .legal-hero__body {
-    height: calc(100svh - (var(--gap) * 2));
-    border: 2.7px solid #E31C8D;
-    border-radius: 0 14px 0 14px;
-    background: #000;
-    display: grid;
-    place-items: center;
+  .legal-header {
+    display: flex;
+    justify-content: center;
+    padding-bottom: clamp(1rem, 3vh, 2rem);
   }
-  .legal-hero__inner {
+  .legal-header__title {
     border: 2.7px solid #E31C8D;
     border-radius: 0 14px 0 14px;
     background: #000;
     padding: clamp(0.8rem, 1.8vw, 1.2rem) clamp(1.2rem, 3vw, 2.2rem);
-    text-align: center;
-  }
-  .legal-hero__title {
-    font-family: 'Satoshi';
     font-weight: 750;
     font-size: clamp(1.9rem, 5vw, 3.7rem);
     line-height: 0.95;
     letter-spacing: -0.02em;
+    text-align: center;
     color: #fff;
   }
 
   /* ── Sections ── */
   .legal-sections {
-    padding: var(--gap);
-    padding-top: 0;
     display: flex;
     flex-direction: column;
     gap: var(--gap);
@@ -459,9 +455,7 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
 
   /* ── Light mode ── */
   :global([data-theme="light"]) .legal-page { background: #fff; color: #000; --ui-border: #404040; }
-  :global([data-theme="light"]) .legal-hero__body { background: #fff; }
-  :global([data-theme="light"]) .legal-hero__inner { background: #fff; }
-  :global([data-theme="light"]) .legal-hero__title { color: #000; }
+  :global([data-theme="light"]) .legal-header__title { background: #fff; color: #000; }
   :global([data-theme="light"]) .legal-box { background: #fff; }
   :global([data-theme="light"]) .legal-box__label { background: #fff; color: #000; }
   :global([data-theme="light"]) .legal-box p { color: #404040; }
