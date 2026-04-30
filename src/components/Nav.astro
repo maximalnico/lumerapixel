@@ -206,10 +206,11 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 
   @media (max-width: 820px) {
     .lp-nav {
-      width: calc(100vw - (2 * var(--gap-xs)));
-      left: var(--gap-xs);
-      right: var(--gap-xs);
-      transform: none;
+      width: max-content;
+      max-width: calc(100vw - (2 * var(--gap-xs)));
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
       top: var(--gap-xs);
     }
 
