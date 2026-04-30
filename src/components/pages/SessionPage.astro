@@ -103,12 +103,20 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
 </Base>
 
 <style>
-  .session-page { background: #000; min-height: 100svh; color: #fff; }
-  .session-hero { padding-top: calc(var(--nav-h) + 7px); margin: 0 7px 7px; }
+  .session-page {
+    background: #000;
+    min-height: 100svh;
+    color: #fff;
+    --masonry-gap: 7px;
+  }
+  .session-hero {
+    padding-top: calc(var(--nav-h) + var(--masonry-gap));
+    margin: 0 var(--masonry-gap) var(--masonry-gap);
+  }
 
   .session-hero__body {
     position: relative;
-    min-height: calc(100svh - 14px);
+    min-height: calc(100svh - (var(--masonry-gap) * 2));
     overflow: hidden;
     border-radius: 0 14px 0 14px;
     border: 2.7px solid #E31C8D;
@@ -137,7 +145,10 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   .session-hero__title { font-size: clamp(2rem, 6vw, 4.6rem); line-height: .95; margin-top: .7rem; }
   .session-hero__sub { margin-top: .7rem; color: #ddd; max-width: 60ch; margin-inline: auto; }
 
-  .photo-section { padding: 7px; }
+  .photo-section {
+    padding: 0 var(--masonry-gap) var(--masonry-gap);
+    margin-top: var(--masonry-gap);
+  }
   .session-nav { display: flex; justify-content: space-between; gap: .75rem; margin-bottom: .75rem; }
   .session-nav__btn {
     display: inline-flex; align-items: center; gap: .45rem;
@@ -146,8 +157,8 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   }
   .session-nav__btn:hover { border-color: #E31C8D; }
   .session-nav__icon { width: 16px; height: 16px; }
-  .photo-grid { columns: 5; column-gap: .5rem; }
-  .photo-item { break-inside: avoid; display: block; width: 100%; margin-bottom: .5rem; padding: 0; border: 2.7px solid #404040; border-radius: 0 14px 0 14px; overflow: hidden; background: #000; cursor: zoom-in; }
+  .photo-grid { columns: 5; column-gap: var(--masonry-gap); }
+  .photo-item { break-inside: avoid; display: block; width: 100%; margin-bottom: var(--masonry-gap); padding: 0; border: 2.7px solid #404040; border-radius: 0 14px 0 14px; overflow: hidden; background: #000; cursor: zoom-in; }
   .photo-item:hover { border-color: #E31C8D; }
   .photo-item img { width: 100%; display: block; filter: grayscale(1) brightness(0.72); }
   .photo-item:hover img { filter: brightness(0.72); }
