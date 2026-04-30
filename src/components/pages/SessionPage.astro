@@ -115,18 +115,22 @@ const schema = {
     <header class="session-hero">
       <!-- Prev/Next Bar -->
       <div class="session-hero__nav">
-        {next ? (
-          <a href={sessionPath(next.slug)} class="session-hero__nav-btn">
-            {heroSlides.map((slide) => (
-                src={slide.src}
-                class={slide.className}
-                loading={slide.loading}
-        {prev ? (
-          <a href={sessionPath(prev.slug)} class="session-hero__nav-btn">
-            <span>{navTitle(prev)}</span>
-            <img src="/logos/phosphoricons/white/caret-right.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
-          </a>
-        ) : <span />}
+        <span>
+          {next && (
+            <a href={sessionPath(next.slug)} class="session-hero__nav-btn">
+              <img src="/logos/phosphoricons/white/caret-left-thin.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
+              <span>{navTitle(next)}</span>
+            </a>
+          )}
+        </span>
+        <span>
+          {prev && (
+            <a href={sessionPath(prev.slug)} class="session-hero__nav-btn">
+              <span>{navTitle(prev)}</span>
+              <img src="/logos/phosphoricons/white/caret-right-thin.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
+            </a>
+          )}
+        </span>
       </div>
 
       <!-- Bild links + Text rechts -->
