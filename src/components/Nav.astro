@@ -275,8 +275,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   const langBtn = document.getElementById('langQuickToggle') as HTMLButtonElement;
   const langLabel = document.getElementById('langQuickLabel') as HTMLElement;
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  let currentMode = (localStorage.getItem('lp-theme-mode') || (prefersDark ? 'dark' : 'light'));
-  if (!['dark', 'light'].includes(currentMode)) currentMode = prefersDark ? 'dark' : 'light';
+  let currentMode = prefersDark ? 'dark' : 'light';
 
   function updateThemeButton(mode: string) {
     if (!themeBtn || !themeIcon) return;
@@ -302,10 +301,14 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 
   function toggleMode() {
     currentMode = currentMode === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('lp-theme-mode', currentMode);
     applyTheme(currentMode);
   }
   themeBtn?.addEventListener('click', toggleMode);
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    currentMode = e.matches ? 'dark' : 'light';
+    applyTheme(currentMode);
+  });
 
   const path = window.location.pathname;
   const isPathEN = path.startsWith('/en');
