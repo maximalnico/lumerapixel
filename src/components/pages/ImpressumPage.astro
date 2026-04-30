@@ -27,14 +27,13 @@ const enUrl = `${siteUrl}/en/site-notice`;
     <div class="legal-wrap">
 
       <div class="legal-header">
-        <div class="legal-header__divider" aria-hidden="true"></div>
         <h1 class="legal-header__title">{isEN ? 'Site Notice' : 'Impressum'}</h1>
       </div>
 
       {isEN ? (
         <>
-          <div class="glass-box">
-            <h2 class="glass-box__title section-num">Information according to § 5 TMG</h2>
+          <div class="legal-box">
+            <span class="legal-box__label">Information according to § 5 TMG</span>
             <p>
               Nico Thomas Henkel<br />
               MultaEnhavo<br />
@@ -43,29 +42,29 @@ const enUrl = `${siteUrl}/en/site-notice`;
             </p>
           </div>
 
-          <div class="glass-box">
-            <h2 class="glass-box__title section-num">Contact</h2>
+          <div class="legal-box">
+            <span class="legal-box__label">Contact</span>
             <p>
               Phone: <a href="tel:+4915122268995">+49-151-22268995</a><br />
               E-mail: <a href="mailto:nico@multaenhavo.com">nico@multaenhavo.com</a>
             </p>
           </div>
 
-          <div class="glass-box">
-            <h2 class="glass-box__title section-num">VAT ID</h2>
+          <div class="legal-box">
+            <span class="legal-box__label">VAT ID</span>
             <p>Sales tax identification number according to Sect. 27 a of the Sales Tax Law:</p>
-            <p class="ust-id">DE459009808</p>
+            <p class="legal-box__id">DE459009808</p>
           </div>
 
-          <div class="glass-box">
-            <h2 class="glass-box__title section-num">Dispute Resolution</h2>
+          <div class="legal-box">
+            <span class="legal-box__label">Dispute Resolution</span>
             <p>We are not willing or obliged to participate in dispute resolution proceedings in front of a consumer arbitration board.</p>
           </div>
         </>
       ) : (
         <>
-          <div class="glass-box">
-            <h2 class="glass-box__title section-num">Angaben gemäß § 5 TMG</h2>
+          <div class="legal-box">
+            <span class="legal-box__label">Angaben gemäß § 5 TMG</span>
             <p>
               Nico Thomas Henkel<br />
               MultaEnhavo<br />
@@ -74,22 +73,22 @@ const enUrl = `${siteUrl}/en/site-notice`;
             </p>
           </div>
 
-          <div class="glass-box">
-            <h2 class="glass-box__title section-num">Kontakt</h2>
+          <div class="legal-box">
+            <span class="legal-box__label">Kontakt</span>
             <p>
               Telefon: <a href="tel:+4915122268995">+49-151-22268995</a><br />
               E-Mail: <a href="mailto:nico@multaenhavo.com">nico@multaenhavo.com</a>
             </p>
           </div>
 
-          <div class="glass-box">
-            <h2 class="glass-box__title section-num">Umsatzsteuer-ID</h2>
+          <div class="legal-box">
+            <span class="legal-box__label">Umsatzsteuer-ID</span>
             <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:</p>
-            <p class="ust-id">DE459009808</p>
+            <p class="legal-box__id">DE459009808</p>
           </div>
 
-          <div class="glass-box">
-            <h2 class="glass-box__title section-num">Verbraucherstreit&shy;beilegung / Universal&shy;schlichtungs&shy;stelle</h2>
+          <div class="legal-box">
+            <span class="legal-box__label">Verbraucherstreit&shy;beilegung / Universal&shy;schlichtungs&shy;stelle</span>
             <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
           </div>
         </>
@@ -102,116 +101,100 @@ const enUrl = `${siteUrl}/en/site-notice`;
 </Base>
 
 <style>
-  .legal-page { min-height: 100svh; }
+  .legal-page {
+    background: #000;
+    min-height: 100svh;
+    color: #fff;
+  }
 
   .legal-wrap {
-    max-width: 80ch;
+    max-width: 64ch;
     margin: 0 auto;
     padding: calc(var(--nav-h) + clamp(3rem, 8vh, 6rem)) var(--page-x) var(--gap-xl);
     display: flex;
     flex-direction: column;
-    gap: var(--gap-md);
+    gap: 7px;
   }
 
   .legal-header {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 0.5rem;
-    padding-bottom: var(--gap-md);
-  }
-  .legal-header__divider {
-    width: clamp(3rem, 8vw, 5rem);
-    height: 2.7px;
-    background: var(--rainbow);
-    border-radius: 7px;
-    opacity: 0.9;
-    margin-bottom: 0.2rem;
+    justify-content: center;
+    padding-bottom: clamp(1.5rem, 4vh, 3rem);
   }
   .legal-header__title {
-    font-family: 'Satoshi';
-    font-weight: 400;
-    font-size: clamp(2.8rem, 8vw, 6rem);
-    line-height: 0.9;
-    letter-spacing: -0.025em;
-    color: var(--text);
+    border: 2.7px solid #E31C8D;
+    border-radius: 0 14px 0 14px;
+    background: #000;
+    padding: clamp(0.8rem, 1.8vw, 1.2rem) clamp(1.2rem, 3vw, 2.2rem);
+    font-weight: 750;
+    font-size: clamp(1.9rem, 5vw, 3.7rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-align: center;
+    color: #fff;
   }
 
-  .glass-box {
-    background: rgba(0,0,0,0.27);
-    backdrop-filter: blur(27px);
-    -webkit-backdrop-filter: blur(27px);
-    border: 2.7px solid rgba(0,0,0,0.37);
-    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.27);
-    border-radius: 7px;
-    padding: var(--gap-md) var(--gap-lg);
-    display: grid;
-    gap: 0.6rem;
+  .legal-box {
+    border: 2.7px solid #404040;
+    border-radius: 0 14px 0 14px;
+    background: #000;
+    padding: clamp(1rem, 2.5vw, 1.6rem) clamp(1.2rem, 3vw, 2rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
     text-align: center;
-    justify-items: center;
+    transition: border-color 180ms ease;
   }
-  .glass-box__title {
-    font-family: 'Satoshi';
-    font-weight: 400;
-    font-size: 1.1rem;
+  .legal-box:hover {
+    border-color: #E31C8D;
+  }
+
+  .legal-box__label {
+    border: 2.7px solid #404040;
+    border-radius: 0 14px 0 14px;
+    background: #000;
+    padding: 0.42rem 0.78rem;
+    font-size: 0.62rem;
+    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--text);
-    text-align: center;
-    width: 100%;
+    letter-spacing: 0.09em;
+    color: #fff;
+    transition: border-color 180ms ease;
   }
-  .section-num {
-    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
-    border-radius: 7px;
-    border: 2.7px solid var(--text-muted);
-    padding: 0.55rem 1.4rem;
+  .legal-box:hover .legal-box__label {
+    border-color: #E31C8D;
   }
-  :global([data-theme="dark"]) .section-num {
-    background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
-  }
-  .glass-box p {
-    font-family: 'Satoshi';
-    font-weight: 400;
-    color: var(--text-muted);
+
+  .legal-box p {
+    color: #bfbfbf;
     line-height: 1.8;
-    font-size: clamp(0.95rem, 1.3vw, 1.1rem);
-    text-align: center;
-  }
-  .glass-box a {
-    color: var(--text-muted);
-    border-bottom: 2.7px solid var(--border-mid);
-    transition: color var(--quick), border-color var(--quick);
-  }
-  .glass-box a:hover {
-    background: var(--rainbow);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    border-image: linear-gradient(277deg, #808080, #808080, #ffffff, #808080, #808080, #808080) 1;
+    font-size: clamp(0.95rem, 1.3vw, 1.05rem);
   }
 
-  .ust-id {
-    font-family: 'Satoshi';
-    font-weight: 400;
+  .legal-box a {
+    color: #bfbfbf;
+    border-bottom: 2px solid #404040;
+    transition: color 180ms ease, border-color 180ms ease;
+  }
+  .legal-box a:hover {
+    color: #fff;
+    border-color: #E31C8D;
+  }
+
+  .legal-box__id {
     font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    font-weight: 550;
     letter-spacing: 0.08em;
-    color: var(--text-muted);
+    color: #fff !important;
   }
 
-  :global([data-theme="light"]) .glass-box {
-    background: rgba(255,255,255,0.27);
-    border-color: rgba(255,255,255,0.37);
-  }
-  :global([data-theme="light"]) .glass-box p,
-  :global([data-theme="light"]) .glass-box a {
-    color: var(--text-muted);
-  }
-  :global([data-theme="light"]) .glass-box a:hover {
-    background: var(--rainbow);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    border-image: linear-gradient(277deg, #808080, #808080, #ffffff, #808080, #808080, #808080) 1;
-  }
+  :global([data-theme="light"]) .legal-page { background: #fff; color: #000; }
+  :global([data-theme="light"]) .legal-header__title { background: #fff; color: #000; }
+  :global([data-theme="light"]) .legal-box { background: #fff; }
+  :global([data-theme="light"]) .legal-box__label { background: #fff; color: #000; }
+  :global([data-theme="light"]) .legal-box p { color: #404040; }
+  :global([data-theme="light"]) .legal-box a { color: #404040; }
+  :global([data-theme="light"]) .legal-box a:hover { color: #000; }
+  :global([data-theme="light"]) .legal-box__id { color: #000 !important; }
 </style>
