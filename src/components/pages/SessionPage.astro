@@ -58,25 +58,6 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
 
   <main class="session-page">
     <header class="session-hero">
-      <div class="session-hero__nav">
-        <span>
-          {next && (
-            <a href={sessionPath(next.slug)} class="session-hero__nav-btn">
-              <img src="/logos/phosphoricons/white/caret-left-thin.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
-              <span>{navTitle(next)}</span>
-            </a>
-          )}
-        </span>
-        <span>
-          {prev && (
-            <a href={sessionPath(prev.slug)} class="session-hero__nav-btn">
-              <span>{navTitle(prev)}</span>
-              <img src="/logos/phosphoricons/white/caret-right-thin.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
-            </a>
-          )}
-        </span>
-      </div>
-
       <div class="session-hero__body">
         <img src={photos[0]} alt={title} class="session-hero__image" loading="eager" decoding="async" />
         <div class="session-hero__overlay">
@@ -94,6 +75,20 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
     </header>
 
     <section class="photo-section" aria-label="Fotos">
+      <div class="session-nav">
+        {next && (
+          <a href={sessionPath(next.slug)} class="session-nav__btn">
+            <img src="/logos/phosphoricons/white/caret-left-thin.svg" alt="" aria-hidden="true" class="session-nav__icon" />
+            <span>{navTitle(next)}</span>
+          </a>
+        )}
+        {prev && (
+          <a href={sessionPath(prev.slug)} class="session-nav__btn">
+            <span>{navTitle(prev)}</span>
+            <img src="/logos/phosphoricons/white/caret-right-thin.svg" alt="" aria-hidden="true" class="session-nav__icon" />
+          </a>
+        )}
+      </div>
       <div class="photo-grid" id="photoGrid">
         {photos.map((src, i) => (
           <button class="photo-item" data-index={i} aria-label={isEN ? `Photo ${i + 1} of ${session.images}` : `Foto ${i + 1} von ${session.images}`}>
@@ -109,20 +104,11 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
 
 <style>
   .session-page { background: #000; min-height: 100svh; color: #fff; }
-  .session-hero { padding: calc(var(--nav-h) + 1rem) 7px 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
-  .session-hero__nav { display: flex; justify-content: space-between; gap: .75rem; }
-  .session-hero__nav-btn {
-    display: inline-flex; align-items: center; gap: .45rem;
-    border: 2.7px solid #404040; border-radius: 0 14px 0 14px;
-    color: #fff; text-decoration: none; padding: .5rem .85rem;
-    background: #000; max-width: 38vw;
-  }
-  .session-hero__nav-btn:hover { border-color: #E31C8D; }
-  .session-hero__nav-icon { width: 16px; height: 16px; }
+  .session-hero { padding-top: calc(var(--nav-h) + 7px); margin: 0 7px 7px; }
 
   .session-hero__body {
     position: relative;
-    min-height: clamp(420px, 72svh, 880px);
+    min-height: calc(100svh - 14px);
     overflow: hidden;
     border-radius: 0 14px 0 14px;
     border: 2.7px solid #E31C8D;
@@ -152,6 +138,14 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   .session-hero__sub { margin-top: .7rem; color: #ddd; max-width: 60ch; margin-inline: auto; }
 
   .photo-section { padding: 7px; }
+  .session-nav { display: flex; justify-content: space-between; gap: .75rem; margin-bottom: .75rem; }
+  .session-nav__btn {
+    display: inline-flex; align-items: center; gap: .45rem;
+    border: 2.7px solid #404040; border-radius: 0 14px 0 14px;
+    color: #fff; text-decoration: none; padding: .5rem .85rem; background: #000; max-width: 38vw;
+  }
+  .session-nav__btn:hover { border-color: #E31C8D; }
+  .session-nav__icon { width: 16px; height: 16px; }
   .photo-grid { columns: 5; column-gap: .5rem; }
   .photo-item { break-inside: avoid; display: block; width: 100%; margin-bottom: .5rem; padding: 0; border: 2.7px solid #404040; border-radius: 0 14px 0 14px; overflow: hidden; background: #000; cursor: zoom-in; }
   .photo-item:hover { border-color: #E31C8D; }
@@ -159,7 +153,7 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   .photo-item:hover img { filter: brightness(0.72); }
 
   :global([data-theme="light"]) .session-page { background: #fff; color: #000; }
-  :global([data-theme="light"]) .session-hero__nav-btn,
+  :global([data-theme="light"]) .session-nav__btn,
   :global([data-theme="light"]) .session-hero__textlab,
   :global([data-theme="light"]) .photo-item { background: #fff; color: #000; border-color: #404040; }
   :global([data-theme="light"]) .session-hero__body { background: #fff; }
@@ -168,18 +162,18 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   :global([data-theme="light"]) .session-hero__meta,
   :global([data-theme="light"]) .session-hero__cat { color: #000; }
   :global([data-theme="light"]) .session-hero__cat { border-color: #404040; }
-  :global([data-theme="light"]) .session-hero__nav-icon { filter: invert(1); }
+  :global([data-theme="light"]) .session-nav__icon { filter: invert(1); }
   :global([data-theme="light"]) .session-hero__image,
   :global([data-theme="light"]) .photo-item img { filter: grayscale(1); }
 
   @media (max-width: 1024px) { .photo-grid { columns: 4; } }
   @media (max-width: 768px) {
-    .session-hero__nav-btn { max-width: 45vw; }
+    .session-nav__btn { max-width: 45vw; }
     .photo-grid { columns: 3; }
   }
   @media (max-width: 520px) {
     .photo-grid { columns: 2; }
-    .session-hero__nav-btn { max-width: 42vw; font-size: .8rem; }
+    .session-nav__btn { max-width: 42vw; font-size: .8rem; }
     .session-hero__meta { font-size: .76rem; }
   }
 </style>
