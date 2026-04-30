@@ -20,16 +20,20 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 
     <div class="lp-nav__links" id="navLinks">
       <a href={home} class={`lp-nav__link ${isHomeActive ? 'is-active' : ''}`}>
-        <span>{t(lang, 'nav.home')}</span>
+        <img src="/logos/phosphoricons/white/house.svg" class="lp-nav__link-icon" alt="" aria-hidden="true" />
+        <span class="lp-nav__link-text">{t(lang, 'nav.home')}</span>
       </a>
       <a href={contact} class="lp-nav__link">
-        <span>{t(lang, 'nav.contact')}</span>
+        <img src="/logos/phosphoricons/white/envelope-simple.svg" class="lp-nav__link-icon" alt="" aria-hidden="true" />
+        <span class="lp-nav__link-text">{t(lang, 'nav.contact')}</span>
       </a>
       <a href={legal} class={`lp-nav__link ${isLegalActive ? 'is-active' : ''}`}>
-        <span>{t(lang, 'nav.legal')}</span>
+        <img src="/logos/phosphoricons/white/address-book-tabs.svg" class="lp-nav__link-icon" alt="" aria-hidden="true" />
+        <span class="lp-nav__link-text">{t(lang, 'nav.legal')}</span>
       </a>
       <a href={privacy} class={`lp-nav__link ${isPrivacyActive ? 'is-active' : ''}`}>
-        <span>{t(lang, 'nav.privacy')}</span>
+        <img src="/logos/phosphoricons/white/lock-key.svg" class="lp-nav__link-icon" alt="" aria-hidden="true" />
+        <span class="lp-nav__link-text">{t(lang, 'nav.privacy')}</span>
       </a>
     </div>
 
@@ -181,6 +185,14 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     pointer-events: none;
   }
 
+  .lp-nav__link-icon {
+    display: none;
+    width: 1.4rem;
+    height: 1.4rem;
+    pointer-events: none;
+    flex-shrink: 0;
+  }
+
   .lp-nav__quick-label {
     font-family: 'Satoshi';
     font-weight: 500;
@@ -202,23 +214,30 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     }
 
     .lp-nav__island {
-      grid-template-columns: 1fr;
-      align-items: stretch;
-      gap: 0.35rem;
-    }
-
-    .lp-nav__brand {
-      justify-content: flex-start;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 0.34rem;
     }
 
     .lp-nav__links {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 0.34rem;
     }
 
     .lp-nav__link {
-      font-size: 0.86rem;
-      letter-spacing: 0.08em;
+      width: 3rem;
+      min-width: 3rem;
+      padding: 0;
+    }
+
+    .lp-nav__link-text {
+      display: none;
+    }
+
+    .lp-nav__link-icon {
+      display: block;
     }
 
     .lp-nav__controls {
@@ -263,7 +282,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   [data-theme="light"] .lp-nav__quick-label {
     color: #000000;
   }
-  [data-theme="light"] .lp-nav__quick-icon {
+  [data-theme="light"] .lp-nav__quick-icon,
+  [data-theme="light"] .lp-nav__link-icon {
     filter: invert(1);
   }
 
