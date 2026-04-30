@@ -78,17 +78,17 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
       </div>
 
       <div class="session-hero__body">
-        <div class="session-hero__preview-wrap">
-          <img src={photos[0]} alt={title} class="session-hero__preview" loading="eager" decoding="async" />
-        </div>
-        <div class="session-hero__text">
-          <div class="session-hero__meta">
-            <span class="session-hero__cat">{category}</span>
-            <span>{session.images} {t(lang, 'session.photos')}</span>
-            <span>{dateStr}</span>
+        <img src={photos[0]} alt={title} class="session-hero__image" loading="eager" decoding="async" />
+        <div class="session-hero__overlay">
+          <div class="session-hero__textlab">
+            <div class="session-hero__meta">
+              <span class="session-hero__cat">{category}</span>
+              <span>{session.images} {t(lang, 'session.photos')}</span>
+              <span>{dateStr}</span>
+            </div>
+            <h1 class="session-hero__title">{title}</h1>
+            {subtitle && <p class="session-hero__sub">{subtitle}</p>}
           </div>
-          <h1 class="session-hero__title">{title}</h1>
-          {subtitle && <p class="session-hero__sub">{subtitle}</p>}
         </div>
       </div>
     </header>
@@ -109,10 +109,7 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
 
 <style>
   .session-page { background: #000; min-height: 100svh; color: #fff; }
-  .session-hero {
-    padding: calc(var(--nav-h) + 1rem) 7px 1.5rem;
-    display: flex; flex-direction: column; gap: 1rem;
-  }
+  .session-hero { padding: calc(var(--nav-h) + 1rem) 7px 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
   .session-hero__nav { display: flex; justify-content: space-between; gap: .75rem; }
   .session-hero__nav-btn {
     display: inline-flex; align-items: center; gap: .45rem;
@@ -122,39 +119,67 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   }
   .session-hero__nav-btn:hover { border-color: #E31C8D; }
   .session-hero__nav-icon { width: 16px; height: 16px; }
+
   .session-hero__body {
-    margin: 0 0 0;
-    border: 2.7px solid #E31C8D; border-radius: 0 14px 0 14px;
+    position: relative;
+    min-height: clamp(420px, 72svh, 880px);
     overflow: hidden;
-    display: grid; grid-template-columns: minmax(280px, 1fr) 1fr;
+    border-radius: 0 14px 0 14px;
+    border: 2.7px solid #E31C8D;
     background: #000;
   }
-  .session-hero__preview-wrap { min-height: 280px; }
-  .session-hero__preview { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .session-hero__text { padding: 1.1rem; display: flex; flex-direction: column; justify-content: center; }
-  .session-hero__meta { display: flex; flex-wrap: wrap; gap: .5rem; font-size: .85rem; text-transform: uppercase; letter-spacing: .08em; color: #cfcfcf; }
+  .session-hero__image {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: grayscale(1) brightness(0.72);
+  }
+  .session-hero__overlay {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    background: linear-gradient(90deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,.15) 25%, rgba(0,0,0,.15) 75%, rgba(0,0,0,.45) 100%);
+    padding: 1.2rem;
+  }
+  .session-hero__textlab {
+    width: min(92vw, 58rem);
+    border: 2.7px solid #E31C8D;
+    border-radius: 0 14px 0 14px;
+    background: #000;
+    padding: clamp(1rem, 2.2vw, 1.8rem) clamp(1.1rem, 2.8vw, 2.1rem);
+    text-align: center;
+  }
+  .session-hero__meta { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; font-size: .85rem; text-transform: uppercase; letter-spacing: .08em; color: #d0d0d0; }
   .session-hero__cat { border: 2.7px solid #404040; border-radius: 0 14px 0 14px; padding: .05rem .5rem; color: #fff; }
-  .session-hero__title { font-size: clamp(2rem, 5vw, 4rem); line-height: .95; margin-top: .6rem; }
-  .session-hero__sub { margin-top: .6rem; color: #ddd; max-width: 60ch; }
+  .session-hero__title { font-size: clamp(2rem, 6vw, 4.6rem); line-height: .95; margin-top: .7rem; }
+  .session-hero__sub { margin-top: .7rem; color: #ddd; max-width: 60ch; margin-inline: auto; }
 
   .photo-section { padding: 7px; }
   .photo-grid { columns: 5; column-gap: .5rem; }
-  .photo-item {
-    break-inside: avoid; display: block; width: 100%; margin-bottom: .5rem; padding: 0;
-    border: 2.7px solid #404040; border-radius: 0 14px 0 14px;
-    overflow: hidden; background: #000; cursor: zoom-in;
-  }
+  .photo-item { break-inside: avoid; display: block; width: 100%; margin-bottom: .5rem; padding: 0; border: 2.7px solid #404040; border-radius: 0 14px 0 14px; overflow: hidden; background: #000; cursor: zoom-in; }
   .photo-item:hover { border-color: #E31C8D; }
-  .photo-item img { width: 100%; display: block; }
+  .photo-item img { width: 100%; display: block; filter: grayscale(1) brightness(0.72); }
+  .photo-item:hover img { filter: brightness(0.72); }
+
+  :global([data-theme="light"]) .session-page { background: #fff; color: #000; }
+  :global([data-theme="light"]) .session-hero__nav-btn,
+  :global([data-theme="light"]) .session-hero__textlab,
+  :global([data-theme="light"]) .photo-item { background: #fff; color: #000; border-color: #404040; }
+  :global([data-theme="light"]) .session-hero__body { background: #fff; }
+  :global([data-theme="light"]) .session-hero__title,
+  :global([data-theme="light"]) .session-hero__sub,
+  :global([data-theme="light"]) .session-hero__meta,
+  :global([data-theme="light"]) .session-hero__cat { color: #000; }
+  :global([data-theme="light"]) .session-hero__cat { border-color: #404040; }
+  :global([data-theme="light"]) .session-hero__nav-icon { filter: invert(1); }
+  :global([data-theme="light"]) .session-hero__image,
+  :global([data-theme="light"]) .photo-item img { filter: grayscale(1); }
 
   @media (max-width: 1024px) { .photo-grid { columns: 4; } }
   @media (max-width: 768px) {
-    .session-hero__body { grid-template-columns: 1fr; }
     .session-hero__nav-btn { max-width: 45vw; }
     .photo-grid { columns: 3; }
   }
   @media (max-width: 520px) {
     .photo-grid { columns: 2; }
     .session-hero__nav-btn { max-width: 42vw; font-size: .8rem; }
+    .session-hero__meta { font-size: .76rem; }
   }
 </style>
