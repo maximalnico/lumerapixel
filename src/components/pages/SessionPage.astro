@@ -224,6 +224,8 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
     display: grid;
     place-items: center;
     z-index: 3;
+    cursor: pointer;
+    transition: border-color 180ms ease, background 180ms ease;
   }
   .session-hero__side-nav--left { left: 0.85rem; }
   .session-hero__side-nav--right { right: 0.85rem; }
@@ -241,6 +243,7 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
     z-index: 300;
     display: grid;
     place-items: center;
+    --session-border: #bfbfbf;
   }
   .lightbox[hidden] { display: none; }
   .lightbox__backdrop {
@@ -265,8 +268,8 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
     top: 1rem;
     right: 1rem;
     z-index: 2;
-    width: 3rem;
-    height: 3rem;
+    width: 4.4rem;
+    height: 4.4rem;
     display: grid;
     place-items: center;
     border: 2.7px solid var(--session-border);
@@ -275,15 +278,15 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
     cursor: pointer;
     transition: border-color 180ms ease, background 180ms ease;
   }
-  .lightbox__close img { width: 1.9rem; height: 1.9rem; }
+  .lightbox__close img { width: 2.7rem; height: 2.7rem; }
   .lightbox__close:hover { border-color: #E31C8D; }
   .lightbox__nav {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     z-index: 2;
-    width: 3.2rem;
-    height: 3.2rem;
+    width: 4.4rem;
+    height: 4.4rem;
     display: grid;
     place-items: center;
     border: 2.7px solid var(--session-border);
@@ -294,7 +297,7 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   }
   .lightbox__nav--prev { left: 1rem; }
   .lightbox__nav--next { right: 1rem; }
-  .lightbox__nav img { width: 2rem; height: 2rem; }
+  .lightbox__nav img { width: 2.7rem; height: 2.7rem; }
   .lightbox__nav:hover { border-color: #E31C8D; }
 
   :global([data-theme="light"]) .session-page { background: #fff; color: #000; --session-border: #404040; }
@@ -310,6 +313,7 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   :global([data-theme="light"]) .session-hero__scroll-indicator { background: #fff; }
   :global([data-theme="light"]) .lightbox__close { background: #fff; }
   :global([data-theme="light"]) .lightbox__nav { background: #fff; }
+  :global([data-theme="light"]) .lightbox { --session-border: #404040; }
   :global([data-theme="light"]) .session-hero__side-nav img,
   :global([data-theme="light"]) .session-hero__scroll-indicator img,
   :global([data-theme="light"]) .lightbox__close img,
