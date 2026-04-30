@@ -101,6 +101,14 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
     </section>
   </main>
 
+  <div class="lightbox" id="sessionLightbox" hidden>
+    <button class="lightbox__backdrop" id="sessionLightboxBackdrop" aria-label={isEN ? 'Close lightbox' : 'Lightbox schließen'}></button>
+    <button class="lightbox__close" id="sessionLightboxClose" aria-label={isEN ? 'Close' : 'Schließen'}>
+      <img src="/logos/phosphoricons/white/x.svg" alt="" />
+    </button>
+    <img class="lightbox__img" id="sessionLightboxImage" src="" alt="" />
+  </div>
+
   <Footer />
 </Base>
 
@@ -219,6 +227,47 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   .photo-item img { width: 100%; display: block; filter: grayscale(1) brightness(0.72); }
   .photo-item:hover img { filter: brightness(0.72); }
 
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    display: grid;
+    place-items: center;
+  }
+  .lightbox[hidden] { display: none; }
+  .lightbox__backdrop {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(6px);
+  }
+  .lightbox__img {
+    position: relative;
+    z-index: 1;
+    max-width: min(92vw, 1500px);
+    max-height: 88vh;
+    object-fit: contain;
+    border: 2.7px solid #E31C8D;
+    border-radius: 0 14px 0 14px;
+    background: #000;
+  }
+  .lightbox__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 2;
+    width: 3rem;
+    height: 3rem;
+    display: grid;
+    place-items: center;
+    border: 2.7px solid var(--session-border);
+    border-radius: 0 14px 0 14px;
+    background: #000;
+  }
+  .lightbox__close img { width: 1.9rem; height: 1.9rem; }
+  .lightbox__close:hover { border-color: #E31C8D; }
+
   :global([data-theme="light"]) .session-page { background: #fff; color: #000; --session-border: #404040; }
   :global([data-theme="light"]) .photo-item { background: #fff; color: #000; border-color: #404040; }
   :global([data-theme="light"]) .session-hero__textlab { background: #fff; color: #000; border-color: #E31C8D; }
@@ -230,8 +279,10 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   :global([data-theme="light"]) .session-hero__cat { border-color: #404040; }
   :global([data-theme="light"]) .session-hero__side-nav { background: #fff; }
   :global([data-theme="light"]) .session-hero__scroll-indicator { background: #fff; }
+  :global([data-theme="light"]) .lightbox__close { background: #fff; }
   :global([data-theme="light"]) .session-hero__side-nav img,
-  :global([data-theme="light"]) .session-hero__scroll-indicator img { filter: invert(1); }
+  :global([data-theme="light"]) .session-hero__scroll-indicator img,
+  :global([data-theme="light"]) .lightbox__close img { filter: invert(1); }
   :global([data-theme="light"]) .session-hero__image,
   :global([data-theme="light"]) .photo-item img { filter: grayscale(1); }
   :global([data-theme="light"]) .photo-item:hover img { filter: none; }
@@ -255,6 +306,11 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
 <script>
   const sessionScrollBtn = document.getElementById('sessionHeroScrollIndicator') as HTMLButtonElement | null;
   const sessionContent = document.getElementById('session-content');
+  const sessionLightbox = document.getElementById('sessionLightbox') as HTMLElement | null;
+  const sessionLightboxImg = document.getElementById('sessionLightboxImage') as HTMLImageElement | null;
+  const sessionLightboxBackdrop = document.getElementById('sessionLightboxBackdrop') as HTMLButtonElement | null;
+  const sessionLightboxClose = document.getElementById('sessionLightboxClose') as HTMLButtonElement | null;
+  const photoButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('.photo-item'));
 
   sessionScrollBtn?.addEventListener('click', () => {
     if (!sessionContent) return;
@@ -263,5 +319,29 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
     const masonryGap = Number.parseFloat(masonryGapRaw) || 0;
     const top = sessionContent.getBoundingClientRect().top + window.scrollY - masonryGap;
     window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+  });
+
+  function closeLightbox() {
+    if (!sessionLightbox || !sessionLightboxImg) return;
+    sessionLightbox.hidden = true;
+    sessionLightboxImg.src = '';
+    document.body.style.overflow = '';
+  }
+
+  photoButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const img = btn.querySelector('img');
+      if (!img || !sessionLightbox || !sessionLightboxImg) return;
+      sessionLightboxImg.src = img.currentSrc || img.src;
+      sessionLightboxImg.alt = img.alt || '';
+      sessionLightbox.hidden = false;
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  sessionLightboxBackdrop?.addEventListener('click', closeLightbox);
+  sessionLightboxClose?.addEventListener('click', closeLightbox);
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeLightbox();
   });
 </script>
