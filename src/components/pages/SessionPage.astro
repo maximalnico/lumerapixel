@@ -40,6 +40,12 @@ const photos: string[] = Array.from({ length: session.images }, (_, i) =>
   `${folder}/${String(i).padStart(3, '0')}.webp`
 );
 
+const heroSlides = photos.slice(0, 8).map((src, i) => ({
+  src,
+  className: i === 0 ? 'hero-slide is-active' : 'hero-slide',
+  loading: i === 0 ? 'eager' : 'lazy'
+}));
+
 const [d, m, y] = session.date.split('.');
 const dateStr = new Date(+y, +m - 1, +d).toLocaleDateString(dateLocale, { day: '2-digit', month: 'long', year: 'numeric' });
 const isoDate = `${y}-${m.padStart(2,'0')}-${d.padStart(2,'0')}`;
@@ -111,10 +117,10 @@ const schema = {
       <div class="session-hero__nav">
         {next ? (
           <a href={sessionPath(next.slug)} class="session-hero__nav-btn">
-                class={i === 0 ? 'hero-slide is-active' : 'hero-slide'}
-            <span>{navTitle(next)}</span>
-          </a>
-        ) : <span />}
+            {heroSlides.map((slide) => (
+                src={slide.src}
+                class={slide.className}
+                loading={slide.loading}
         {prev ? (
           <a href={sessionPath(prev.slug)} class="session-hero__nav-btn">
             <span>{navTitle(prev)}</span>
