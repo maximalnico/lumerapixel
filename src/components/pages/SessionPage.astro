@@ -200,6 +200,9 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   :global([data-theme="light"]) .photo-item { background: #fff; color: #000; border-color: #404040; }
   :global([data-theme="light"]) .session-hero__textlab { background: #fff; color: #000; border-color: #E31C8D; }
   :global([data-theme="light"]) .session-hero__body { background: #fff; }
+  :global([data-theme="light"]) .session-hero__overlay {
+    background: linear-gradient(90deg, rgba(255,255,255,0.34) 0%, rgba(255,255,255,0.12) 25%, rgba(255,255,255,0.12) 75%, rgba(255,255,255,0.34) 100%);
+  }
   :global([data-theme="light"]) .session-hero__title,
   :global([data-theme="light"]) .session-hero__sub,
   :global([data-theme="light"]) .session-hero__meta,
