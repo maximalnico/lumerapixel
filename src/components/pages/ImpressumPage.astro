@@ -108,6 +108,7 @@ const enUrl = `${siteUrl}/en/site-notice`;
     position: relative;
     z-index: 0;
     isolation: isolate;
+    --ui-border: #bfbfbf;
   }
   .legal-page::before {
     content: '';
@@ -145,7 +146,7 @@ const enUrl = `${siteUrl}/en/site-notice`;
   }
 
   .legal-box {
-    border: 2.7px solid #404040;
+    border: 2.7px solid var(--ui-border);
     border-radius: 0 14px 0 14px;
     background: #000;
     padding: clamp(1rem, 2.5vw, 1.6rem) clamp(1.2rem, 3vw, 2rem);
@@ -161,7 +162,7 @@ const enUrl = `${siteUrl}/en/site-notice`;
   }
 
   .legal-box__label {
-    border: 2.7px solid #404040;
+    border: 2.7px solid var(--ui-border);
     border-radius: 0 14px 0 14px;
     background: #000;
     padding: 0.42rem 0.78rem;
@@ -184,7 +185,7 @@ const enUrl = `${siteUrl}/en/site-notice`;
 
   .legal-box a {
     color: #bfbfbf;
-    border-bottom: 2px solid #404040;
+    border-bottom: 2px solid var(--ui-border);
     transition: color 180ms ease, border-color 180ms ease;
   }
   .legal-box a:hover {
@@ -199,7 +200,7 @@ const enUrl = `${siteUrl}/en/site-notice`;
     color: #fff !important;
   }
 
-  :global([data-theme="light"]) .legal-page { background: #fff; color: #000; }
+  :global([data-theme="light"]) .legal-page { background: #fff; color: #000; --ui-border: #404040; }
   :global([data-theme="light"]) .legal-page::before { background: #fff; }
   :global([data-theme="light"]) .legal-header__title { background: #fff; color: #000; }
   :global([data-theme="light"]) .legal-box { background: #fff; }
