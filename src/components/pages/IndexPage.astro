@@ -661,10 +661,17 @@ const schema = {
   :global([data-theme="dark"]) .fullscreen-header__image,
   :global([data-theme="dark"]) .latest-session-strip img,
   :global([data-theme="dark"]) .featured-split__item img,
-  :global([data-theme="dark"]) .masonry-card img,
+  :global([data-theme="dark"]) .masonry-card img {
+    filter: grayscale(1) brightness(0.72) contrast(1.05);
+  }
+
+  :global([data-theme="light"]) .latest-session-strip:hover img,
+  :global([data-theme="light"]) .featured-split__item:hover img,
+  :global([data-theme="light"]) .masonry-card:hover img,
+  :global([data-theme="dark"]) .latest-session-strip:hover img,
   :global([data-theme="dark"]) .featured-split__item:hover img,
   :global([data-theme="dark"]) .masonry-card:hover img {
-    filter: grayscale(1) brightness(0.72) contrast(1.05);
+    filter: brightness(0.72) contrast(1.05);
   }
 
 </style>
