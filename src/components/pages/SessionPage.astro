@@ -104,7 +104,7 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   <div class="lightbox" id="sessionLightbox" hidden>
     <button class="lightbox__backdrop" id="sessionLightboxBackdrop" aria-label={isEN ? 'Close lightbox' : 'Lightbox schließen'}></button>
     <button class="lightbox__close" id="sessionLightboxClose" aria-label={isEN ? 'Close' : 'Schließen'}>
-      <img src="/logos/phosphoricons/white/x-thin.svg" alt="" />
+      <img src="/logos/phosphoricons/white/x.svg" alt="" />
     </button>
     <button class="lightbox__nav lightbox__nav--prev" id="sessionLightboxPrev" aria-label={isEN ? 'Previous photo' : 'Vorheriges Foto'}>
       <img src="/logos/phosphoricons/white/caret-left.svg" alt="" />
@@ -270,6 +270,8 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
     border: 2.7px solid var(--session-border);
     border-radius: 0 14px 0 14px;
     background: #000;
+    cursor: pointer;
+    transition: border-color 180ms ease, background 180ms ease;
   }
   .lightbox__close img { width: 1.9rem; height: 1.9rem; }
   .lightbox__close:hover { border-color: #E31C8D; }
@@ -285,6 +287,8 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
     border: 2.7px solid var(--session-border);
     border-radius: 0 14px 0 14px;
     background: #000;
+    cursor: pointer;
+    transition: border-color 180ms ease, background 180ms ease;
   }
   .lightbox__nav--prev { left: 1rem; }
   .lightbox__nav--next { right: 1rem; }
