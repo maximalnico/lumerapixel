@@ -307,13 +307,38 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   }
   themeBtn?.addEventListener('click', toggleMode);
 
-  let currentLangMode = localStorage.getItem('lp-lang-mode') || (window.location.pathname.startsWith('/en') ? 'en' : 'de');
-  if (!['de', 'en'].includes(currentLangMode)) currentLangMode = window.location.pathname.startsWith('/en') ? 'en' : 'de';
+  const path = window.location.pathname;
+  const isPathEN = path.startsWith('/en');
+  const enToDe: Record<string, string> = {
+    '/en/': '/',
+    '/en/site-notice': '/impressum',
+    '/en/privacy-policy': '/datenschutz'
+  };
+  const deToEn: Record<string, string> = {
+    '/': '/en/',
+    '/impressum': '/en/site-notice',
+    '/datenschutz': '/en/privacy-policy'
+  };
+
+  const storedLang = localStorage.getItem('lp-lang-mode');
+  const browserLang = (navigator.language || '').toLowerCase().startsWith('en') ? 'en' : 'de';
+  let currentLangMode = storedLang === 'de' || storedLang === 'en'
+    ? storedLang
+    : browserLang;
+
+  if (!storedLang) {
+    if (currentLangMode === 'en' && !isPathEN) {
+      window.location.href = deToEn[path] ?? `/en${path === '/' ? '/' : path}`;
+    } else if (currentLangMode === 'de' && isPathEN) {
+      window.location.href = enToDe[path] ?? (path.replace(/^\/en/, '') || '/');
+    }
+  }
 
   function updateLangButton(mode: string) {
     if (!langLabel || !langBtn) return;
     langLabel.textContent = mode.toUpperCase();
     langBtn.setAttribute('aria-label', mode === 'de' ? 'Deutsch aktiv' : 'English active');
+    document.documentElement.setAttribute('lang', mode);
   }
   updateLangButton(currentLangMode);
 
@@ -322,19 +347,6 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     localStorage.setItem('lp-lang-mode', mode);
     currentLangMode = mode;
     updateLangButton(mode);
-
-    const path = window.location.pathname;
-    const isPathEN = path.startsWith('/en');
-    const enToDe: Record<string, string> = {
-      '/en/': '/',
-      '/en/site-notice': '/impressum',
-      '/en/privacy-policy': '/datenschutz'
-    };
-    const deToEn: Record<string, string> = {
-      '/': '/en/',
-      '/impressum': '/en/site-notice',
-      '/datenschutz': '/en/privacy-policy'
-    };
 
     if (mode === 'en' && !isPathEN) {
       window.location.href = deToEn[path] ?? `/en${path === '/' ? '/' : path}`;
