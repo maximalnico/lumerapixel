@@ -104,7 +104,13 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   <div class="lightbox" id="sessionLightbox" hidden>
     <button class="lightbox__backdrop" id="sessionLightboxBackdrop" aria-label={isEN ? 'Close lightbox' : 'Lightbox schließen'}></button>
     <button class="lightbox__close" id="sessionLightboxClose" aria-label={isEN ? 'Close' : 'Schließen'}>
-      <img src="/logos/phosphoricons/white/x.svg" alt="" />
+      <img src="/logos/phosphoricons/white/x-thin.svg" alt="" />
+    </button>
+    <button class="lightbox__nav lightbox__nav--prev" id="sessionLightboxPrev" aria-label={isEN ? 'Previous photo' : 'Vorheriges Foto'}>
+      <img src="/logos/phosphoricons/white/caret-left.svg" alt="" />
+    </button>
+    <button class="lightbox__nav lightbox__nav--next" id="sessionLightboxNext" aria-label={isEN ? 'Next photo' : 'Nächstes Foto'}>
+      <img src="/logos/phosphoricons/white/caret-right.svg" alt="" />
     </button>
     <img class="lightbox__img" id="sessionLightboxImage" src="" alt="" />
   </div>
@@ -267,6 +273,23 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   }
   .lightbox__close img { width: 1.9rem; height: 1.9rem; }
   .lightbox__close:hover { border-color: #E31C8D; }
+  .lightbox__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 3.2rem;
+    height: 3.2rem;
+    display: grid;
+    place-items: center;
+    border: 2.7px solid var(--session-border);
+    border-radius: 0 14px 0 14px;
+    background: #000;
+  }
+  .lightbox__nav--prev { left: 1rem; }
+  .lightbox__nav--next { right: 1rem; }
+  .lightbox__nav img { width: 2rem; height: 2rem; }
+  .lightbox__nav:hover { border-color: #E31C8D; }
 
   :global([data-theme="light"]) .session-page { background: #fff; color: #000; --session-border: #404040; }
   :global([data-theme="light"]) .photo-item { background: #fff; color: #000; border-color: #404040; }
@@ -280,9 +303,11 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   :global([data-theme="light"]) .session-hero__side-nav { background: #fff; }
   :global([data-theme="light"]) .session-hero__scroll-indicator { background: #fff; }
   :global([data-theme="light"]) .lightbox__close { background: #fff; }
+  :global([data-theme="light"]) .lightbox__nav { background: #fff; }
   :global([data-theme="light"]) .session-hero__side-nav img,
   :global([data-theme="light"]) .session-hero__scroll-indicator img,
-  :global([data-theme="light"]) .lightbox__close img { filter: invert(1); }
+  :global([data-theme="light"]) .lightbox__close img,
+  :global([data-theme="light"]) .lightbox__nav img { filter: invert(1); }
   :global([data-theme="light"]) .session-hero__image,
   :global([data-theme="light"]) .photo-item img { filter: grayscale(1); }
   :global([data-theme="light"]) .photo-item:hover img { filter: none; }
@@ -310,7 +335,14 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   const sessionLightboxImg = document.getElementById('sessionLightboxImage') as HTMLImageElement | null;
   const sessionLightboxBackdrop = document.getElementById('sessionLightboxBackdrop') as HTMLButtonElement | null;
   const sessionLightboxClose = document.getElementById('sessionLightboxClose') as HTMLButtonElement | null;
+  const sessionLightboxPrev = document.getElementById('sessionLightboxPrev') as HTMLButtonElement | null;
+  const sessionLightboxNext = document.getElementById('sessionLightboxNext') as HTMLButtonElement | null;
   const photoButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('.photo-item'));
+  const photoSources = photoButtons
+    .map((btn) => btn.querySelector('img'))
+    .filter((img): img is HTMLImageElement => Boolean(img))
+    .map((img) => ({ src: img.currentSrc || img.src, alt: img.alt || '' }));
+  let currentLightboxIndex = 0;
 
   sessionScrollBtn?.addEventListener('click', () => {
     if (!sessionContent) return;
@@ -320,6 +352,14 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
     const top = sessionContent.getBoundingClientRect().top + window.scrollY - masonryGap;
     window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   });
+
+  function showLightboxImage(index: number) {
+    if (!sessionLightboxImg || !photoSources.length) return;
+    const normalized = (index + photoSources.length) % photoSources.length;
+    currentLightboxIndex = normalized;
+    sessionLightboxImg.src = photoSources[normalized].src;
+    sessionLightboxImg.alt = photoSources[normalized].alt;
+  }
 
   function closeLightbox() {
     if (!sessionLightbox || !sessionLightboxImg) return;
@@ -332,8 +372,8 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
     btn.addEventListener('click', () => {
       const img = btn.querySelector('img');
       if (!img || !sessionLightbox || !sessionLightboxImg) return;
-      sessionLightboxImg.src = img.currentSrc || img.src;
-      sessionLightboxImg.alt = img.alt || '';
+      const clickedIndex = Number.parseInt(btn.dataset.index || '0', 10) || 0;
+      showLightboxImage(clickedIndex);
       sessionLightbox.hidden = false;
       document.body.style.overflow = 'hidden';
     });
@@ -341,7 +381,12 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
 
   sessionLightboxBackdrop?.addEventListener('click', closeLightbox);
   sessionLightboxClose?.addEventListener('click', closeLightbox);
+  sessionLightboxPrev?.addEventListener('click', () => showLightboxImage(currentLightboxIndex - 1));
+  sessionLightboxNext?.addEventListener('click', () => showLightboxImage(currentLightboxIndex + 1));
   window.addEventListener('keydown', (event) => {
+    if (sessionLightbox?.hidden) return;
     if (event.key === 'Escape') closeLightbox();
+    if (event.key === 'ArrowLeft') showLightboxImage(currentLightboxIndex - 1);
+    if (event.key === 'ArrowRight') showLightboxImage(currentLightboxIndex + 1);
   });
 </script>
