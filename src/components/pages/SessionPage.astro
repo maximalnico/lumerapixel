@@ -75,9 +75,14 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
           </div>
         </div>
       </div>
-      <a class="session-hero__scroll-indicator" href="#" aria-label={isEN ? 'Scroll to photos' : 'Zu den Fotos scrollen'}>
+      <button
+        type="button"
+        id="sessionHeroScrollIndicator"
+        class="session-hero__scroll-indicator"
+        aria-label={isEN ? 'Scroll to photos' : 'Zu den Fotos scrollen'}
+      >
         <img src="/logos/phosphoricons/white/caret-down.svg" alt="" />
-      </a>
+      </button>
       {next && (
         <a class="session-hero__side-nav session-hero__side-nav--left" href={sessionPath(next.slug)} aria-label={isEN ? 'Previous session' : 'Vorherige Session'}>
           <img src="/logos/phosphoricons/white/caret-left.svg" alt="" />
@@ -251,3 +256,12 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
     .session-hero__meta { font-size: .76rem; }
   }
 </style>
+
+<script>
+  const sessionScrollBtn = document.getElementById('sessionHeroScrollIndicator') as HTMLButtonElement | null;
+  const sessionContent = document.getElementById('session-content');
+
+  sessionScrollBtn?.addEventListener('click', () => {
+    sessionContent?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+</script>
