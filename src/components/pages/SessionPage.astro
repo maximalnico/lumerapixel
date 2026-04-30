@@ -111,7 +111,7 @@ const schema = {
       <div class="session-hero__nav">
         {next ? (
           <a href={sessionPath(next.slug)} class="session-hero__nav-btn">
-            <img src="/logos/phosphoricons/white/caret-left.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
+                class={i === 0 ? 'hero-slide is-active' : 'hero-slide'}
             <span>{navTitle(next)}</span>
           </a>
         ) : <span />}
