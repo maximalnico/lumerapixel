@@ -35,7 +35,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 
     <div class="lp-nav__controls">
       <button class="lp-nav__quick-btn" id="themeQuickToggle" aria-label="Theme wechseln">
-        <img src="/logos/phosphoricons/white/moon-thin.svg" class="lp-nav__quick-icon" id="themeQuickIcon" alt="" />
+        <img src="/logos/phosphoricons/white/moon.svg" class="lp-nav__quick-icon" id="themeQuickIcon" alt="" />
       </button>
       <button class="lp-nav__quick-btn" id="langQuickToggle" aria-label="Sprache wechseln">
         <span class="lp-nav__quick-label" id="langQuickLabel">DE</span>
@@ -281,8 +281,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   function updateThemeButton(mode: string) {
     if (!themeBtn || !themeIcon) return;
     themeIcon.src = mode === 'dark'
-      ? `${WHITE_ICON_BASE}/moon-thin.svg`
-      : `${WHITE_ICON_BASE}/sun-thin.svg`;
+      ? `${WHITE_ICON_BASE}/moon.svg`
+      : `${WHITE_ICON_BASE}/sun.svg`;
     themeBtn.setAttribute('aria-label', mode === 'dark' ? 'Dark Mode aktiv' : 'Light Mode aktiv');
   }
 
