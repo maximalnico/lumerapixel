@@ -269,6 +269,7 @@ const schema = {
   .session-hero__preview-wrap {
     padding: 2.7px;
     background: #000000;
+    border: 2.7px solid #404040;
     border-radius: 0 14px 0 14px;
     flex-shrink: 0;
   }
@@ -361,9 +362,12 @@ const schema = {
     color: #ffffff;
     background: #000000;
   }
-  :global([data-theme="dark"]) .session-hero__cat {
+  :global([data-theme="dark"]) .session-hero__cat,
+  :global([data-theme="dark"]) .session-hero__preview-wrap {
     border-color: #E31C8D;
     background: #000000;
+  }
+  :global([data-theme="dark"]) .session-hero__cat {
     color: #E31C8D;
   }
   .session-hero__sep { opacity: 0.35; }
@@ -632,11 +636,14 @@ const schema = {
   :global([data-theme="light"]) .session-hero__preview-wrap,
   :global([data-theme="light"]) .session-hero__cat,
   :global([data-theme="light"]) .session-hero__nav-btn,
-  :global([data-theme="light"]) .photo-item::before,
   :global([data-theme="light"]) .lightbox__counter,
   :global([data-theme="light"]) .lightbox__btn,
   :global([data-theme="light"]) .lightbox__close {
     background: #ffffff;
+    border-color: #404040;
+  }
+  :global([data-theme="light"]) .photo-item::before {
+    background: transparent;
     border-color: #404040;
   }
   :global([data-theme="light"]) .session-hero__nav-icon,
