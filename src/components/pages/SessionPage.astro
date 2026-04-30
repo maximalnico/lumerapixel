@@ -72,8 +72,8 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
           </div>
         </div>
       </div>
-      <a class="session-hero__scroll-indicator" href="#session-content" aria-label={isEN ? 'Scroll to photos' : 'Zu den Fotos scrollen'}>
-        <img src="/logos/phosphoricons/white/caret-down-thin.svg" alt="" />
+      <a class="session-hero__scroll-indicator" href="#" aria-label={isEN ? 'Scroll to photos' : 'Zu den Fotos scrollen'}>
+        <img src="/logos/phosphoricons/white/caret-down.svg" alt="" />
       </a>
     </header>
 
@@ -81,14 +81,14 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
       <div class="session-nav">
         {next && (
           <a href={sessionPath(next.slug)} class="session-nav__btn">
-            <img src="/logos/phosphoricons/white/caret-left-thin.svg" alt="" aria-hidden="true" class="session-nav__icon" />
+            <img src="/logos/phosphoricons/white/caret-left.svg" alt="" aria-hidden="true" class="session-nav__icon" />
             <span>{navTitle(next)}</span>
           </a>
         )}
         {prev && (
           <a href={sessionPath(prev.slug)} class="session-nav__btn">
             <span>{navTitle(prev)}</span>
-            <img src="/logos/phosphoricons/white/caret-right-thin.svg" alt="" aria-hidden="true" class="session-nav__icon" />
+            <img src="/logos/phosphoricons/white/caret-right.svg" alt="" aria-hidden="true" class="session-nav__icon" />
           </a>
         )}
       </div>
