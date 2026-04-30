@@ -29,7 +29,6 @@ const next = sorted[idx - 1] ?? null;
 const title = isEN ? (session.title_en || session.title_de) : (session.title_de || session.title_en);
 const subtitle = isEN ? (session.subtitle_en || session.subtitle_de) : (session.subtitle_de || session.subtitle_en);
 const category = isEN ? (session.category_en || session.category) : (session.category_de || session.category);
-const navTitle = (s: any) => isEN ? (s.title_en || s.title_de) : (s.title_de || s.title_en);
 const sessionPath = (s: string) => isEN ? `/en/sessions/${s}` : `/sessions/${s}`;
 const dateLocale = isEN ? 'en-US' : 'de-DE';
 
@@ -79,23 +78,19 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
       <a class="session-hero__scroll-indicator" href="#" aria-label={isEN ? 'Scroll to photos' : 'Zu den Fotos scrollen'}>
         <img src="/logos/phosphoricons/white/caret-down.svg" alt="" />
       </a>
+      {next && (
+        <a class="session-hero__side-nav session-hero__side-nav--left" href={sessionPath(next.slug)} aria-label={isEN ? 'Previous session' : 'Vorherige Session'}>
+          <img src="/logos/phosphoricons/white/caret-left.svg" alt="" />
+        </a>
+      )}
+      {prev && (
+        <a class="session-hero__side-nav session-hero__side-nav--right" href={sessionPath(prev.slug)} aria-label={isEN ? 'Next session' : 'Nächste Session'}>
+          <img src="/logos/phosphoricons/white/caret-right.svg" alt="" />
+        </a>
+      )}
     </header>
 
     <section id="session-content" class="photo-section" aria-label="Fotos">
-      <div class="session-nav">
-        {next && (
-          <a href={sessionPath(next.slug)} class="session-nav__btn">
-            <img src="/logos/phosphoricons/white/caret-left.svg" alt="" aria-hidden="true" class="session-nav__icon" />
-            <span>{navTitle(next)}</span>
-          </a>
-        )}
-        {prev && (
-          <a href={sessionPath(prev.slug)} class="session-nav__btn">
-            <span>{navTitle(prev)}</span>
-            <img src="/logos/phosphoricons/white/caret-right.svg" alt="" aria-hidden="true" class="session-nav__icon" />
-          </a>
-        )}
-      </div>
       <div class="photo-grid" id="photoGrid">
         {photos.map((src, i) => (
           <button class="photo-item" data-index={i} aria-label={isEN ? `Photo ${i + 1} of ${session.images}` : `Foto ${i + 1} von ${session.images}`}>
@@ -201,14 +196,23 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
     padding: 0 var(--masonry-gap) var(--masonry-gap);
     margin-top: var(--masonry-gap);
   }
-  .session-nav { display: flex; justify-content: space-between; gap: .75rem; margin-bottom: .75rem; }
-  .session-nav__btn {
-    display: inline-flex; align-items: center; gap: .45rem;
-    border: 2.7px solid var(--session-border); border-radius: 0 14px 0 14px;
-    color: #fff; text-decoration: none; padding: .5rem .85rem; background: #000; max-width: 38vw;
+  .session-hero__side-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4.4rem;
+    height: 4.4rem;
+    border-radius: 0 14px 0 14px;
+    border: 2.7px solid var(--session-border);
+    background: #000;
+    display: grid;
+    place-items: center;
+    z-index: 3;
   }
-  .session-nav__btn:hover { border-color: #E31C8D; }
-  .session-nav__icon { width: 16px; height: 16px; }
+  .session-hero__side-nav--left { left: 0.85rem; }
+  .session-hero__side-nav--right { right: 0.85rem; }
+  .session-hero__side-nav:hover { border-color: #E31C8D; }
+  .session-hero__side-nav img { width: 2.7rem; height: 2.7rem; display: block; }
   .photo-grid { columns: 5; column-gap: var(--masonry-gap); }
   .photo-item { break-inside: avoid; display: block; width: 100%; margin-bottom: var(--masonry-gap); padding: 0; border: 2.7px solid var(--session-border); border-radius: 0 14px 0 14px; overflow: hidden; background: #000; cursor: zoom-in; }
   .photo-item:hover { border-color: #E31C8D; }
@@ -216,7 +220,6 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   .photo-item:hover img { filter: brightness(0.72); }
 
   :global([data-theme="light"]) .session-page { background: #fff; color: #000; --session-border: #404040; }
-  :global([data-theme="light"]) .session-nav__btn,
   :global([data-theme="light"]) .photo-item { background: #fff; color: #000; border-color: #404040; }
   :global([data-theme="light"]) .session-hero__textlab { background: #fff; color: #000; border-color: #E31C8D; }
   :global([data-theme="light"]) .session-hero__body { background: #fff; }
@@ -225,25 +228,26 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   :global([data-theme="light"]) .session-hero__meta { color: #000; }
   :global([data-theme="light"]) .session-hero__cat { color: #000; background: #fff; }
   :global([data-theme="light"]) .session-hero__cat { border-color: #404040; }
-  :global([data-theme="light"]) .session-nav__icon { filter: invert(1); }
+  :global([data-theme="light"]) .session-hero__side-nav { background: #fff; }
   :global([data-theme="light"]) .session-hero__scroll-indicator { background: #fff; }
+  :global([data-theme="light"]) .session-hero__side-nav img,
   :global([data-theme="light"]) .session-hero__scroll-indicator img { filter: invert(1); }
   :global([data-theme="light"]) .session-hero__image,
   :global([data-theme="light"]) .photo-item img { filter: grayscale(1); }
   :global([data-theme="light"]) .photo-item:hover img { filter: none; }
-  :global([data-theme="light"]) .session-nav__btn:hover,
   :global([data-theme="light"]) .photo-item:hover,
-  :global([data-theme="light"]) .session-hero__scroll-indicator:hover { border-color: #E31C8D; }
+  :global([data-theme="light"]) .session-hero__scroll-indicator:hover,
+  :global([data-theme="light"]) .session-hero__side-nav:hover { border-color: #E31C8D; }
 
   @media (max-width: 1024px) { .photo-grid { columns: 4; } }
   @media (max-width: 768px) {
     .session-hero__body { height: 78svh; }
-    .session-nav__btn { max-width: 45vw; }
     .photo-grid { columns: 3; }
   }
   @media (max-width: 520px) {
     .photo-grid { columns: 2; }
-    .session-nav__btn { max-width: 42vw; font-size: .8rem; }
+    .session-hero__side-nav { width: 3.6rem; height: 3.6rem; }
+    .session-hero__side-nav img { width: 2.2rem; height: 2.2rem; }
     .session-hero__meta { font-size: .76rem; }
   }
 </style>
