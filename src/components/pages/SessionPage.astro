@@ -75,12 +75,7 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
           </div>
         </div>
       </div>
-      <button
-        type="button"
-        id="sessionHeroScrollIndicator"
-        class="session-hero__scroll-indicator"
-        aria-label={isEN ? 'Scroll to photos' : 'Zu den Fotos scrollen'}
-      >
+      <button type="button" id="sessionHeroScrollIndicator" class="session-hero__scroll-indicator" aria-label={isEN ? 'Scroll to photos' : 'Zu den Fotos scrollen'}>
         <img src="/logos/phosphoricons/white/caret-down.svg" alt="" />
       </button>
       {next && (
@@ -262,6 +257,11 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   const sessionContent = document.getElementById('session-content');
 
   sessionScrollBtn?.addEventListener('click', () => {
-    sessionContent?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!sessionContent) return;
+    const mainEl = document.querySelector('main');
+    const masonryGapRaw = getComputedStyle(mainEl || document.documentElement).getPropertyValue('--masonry-gap');
+    const masonryGap = Number.parseFloat(masonryGapRaw) || 0;
+    const top = sessionContent.getBoundingClientRect().top + window.scrollY - masonryGap;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   });
 </script>

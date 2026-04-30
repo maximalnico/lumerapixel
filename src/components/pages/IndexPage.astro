@@ -109,9 +109,9 @@ const schema = {
             </div>
           </div>
         </div>
-        <a id="heroToFeaturedIndicator" class="fullscreen-header__scroll-indicator" href="#" aria-label="Zu Featured Sessions scrollen">
+        <button id="heroToFeaturedIndicator" class="fullscreen-header__scroll-indicator" type="button" aria-label="Zu Featured Sessions scrollen">
           <img src="/logos/phosphoricons/white/caret-down.svg" alt="" />
-        </a>
+        </button>
       </section>
 
       <section class="featured-split motion-safe:animate-in motion-safe:slide-in-from-bottom-4" id="featured-sessions" aria-label="Featured Sessions">
@@ -132,9 +132,9 @@ const schema = {
             );
           })}
         </div>
-        <a id="featuredToLatestIndicator" class="fullscreen-header__scroll-indicator featured-split__scroll-indicator" href="#" aria-label="Zur neuesten Session scrollen">
+        <button id="featuredToLatestIndicator" class="fullscreen-header__scroll-indicator featured-split__scroll-indicator" type="button" aria-label="Zur neuesten Session scrollen">
           <img src="/logos/phosphoricons/white/caret-down.svg" alt="" />
-        </a>
+        </button>
       </section>
 
       <div
@@ -732,14 +732,13 @@ const schema = {
     });
   });
 
-  const heroToFeaturedIndicator = document.getElementById('heroToFeaturedIndicator') as HTMLAnchorElement | null;
+  const heroToFeaturedIndicator = document.getElementById('heroToFeaturedIndicator') as HTMLButtonElement | null;
   const firstFeaturedCard = document.querySelector<HTMLElement>('.featured-split__item');
-  const featuredToLatestIndicator = document.getElementById('featuredToLatestIndicator') as HTMLAnchorElement | null;
+  const featuredToLatestIndicator = document.getElementById('featuredToLatestIndicator') as HTMLButtonElement | null;
   const latestSessionStrip = document.getElementById('latest-session-strip');
 
-  heroToFeaturedIndicator?.addEventListener('click', (event) => {
+  heroToFeaturedIndicator?.addEventListener('click', () => {
     if (!firstFeaturedCard) return;
-    event.preventDefault();
     const mainEl = document.querySelector('main');
     const masonryGapRaw = getComputedStyle(mainEl || document.documentElement).getPropertyValue('--masonry-gap');
     const masonryGap = Number.parseFloat(masonryGapRaw) || 0;
@@ -747,9 +746,8 @@ const schema = {
     window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   });
 
-  featuredToLatestIndicator?.addEventListener('click', (event) => {
+  featuredToLatestIndicator?.addEventListener('click', () => {
     if (!latestSessionStrip) return;
-    event.preventDefault();
     const mainEl = document.querySelector('main');
     const masonryGapRaw = getComputedStyle(mainEl || document.documentElement).getPropertyValue('--masonry-gap');
     const masonryGap = Number.parseFloat(masonryGapRaw) || 0;
