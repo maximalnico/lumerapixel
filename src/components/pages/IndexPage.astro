@@ -667,7 +667,10 @@ const schema = {
 
   :global([data-theme="light"]) .latest-session-strip:hover img,
   :global([data-theme="light"]) .featured-split__item:hover img,
-  :global([data-theme="light"]) .masonry-card:hover img,
+  :global([data-theme="light"]) .masonry-card:hover img {
+    filter: contrast(1.05);
+  }
+
   :global([data-theme="dark"]) .latest-session-strip:hover img,
   :global([data-theme="dark"]) .featured-split__item:hover img,
   :global([data-theme="dark"]) .masonry-card:hover img {
@@ -692,12 +695,17 @@ const schema = {
         const nextPool = choices.length ? choices : slides;
         const next = nextPool[Math.floor(Math.random() * nextPool.length)];
         allSessionsImg.style.opacity = '0.3';
-        allSessionsImg.style.filter = 'grayscale(1) brightness(0.72) contrast(1.02)';
+        const isLightMode = document.documentElement.getAttribute('data-theme') === 'light';
+        allSessionsImg.style.filter = isLightMode
+          ? 'grayscale(1) contrast(1.02)'
+          : 'grayscale(1) brightness(0.72) contrast(1.02)';
         setTimeout(() => {
           current = next;
           allSessionsImg.src = next;
           allSessionsImg.style.opacity = '1';
-          allSessionsImg.style.filter = 'grayscale(1) brightness(0.72) contrast(1.04)';
+          allSessionsImg.style.filter = isLightMode
+            ? 'grayscale(1) contrast(1.04)'
+            : 'grayscale(1) brightness(0.72) contrast(1.04)';
         }, 280);
       }, 2700);
     }
