@@ -276,8 +276,13 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   const navBrandLogo = document.getElementById('navBrandLogo') as HTMLImageElement;
   const langBtn = document.getElementById('langQuickToggle') as HTMLButtonElement;
   const langLabel = document.getElementById('langQuickLabel') as HTMLElement;
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  let currentMode = prefersDark ? 'dark' : 'light';
+  const THEME_KEY = 'lp-theme-mode';
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  const storedTheme = localStorage.getItem(THEME_KEY);
+  const prefersDark = mediaQuery.matches;
+  let currentMode = storedTheme === 'dark' || storedTheme === 'light'
+    ? storedTheme
+    : (prefersDark ? 'dark' : 'light');
 
   function updateThemeButton(mode: string) {
     if (!themeBtn || !themeIcon) return;
@@ -303,11 +308,14 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 
   function toggleMode() {
     currentMode = currentMode === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(THEME_KEY, currentMode);
     applyTheme(currentMode);
   }
   themeBtn?.addEventListener('click', toggleMode);
 
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+  mediaQuery.addEventListener('change', (e) => {
+    const saved = localStorage.getItem(THEME_KEY);
+    if (saved === 'dark' || saved === 'light') return;
     currentMode = e.matches ? 'dark' : 'light';
     applyTheme(currentMode);
   });
