@@ -105,6 +105,16 @@ const enUrl = `${siteUrl}/en/site-notice`;
     background: #000;
     min-height: 100svh;
     color: #fff;
+    position: relative;
+    z-index: 0;
+    isolation: isolate;
+  }
+  .legal-page::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: -1;
   }
 
   .legal-wrap {
@@ -190,6 +200,7 @@ const enUrl = `${siteUrl}/en/site-notice`;
   }
 
   :global([data-theme="light"]) .legal-page { background: #fff; color: #000; }
+  :global([data-theme="light"]) .legal-page::before { background: #fff; }
   :global([data-theme="light"]) .legal-header__title { background: #fff; color: #000; }
   :global([data-theme="light"]) .legal-box { background: #fff; }
   :global([data-theme="light"]) .legal-box__label { background: #fff; color: #000; }
