@@ -48,6 +48,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   .lp-nav {
     --lp-glass-black-bg: #000000;
     --lp-glass-black-border: #E31C8D;
+    --lp-ui-border: #bfbfbf;
     position: fixed;
     top: var(--gap-sm);
     left: 50%;
@@ -88,7 +89,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     padding: 0 0.55rem;
     border-radius: 0 14px 0 14px;
     background: var(--lp-glass-black-bg);
-    border: 2.7px solid #404040;
+    border: 2.7px solid var(--lp-ui-border);
     flex-shrink: 0;
     box-sizing: border-box;
   }
@@ -122,7 +123,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     padding: 0 0.5rem;
     border-radius: 0 14px 0 14px;
     background: var(--lp-glass-black-bg);
-    border: 2.7px solid #404040;
+    border: 2.7px solid var(--lp-ui-border);
     transition: background var(--quick);
     white-space: nowrap;
     text-align: center;
@@ -139,7 +140,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   }
 
   .lp-nav__link:not(:hover):not(.is-active) {
-    border-color: #404040;
+    border-color: var(--lp-ui-border);
   }
 
   .lp-nav__controls {
@@ -159,7 +160,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     padding: 0 0.6rem;
     border-radius: 0 14px 0 14px;
     background: var(--lp-glass-black-bg);
-    border: 2.7px solid #404040;
+    border: 2.7px solid var(--lp-ui-border);
     color: #ffffff;
     transition: background var(--quick);
     cursor: pointer;
@@ -171,7 +172,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   }
 
   .lp-nav__quick-btn:not(:hover) {
-    border-color: #404040;
+    border-color: var(--lp-ui-border);
   }
 
   .lp-nav__quick-icon {
@@ -244,6 +245,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   [data-theme="light"] .lp-nav__brand,
   [data-theme="light"] .lp-nav__link,
   [data-theme="light"] .lp-nav__quick-btn {
+    --lp-ui-border: #404040;
     background: #ffffff;
     color: #000000;
   }
