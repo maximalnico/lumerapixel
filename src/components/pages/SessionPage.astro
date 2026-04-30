@@ -184,7 +184,7 @@ const schema = {
 
     <!-- Prev/Next seitlich -->
     <button class="lightbox__btn lightbox__btn--prev" id="lbPrev" aria-label="Vorheriges Foto">
-      <img src="/logos/phosphoricons/white/caret-left.svg" alt="" aria-hidden="true" class="lb-icon" />
+  .session-page { background: #000000; }
     </button>
     <button class="lightbox__btn lightbox__btn--next" id="lbNext" aria-label="Nächstes Foto">
       <img src="/logos/phosphoricons/white/caret-right.svg" alt="" aria-hidden="true" class="lb-icon" />
@@ -349,27 +349,21 @@ const schema = {
     font-size: 1.05rem;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: #ffffff;
+    color: var(--text-muted);
   }
   .session-hero__cat {
     display: inline-block;
     padding: 0.15rem 0.6rem;
     border-radius: 0 14px 0 14px;
     border: 2.7px solid #404040;
-    color: #ffffff;
+    color: var(--text-muted);
     background: #000000;
   }
-  :global([data-theme="dark"]) .session-hero__cat,
-  :global([data-theme="dark"]) .session-hero__preview-wrap {
-    border-color: #E31C8D;
-    background: #000000;
-  }
-  :global([data-theme="dark"]) .session-hero__cat {
-    color: #E31C8D;
-  }
-  .session-hero__sep { opacity: 0.35; }
-
-  .session-hero__title {
+    color: var(--text-muted);
+    border: 2.7px solid #404040;
+    opacity: 1;
+    transition: border-color var(--quick);
+  .photo-item:hover::before { border-color: #E31C8D; }
     font-family: 'Satoshi';
     font-weight: 400;
     font-size: clamp(2.8rem, 8vw, 7rem);
@@ -575,7 +569,6 @@ const schema = {
   .lp-footer__line {
     height: 1px;
     background: #000000;
-    border: 2.7px solid #E31C8D;
     opacity: 0.5;
     margin-bottom: var(--gap-md);
   }
@@ -594,7 +587,6 @@ const schema = {
     font-weight: 400;
     transition: opacity var(--quick);
     background: #000000;
-    border: 2.7px solid #E31C8D;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -608,7 +600,7 @@ const schema = {
     color: var(--text-dim);
   }
   .lp-footer__legal a { transition: color var(--quick); }
-  .lp-footer__legal a:hover { color: #ffffff; }
+  .lp-footer__legal a:hover { color: var(--text-muted); }
 
   :global([data-theme="dark"]) {
     --icon-filter: invert(1);
