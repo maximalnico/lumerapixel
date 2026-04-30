@@ -24,21 +24,25 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
   <Nav />
 
   <main class="legal-page">
-    <div class="legal-wrap">
 
-      <div class="legal-header">
-        <div class="legal-header__divider" aria-hidden="true"></div>
-        <h1 class="legal-header__title">{isEN ? 'Privacy Policy' : 'Datenschutz'}</h1>
+    <div class="legal-hero">
+      <div class="legal-hero__body">
+        <div class="legal-hero__inner">
+          <h1 class="legal-hero__title">{isEN ? 'Privacy Policy' : 'Datenschutz'}</h1>
+        </div>
       </div>
+    </div>
+
+    <div class="legal-sections">
 
       {isEN ? (
         <>
-          <div class="glass-box">
-            <h2 class="glass-box__title section-num">1. An overview of data protection</h2>
+          <div class="legal-box">
+            <span class="legal-box__label">1. An overview of data protection</span>
             <div class="block">
               <h3 class="block-title">General information</h3>
               <p>The following information will provide you with an easy to navigate overview of what will happen with your personal data when you visit this website. The term "personal data" comprises all data that can be used to personally identify you. For detailed information about the subject matter of data protection, please consult our Data Protection Declaration, which we have included beneath this copy.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Data recording on this website</h3>
               <h4 class="block-sub">Who is the responsible party for the recording of data on this website (i.e., the "controller")?</h4>
@@ -51,11 +55,11 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
               <h4 class="block-sub">What rights do you have as far as your information is concerned?</h4>
               <p>You have the right to receive information about the source, recipients, and purposes of your archived personal data at any time without having to pay a fee for such disclosures. You also have the right to demand that your data are rectified or eradicated. If you have consented to data processing, you have the option to revoke this consent at any time, which shall affect all future data processing. Moreover, you have the right to demand that the processing of your data be restricted under certain circumstances. Furthermore, you have the right to log a complaint with the competent supervising agency.</p>
               <p>Please do not hesitate to contact us at any time if you have questions about this or any other data protection related issues.</p>
-            </div>
-          </div>
+            </div><!-- legal-box -->
+          </div><!-- legal-box -->
 
-          <div class="glass-box">
-            <h2 class="glass-box__title section-num">2. Hosting and Content Delivery Networks (CDN)</h2>
+          <div class="legal-box">
+            <span class="legal-box__label">2. Hosting and Content Delivery Networks (CDN)</span>
             <div class="block">
               <h3 class="block-title">Hetzner</h3>
               <p>The provider is the Hetzner Online GmbH, Industriestr. 25, 91710 Gunzenhausen, Germany (hereinafter referred to as Hetzner).</p>
@@ -63,7 +67,7 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
               <p>We use Hetzner on the basis of Art.&nbsp;6(1)(f) GDPR. We have a legitimate interest in the most reliable depiction of our website possible. If appropriate consent has been obtained, the processing is carried out exclusively on the basis of Art.&nbsp;6(1)(a) GDPR and §&nbsp;25&nbsp;(1) TDDDG, insofar the consent includes the storage of cookies or the access to information in the user's end device (e.g., device fingerprinting) within the meaning of the TDDDG. This consent can be revoked at any time.</p>
               <h4 class="block-sub">Data processing</h4>
               <p>We have concluded a data processing agreement (DPA) for the use of the above-mentioned service. This is a contract mandated by data privacy laws that guarantees that they process personal data of our website visitors only based on our instructions and in compliance with the GDPR.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Bunny.net CDN</h3>
               <p>We use the content delivery network Bunny.net. The provider is BunnyWay d.o.o., Dunajska cesta 165, 1000 Ljubljana, Slovenia (hereinafter "Bunny.net CDN").</p>
@@ -72,17 +76,17 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
               <p>More information: <a href="https://bunny.net/privacy/" target="_blank" rel="noopener">bunny.net/privacy</a>.</p>
               <h4 class="block-sub">Data processing</h4>
               <p>We have concluded a data processing agreement (DPA) for the use of the above-mentioned service. This is a contract mandated by data privacy laws that guarantees that they process personal data of our website visitors only based on our instructions and in compliance with the GDPR.</p>
-            </div>
-          </div>
+            </div><!-- legal-box -->
+          </div><!-- legal-box -->
 
-          <div class="glass-box">
-            <h2 class="glass-box__title section-num">3. General information and mandatory information</h2>
+          <div class="legal-box">
+            <span class="legal-box__label">3. General information and mandatory information</span>
             <div class="block">
               <h3 class="block-title">Data protection</h3>
               <p>The operators of this website and its pages take the protection of your personal data very seriously. Hence, we handle your personal data as confidential information and in compliance with the statutory data protection regulations and this Data Protection Declaration.</p>
               <p>Whenever you use this website, a variety of personal information will be collected. Personal data comprises data that can be used to personally identify you. This Data Protection Declaration explains which data we collect as well as the purposes we use this data for. It also explains how, and for which purpose the information is collected.</p>
               <p>We herewith advise you that the transmission of data via the Internet (i.e., through e-mail communications) may be prone to security gaps. It is not possible to completely protect data against third-party access.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Information about the responsible party (referred to as the "controller" in the GDPR)</h3>
               <p>The data processing controller on this website is:</p>
@@ -96,40 +100,40 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
                 E-mail: <a href="mailto:nico@multaenhavo.com">nico@multaenhavo.com</a>
               </p>
               <p>The controller is the natural person or legal entity that single-handedly or jointly with others makes decisions as to the purposes of and resources for the processing of personal data (e.g., names, e-mail addresses, etc.).</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Storage duration</h3>
               <p>Unless a more specific storage period has been specified in this privacy policy, your personal data will remain with us until the purpose for which it was collected no longer applies. If you assert a justified request for deletion or revoke your consent to data processing, your data will be deleted, unless we have other legally permissible reasons for storing your personal data (e.g., tax or commercial law retention periods); in the latter case, the deletion will take place after these reasons cease to apply.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">General information on the legal basis for the data processing on this website</h3>
               <p>If you have consented to data processing, we process your personal data on the basis of Art.&nbsp;6(1)(a) GDPR or Art.&nbsp;9&nbsp;(2)(a) GDPR, if special categories of data are processed according to Art.&nbsp;9&nbsp;(1) DSGVO. In the case of explicit consent to the transfer of personal data to third countries, the data processing is also based on Art.&nbsp;49&nbsp;(1)(a) GDPR. If you have consented to the storage of cookies or to the access to information in your end device (e.g., via device fingerprinting), the data processing is additionally based on §&nbsp;25&nbsp;(1) TDDDG. The consent can be revoked at any time. If your data is required for the fulfillment of a contract or for the implementation of pre-contractual measures, we process your data on the basis of Art.&nbsp;6(1)(b) GDPR. Furthermore, if your data is required for the fulfillment of a legal obligation, we process it on the basis of Art.&nbsp;6(1)(c) GDPR. Furthermore, the data processing may be carried out on the basis of our legitimate interest according to Art.&nbsp;6(1)(f) GDPR. Information on the relevant legal basis in each individual case is provided in the following paragraphs of this privacy policy.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Recipients of personal data</h3>
               <p>In the scope of our business activities, we cooperate with various external parties. In some cases, this also requires the transfer of personal data to these external parties. We only disclose personal data to external parties if this is required as part of the fulfillment of a contract, if we are legally obligated to do so (e.g., disclosure of data to tax authorities), if we have a legitimate interest in the disclosure pursuant to Art.&nbsp;6&nbsp;(1)(f) GDPR, or if another legal basis permits the disclosure of this data. When using processors, we only disclose personal data of our customers on the basis of a valid contract on data processing. In the case of joint processing, a joint processing agreement is concluded.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Revocation of your consent to the processing of data</h3>
               <p>A wide range of data processing transactions are possible only subject to your express consent. You can also revoke at any time any consent you have already given us. This shall be without prejudice to the lawfulness of any data collection that occurred prior to your revocation.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Right to object to the collection of data in special cases; right to object to direct advertising (Art. 21 GDPR)</h3>
               <p class="uppercase-block">IN THE EVENT THAT DATA ARE PROCESSED ON THE BASIS OF ART. 6(1)(E) OR (F) GDPR, YOU HAVE THE RIGHT TO AT ANY TIME OBJECT TO THE PROCESSING OF YOUR PERSONAL DATA BASED ON GROUNDS ARISING FROM YOUR UNIQUE SITUATION. THIS ALSO APPLIES TO ANY PROFILING BASED ON THESE PROVISIONS. TO DETERMINE THE LEGAL BASIS, ON WHICH ANY PROCESSING OF DATA IS BASED, PLEASE CONSULT THIS DATA PROTECTION DECLARATION. IF YOU LOG AN OBJECTION, WE WILL NO LONGER PROCESS YOUR AFFECTED PERSONAL DATA, UNLESS WE ARE IN A POSITION TO PRESENT COMPELLING PROTECTION WORTHY GROUNDS FOR THE PROCESSING OF YOUR DATA, THAT OUTWEIGH YOUR INTERESTS, RIGHTS AND FREEDOMS OR IF THE PURPOSE OF THE PROCESSING IS THE CLAIMING, EXERCISING OR DEFENCE OF LEGAL ENTITLEMENTS (OBJECTION PURSUANT TO ART. 21(1) GDPR).</p>
               <p class="uppercase-block">IF YOUR PERSONAL DATA IS BEING PROCESSED IN ORDER TO ENGAGE IN DIRECT ADVERTISING, YOU HAVE THE RIGHT TO OBJECT TO THE PROCESSING OF YOUR AFFECTED PERSONAL DATA FOR THE PURPOSES OF SUCH ADVERTISING AT ANY TIME. THIS ALSO APPLIES TO PROFILING TO THE EXTENT THAT IT IS AFFILIATED WITH SUCH DIRECT ADVERTISING. IF YOU OBJECT, YOUR PERSONAL DATA WILL SUBSEQUENTLY NO LONGER BE USED FOR DIRECT ADVERTISING PURPOSES (OBJECTION PURSUANT TO ART. 21(2) GDPR).</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Right to log a complaint with the competent supervisory agency</h3>
               <p>In the event of violations of the GDPR, data subjects are entitled to log a complaint with a supervisory agency, in particular in the member state where they usually maintain their domicile, place of work or at the place where the alleged violation occurred. The right to log a complaint is in effect regardless of any other administrative or court proceedings available as legal recourses.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Right to data portability</h3>
               <p>You have the right to have data that we process automatically on the basis of your consent or in fulfillment of a contract handed over to you or to a third party in a common, machine-readable format. If you should demand the direct transfer of the data to another controller, this will be done only if it is technically feasible.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Information about, rectification and eradication of data</h3>
               <p>Within the scope of the applicable statutory provisions, you have the right to demand information about your archived personal data, their source and recipients as well as the purpose of the processing of your data at any time. You may also have a right to have your data rectified or eradicated. If you have questions about this subject matter or any other questions about personal data, please do not hesitate to contact us at any time.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Right to demand processing restrictions</h3>
               <p>You have the right to demand the imposition of restrictions as far as the processing of your personal data is concerned. To do so, you may contact us at any time. The right to demand restriction of processing applies in the following cases:</p>
@@ -140,32 +144,32 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
                 <li>If you have raised an objection pursuant to Art.&nbsp;21(1) GDPR, your rights and our rights will have to be weighed against each other. As long as it has not been determined whose interests prevail, you have the right to demand a restriction of the processing of your personal data.</li>
               </ul>
               <p>If you have restricted the processing of your personal data, these data – with the exception of their archiving – may be processed only subject to your consent or to claim, exercise or defend legal entitlements or to protect the rights of other natural persons or legal entities or for important public interest reasons cited by the European Union or a member state of the EU.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">SSL and/or TLS encryption</h3>
               <p>For security reasons and to protect the transmission of confidential content, this website uses either an SSL or a TLS encryption program. You can recognize an encrypted connection by checking whether the address line of the browser switches from "http://" to "https://" and also by the appearance of the lock icon in the browser line.</p>
               <p>If the SSL or TLS encryption is activated, data you transmit to us cannot be read by third parties.</p>
-            </div>
-          </div>
+            </div><!-- legal-box -->
+          </div><!-- legal-box -->
 
-          <div class="glass-box">
-            <h2 class="glass-box__title section-num">4. Recording of data on this website</h2>
+          <div class="legal-box">
+            <span class="legal-box__label">4. Recording of data on this website</span>
             <div class="block">
               <h3 class="block-title">Request by e-mail, telephone, or fax</h3>
               <p>If you contact us by e-mail, telephone or fax, your request, including all resulting personal data (name, request) will be stored and processed by us for the purpose of processing your request. We do not pass these data on without your consent.</p>
               <p>These data are processed on the basis of Art.&nbsp;6(1)(b) GDPR if your inquiry is related to the fulfillment of a contract or is required for the performance of pre-contractual measures. In all other cases, the data are processed on the basis of our legitimate interest in the effective handling of inquiries submitted to us (Art.&nbsp;6(1)(f) GDPR) or on the basis of your consent (Art.&nbsp;6(1)(a) GDPR) if it has been obtained; the consent can be revoked at any time.</p>
               <p>The data sent by you to us via contact requests remain with us until you request us to delete, revoke your consent to the storage or the purpose for the data storage lapses (e.g. after completion of your request). Mandatory statutory provisions – in particular statutory retention periods – remain unaffected.</p>
-            </div>
-          </div>
+            </div><!-- legal-box -->
+          </div><!-- legal-box -->
         </>
       ) : (
         <>
-          <div class="glass-box">
-            <h2 class="glass-box__title section-num">1. Datenschutz auf einen Blick</h2>
+          <div class="legal-box">
+            <span class="legal-box__label">1. Datenschutz auf einen Blick</span>
             <div class="block">
               <h3 class="block-title">Allgemeine Hinweise</h3>
               <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können. Ausführliche Informationen zum Thema Datenschutz entnehmen Sie unserer unter diesem Text aufgeführten Datenschutzerklärung.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Datenerfassung auf dieser Website</h3>
               <h4 class="block-sub">Wer ist verantwortlich für die Datenerfassung auf dieser Website?</h4>
@@ -178,10 +182,10 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
               <h4 class="block-sub">Welche Rechte haben Sie bezüglich Ihrer Daten?</h4>
               <p>Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die Berichtigung oder Löschung dieser Daten zu verlangen. Wenn Sie eine Einwilligung zur Datenverarbeitung erteilt haben, können Sie diese Einwilligung jederzeit für die Zukunft widerrufen. Außerdem haben Sie das Recht, unter bestimmten Umständen die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen. Des Weiteren steht Ihnen ein Beschwerderecht bei der zuständigen Aufsichtsbehörde zu.</p>
               <p>Hierzu sowie zu weiteren Fragen zum Thema Datenschutz können Sie sich jederzeit an uns wenden.</p>
-            </div>
-          </div>
-          <div class="glass-box">
-            <h2 class="glass-box__title section-num">2. Hosting und Content Delivery Networks (CDN)</h2>
+            </div><!-- legal-box -->
+          </div><!-- legal-box -->
+          <div class="legal-box">
+            <span class="legal-box__label">2. Hosting und Content Delivery Networks (CDN)</span>
             <div class="block">
               <h3 class="block-title">Hetzner</h3>
               <p>Anbieter ist die Hetzner Online GmbH, Industriestr. 25, 91710 Gunzenhausen (nachfolgend Hetzner).</p>
@@ -189,7 +193,7 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
               <p>Die Verwendung von Hetzner erfolgt auf Grundlage von Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO. Wir haben ein berechtigtes Interesse an einer möglichst zuverlässigen Darstellung unserer Website. Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a DSGVO und § 25 Abs.&nbsp;1 TDDDG, soweit die Einwilligung die Speicherung von Cookies oder den Zugriff auf Informationen im Endgerät des Nutzers (z.&nbsp;B. Device-Fingerprinting) im Sinne des TDDDG umfasst. Die Einwilligung ist jederzeit widerrufbar.</p>
               <h4 class="block-sub">Auftragsverarbeitung</h4>
               <p>Wir haben einen Vertrag über Auftragsverarbeitung (AVV) zur Nutzung des oben genannten Dienstes geschlossen. Hierbei handelt es sich um einen datenschutzrechtlich vorgeschriebenen Vertrag, der gewährleistet, dass dieser die personenbezogenen Daten unserer Websitebesucher nur nach unseren Weisungen und unter Einhaltung der DSGVO verarbeitet.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Bunny.net CDN</h3>
               <p>Wir nutzen das Content Delivery Network Bunny.net. Anbieter ist die BunnyWay d.o.o., Dunajska cesta 165, 1000 Ljubljana, Slovenia (nachfolgend „Bunny.net CDN").</p>
@@ -198,55 +202,55 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
               <p>Weitere Informationen: <a href="https://bunny.net/privacy/" target="_blank" rel="noopener">bunny.net/privacy</a>.</p>
               <h4 class="block-sub">Auftragsverarbeitung</h4>
               <p>Wir haben einen Vertrag über Auftragsverarbeitung (AVV) zur Nutzung des oben genannten Dienstes geschlossen. Hierbei handelt es sich um einen datenschutzrechtlich vorgeschriebenen Vertrag, der gewährleistet, dass dieser die personenbezogenen Daten unserer Websitebesucher nur nach unseren Weisungen und unter Einhaltung der DSGVO verarbeitet.</p>
-            </div>
-          </div>
-          <div class="glass-box">
-            <h2 class="glass-box__title section-num">3. Allgemeine Hinweise und Pflicht&shy;informationen</h2>
+            </div><!-- legal-box -->
+          </div><!-- legal-box -->
+          <div class="legal-box">
+            <span class="legal-box__label">3. Allgemeine Hinweise und Pflicht&shy;informationen</span>
             <div class="block">
               <h3 class="block-title">Datenschutz</h3>
               <p>Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend den gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.</p>
               <p>Wenn Sie diese Website benutzen, werden verschiedene personenbezogene Daten erhoben. Personenbezogene Daten sind Daten, mit denen Sie persönlich identifiziert werden können. Die vorliegende Datenschutzerklärung erläutert, welche Daten wir erheben und wofür wir sie nutzen. Sie erläutert auch, wie und zu welchem Zweck das geschieht.</p>
               <p>Wir weisen darauf hin, dass die Datenübertragung im Internet (z.&nbsp;B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Hinweis zur verantwortlichen Stelle</h3>
               <p>Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:</p>
               <p>MultaEnhavo<br />Nico Thomas Henkel<br />Blumenstraße 26<br />85467 Neuching<br />Deutschland<br /><br />Telefon: <a href="tel:+4915122268995">+49-151-22268995</a><br />E-Mail: <a href="mailto:nico@multaenhavo.com">nico@multaenhavo.com</a></p>
               <p>Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten (z.&nbsp;B. Namen, E-Mail-Adressen o.&nbsp;Ä.) entscheidet.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Speicherdauer</h3>
               <p>Soweit innerhalb dieser Datenschutzerklärung keine speziellere Speicherdauer genannt wurde, verbleiben Ihre personenbezogenen Daten bei uns, bis der Zweck für die Datenverarbeitung entfällt. Wenn Sie ein berechtigtes Löschersuchen geltend machen oder eine Einwilligung zur Datenverarbeitung widerrufen, werden Ihre Daten gelöscht, sofern wir keine anderen rechtlich zulässigen Gründe für die Speicherung Ihrer personenbezogenen Daten haben (z.&nbsp;B. steuer- oder handelsrechtliche Aufbewahrungsfristen); im letztgenannten Fall erfolgt die Löschung nach Fortfall dieser Gründe.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Allgemeine Hinweise zu den Rechtsgrundlagen der Datenverarbeitung auf dieser Website</h3>
               <p>Sofern Sie in die Datenverarbeitung eingewilligt haben, verarbeiten wir Ihre personenbezogenen Daten auf Grundlage von Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a DSGVO bzw. Art.&nbsp;9 Abs.&nbsp;2 lit.&nbsp;a DSGVO, sofern besondere Datenkategorien nach Art.&nbsp;9 Abs.&nbsp;1 DSGVO verarbeitet werden. Im Falle einer ausdrücklichen Einwilligung in die Übertragung personenbezogener Daten in Drittstaaten erfolgt die Datenverarbeitung außerdem auf Grundlage von Art.&nbsp;49 Abs.&nbsp;1 lit.&nbsp;a DSGVO. Sofern Sie in die Speicherung von Cookies oder in den Zugriff auf Informationen in Ihr Endgerät (z.&nbsp;B. via Device-Fingerprinting) eingewilligt haben, erfolgt die Datenverarbeitung zusätzlich auf Grundlage von § 25 Abs.&nbsp;1 TDDDG. Die Einwilligung ist jederzeit widerrufbar. Sind Ihre Daten zur Vertragserfüllung oder zur Durchführung vorvertraglicher Maßnahmen erforderlich, verarbeiten wir Ihre Daten auf Grundlage des Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO. Des Weiteren verarbeiten wir Ihre Daten, sofern diese zur Erfüllung einer rechtlichen Verpflichtung erforderlich sind auf Grundlage von Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;c DSGVO. Die Datenverarbeitung kann ferner auf Grundlage unseres berechtigten Interesses nach Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO erfolgen. Über die jeweils im Einzelfall einschlägigen Rechtsgrundlagen wird in den folgenden Absätzen dieser Datenschutzerklärung informiert.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Empfänger von personenbezogenen Daten</h3>
               <p>Im Rahmen unserer Geschäftstätigkeit arbeiten wir mit verschiedenen externen Stellen zusammen. Dabei ist teilweise auch eine Übermittlung von personenbezogenen Daten an diese externen Stellen erforderlich. Wir geben personenbezogene Daten nur dann an externe Stellen weiter, wenn dies im Rahmen einer Vertragserfüllung erforderlich ist, wenn wir gesetzlich hierzu verpflichtet sind (z.&nbsp;B. Weitergabe von Daten an Steuerbehörden), wenn wir ein berechtigtes Interesse nach Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO an der Weitergabe haben oder wenn eine sonstige Rechtsgrundlage die Datenweitergabe erlaubt. Beim Einsatz von Auftragsverarbeitern geben wir personenbezogene Daten unserer Kunden nur auf Grundlage eines gültigen Vertrags über Auftragsverarbeitung weiter. Im Falle einer gemeinsamen Verarbeitung wird ein Vertrag über gemeinsame Verarbeitung geschlossen.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Widerruf Ihrer Einwilligung zur Datenverarbeitung</h3>
               <p>Viele Datenverarbeitungsvorgänge sind nur mit Ihrer ausdrücklichen Einwilligung möglich. Sie können eine bereits erteilte Einwilligung jederzeit widerrufen. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Datenverarbeitung bleibt vom Widerruf unberührt.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Widerspruchsrecht gegen die Datenerhebung in besonderen Fällen sowie gegen Direktwerbung (Art. 21 DSGVO)</h3>
               <p class="uppercase-block">WENN DIE DATENVERARBEITUNG AUF GRUNDLAGE VON ART. 6 ABS. 1 LIT. E ODER F DSGVO ERFOLGT, HABEN SIE JEDERZEIT DAS RECHT, AUS GRÜNDEN, DIE SICH AUS IHRER BESONDEREN SITUATION ERGEBEN, GEGEN DIE VERARBEITUNG IHRER PERSONENBEZOGENEN DATEN WIDERSPRUCH EINZULEGEN; DIES GILT AUCH FÜR EIN AUF DIESE BESTIMMUNGEN GESTÜTZTES PROFILING. DIE JEWEILIGE RECHTSGRUNDLAGE, AUF DENEN EINE VERARBEITUNG BERUHT, ENTNEHMEN SIE DIESER DATENSCHUTZERKLÄRUNG. WENN SIE WIDERSPRUCH EINLEGEN, WERDEN WIR IHRE BETROFFENEN PERSONENBEZOGENEN DATEN NICHT MEHR VERARBEITEN, ES SEI DENN, WIR KÖNNEN ZWINGENDE SCHUTZWÜRDIGE GRÜNDE FÜR DIE VERARBEITUNG NACHWEISEN, DIE IHRE INTERESSEN, RECHTE UND FREIHEITEN ÜBERWIEGEN ODER DIE VERARBEITUNG DIENT DER GELTENDMACHUNG, AUSÜBUNG ODER VERTEIDIGUNG VON RECHTSANSPRÜCHEN (WIDERSPRUCH NACH ART. 21 ABS. 1 DSGVO).</p>
               <p class="uppercase-block">WERDEN IHRE PERSONENBEZOGENEN DATEN VERARBEITET, UM DIREKTWERBUNG ZU BETREIBEN, SO HABEN SIE DAS RECHT, JEDERZEIT WIDERSPRUCH GEGEN DIE VERARBEITUNG SIE BETREFFENDER PERSONENBEZOGENER DATEN ZUM ZWECKE DERARTIGER WERBUNG EINZULEGEN; DIES GILT AUCH FÜR DAS PROFILING, SOWEIT ES MIT SOLCHER DIREKTWERBUNG IN VERBINDUNG STEHT. WENN SIE WIDERSPRECHEN, WERDEN IHRE PERSONENBEZOGENEN DATEN ANSCHLIESSEND NICHT MEHR ZUM ZWECKE DER DIREKTWERBUNG VERWENDET (WIDERSPRUCH NACH ART. 21 ABS. 2 DSGVO).</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Beschwerde&shy;recht bei der zuständigen Aufsichts&shy;behörde</h3>
               <p>Im Falle von Verstößen gegen die DSGVO steht den Betroffenen ein Beschwerderecht bei einer Aufsichtsbehörde, insbesondere in dem Mitgliedstaat ihres gewöhnlichen Aufenthalts, ihres Arbeitsplatzes oder des Orts des mutmaßlichen Verstoßes zu. Das Beschwerderecht besteht unbeschadet anderweitiger verwaltungsrechtlicher oder gerichtlicher Rechtsbehelfe.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Recht auf Daten&shy;übertrag&shy;barkeit</h3>
               <p>Sie haben das Recht, Daten, die wir auf Grundlage Ihrer Einwilligung oder in Erfüllung eines Vertrags automatisiert verarbeiten, an sich oder an einen Dritten in einem gängigen, maschinenlesbaren Format aushändigen zu lassen. Sofern Sie die direkte Übertragung der Daten an einen anderen Verantwortlichen verlangen, erfolgt dies nur, soweit es technisch machbar ist.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Auskunft, Berichtigung und Löschung</h3>
               <p>Sie haben im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit das Recht auf unentgeltliche Auskunft über Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger und den Zweck der Datenverarbeitung und ggf. ein Recht auf Berichtigung oder Löschung dieser Daten. Hierzu sowie zu weiteren Fragen zum Thema personenbezogene Daten können Sie sich jederzeit an uns wenden.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">Recht auf Einschränkung der Verarbeitung</h3>
               <p>Sie haben das Recht, die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen. Hierzu können Sie sich jederzeit an uns wenden. Das Recht auf Einschränkung der Verarbeitung besteht in folgenden Fällen:</p>
@@ -257,141 +261,161 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
                 <li>Wenn Sie einen Widerspruch nach Art.&nbsp;21 Abs.&nbsp;1 DSGVO eingelegt haben, muss eine Abwägung zwischen Ihren und unseren Interessen vorgenommen werden. Solange noch nicht feststeht, wessen Interessen überwiegen, haben Sie das Recht, die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen.</li>
               </ul>
               <p>Wenn Sie die Verarbeitung Ihrer personenbezogenen Daten eingeschränkt haben, dürfen diese Daten – von ihrer Speicherung abgesehen – nur mit Ihrer Einwilligung oder zur Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen oder zum Schutz der Rechte einer anderen natürlichen oder juristischen Person oder aus Gründen eines wichtigen öffentlichen Interesses der Europäischen Union oder eines Mitgliedstaats verarbeitet werden.</p>
-            </div>
+            </div><!-- legal-box -->
             <div class="block">
               <h3 class="block-title">SSL- bzw. TLS-Verschlüsselung</h3>
               <p>Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte eine SSL- bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von „http://" auf „https://" wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.</p>
               <p>Wenn die SSL- bzw. TLS-Verschlüsselung aktiviert ist, können die Daten, die Sie an uns übermitteln, nicht von Dritten mitgelesen werden.</p>
-            </div>
-          </div>
-          <div class="glass-box">
-            <h2 class="glass-box__title section-num">4. Datenerfassung auf dieser Website</h2>
+            </div><!-- legal-box -->
+          </div><!-- legal-box -->
+          <div class="legal-box">
+            <span class="legal-box__label">4. Datenerfassung auf dieser Website</span>
             <div class="block">
               <h3 class="block-title">Anfrage per E-Mail, Telefon oder Telefax</h3>
               <p>Wenn Sie uns per E-Mail, Telefon oder Telefax kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten (Name, Anfrage) zum Zwecke der Bearbeitung Ihres Anliegens bei uns gespeichert und verarbeitet. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
               <p>Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen beruht die Verarbeitung auf unserem berechtigten Interesse an der effektiven Bearbeitung der an uns gerichteten Anfragen (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO) oder auf Ihrer Einwilligung (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a DSGVO) sofern diese abgefragt wurde; die Einwilligung ist jederzeit widerrufbar.</p>
               <p>Die von Ihnen an uns per Kontaktanfragen übersandten Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt (z.&nbsp;B. nach abgeschlossener Bearbeitung Ihres Anliegens). Zwingende gesetzliche Bestimmungen – insbesondere gesetzliche Aufbewahrungsfristen – bleiben unberührt.</p>
-            </div>
-          </div>
+            </div><!-- legal-box -->
+          </div><!-- legal-box -->
         </>
       )}
 
-    </div>
+    </div><!-- legal-sections -->
   </main>
 
   <Footer />
 </Base>
 
 <style>
-  .legal-page { min-height: 100svh; }
-
-  .legal-wrap {
-    max-width: 80ch;
-    margin: 0 auto;
-    padding: calc(var(--nav-h) + clamp(3rem, 8vh, 6rem)) var(--page-x) var(--gap-xl);
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-md);
+  .legal-page {
+    background: #000;
+    min-height: 100svh;
+    color: #fff;
+    --ui-border: #bfbfbf;
+    --gap: 7px;
   }
 
-  .legal-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  /* ── Hero ── */
+  .legal-hero {
+    margin: var(--gap);
+  }
+  .legal-hero__body {
+    height: calc(100svh - (var(--gap) * 2));
+    border: 2.7px solid #E31C8D;
+    border-radius: 0 14px 0 14px;
+    background: #000;
+    display: grid;
+    place-items: center;
+  }
+  .legal-hero__inner {
+    border: 2.7px solid #E31C8D;
+    border-radius: 0 14px 0 14px;
+    background: #000;
+    padding: clamp(0.8rem, 1.8vw, 1.2rem) clamp(1.2rem, 3vw, 2.2rem);
     text-align: center;
-    gap: 0.5rem;
-    padding-bottom: var(--gap-md);
   }
-  .legal-header__divider {
-    width: clamp(3rem, 8vw, 5rem);
-    height: 2.7px;
-    background: var(--rainbow);
-    border-radius: 7px;
-    opacity: 0.9;
-    margin-bottom: 0.2rem;
-  }
-  .legal-header__title {
+  .legal-hero__title {
     font-family: 'Satoshi';
-    font-weight: 400;
-    font-size: clamp(2.8rem, 8vw, 6rem);
-    line-height: 0.9;
-    letter-spacing: -0.025em;
-    color: var(--text);
+    font-weight: 750;
+    font-size: clamp(1.9rem, 5vw, 3.7rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: #fff;
   }
 
-  .glass-box {
-    background: rgba(0,0,0,0.27);
-    backdrop-filter: blur(27px);
-    -webkit-backdrop-filter: blur(27px);
-    border: 2.7px solid rgba(0,0,0,0.37);
-    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.27);
-    border-radius: 7px;
-    padding: var(--gap-md) var(--gap-lg);
+  /* ── Sections ── */
+  .legal-sections {
+    padding: var(--gap);
+    padding-top: 0;
     display: flex;
     flex-direction: column;
-    gap: var(--gap-md);
+    gap: var(--gap);
   }
-  .glass-box__title {
+
+  .legal-box {
+    border: 2.7px solid var(--ui-border);
+    border-radius: 0 14px 0 14px;
+    background: #000;
+    padding: clamp(1rem, 2.5vw, 1.6rem) clamp(1.2rem, 3vw, 2rem);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+    transition: border-color 180ms ease;
+  }
+  .legal-box:hover { border-color: #E31C8D; }
+
+  .legal-box__label {
+    align-self: center;
+    border: 2.7px solid var(--ui-border);
+    border-radius: 0 14px 0 14px;
+    background: #000;
+    padding: 0.42rem 0.78rem;
     font-family: 'Satoshi';
-    font-weight: 400;
-    font-size: 1.1rem;
+    font-size: 0.62rem;
+    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--text);
-    text-align: center;
-    width: 100%;
+    letter-spacing: 0.09em;
+    color: #fff;
+    transition: border-color 180ms ease;
+    margin-bottom: 0.4rem;
   }
-  .section-num {
-    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
-    border-radius: 7px;
-    border: 2.7px solid var(--text-muted);
-    padding: 0.55rem 1.4rem;
-  }
-  :global([data-theme="dark"]) .section-num {
-    background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
-  }
+  .legal-box:hover .legal-box__label { border-color: #E31C8D; }
 
+  /* ── Blocks (sub-sections) ── */
   .block {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
-    padding-top: var(--gap-sm);
-    border-top: 2.7px solid rgba(128,128,128,0.12);
+    gap: 0.55rem;
+    padding-top: 0.8rem;
+    border-top: 2.7px solid rgba(191,191,191,0.15);
   }
   .block:first-of-type { border-top: none; padding-top: 0; }
 
   .block-title {
     font-family: 'Satoshi';
-    font-weight: 400;
-    font-size: clamp(0.92rem, 1.4vw, 1.08rem);
-    color: var(--text);
+    font-weight: 550;
+    font-size: clamp(0.92rem, 1.4vw, 1.05rem);
+    color: #fff;
     letter-spacing: 0.01em;
   }
   .block-sub {
     font-family: 'Satoshi';
     font-weight: 400;
-    font-size: clamp(0.82rem, 1.2vw, 0.95rem);
-    color: var(--text-muted);
-    letter-spacing: 0.02em;
+    font-size: clamp(0.82rem, 1.2vw, 0.92rem);
+    color: #bfbfbf;
+    letter-spacing: 0.01em;
   }
 
-  .glass-box p {
+  .legal-box p {
     font-family: 'Satoshi';
     font-weight: 400;
-    color: var(--text-muted);
+    color: #bfbfbf;
     line-height: 1.8;
     font-size: clamp(0.9rem, 1.2vw, 1rem);
+  }
+
+  .legal-box a {
+    color: #bfbfbf;
+    border-bottom: 2px solid var(--ui-border);
+    transition: color 180ms ease, border-color 180ms ease;
+    word-break: break-all;
+  }
+  .legal-box a:hover {
+    color: #fff;
+    border-color: #E31C8D;
   }
 
   .uppercase-block {
     font-family: 'Satoshi';
     font-weight: 400;
     font-size: clamp(0.72rem, 0.95vw, 0.85rem);
-    color: var(--text-dim);
+    color: #bfbfbf;
     line-height: 1.65;
     letter-spacing: 0.02em;
     position: relative;
-    padding-left: calc(var(--gap-sm) + 2px);
+    padding-left: calc(var(--gap-sm, 0.75rem) + 4px);
     opacity: 0.7;
   }
   .uppercase-block::before {
@@ -401,7 +425,7 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
     top: 0;
     bottom: 0;
     width: 2.7px;
-    background: linear-gradient(to bottom, #808080, #808080, #ffffff, #808080, #808080, #808080);
+    background: #E31C8D;
     border-radius: 7px;
   }
 
@@ -410,8 +434,9 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
-    padding-left: var(--gap-sm);
+    padding-left: 1rem;
     position: relative;
+    width: 100%;
   }
   .legal-list::before {
     content: '';
@@ -420,51 +445,31 @@ const enUrl = `${siteUrl}/en/privacy-policy`;
     top: 0;
     bottom: 0;
     width: 2.7px;
-    background: linear-gradient(to bottom, #808080, #808080, #ffffff, #808080, #808080, #808080);
+    background: var(--ui-border);
     border-radius: 7px;
   }
   .legal-list li {
     font-family: 'Satoshi';
     font-weight: 400;
-    color: var(--text-muted);
+    color: #bfbfbf;
     font-size: clamp(0.9rem, 1.2vw, 1rem);
     line-height: 1.7;
-    position: relative;
-    padding-left: 0.75rem;
-  }
-  .legal-list li::before {
-    content: '–';
-    position: absolute;
-    left: -0.1rem;
-    background: var(--rainbow);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    padding-left: 0.5rem;
   }
 
-  .glass-box a {
-    color: var(--text-muted);
-    border-bottom: 2.7px solid var(--border-mid);
-    transition: color var(--quick), border-color var(--quick);
-    word-break: break-all;
-  }
-  .glass-box a:hover {
-    background: var(--rainbow);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    border-image: linear-gradient(277deg, #808080, #808080, #ffffff, #808080, #808080, #808080) 1;
-  }
-
-  :global([data-theme="light"]) .glass-box {
-    background: rgba(255,255,255,0.27);
-    border-color: rgba(255,255,255,0.37);
-  }
-  :global([data-theme="light"]) .glass-box a:hover {
-    background: var(--rainbow);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    border-image: linear-gradient(277deg, #808080, #808080, #ffffff, #808080, #808080, #808080) 1;
-  }
+  /* ── Light mode ── */
+  :global([data-theme="light"]) .legal-page { background: #fff; color: #000; --ui-border: #404040; }
+  :global([data-theme="light"]) .legal-hero__body { background: #fff; }
+  :global([data-theme="light"]) .legal-hero__inner { background: #fff; }
+  :global([data-theme="light"]) .legal-hero__title { color: #000; }
+  :global([data-theme="light"]) .legal-box { background: #fff; }
+  :global([data-theme="light"]) .legal-box__label { background: #fff; color: #000; }
+  :global([data-theme="light"]) .legal-box p { color: #404040; }
+  :global([data-theme="light"]) .legal-box a { color: #404040; }
+  :global([data-theme="light"]) .legal-box a:hover { color: #000; }
+  :global([data-theme="light"]) .block { border-top-color: rgba(64,64,64,0.15); }
+  :global([data-theme="light"]) .block-title { color: #000; }
+  :global([data-theme="light"]) .block-sub { color: #404040; }
+  :global([data-theme="light"]) .uppercase-block { color: #404040; }
+  :global([data-theme="light"]) .legal-list li { color: #404040; }
 </style>
