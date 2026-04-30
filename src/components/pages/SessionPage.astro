@@ -40,6 +40,18 @@ const photos: string[] = Array.from({ length: session.images }, (_, i) =>
   `${folder}/${String(i).padStart(3, '0')}.webp`
 );
 
+const heroPreviewSlides = photos.slice(0, 8).map((src, i) => ({
+  src,
+  className: i === 0 ? 'hero-slide is-active' : 'hero-slide',
+  loading: i === 0 ? 'eager' : 'lazy'
+}));
+
+const heroSlides = photos.slice(0, 8).map((src, i) => ({
+  src,
+  className: i === 0 ? 'hero-slide is-active' : 'hero-slide',
+  loading: i === 0 ? 'eager' : 'lazy'
+}));
+
 const [d, m, y] = session.date.split('.');
 const dateStr = new Date(+y, +m - 1, +d).toLocaleDateString(dateLocale, { day: '2-digit', month: 'long', year: 'numeric' });
 const isoDate = `${y}-${m.padStart(2,'0')}-${d.padStart(2,'0')}`;
@@ -96,10 +108,10 @@ const schema = {
   description={pageDesc}
   ogImage={ogImg}
   ogType="article"
-  canonical={pageUrl}
-  {schema}
-  hreflangDe={deUrl}
-  hreflangEn={enUrl}
+            {heroPreviewSlides.map((slide) => (
+                src={slide.src}
+                class={slide.className}
+                loading={slide.loading}
 >
   <Nav />
 
@@ -109,18 +121,22 @@ const schema = {
     <header class="session-hero">
       <!-- Prev/Next Bar -->
       <div class="session-hero__nav">
-        {next ? (
-          <a href={sessionPath(next.slug)} class="session-hero__nav-btn">
-            <img src="/logos/phosphoricons/white/caret-left-thin.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
-            <span>{navTitle(next)}</span>
-          </a>
-        ) : <span />}
-        {prev ? (
-          <a href={sessionPath(prev.slug)} class="session-hero__nav-btn">
-            <span>{navTitle(prev)}</span>
-            <img src="/logos/phosphoricons/white/caret-right-thin.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
-          </a>
-        ) : <span />}
+        <span>
+          {next && (
+            <a href={sessionPath(next.slug)} class="session-hero__nav-btn">
+              <img src="/logos/phosphoricons/white/caret-left-thin.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
+              <span>{navTitle(next)}</span>
+            </a>
+          )}
+        </span>
+        <span>
+          {prev && (
+            <a href={sessionPath(prev.slug)} class="session-hero__nav-btn">
+              <span>{navTitle(prev)}</span>
+              <img src="/logos/phosphoricons/white/caret-right-thin.svg" alt="" aria-hidden="true" class="session-hero__nav-icon" />
+            </a>
+          )}
+        </span>
       </div>
 
       <!-- Bild links + Text rechts -->
@@ -179,15 +195,15 @@ const schema = {
 
     <!-- Close oben rechts -->
     <button class="lightbox__close" id="lbClose" aria-label="Schließen">
-      <img src="/logos/phosphoricons/white/x-thin.svg" alt="" aria-hidden="true" class="lb-icon" />
+      <img src="/logos/phosphoricons/white/x.svg" alt="" aria-hidden="true" class="lb-icon" />
     </button>
 
     <!-- Prev/Next seitlich -->
     <button class="lightbox__btn lightbox__btn--prev" id="lbPrev" aria-label="Vorheriges Foto">
-      <img src="/logos/phosphoricons/white/caret-left-thin.svg" alt="" aria-hidden="true" class="lb-icon" />
+  .session-page { background: #000000; }
     </button>
     <button class="lightbox__btn lightbox__btn--next" id="lbNext" aria-label="Nächstes Foto">
-      <img src="/logos/phosphoricons/white/caret-right-thin.svg" alt="" aria-hidden="true" class="lb-icon" />
+      <img src="/logos/phosphoricons/white/caret-right.svg" alt="" aria-hidden="true" class="lb-icon" />
     </button>
 
     <div class="lightbox__stage">
@@ -205,7 +221,9 @@ const schema = {
 
 <style>
   /* ── GLOBAL BG ── */
-
+  .session-page {
+    background: #000000;
+  }
 
   /* ── HERO ── */
   .session-hero {
@@ -240,82 +258,80 @@ const schema = {
       justify-content: center;
       flex-direction: column;
       align-items: center;
-      gap: 0.2rem;
-      text-align: center;
-    }
-    .session-hero__sep--desktop { display: none; }
-    .session-hero__meta-row {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .session-hero__title {
-      text-align: center;
-      max-width: 100%;
-    }
-    .session-hero__sub {
-      text-align: center;
-      max-width: 100%;
-    }
-    .session-hero__nav-btn span { display: none; }
-    .session-hero__nav { margin-top: var(--gap-md); }
-    .session-hero__divider {
-      align-self: center !important;
-    }
+    background: #000000;
+    border: 2.7px solid #E31C8D;
+    border-radius: 0 14px 0 14px;
+    border-radius: 0 14px 0 14px;
+    color: var(--text);
+    border: 2.7px solid #404040;
+    border-radius: 0 14px 0 14px;
+    filter: invert(1);
+    border-color: #E31C8D;
+    background: #000000;
+    color: #ffffff;
+    border-radius: 0 14px 0 14px;
+    border: 2.7px solid #404040;
+    color: #ffffff;
+    background: #000000;
+    border-color: #E31C8D;
+    background: #000000;
+    color: #E31C8D;
+    color: #ffffff;
+    color: #ffffff;
+    background: #000000;
+    border: 2.7px solid #E31C8D;
+    border-radius: 0 14px 0 14px;
+    border-radius: 0 14px 0 14px;
   }
-  /* Vorschaubild links */
-  .session-hero__preview-wrap {
-    padding: 2.7px;
-    background: var(--rainbow);
-    border-radius: 7px;
-    flex-shrink: 0;
-  }
-  .session-hero__preview {
-    border-radius: 7px;
-    overflow: hidden;
-    aspect-ratio: 4/3;
-    position: relative;
-    background: var(--bg);
-  }
-  .hero-slide {
-    position: absolute;
-    inset: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-    filter: brightness(0.92) contrast(1.04);
-    display: block;
-    opacity: 0;
-    transition: opacity 0.7s ease-in-out;
-  }
-  .hero-slide.is-active { opacity: 1; }
-  .hero-slide:first-child { position: relative; }
-  /* Text rechts */
-  .session-hero__text {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    text-align: right;
-    gap: 0.6rem;
-  }
+    border-radius: 0 14px 0 14px;
+    background: #000000;
+    border: 2.7px solid #E31C8D;
+    -webkit-mask: linear-gradient(#ffffff 0 0) content-box, linear-gradient(#ffffff 0 0);
+  .photo-item:hover::before { opacity: 1; border-color: #E31C8D; }
+    background: rgba(0,0,0,0.27);
+    border-radius: 0 14px 0 14px;
+    color: var(--sp-text);
+    background: var(--sp-surface);
+    border: 2.7px solid var(--sp-border);
+    border-radius: 0 14px 0 14px;
+    border: 2.7px solid var(--sp-border);
+    border-radius: 0 14px 0 14px;
+    filter: var(--sp-icon-filter);
+    border-color: var(--sp-text);
+    background: var(--sp-surface);
+    border: 2.7px solid var(--sp-border);
+    border-radius: 0 14px 0 14px;
+    border-color: var(--sp-text);
+    background: var(--sp-surface);
+    background: var(--sp-surface);
+    background: var(--sp-surface);
+  .lp-footer__legal a:hover { color: var(--sp-text); }
+  :global([data-theme="dark"]) .session-page {
+    --sp-bg: #000000;
+    --sp-surface: #000000;
+    --sp-text: #ffffff;
+    --sp-border: #404040;
+    --sp-accent: #E31C8D;
+    --sp-backdrop: rgba(0,0,0,0.27);
+    --sp-icon-filter: invert(1);
 
-  .session-hero__nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--gap-md);
-  }
-  .session-hero__nav-btn {
-    font-family: 'Satoshi';
-    font-weight: 400;
-    font-size: clamp(0.78rem, 1vw, 0.9rem);
+  :global([data-theme="light"]) .session-page {
+    --sp-bg: #ffffff;
+    --sp-surface: #ffffff;
+    --sp-text: #000000;
+    --sp-border: #404040;
+    --sp-accent: #E31C8D;
+    --sp-backdrop: rgba(255,255,255,0.2);
+    --sp-icon-filter: invert(0);
+
     text-transform: uppercase;
     letter-spacing: 0.16em;
-    color: var(--text);
+    color: #ffffff;
     text-decoration: none;
     max-width: 36%;
     padding: 0.55rem 1.4rem;
-    border: 2.7px solid var(--text-muted);
-    border-radius: 7px;
+    border: 2.7px solid #404040;
+    border-radius: 0 14px 0 14px;
     background: transparent;
     display: flex;
     align-items: center;
@@ -336,8 +352,8 @@ const schema = {
     opacity: 0.7;
   }
   .session-hero__nav-btn:hover {
-    border-color: var(--text);
-    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
+    border-color: #E31C8D;
+    background: #000000;
   }
   .session-hero__meta {
     display: flex;
@@ -354,19 +370,16 @@ const schema = {
   .session-hero__cat {
     display: inline-block;
     padding: 0.15rem 0.6rem;
-    border-radius: 7px;
-    border: 2.7px solid var(--text-muted);
+    border-radius: 0 14px 0 14px;
+    border: 2.7px solid #404040;
     color: var(--text-muted);
-    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
-  }
-  :global([data-theme="dark"]) .session-hero__cat {
-    border-color: #E31C8D;
     background: #000000;
-    color: #E31C8D;
   }
-  .session-hero__sep { opacity: 0.35; }
-
-  .session-hero__title {
+    color: var(--text-muted);
+    border: 2.7px solid #404040;
+    opacity: 1;
+    transition: border-color var(--quick);
+  .photo-item:hover::before { border-color: #E31C8D; }
     font-family: 'Satoshi';
     font-weight: 400;
     font-size: clamp(2.8rem, 8vw, 7rem);
@@ -379,7 +392,7 @@ const schema = {
     font-family: 'Satoshi';
     font-weight: 400;
     font-size: clamp(1.1rem, 1.9vw, 1.4rem);
-    color: var(--text-muted);
+    color: #ffffff;
     max-width: 52ch;
     line-height: 1.5;
     margin-top: var(--gap-sm);
@@ -387,8 +400,8 @@ const schema = {
   .session-hero__divider {
     width: clamp(3rem, 8vw, 6rem);
     height: 2.7px;
-    background: var(--rainbow);
-    border-radius: 7px;
+    background: #000000;
+    border-radius: 0 14px 0 14px;
     opacity: 0.75;
     align-self: flex-end;
   }
@@ -406,7 +419,7 @@ const schema = {
     display: block;
     margin-bottom: 0.5rem;
     cursor: zoom-in;
-    border-radius: 7px;
+    border-radius: 0 14px 0 14px;
     overflow: hidden;
     padding: 0;
     position: relative;
@@ -416,21 +429,17 @@ const schema = {
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: 7px;
-    padding: 2.7px;
-    background: var(--rainbow);
-    -webkit-mask: linear-gradient(#ffffff 0 0) content-box, linear-gradient(#ffffff 0 0);
-    -webkit-mask-composite: destination-out;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity var(--quick);
+    border-radius: 0 14px 0 14px;
+    border: 2.7px solid #404040;
+    opacity: 1;
+    transition: border-color var(--quick);
     z-index: 2;
     pointer-events: none;
   }
   .photo-item:hover {
     transform: translateY(-2px);
   }
-  .photo-item:hover::before { opacity: 1; }
+  .photo-item:hover::before { border-color: #E31C8D; }
   .photo-item img {
     width: 100%; height: auto; display: block;
     transition: filter var(--flow);
@@ -477,7 +486,7 @@ const schema = {
     max-width: 100%;
     max-height: 88vh;
     object-fit: contain;
-    border-radius: 7px;
+    border-radius: 0 14px 0 14px;
     opacity: 0;
     transition: opacity 0.25s ease;
     filter: none;
@@ -492,7 +501,7 @@ const schema = {
   }
   .lightbox__spinner-ring {
     width: 36px; height: 36px;
-    border-radius: 7px;
+    border-radius: 0 14px 0 14px;
     border: 2.7px solid rgba(128,128,128,0.15);
     border-top-color: var(--accent);
     animation: spin 0.8s linear infinite;
@@ -512,9 +521,9 @@ const schema = {
     letter-spacing: 0.08em;
     color: var(--text);
     white-space: nowrap;
-    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
+    background: #000000;
     border: 2.7px solid var(--text);
-    border-radius: 7px;
+    border-radius: 0 14px 0 14px;
     padding: 0.45rem 1.2rem;
   }
 
@@ -526,8 +535,8 @@ const schema = {
     z-index: 2;
     cursor: pointer;
     background: transparent;
-    border: 2.7px solid var(--text-muted);
-    border-radius: 7px;
+    border: 2.7px solid #404040;
+    border-radius: 0 14px 0 14px;
     padding: 0.9rem 0.75rem;
     transition: background var(--quick), border-color var(--quick);
     display: flex;
@@ -540,8 +549,8 @@ const schema = {
     opacity: 0.8;
   }
   .lightbox__btn:hover {
-    border-color: var(--text);
-    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
+    border-color: #E31C8D;
+    background: #000000;
   }
   .lightbox__btn--prev { left: var(--page-x); }
   .lightbox__btn--next { right: var(--page-x); }
@@ -554,8 +563,8 @@ const schema = {
     z-index: 2;
     cursor: pointer;
     background: transparent;
-    border: 2.7px solid var(--text-muted);
-    border-radius: 7px;
+    border: 2.7px solid #404040;
+    border-radius: 0 14px 0 14px;
     padding: 0.6rem;
     transition: background var(--quick), border-color var(--quick);
     display: flex;
@@ -567,15 +576,15 @@ const schema = {
     opacity: 0.75;
   }
   .lightbox__close:hover {
-    border-color: var(--text);
-    background: linear-gradient(277deg, rgba(255,0,0,0.18), rgba(255,119,0,0.18), rgba(255,238,0,0.18), rgba(0,204,0,0.18), rgba(0,136,255,0.18), rgba(136,0,255,0.18));
+    border-color: #E31C8D;
+    background: #000000;
   }
 
   /* ── FOOTER ── */
   .lp-footer { padding: var(--gap-lg) var(--page-x) var(--gap-md); }
   .lp-footer__line {
     height: 1px;
-    background: var(--rainbow);
+    background: #000000;
     opacity: 0.5;
     margin-bottom: var(--gap-md);
   }
@@ -593,7 +602,7 @@ const schema = {
   .lp-footer__mn {
     font-weight: 400;
     transition: opacity var(--quick);
-    background: var(--rainbow);
+    background: #000000;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -617,10 +626,14 @@ const schema = {
     --icon-filter: invert(0);
     --icon-filter-accent: invert(20%) sepia(100%) saturate(1000%) hue-rotate(270deg) brightness(0.9);
   }
-  :global([data-theme="light"]) .session-hero__nav-btn { border-color: rgba(10,10,15,0.35); color: rgba(10,10,15,0.85); }
+  :global([data-theme="light"]) .session-page { background: #ffffff; }
+  :global([data-theme="light"]) .session-hero__nav-btn { border-color: #404040; color: #000000; background: #ffffff; }
   :global([data-theme="light"]) .session-hero__nav-icon { filter: invert(0); }
-  :global([data-theme="dark"]) .session-hero__nav-btn:hover { background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32)); }
-  :global([data-theme="light"]) .session-hero__title { color: var(--text); }
+  :global([data-theme="dark"]) .session-hero__nav-btn:hover { background: #000000; }
+  :global([data-theme="light"]) .session-hero__title,
+  :global([data-theme="light"]) .session-hero__sub,
+  :global([data-theme="light"]) .session-hero__meta,
+  :global([data-theme="light"]) .session-hero__cat { color: #000000; }
   :global([data-theme="light"]) .glass-box {
     background: rgba(255,255,255,0.27);
     border-color: rgba(255,255,255,0.37);
@@ -628,13 +641,47 @@ const schema = {
   :global([data-theme="light"]) .lightbox__backdrop {
     background: rgba(255,255,255,0.15);
   }
+  :global([data-theme="light"]) .session-hero__cat,
+  :global([data-theme="light"]) .lightbox__counter,
+  :global([data-theme="light"]) .lightbox__btn,
+  :global([data-theme="light"]) .lightbox__close { background: #ffffff; border-color: #404040; color: #000000; }
   :global([data-theme="dark"]) .lightbox__counter {
-    background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
+    background: #000000;
   }
   :global([data-theme="dark"]) .lightbox__btn:hover,
   :global([data-theme="dark"]) .lightbox__close:hover {
-    background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32));
+    background: #000000;
+  :global([data-theme="light"]) .lightbox__counter {
+    color: #000000;
   }
+  :global([data-theme="light"]) .session-hero__preview-wrap,
+  :global([data-theme="light"]) .session-hero__cat,
+  :global([data-theme="light"]) .session-hero__nav-btn,
+  :global([data-theme="light"]) .lightbox__counter,
+  :global([data-theme="light"]) .lightbox__btn,
+  :global([data-theme="light"]) .lightbox__close {
+    background: #ffffff;
+    border-color: #404040;
+  }
+  :global([data-theme="light"]) .photo-item::before {
+    background: transparent;
+    border-color: #404040;
+  }
+  :global([data-theme="light"]) .session-hero__nav-icon,
+  :global([data-theme="light"]) .lb-icon {
+    filter: invert(0);
+  }
+  :global([data-theme="light"]) .session-hero__nav-btn:hover,
+  :global([data-theme="light"]) .photo-item:hover::before,
+  :global([data-theme="light"]) .lightbox__btn:hover,
+  :global([data-theme="light"]) .lightbox__close:hover {
+    border-color: #E31C8D;
+    background: #ffffff;
+  }
+  :global([data-theme="light"]) .lightbox__backdrop {
+    background: rgba(255,255,255,0.2);
+  }
+
 
 </style>
 

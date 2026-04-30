@@ -35,7 +35,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 
     <div class="lp-nav__controls">
       <button class="lp-nav__quick-btn" id="themeQuickToggle" aria-label="Theme wechseln">
-        <img src="/logos/phosphoricons/white/moon-thin.svg" class="lp-nav__quick-icon" id="themeQuickIcon" alt="" />
+        <img src="/logos/phosphoricons/white/moon.svg" class="lp-nav__quick-icon" id="themeQuickIcon" alt="" />
       </button>
       <button class="lp-nav__quick-btn" id="langQuickToggle" aria-label="Sprache wechseln">
         <span class="lp-nav__quick-label" id="langQuickLabel">DE</span>
@@ -76,7 +76,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     background: var(--lp-glass-black-bg);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    border-radius: 0 10px 0 10px;
+    border-radius: 0 14px 0 14px;
     border: 2.7px solid var(--lp-glass-black-border);
   }
 
@@ -86,7 +86,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     justify-content: center;
     height: 3rem;
     padding: 0 0.55rem;
-    border-radius: 0 10px 0 10px;
+    border-radius: 0 14px 0 14px;
     background: var(--lp-glass-black-bg);
     border: 2.7px solid #404040;
     flex-shrink: 0;
@@ -120,7 +120,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     width: 100%;
     height: 3rem;
     padding: 0 0.5rem;
-    border-radius: 0 10px 0 10px;
+    border-radius: 0 14px 0 14px;
     background: var(--lp-glass-black-bg);
     border: 2.7px solid #404040;
     transition: background var(--quick);
@@ -157,7 +157,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     min-width: 3rem;
     height: 3rem;
     padding: 0 0.6rem;
-    border-radius: 0 10px 0 10px;
+    border-radius: 0 14px 0 14px;
     background: var(--lp-glass-black-bg);
     border: 2.7px solid #404040;
     color: #ffffff;
@@ -237,7 +237,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   [data-theme="dark"] .lp-nav__brand,
   [data-theme="dark"] .lp-nav__link,
   [data-theme="dark"] .lp-nav__quick-btn {
-    border-radius: 0 10px 0 10px;
+    border-radius: 0 14px 0 14px;
   }
 
   [data-theme="light"] .lp-nav__island,
@@ -275,14 +275,13 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   const langBtn = document.getElementById('langQuickToggle') as HTMLButtonElement;
   const langLabel = document.getElementById('langQuickLabel') as HTMLElement;
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  let currentMode = (localStorage.getItem('lp-theme-mode') || (prefersDark ? 'dark' : 'light'));
-  if (!['dark', 'light'].includes(currentMode)) currentMode = prefersDark ? 'dark' : 'light';
+  let currentMode = prefersDark ? 'dark' : 'light';
 
   function updateThemeButton(mode: string) {
     if (!themeBtn || !themeIcon) return;
     themeIcon.src = mode === 'dark'
-      ? `${WHITE_ICON_BASE}/moon-thin.svg`
-      : `${WHITE_ICON_BASE}/sun-thin.svg`;
+      ? `${WHITE_ICON_BASE}/moon.svg`
+      : `${WHITE_ICON_BASE}/sun.svg`;
     themeBtn.setAttribute('aria-label', mode === 'dark' ? 'Dark Mode aktiv' : 'Light Mode aktiv');
   }
 
@@ -302,18 +301,47 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 
   function toggleMode() {
     currentMode = currentMode === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('lp-theme-mode', currentMode);
     applyTheme(currentMode);
   }
   themeBtn?.addEventListener('click', toggleMode);
 
-  let currentLangMode = localStorage.getItem('lp-lang-mode') || (window.location.pathname.startsWith('/en') ? 'en' : 'de');
-  if (!['de', 'en'].includes(currentLangMode)) currentLangMode = window.location.pathname.startsWith('/en') ? 'en' : 'de';
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    currentMode = e.matches ? 'dark' : 'light';
+    applyTheme(currentMode);
+  });
+
+  const path = window.location.pathname;
+  const isPathEN = path.startsWith('/en');
+  const enToDe: Record<string, string> = {
+    '/en/': '/',
+    '/en/site-notice': '/impressum',
+    '/en/privacy-policy': '/datenschutz'
+  };
+  const deToEn: Record<string, string> = {
+    '/': '/en/',
+    '/impressum': '/en/site-notice',
+    '/datenschutz': '/en/privacy-policy'
+  };
+
+  const storedLang = localStorage.getItem('lp-lang-mode');
+  const browserLang = (navigator.language || '').toLowerCase().startsWith('en') ? 'en' : 'de';
+  let currentLangMode = storedLang === 'de' || storedLang === 'en'
+    ? storedLang
+    : browserLang;
+
+  if (!storedLang) {
+    if (currentLangMode === 'en' && !isPathEN) {
+      window.location.href = deToEn[path] ?? `/en${path === '/' ? '/' : path}`;
+    } else if (currentLangMode === 'de' && isPathEN) {
+      window.location.href = enToDe[path] ?? (path.replace(/^\/en/, '') || '/');
+    }
+  }
 
   function updateLangButton(mode: string) {
     if (!langLabel || !langBtn) return;
     langLabel.textContent = mode.toUpperCase();
     langBtn.setAttribute('aria-label', mode === 'de' ? 'Deutsch aktiv' : 'English active');
+    document.documentElement.setAttribute('lang', mode);
   }
   updateLangButton(currentLangMode);
 
@@ -322,19 +350,6 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     localStorage.setItem('lp-lang-mode', mode);
     currentLangMode = mode;
     updateLangButton(mode);
-
-    const path = window.location.pathname;
-    const isPathEN = path.startsWith('/en');
-    const enToDe: Record<string, string> = {
-      '/en/': '/',
-      '/en/site-notice': '/impressum',
-      '/en/privacy-policy': '/datenschutz'
-    };
-    const deToEn: Record<string, string> = {
-      '/': '/en/',
-      '/impressum': '/en/site-notice',
-      '/datenschutz': '/en/privacy-policy'
-    };
 
     if (mode === 'en' && !isPathEN) {
       window.location.href = deToEn[path] ?? `/en${path === '/' ? '/' : path}`;

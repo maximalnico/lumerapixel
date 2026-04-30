@@ -69,9 +69,10 @@ const canonicalURL = canonical ?? Astro.url.href;
   <!-- Theme init: vor render setzen um FOUC zu verhindern -->
   <script is:inline>
     (function() {
-      const mode = localStorage.getItem('lp-theme-mode') || 'auto';
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const theme = mode === 'auto' ? (prefersDark ? 'dark' : 'light') : mode;
+      const theme = prefersDark ? 'dark' : 'light';
+      localStorage.removeItem('lp-theme');
+      localStorage.removeItem('lp-theme-mode');
       document.documentElement.setAttribute('data-theme', theme);
 
       const updateFavicon = (mode) => {
@@ -292,7 +293,6 @@ const canonicalURL = canonical ?? Astro.url.href;
       const current = html.getAttribute('data-theme');
       const next = current === 'dark' ? 'light' : 'dark';
       html.setAttribute('data-theme', next);
-      localStorage.setItem('lp-theme', next);
       // Icon updaten
       document.querySelectorAll('.theme-toggle__icon').forEach(el => {
         (el as HTMLElement).textContent = next === 'dark' ? '☀️' : '🌙';
@@ -301,11 +301,9 @@ const canonicalURL = canonical ?? Astro.url.href;
 
     window.__updateFavicon = window.__updateFavicon || function(_theme: string) {};
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-      if (!localStorage.getItem('lp-theme')) {
-        const theme = e.matches ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', theme);
-        (window as any).__updateFavicon?.(theme);
-      }
+      const theme = e.matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      (window as any).__updateFavicon?.(theme);
     });
   </script>
 </body>
