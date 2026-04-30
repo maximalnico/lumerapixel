@@ -609,39 +609,51 @@ const schema = {
 
   :global([data-theme="dark"]) {
     --icon-filter: invert(1);
-    --icon-filter-accent: invert(54%) sepia(100%) saturate(500%) hue-rotate(72deg) brightness(1.1);
   }
+
   :global([data-theme="light"]) {
     --icon-filter: invert(0);
-    --icon-filter-accent: invert(20%) sepia(100%) saturate(1000%) hue-rotate(270deg) brightness(0.9);
   }
-  :global([data-theme="light"]) .session-hero__nav-btn { border-color: rgba(10,10,15,0.35); color: rgba(10,10,15,0.85); }
-  :global([data-theme="light"]) .session-hero__nav-icon { filter: invert(0); }
-  :global([data-theme="dark"]) .session-hero__nav-btn:hover { background: #000000; }
-  :global([data-theme="light"]) .session-page { background: #ffffff; }
+
+  :global([data-theme="light"]) .session-page {
+    background: #ffffff;
+  }
+  :global([data-theme="light"]) .session-hero::after {
+    background: rgba(10,10,15,0.12);
+  }
   :global([data-theme="light"]) .session-hero__title,
   :global([data-theme="light"]) .session-hero__sub,
   :global([data-theme="light"]) .session-hero__meta,
-  :global([data-theme="light"]) .session-hero__cat { color: #000000; }
   :global([data-theme="light"]) .session-hero__cat,
   :global([data-theme="light"]) .session-hero__nav-btn,
+  :global([data-theme="light"]) .lightbox__counter {
+    color: #000000;
+  }
+  :global([data-theme="light"]) .session-hero__preview-wrap,
+  :global([data-theme="light"]) .session-hero__cat,
+  :global([data-theme="light"]) .session-hero__nav-btn,
+  :global([data-theme="light"]) .photo-item::before,
   :global([data-theme="light"]) .lightbox__counter,
   :global([data-theme="light"]) .lightbox__btn,
-  :global([data-theme="light"]) .lightbox__close { background: #ffffff; border-color: #404040; }
-  :global([data-theme="light"]) .glass-box {
-    background: rgba(255,255,255,0.27);
-    border-color: rgba(255,255,255,0.37);
+  :global([data-theme="light"]) .lightbox__close {
+    background: #ffffff;
+    border-color: #404040;
+  }
+  :global([data-theme="light"]) .session-hero__nav-icon,
+  :global([data-theme="light"]) .lb-icon {
+    filter: invert(0);
+  }
+  :global([data-theme="light"]) .session-hero__nav-btn:hover,
+  :global([data-theme="light"]) .photo-item:hover::before,
+  :global([data-theme="light"]) .lightbox__btn:hover,
+  :global([data-theme="light"]) .lightbox__close:hover {
+    border-color: #E31C8D;
+    background: #ffffff;
   }
   :global([data-theme="light"]) .lightbox__backdrop {
-    background: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.2);
   }
-  :global([data-theme="dark"]) .lightbox__counter {
-    background: #000000;
-  }
-  :global([data-theme="dark"]) .lightbox__btn:hover,
-  :global([data-theme="dark"]) .lightbox__close:hover {
-    background: #000000;
-  }
+
 
 </style>
 
