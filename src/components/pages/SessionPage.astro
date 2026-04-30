@@ -40,6 +40,12 @@ const photos: string[] = Array.from({ length: session.images }, (_, i) =>
   `${folder}/${String(i).padStart(3, '0')}.webp`
 );
 
+const heroPreviewSlides = photos.slice(0, 8).map((src, i) => ({
+  src,
+  className: i === 0 ? 'hero-slide is-active' : 'hero-slide',
+  loading: i === 0 ? 'eager' : 'lazy'
+}));
+
 const heroSlides = photos.slice(0, 8).map((src, i) => ({
   src,
   className: i === 0 ? 'hero-slide is-active' : 'hero-slide',
@@ -102,10 +108,10 @@ const schema = {
   description={pageDesc}
   ogImage={ogImg}
   ogType="article"
-  canonical={pageUrl}
-  {schema}
-  hreflangDe={deUrl}
-  hreflangEn={enUrl}
+            {heroPreviewSlides.map((slide) => (
+                src={slide.src}
+                class={slide.className}
+                loading={slide.loading}
 >
   <Nav />
 
