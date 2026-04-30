@@ -19,7 +19,7 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     </a>
 
     <div class="lp-nav__links" id="navLinks">
-      <a href={home} class={`lp-nav__link ${isHomeActive ? 'is-active' : ''}`}>
+      <a href={home} class={`lp-nav__link lp-nav__link--home ${isHomeActive ? 'is-active' : ''}`}>
         <img src="/logos/phosphoricons/white/house.svg" class="lp-nav__link-icon" alt="" aria-hidden="true" />
         <span class="lp-nav__link-text">{t(lang, 'nav.home')}</span>
       </a>
@@ -230,6 +230,10 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
       width: 3rem;
       min-width: 3rem;
       padding: 0;
+    }
+
+    .lp-nav__link--home {
+      display: none;
     }
 
     .lp-nav__link-text {
