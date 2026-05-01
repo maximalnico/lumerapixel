@@ -327,7 +327,6 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     const saved = localStorage.getItem(THEME_KEY);
     if (saved === 'dark' || saved === 'light') return;
     const mode = e.matches ? 'dark' : 'light';
-    localStorage.setItem(THEME_KEY, mode);
     document.documentElement.setAttribute('data-theme', mode);
     (window as any).__updateFavicon?.(mode);
     updateThemeBtnState(mode);
