@@ -97,26 +97,26 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
           </div>
         </div>
       </div>
-      <button type="button" id="sessionHeroScrollIndicator" class="session-hero__scroll-indicator" aria-label={isEN ? 'Scroll to photos' : 'Zu den Fotos scrollen'}>
+      <button type="button" id="sessionHeroScrollIndicator" class="session-hero__scroll-indicator" aria-label={t(lang, 'session.scroll_photos')}>
         <img src="/logos/phosphoricons/white/caret-down.svg" alt="" />
       </button>
       {next && (
-        <a class="session-hero__side-nav session-hero__side-nav--left" href={sessionPath(next.slug)} aria-label={isEN ? 'Previous session' : 'Vorherige Session'}>
+        <a class="session-hero__side-nav session-hero__side-nav--left" href={sessionPath(next.slug)} aria-label={t(lang, 'session.prev')}>
           <img src="/logos/phosphoricons/white/caret-left.svg" alt="" />
         </a>
       )}
       {prev && (
-        <a class="session-hero__side-nav session-hero__side-nav--right" href={sessionPath(prev.slug)} aria-label={isEN ? 'Next session' : 'Nächste Session'}>
+        <a class="session-hero__side-nav session-hero__side-nav--right" href={sessionPath(prev.slug)} aria-label={t(lang, 'session.next')}>
           <img src="/logos/phosphoricons/white/caret-right.svg" alt="" />
         </a>
       )}
     </header>
 
-    <section id="session-content" class="photo-section" aria-label="Fotos">
+    <section id="session-content" class="photo-section" aria-label={t(lang, 'session.section_aria')}>
       <div class="photo-grid" id="photoGrid">
         {photos.map((src, i) => (
-          <button class="photo-item" data-index={i} aria-label={isEN ? `Photo ${i + 1} of ${session.images}` : `Foto ${i + 1} von ${session.images}`}>
-            <img src={src} alt={`${title} – ${isEN ? 'Photo' : 'Foto'} ${i + 1}`} loading={i < 4 ? 'eager' : 'lazy'} decoding="async" />
+          <button class="photo-item" data-index={i} aria-label={`${t(lang, 'session.photo')} ${i + 1} ${isEN ? 'of' : 'von'} ${session.images}`}>
+            <img src={src} alt={`${title} – ${t(lang, 'session.photo')} ${i + 1}`} loading={i < 4 ? 'eager' : 'lazy'} decoding="async" />
           </button>
         ))}
       </div>
@@ -124,20 +124,20 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   </main>
 
   <div class="lightbox" id="sessionLightbox" hidden>
-    <button class="lightbox__backdrop" id="sessionLightboxBackdrop" aria-label={isEN ? 'Close lightbox' : 'Lightbox schließen'}></button>
-    <button class="lightbox__close" id="sessionLightboxClose" aria-label={isEN ? 'Close' : 'Schließen'}>
+    <button class="lightbox__backdrop" id="sessionLightboxBackdrop" aria-label={t(lang, 'lightbox.backdrop_close')}></button>
+    <button class="lightbox__close" id="sessionLightboxClose" aria-label={t(lang, 'lightbox.close')}>
       <img src="/logos/phosphoricons/white/x.svg" alt="" />
     </button>
-    <button class="lightbox__nav lightbox__nav--prev" id="sessionLightboxPrev" aria-label={isEN ? 'Previous photo' : 'Vorheriges Foto'}>
+    <button class="lightbox__nav lightbox__nav--prev" id="sessionLightboxPrev" aria-label={t(lang, 'lightbox.prev')}>
       <img src="/logos/phosphoricons/white/caret-left.svg" alt="" />
     </button>
-    <button class="lightbox__nav lightbox__nav--next" id="sessionLightboxNext" aria-label={isEN ? 'Next photo' : 'Nächstes Foto'}>
+    <button class="lightbox__nav lightbox__nav--next" id="sessionLightboxNext" aria-label={t(lang, 'lightbox.next')}>
       <img src="/logos/phosphoricons/white/caret-right.svg" alt="" />
     </button>
     <img class="lightbox__img" id="sessionLightboxImage" src="" alt="" />
     <div class="lightbox__swipe-hint" id="lightboxSwipeHint" aria-hidden="true">
       <img src="/logos/phosphoricons/white/caret-up.svg" alt="" />
-      <span>swipe</span>
+      <span>{t(lang, 'lightbox.swipe')}</span>
       <img src="/logos/phosphoricons/white/caret-down.svg" alt="" />
     </div>
   </div>

@@ -110,14 +110,14 @@ const schema = {
             </div>
           </div>
         </div>
-        <button id="heroToFeaturedIndicator" class="fullscreen-header__scroll-indicator" type="button" aria-label="Zu Featured Sessions scrollen">
+        <button id="heroToFeaturedIndicator" class="fullscreen-header__scroll-indicator" type="button" aria-label={t(lang, 'hero.scroll_featured')}>
           <img src="/logos/phosphoricons/white/caret-down.svg" alt="" />
         </button>
       </section>
 
-      <section class="featured-split motion-safe:animate-in motion-safe:slide-in-from-bottom-4" id="featured-sessions" aria-label="Featured Sessions">
+      <section class="featured-split motion-safe:animate-in motion-safe:slide-in-from-bottom-4" id="featured-sessions" aria-label={t(lang, 'section.featured')}>
         <div class="featured-split__heading-lab">
-          <h2 class="featured-split__heading">Featured Sessions</h2>
+          <h2 class="featured-split__heading">{t(lang, 'section.featured')}</h2>
         </div>
         <div class="featured-split__grid">
           {featuredSessions.map((s: any) => {
@@ -141,18 +141,18 @@ const schema = {
       <div
         id="latest-session-strip"
         class="latest-session-strip"
-        aria-label={isEN ? 'All sessions preview' : 'Alle Sessions Vorschau'}
+        aria-label={t(lang, 'section.all_aria')}
       >
         <img id="allSessionsSlideshowImage" src={`${headerSession.folder}/000.webp`} data-slides={allSessionCovers.join('|')} alt={st(headerSession)} loading="lazy" decoding="async" />
         <div class="masonry-home__filters-lab latest-session-strip__heading-lab">
-          <h2 class="masonry-home__filters-title">{isEN ? 'ALL SESSIONS' : 'ALLE SESSIONS'}</h2>
+          <h2 class="masonry-home__filters-title">{t(lang, 'section.all')}</h2>
         </div>
       </div>
 
       <section class="masonry-home__filters" aria-label="Session Filter">
         <div class="masonry-home__filters-controls">
           <button class="masonry-home__filter-btn is-active" data-session-filter="all" type="button">
-            {isEN ? 'All' : 'Alle'}
+            {t(lang, 'filter.all')}
           </button>
           {sessionCategories.map((category) => (
             <button class="masonry-home__filter-btn" data-session-filter={category} type="button">

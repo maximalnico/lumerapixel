@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { t } from '../i18n';
 ---
 <Base title="404 – Seite nicht gefunden · LumeraPixel">
   <Nav />
@@ -13,14 +14,22 @@ import Footer from '../components/Footer.astro';
         <div class="not-found__header">
           <div class="not-found__divider" aria-hidden="true"></div>
           <h1 class="not-found__code">404</h1>
-          <p class="not-found__title" id="nf-title">Seite nicht gefunden</p>
+          <p class="not-found__title" id="nf-title"
+            data-de={t('de', '404.title')}
+            data-en={t('en', '404.title')}>{t('de', '404.title')}</p>
         </div>
 
         <div class="glass-box">
-          <p id="nf-text">Die gesuchte Seite existiert nicht oder wurde verschoben.</p>
-          <a href="/" class="not-found__btn" id="nf-btn">
+          <p id="nf-text"
+            data-de={t('de', '404.text')}
+            data-en={t('en', '404.text')}>{t('de', '404.text')}</p>
+          <a href="/" class="not-found__btn" id="nf-btn"
+            data-href-de="/"
+            data-href-en="/en/">
             <img src="/logos/phosphoricons/white/caret-left.svg" class="not-found__btn-icon" alt="" />
-            <span id="nf-btn-label">Zurück zur Startseite</span>
+            <span id="nf-btn-label"
+              data-de={t('de', '404.back')}
+              data-en={t('en', '404.back')}>{t('de', '404.back')}</span>
           </a>
         </div>
 
@@ -152,15 +161,16 @@ import Footer from '../components/Footer.astro';
 </style>
 
 <script>
-  const isEN = window.location.pathname.startsWith('/en');
-  if (isEN) {
-    const title = document.getElementById('nf-title');
-    const text = document.getElementById('nf-text');
+  const lang = window.location.pathname.startsWith('/en') ? 'en' : 'de';
+  if (lang === 'en') {
+    const apply = (id: string) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = (el as HTMLElement).dataset.en ?? el.textContent;
+    };
+    apply('nf-title');
+    apply('nf-text');
+    apply('nf-btn-label');
     const btn = document.getElementById('nf-btn');
-    const label = document.getElementById('nf-btn-label');
-    if (title) title.textContent = 'Page not found';
-    if (text) text.textContent = 'The page you are looking for does not exist or has been moved.';
-    if (btn) btn.setAttribute('href', '/en/');
-    if (label) label.textContent = 'Back to home';
+    if (btn) btn.setAttribute('href', (btn as HTMLElement).dataset.hrefEn ?? '/en/');
   }
 </script>

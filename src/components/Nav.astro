@@ -38,10 +38,16 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     </div>
 
     <div class="lp-nav__controls">
-      <button class="lp-nav__quick-btn" id="themeQuickToggle" aria-label="Theme wechseln">
+      <button class="lp-nav__quick-btn" id="themeQuickToggle"
+        aria-label={t(lang, 'nav.toggle_theme')}
+        data-label-dark={t(lang, 'nav.theme_dark')}
+        data-label-light={t(lang, 'nav.theme_light')}>
         <img src="/logos/phosphoricons/white/moon.svg" class="lp-nav__quick-icon" id="themeQuickIcon" alt="" />
       </button>
-      <button class="lp-nav__quick-btn" id="langQuickToggle" aria-label="Sprache wechseln">
+      <button class="lp-nav__quick-btn" id="langQuickToggle"
+        aria-label={t(lang, 'nav.toggle_lang')}
+        data-label-de={t(lang, 'nav.lang_de')}
+        data-label-en={t(lang, 'nav.lang_en')}>
         <span class="lp-nav__quick-label" id="langQuickLabel">DE</span>
       </button>
     </div>
@@ -316,7 +322,9 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     themeIcon.src = mode === 'dark'
       ? `${WHITE_ICON_BASE}/moon.svg`
       : `${WHITE_ICON_BASE}/sun.svg`;
-    themeBtn.setAttribute('aria-label', mode === 'dark' ? 'Dark Mode aktiv' : 'Light Mode aktiv');
+    themeBtn.setAttribute('aria-label', mode === 'dark'
+      ? (themeBtn.dataset.labelDark || 'Dark Mode')
+      : (themeBtn.dataset.labelLight || 'Light Mode'));
   }
 
   if (themeIcon && !themeIcon.src.includes('/logos/phosphoricons/white/')) {
@@ -377,7 +385,9 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   function updateLangButton(mode: string) {
     if (!langLabel || !langBtn) return;
     langLabel.textContent = mode.toUpperCase();
-    langBtn.setAttribute('aria-label', mode === 'de' ? 'Deutsch aktiv' : 'English active');
+    langBtn.setAttribute('aria-label', mode === 'de'
+      ? (langBtn.dataset.labelDe || 'DE')
+      : (langBtn.dataset.labelEn || 'EN'));
     document.documentElement.setAttribute('lang', mode);
   }
   updateLangButton(currentLangMode);
