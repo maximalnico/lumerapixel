@@ -1,58 +1,74 @@
 ---
 import '../styles/tailwind.css';
+import { ClientRouter } from 'astro:transitions';
 export interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  ogImageAlt?: string;
   ogType?: string;
+  articleDate?: string;
   canonical?: string;
   schema?: object;
   hreflangDe?: string;
   hreflangEn?: string;
+  htmlLang?: string;
 }
 const {
   title = 'LumeraPixel – Fotografie by MaximalNico',
   description = 'Lost Places, Automotive & Aerial Photography. LumeraPixel ist das Foto-Projekt von MaximalNico – Nico Henkel aus Bayern.',
   ogImage = 'https://lumerapixel.com/logos/lplong.svg',
+  ogImageAlt = 'LumeraPixel',
   ogType = 'website',
+  articleDate,
   canonical,
   schema,
   hreflangDe,
   hreflangEn,
+  htmlLang = 'de',
 } = Astro.props;
 const canonicalURL = canonical ?? Astro.url.href;
+const ogLocale = htmlLang === 'en' ? 'en_US' : 'de_DE';
 ---
 <!doctype html>
-<html lang="de" data-theme="dark">
+<html lang={htmlLang} data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" id="metaThemeColor" content="#000000" />
   <title>{title}</title>
   <meta name="description" content={description} />
   <meta name="author" content="Nico Henkel" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href={canonicalURL} />
   <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+  <ClientRouter />
 
   <!-- OpenGraph -->
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={ogImage} />
+  <meta property="og:image:alt" content={ogImageAlt} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:type" content={ogType} />
   <meta property="og:url" content={canonicalURL} />
   <meta property="og:site_name" content="LumeraPixel" />
-  <meta property="og:locale" content="de_DE" />
+  <meta property="og:locale" content={ogLocale} />
+  {ogType === 'article' && <meta property="article:author" content="Nico Henkel" />}
+  {ogType === 'article' && articleDate && <meta property="article:published_time" content={articleDate} />}
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
+  <meta name="twitter:image:alt" content={ogImageAlt} />
 
   <!-- Performance -->
-  <link rel="dns-prefetch" href="https://lumerapixel.com" />
+  <link rel="preconnect" href="https://lumerapixel.b-cdn.net" />
+  <link rel="dns-prefetch" href="https://lumerapixel.b-cdn.net" />
+  <link rel="preload" href="/fonts/Satoshi-Variable.woff2" as="font" type="font/woff2" crossorigin />
 
   <!-- hreflang -->
   {hreflangDe && <link rel="alternate" hreflang="de" href={hreflangDe} />}
@@ -66,22 +82,30 @@ const canonicalURL = canonical ?? Astro.url.href;
   <link rel="icon" id="favicon" href="/logos/lplogo-black.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/logos/lplogo-black.svg" />
 
-  <!-- Theme init: vor render setzen um FOUC zu verhindern -->
+  <!-- Theme init: prevent FOUC and persist across View Transitions -->
   <script is:inline>
     (function() {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const theme = prefersDark ? 'dark' : 'light';
       localStorage.removeItem('lp-theme');
-      localStorage.removeItem('lp-theme-mode');
+      const stored = localStorage.getItem('lp-theme-mode');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = (stored === 'dark' || stored === 'light') ? stored : (prefersDark ? 'dark' : 'light');
       document.documentElement.setAttribute('data-theme', theme);
 
       const updateFavicon = (mode) => {
         const favicon = document.getElementById('favicon');
         if (favicon) favicon.setAttribute('href', mode === 'dark' ? '/logos/lplogo-white.svg' : '/logos/lplogo-black.svg');
+        const themeMeta = document.getElementById('metaThemeColor');
+        if (themeMeta) themeMeta.setAttribute('content', mode === 'dark' ? '#000000' : '#ffffff');
       };
 
       window.__updateFavicon = updateFavicon;
       updateFavicon(theme);
+
+      // Preserve data-theme across View Transitions swaps
+      document.addEventListener('astro:before-swap', (e) => {
+        const current = document.documentElement.getAttribute('data-theme');
+        if (current) e.newDocument.documentElement.setAttribute('data-theme', current);
+      });
     })();
   </script>
 
@@ -90,14 +114,14 @@ const canonicalURL = canonical ?? Astro.url.href;
     /* ── FONTS ── */
     @font-face {
       font-family: 'Satoshi';
-      src: url('/fonts/Switzer-Variable.woff2') format('woff2');
+      src: url('/fonts/Satoshi-Variable.woff2') format('woff2');
       font-weight: 300 900;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Satoshi';
-      src: url('/fonts/Switzer-VariableItalic.woff2') format('woff2');
+      src: url('/fonts/Satoshi-VariableItalic.woff2') format('woff2');
       font-weight: 300 900;
       font-style: italic;
       font-display: swap;
@@ -106,7 +130,6 @@ const canonicalURL = canonical ?? Astro.url.href;
     /* ── DARK TOKENS ── */
     :root,
     [data-theme="dark"] {
-      --accent: #404040;
       --accent: #404040;
       --bg:            #000000;
       --bg-card:       rgba(255,255,255,0.04);
@@ -157,7 +180,7 @@ const canonicalURL = canonical ?? Astro.url.href;
       --quick:   180ms ease-out;
       --flow:    340ms cubic-bezier(0.16, 1, 0.3, 1);
     }
-    @media (max-width: 768px) {
+    @media (max-width: 820px) {
       :root { --nav-h: 3rem; }
     }
 
@@ -189,6 +212,13 @@ const canonicalURL = canonical ?? Astro.url.href;
     a { color: inherit; text-decoration: none; }
     button, input { font: inherit; color: inherit; background: none; border: none; outline: none; appearance: none; }
     ul { list-style: none; }
+
+    /* ── FOCUS ── */
+    :focus-visible {
+      outline: 2.7px solid #E31C8D;
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
 
     /* ── GLASS ── */
     [data-theme="light"] .glass {
@@ -275,36 +305,29 @@ const canonicalURL = canonical ?? Astro.url.href;
 </head>
 <body>
   <slot />
-  <script>
-    // ── Reveal on scroll ──
-    const revealEls = document.querySelectorAll('.reveal');
-    if (revealEls.length) {
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
-        });
-      }, { threshold: 0.08 });
-      revealEls.forEach(el => io.observe(el));
-    }
-
-    // ── Theme toggle ──
-    window.__toggleTheme = function() {
-      const html = document.documentElement;
-      const current = html.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', next);
-      // Icon updaten
-      document.querySelectorAll('.theme-toggle__icon').forEach(el => {
-        (el as HTMLElement).textContent = next === 'dark' ? '☀️' : '🌙';
+<script>
+  // Re-initialize reveal animation on every page load
+  function initReveal() {
+    const revealEls = document.querySelectorAll('.reveal:not(.is-visible)');
+    if (!revealEls.length) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
       });
-    };
+    }, { threshold: 0.08 });
+    revealEls.forEach(el => io.observe(el));
+  }
+  document.addEventListener('astro:page-load', initReveal);
 
-    window.__updateFavicon = window.__updateFavicon || function(_theme: string) {};
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-      const theme = e.matches ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', theme);
-      (window as any).__updateFavicon?.(theme);
-    });
-  </script>
+  // System theme change listener — registered once
+  window.__updateFavicon = window.__updateFavicon || function(_theme: string) {};
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    const saved = localStorage.getItem('lp-theme-mode');
+    if (saved === 'dark' || saved === 'light') return;
+    const theme = e.matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    (window as any).__updateFavicon?.(theme);
+  });
+</script>
 </body>
 </html>

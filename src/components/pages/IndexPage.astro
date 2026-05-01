@@ -94,9 +94,10 @@ const schema = {
   {schema}
   hreflangDe={`${siteUrl}/`}
   hreflangEn={`${siteUrl}/en/`}
+  htmlLang={lang}
 >
   <Nav />
-  <main>
+  <main id="main-content">
     <section class="masonry-home">
       <section class="fullscreen-header motion-safe:animate-in motion-safe:fade-in" aria-label="Header">
         <div class="fullscreen-header__frame">
@@ -109,14 +110,14 @@ const schema = {
             </div>
           </div>
         </div>
-        <button id="heroToFeaturedIndicator" class="fullscreen-header__scroll-indicator" type="button" aria-label="Zu Featured Sessions scrollen">
+        <button id="heroToFeaturedIndicator" class="fullscreen-header__scroll-indicator" type="button" aria-label={t(lang, 'hero.scroll_featured')}>
           <img src="/logos/phosphoricons/white/caret-down.svg" alt="" />
         </button>
       </section>
 
-      <section class="featured-split motion-safe:animate-in motion-safe:slide-in-from-bottom-4" id="featured-sessions" aria-label="Featured Sessions">
+      <section class="featured-split motion-safe:animate-in motion-safe:slide-in-from-bottom-4" id="featured-sessions" aria-label={t(lang, 'section.featured')}>
         <div class="featured-split__heading-lab">
-          <h2 class="featured-split__heading">Featured Sessions</h2>
+          <h2 class="featured-split__heading">{t(lang, 'section.featured')}</h2>
         </div>
         <div class="featured-split__grid">
           {featuredSessions.map((s: any) => {
@@ -140,21 +141,21 @@ const schema = {
       <div
         id="latest-session-strip"
         class="latest-session-strip"
-        aria-label={isEN ? 'All sessions preview' : 'Alle Sessions Vorschau'}
+        aria-label={t(lang, 'section.all_aria')}
       >
         <img id="allSessionsSlideshowImage" src={`${headerSession.folder}/000.webp`} data-slides={allSessionCovers.join('|')} alt={st(headerSession)} loading="lazy" decoding="async" />
         <div class="masonry-home__filters-lab latest-session-strip__heading-lab">
-          <h2 class="masonry-home__filters-title">{isEN ? 'ALL SESSIONS' : 'ALLE SESSIONS'}</h2>
+          <h2 class="masonry-home__filters-title">{t(lang, 'section.all')}</h2>
         </div>
       </div>
 
       <section class="masonry-home__filters" aria-label="Session Filter">
         <div class="masonry-home__filters-controls">
-          <button class="masonry-home__filter-btn is-active" data-session-filter="all" type="button">
-            {isEN ? 'All' : 'Alle'}
+          <button class="masonry-home__filter-btn is-active" data-session-filter="all" type="button" aria-pressed="true">
+            {t(lang, 'filter.all')}
           </button>
           {sessionCategories.map((category) => (
-            <button class="masonry-home__filter-btn" data-session-filter={category} type="button">
+            <button class="masonry-home__filter-btn" data-session-filter={category} type="button" aria-pressed="false">
               {category}
             </button>
           ))}
@@ -258,7 +259,7 @@ const schema = {
     width: 4.6rem;
     height: 4.6rem;
     border-radius: 0 14px 0 14px;
-    border: 2.7px solid #404040;
+    border: 2.7px solid #bfbfbf;
     background: #000000;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -365,7 +366,7 @@ const schema = {
   }
 
   .masonry-home__filter-btn {
-    border: 2.7px solid #404040;
+    border: 2.7px solid #bfbfbf;
     font-weight: 550;
     background: #000000;
     color: #ffffff;
@@ -461,7 +462,7 @@ const schema = {
     transform-origin: center center;
     text-align: center;
     border-radius: 0 14px 0 14px;
-    border: 2.7px solid #404040;
+    border: 2.7px solid #bfbfbf;
     background: #000000;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -476,7 +477,7 @@ const schema = {
     font-weight: 500;
     letter-spacing: 0.09em;
     padding: 0.42rem 0.78rem;
-    border-color: #404040;
+    border-color: #bfbfbf;
     background: #000000;
     color: #ffffff;
   }
@@ -504,7 +505,7 @@ const schema = {
     overflow: hidden;
     display: block;
     background: #000000;
-    border: 2.7px solid #404040;
+    border: 2.7px solid #bfbfbf;
     border-radius: 0 14px 0 14px;
     break-inside: avoid;
     margin-bottom: var(--masonry-gap);
@@ -533,7 +534,7 @@ const schema = {
   .masonry-card__pill {
     width: min(90%, max-content);
     text-align: center;
-    border: 2.7px solid #404040;
+    border: 2.7px solid #bfbfbf;
     background: #000000;
     border-radius: 0 14px 0 14px;
     opacity: 1;
@@ -552,7 +553,7 @@ const schema = {
     font-size: 0.62rem;
     text-transform: uppercase;
     letter-spacing: 0.09em;
-    border-color: #404040;
+    border-color: #bfbfbf;
     background: #000000;
     color: #ffffff;
   }
@@ -579,18 +580,27 @@ const schema = {
   }
 
   @media (max-width: 700px) {
-    .featured-split {
-      height: auto;
-    }
     .featured-split__grid { grid-template-columns: 1fr; }
-    .featured-split__item {
-      min-height: 60svh;
-    }
     .masonry-home__grid { columns: 2; }
   }
 
   @media (max-width: 480px) {
     .masonry-home__grid { columns: 1; }
+    .masonry-card { height: 100px; border-color: #E31C8D; }
+    .masonry-card img { height: 100%; }
+    .masonry-card__overlay {
+      align-content: center;
+      padding: 0.5rem;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .fullscreen-header__scroll-indicator {
+      display: none;
+    }
+    .latest-session-strip {
+      height: 120px;
+    }
   }
 
   .fullscreen-header__logo--light { display: none; }
@@ -680,81 +690,77 @@ const schema = {
 </style>
 
 <script>
-  // Random slideshow for the "All Sessions" strip.
-  const allSessionsImg = document.getElementById('allSessionsSlideshowImage') as HTMLImageElement | null;
-  if (allSessionsImg) {
-    const slides = (allSessionsImg.dataset.slides || '')
-      .split('|')
-      .map((s) => s.trim())
-      .filter(Boolean);
+  let slideshowInterval: ReturnType<typeof setInterval> | null = null;
 
-    if (slides.length > 1) {
-      let current = allSessionsImg.src;
-      setInterval(() => {
-        const choices = slides.filter((slide) => !current.endsWith(slide));
-        const nextPool = choices.length ? choices : slides;
-        const next = nextPool[Math.floor(Math.random() * nextPool.length)];
-        allSessionsImg.style.opacity = '0.3';
-        const isLightMode = document.documentElement.getAttribute('data-theme') === 'light';
-        allSessionsImg.style.filter = isLightMode
-          ? 'grayscale(1)'
-          : 'grayscale(1) brightness(0.72)';
-        setTimeout(() => {
-          current = next;
-          allSessionsImg.src = next;
-          allSessionsImg.style.opacity = '1';
-          allSessionsImg.style.filter = isLightMode
-            ? 'grayscale(1)'
-            : 'grayscale(1) brightness(0.72)';
-        }, 280);
-      }, 2700);
+  document.addEventListener('astro:before-swap', () => {
+    if (slideshowInterval) { clearInterval(slideshowInterval); slideshowInterval = null; }
+  });
+
+  document.addEventListener('astro:page-load', () => {
+    // All sessions slideshow
+    const allSessionsImg = document.getElementById('allSessionsSlideshowImage') as HTMLImageElement | null;
+    if (allSessionsImg) {
+      const slides = (allSessionsImg.dataset.slides || '').split('|').map(s => s.trim()).filter(Boolean);
+      if (slides.length > 1) {
+        let current = allSessionsImg.src;
+        slideshowInterval = setInterval(() => {
+          const choices = slides.filter(slide => !current.endsWith(slide));
+          const nextPool = choices.length ? choices : slides;
+          const next = nextPool[Math.floor(Math.random() * nextPool.length)];
+          allSessionsImg.style.opacity = '0.3';
+          const isLightMode = document.documentElement.getAttribute('data-theme') === 'light';
+          allSessionsImg.style.filter = isLightMode ? 'grayscale(1)' : 'grayscale(1) brightness(0.72)';
+          setTimeout(() => {
+            current = next;
+            allSessionsImg.src = next;
+            allSessionsImg.style.opacity = '1';
+            allSessionsImg.style.filter = isLightMode ? 'grayscale(1)' : 'grayscale(1) brightness(0.72)';
+          }, 280);
+        }, 2700);
+      }
     }
-  }
 
-  const filterButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('.masonry-home__filter-btn'));
-  const masonryCards = Array.from(document.querySelectorAll<HTMLElement>('.masonry-card'));
+    // Session filter
+    const filterButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('.masonry-home__filter-btn'));
+    const masonryCards = Array.from(document.querySelectorAll<HTMLElement>('.masonry-card'));
 
-  function applySessionFilter(filterValue: string) {
-    masonryCards.forEach((card) => {
-      const category = card.dataset.category;
-      const isVisible = filterValue === 'all' || category === filterValue;
-      card.style.display = isVisible ? 'block' : 'none';
+    function applySessionFilter(filterValue: string) {
+      masonryCards.forEach(card => {
+        const isVisible = filterValue === 'all' || card.dataset.category === filterValue;
+        card.style.display = isVisible ? 'block' : 'none';
+      });
+      filterButtons.forEach(btn => {
+        const active = btn.dataset.sessionFilter === filterValue;
+        btn.classList.toggle('is-active', active);
+        btn.setAttribute('aria-pressed', String(active));
+      });
+    }
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => applySessionFilter(btn.dataset.sessionFilter || 'all'));
     });
 
-    filterButtons.forEach((btn) => {
-      btn.classList.toggle('is-active', btn.dataset.sessionFilter === filterValue);
+    // Scroll indicators
+    const heroToFeaturedIndicator = document.getElementById('heroToFeaturedIndicator') as HTMLButtonElement | null;
+    const firstFeaturedCard = document.querySelector<HTMLElement>('.featured-split__item');
+    const featuredToLatestIndicator = document.getElementById('featuredToLatestIndicator') as HTMLButtonElement | null;
+    const latestSessionStrip = document.getElementById('latest-session-strip');
+
+    function getGap() {
+      const mainEl = document.querySelector('main');
+      return Number.parseFloat(getComputedStyle(mainEl || document.documentElement).getPropertyValue('--masonry-gap')) || 0;
+    }
+
+    heroToFeaturedIndicator?.addEventListener('click', () => {
+      if (!firstFeaturedCard) return;
+      const top = firstFeaturedCard.getBoundingClientRect().top + window.scrollY - getGap();
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
     });
-  }
 
-  filterButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      applySessionFilter(btn.dataset.sessionFilter || 'all');
+    featuredToLatestIndicator?.addEventListener('click', () => {
+      if (!latestSessionStrip) return;
+      const top = latestSessionStrip.getBoundingClientRect().top + window.scrollY - getGap();
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
     });
   });
-
-  const heroToFeaturedIndicator = document.getElementById('heroToFeaturedIndicator') as HTMLButtonElement | null;
-  const firstFeaturedCard = document.querySelector<HTMLElement>('.featured-split__item');
-  const featuredToLatestIndicator = document.getElementById('featuredToLatestIndicator') as HTMLButtonElement | null;
-  const latestSessionStrip = document.getElementById('latest-session-strip');
-
-  heroToFeaturedIndicator?.addEventListener('click', () => {
-    if (!firstFeaturedCard) return;
-    const mainEl = document.querySelector('main');
-    const masonryGapRaw = getComputedStyle(mainEl || document.documentElement).getPropertyValue('--masonry-gap');
-    const masonryGap = Number.parseFloat(masonryGapRaw) || 0;
-    const top = firstFeaturedCard.getBoundingClientRect().top + window.scrollY - masonryGap;
-    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-  });
-
-  featuredToLatestIndicator?.addEventListener('click', () => {
-    if (!latestSessionStrip) return;
-    const mainEl = document.querySelector('main');
-    const masonryGapRaw = getComputedStyle(mainEl || document.documentElement).getPropertyValue('--masonry-gap');
-    const masonryGap = Number.parseFloat(masonryGapRaw) || 0;
-    const top = latestSessionStrip.getBoundingClientRect().top + window.scrollY - masonryGap;
-    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-  });
-
-
-
 </script>

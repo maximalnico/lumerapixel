@@ -2,25 +2,34 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { t } from '../i18n';
 ---
 <Base title="404 – Seite nicht gefunden · LumeraPixel">
   <Nav />
 
   <div class="page-wrap">
-    <main class="not-found">
+    <main class="not-found" id="main-content">
       <div class="not-found__wrap">
 
         <div class="not-found__header">
           <div class="not-found__divider" aria-hidden="true"></div>
           <h1 class="not-found__code">404</h1>
-          <p class="not-found__title">Seite nicht gefunden</p>
+          <p class="not-found__title" id="nf-title"
+            data-de={t('de', '404.title')}
+            data-en={t('en', '404.title')}>{t('de', '404.title')}</p>
         </div>
 
         <div class="glass-box">
-          <p>Die gesuchte Seite existiert nicht oder wurde verschoben.</p>
-          <a href="/" class="not-found__btn">
+          <p id="nf-text"
+            data-de={t('de', '404.text')}
+            data-en={t('en', '404.text')}>{t('de', '404.text')}</p>
+          <a href="/" class="not-found__btn" id="nf-btn"
+            data-href-de="/"
+            data-href-en="/en/">
             <img src="/logos/phosphoricons/white/caret-left.svg" class="not-found__btn-icon" alt="" />
-            Zurück zur Startseite
+            <span id="nf-btn-label"
+              data-de={t('de', '404.back')}
+              data-en={t('en', '404.back')}>{t('de', '404.back')}</span>
           </a>
         </div>
 
@@ -150,3 +159,18 @@ import Footer from '../components/Footer.astro';
   [data-theme="dark"] .not-found__btn:hover { background: linear-gradient(277deg, rgba(255,0,0,0.32), rgba(255,119,0,0.32), rgba(255,238,0,0.32), rgba(0,204,0,0.32), rgba(0,136,255,0.32), rgba(136,0,255,0.32)); }
   [data-theme="light"] .not-found__btn-icon { filter: invert(0); }
 </style>
+
+<script>
+  const lang = window.location.pathname.startsWith('/en') ? 'en' : 'de';
+  if (lang === 'en') {
+    const apply = (id: string) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = (el as HTMLElement).dataset.en ?? el.textContent;
+    };
+    apply('nf-title');
+    apply('nf-text');
+    apply('nf-btn-label');
+    const btn = document.getElementById('nf-btn');
+    if (btn) btn.setAttribute('href', (btn as HTMLElement).dataset.hrefEn ?? '/en/');
+  }
+</script>

@@ -21,11 +21,12 @@ const sessionLastModBySlug = new Map(
 );
 
 export default defineConfig({
+  prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
   integrations: [
     compress(),
     sitemap({
       filter: (page) => !page.endsWith('/404'),
-      i18n: { defaultLocale: 'de' },
+      i18n: { defaultLocale: 'de', locales: { de: 'de-DE', en: 'en-US' } },
       serialize(item) {
         const url = new URL(item.url);
         const slugMatch = url.pathname.match(/^\/(?:en\/)?sessions\/([^/]+)\/?$/);

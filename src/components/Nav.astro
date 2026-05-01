@@ -14,30 +14,40 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 
 <nav class="lp-nav" aria-label="Main navigation">
   <div class="lp-nav__island">
-    <a href={home} class="lp-nav__brand" aria-label="LumeraPixel Home">
+    <a href={home} class={`lp-nav__brand${isHomeActive ? ' is-active' : ''}`} aria-label="LumeraPixel Home">
       <img src="/logos/lplogo-black.svg" alt="LumeraPixel" class="lp-nav__logo" id="navBrandLogo" />
     </a>
 
     <div class="lp-nav__links" id="navLinks">
-      <a href={home} class={`lp-nav__link ${isHomeActive ? 'is-active' : ''}`}>
-        <span>{t(lang, 'nav.home')}</span>
+      <a href={home} class={`lp-nav__link lp-nav__link--home ${isHomeActive ? 'is-active' : ''}`}>
+        <img src="/logos/phosphoricons/white/house.svg" class="lp-nav__link-icon" alt="" aria-hidden="true" />
+        <span class="lp-nav__link-text">{t(lang, 'nav.home')}</span>
       </a>
       <a href={contact} class="lp-nav__link">
-        <span>{t(lang, 'nav.contact')}</span>
+        <img src="/logos/phosphoricons/white/envelope-simple.svg" class="lp-nav__link-icon" alt="" aria-hidden="true" />
+        <span class="lp-nav__link-text">{t(lang, 'nav.contact')}</span>
       </a>
       <a href={legal} class={`lp-nav__link ${isLegalActive ? 'is-active' : ''}`}>
-        <span>{t(lang, 'nav.legal')}</span>
+        <img src="/logos/phosphoricons/white/address-book-tabs.svg" class="lp-nav__link-icon" alt="" aria-hidden="true" />
+        <span class="lp-nav__link-text">{t(lang, 'nav.legal')}</span>
       </a>
       <a href={privacy} class={`lp-nav__link ${isPrivacyActive ? 'is-active' : ''}`}>
-        <span>{t(lang, 'nav.privacy')}</span>
+        <img src="/logos/phosphoricons/white/lock-key.svg" class="lp-nav__link-icon" alt="" aria-hidden="true" />
+        <span class="lp-nav__link-text">{t(lang, 'nav.privacy')}</span>
       </a>
     </div>
 
     <div class="lp-nav__controls">
-      <button class="lp-nav__quick-btn" id="themeQuickToggle" aria-label="Theme wechseln">
+      <button class="lp-nav__quick-btn" id="themeQuickToggle"
+        aria-label={t(lang, 'nav.toggle_theme')}
+        data-label-dark={t(lang, 'nav.theme_dark')}
+        data-label-light={t(lang, 'nav.theme_light')}>
         <img src="/logos/phosphoricons/white/moon.svg" class="lp-nav__quick-icon" id="themeQuickIcon" alt="" />
       </button>
-      <button class="lp-nav__quick-btn" id="langQuickToggle" aria-label="Sprache wechseln">
+      <button class="lp-nav__quick-btn" id="langQuickToggle"
+        aria-label={t(lang, 'nav.toggle_lang')}
+        data-label-de={t(lang, 'nav.lang_de')}
+        data-label-en={t(lang, 'nav.lang_en')}>
         <span class="lp-nav__quick-label" id="langQuickLabel">DE</span>
       </button>
     </div>
@@ -95,6 +105,11 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   }
   .lp-nav__brand:hover {
     border-color: #E31C8D;
+  }
+  @media (max-width: 820px) {
+    .lp-nav__brand.is-active {
+      border-color: #E31C8D;
+    }
   }
 
   .lp-nav__logo {
@@ -181,6 +196,14 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
     pointer-events: none;
   }
 
+  .lp-nav__link-icon {
+    display: none;
+    width: 1.4rem;
+    height: 1.4rem;
+    pointer-events: none;
+    flex-shrink: 0;
+  }
+
   .lp-nav__quick-label {
     font-family: 'Satoshi';
     font-weight: 500;
@@ -194,31 +217,45 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 
   @media (max-width: 820px) {
     .lp-nav {
-      width: calc(100vw - (2 * var(--gap-xs)));
-      left: var(--gap-xs);
-      right: var(--gap-xs);
+      width: auto;
+      max-width: none;
+      left: 7px;
+      right: 7px;
       transform: none;
-      top: var(--gap-xs);
+      top: 7px;
     }
 
     .lp-nav__island {
-      grid-template-columns: 1fr;
-      align-items: stretch;
-      gap: 0.35rem;
-    }
-
-    .lp-nav__brand {
-      justify-content: flex-start;
+      width: 100%;
+      grid-template-columns: auto auto auto;
+      justify-content: center;
+      align-items: center;
+      gap: 0.34rem;
     }
 
     .lp-nav__links {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 0.34rem;
     }
 
     .lp-nav__link {
-      font-size: 0.86rem;
-      letter-spacing: 0.08em;
+      width: 3rem;
+      min-width: 3rem;
+      padding: 0;
+    }
+
+    .lp-nav__link--home {
+      display: none;
+    }
+
+    .lp-nav__link-text {
+      display: none;
+    }
+
+    .lp-nav__link-icon {
+      display: block;
     }
 
     .lp-nav__controls {
@@ -255,7 +292,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   [data-theme="light"] .lp-nav__link:hover,
   [data-theme="light"] .lp-nav__link.is-active,
   [data-theme="light"] .lp-nav__quick-btn:hover,
-  [data-theme="light"] .lp-nav__brand:hover {
+  [data-theme="light"] .lp-nav__brand:hover,
+  [data-theme="light"] .lp-nav__brand.is-active {
     background: #ffffff;
     color: #000000;
     border-color: #E31C8D;
@@ -263,7 +301,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
   [data-theme="light"] .lp-nav__quick-label {
     color: #000000;
   }
-  [data-theme="light"] .lp-nav__quick-icon {
+  [data-theme="light"] .lp-nav__quick-icon,
+  [data-theme="light"] .lp-nav__link-icon {
     filter: invert(1);
   }
 
@@ -271,102 +310,100 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 
 <script>
   const WHITE_ICON_BASE = '/logos/phosphoricons/white';
-  const themeBtn = document.getElementById('themeQuickToggle') as HTMLButtonElement;
-  const themeIcon = document.getElementById('themeQuickIcon') as HTMLImageElement;
-  const navBrandLogo = document.getElementById('navBrandLogo') as HTMLImageElement;
-  const langBtn = document.getElementById('langQuickToggle') as HTMLButtonElement;
-  const langLabel = document.getElementById('langQuickLabel') as HTMLElement;
   const THEME_KEY = 'lp-theme-mode';
-  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-  const storedTheme = localStorage.getItem(THEME_KEY);
-  const prefersDark = mediaQuery.matches;
-  let currentMode = storedTheme === 'dark' || storedTheme === 'light'
-    ? storedTheme
-    : (prefersDark ? 'dark' : 'light');
 
-  function updateThemeButton(mode: string) {
+  function updateThemeBtnState(mode: string) {
+    const themeBtn = document.getElementById('themeQuickToggle') as HTMLButtonElement | null;
+    const themeIcon = document.getElementById('themeQuickIcon') as HTMLImageElement | null;
     if (!themeBtn || !themeIcon) return;
-    themeIcon.src = mode === 'dark'
-      ? `${WHITE_ICON_BASE}/moon.svg`
-      : `${WHITE_ICON_BASE}/sun.svg`;
-    themeBtn.setAttribute('aria-label', mode === 'dark' ? 'Dark Mode aktiv' : 'Light Mode aktiv');
+    themeIcon.src = mode === 'dark' ? `${WHITE_ICON_BASE}/moon.svg` : `${WHITE_ICON_BASE}/sun.svg`;
+    themeBtn.setAttribute('aria-label', mode === 'dark'
+      ? (themeBtn.dataset.labelDark || 'Dark Mode')
+      : (themeBtn.dataset.labelLight || 'Light Mode'));
   }
 
-  if (themeIcon && !themeIcon.src.includes('/logos/phosphoricons/white/')) {
-    const current = themeIcon.getAttribute('src') || '';
-    themeIcon.src = current.replace('/logos/phosphoricons/', `${WHITE_ICON_BASE}/`);
-  }
-
-  function applyTheme(mode: string) {
-    document.documentElement.setAttribute('data-theme', mode);
-    (window as any).__updateFavicon?.(mode);
-    updateThemeButton(mode);
-    if (navBrandLogo) {
-      navBrandLogo.src = mode === 'dark' ? '/logos/lplogo-white.svg' : '/logos/lplogo-black.svg';
-    }
-  }
-
-  function toggleMode() {
-    currentMode = currentMode === 'dark' ? 'light' : 'dark';
-    localStorage.setItem(THEME_KEY, currentMode);
-    applyTheme(currentMode);
-  }
-  themeBtn?.addEventListener('click', toggleMode);
-
-  mediaQuery.addEventListener('change', (e) => {
+  // Media query listener — registered once at module level
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
     const saved = localStorage.getItem(THEME_KEY);
     if (saved === 'dark' || saved === 'light') return;
-    currentMode = e.matches ? 'dark' : 'light';
-    applyTheme(currentMode);
+    const mode = e.matches ? 'dark' : 'light';
+    localStorage.setItem(THEME_KEY, mode);
+    document.documentElement.setAttribute('data-theme', mode);
+    (window as any).__updateFavicon?.(mode);
+    updateThemeBtnState(mode);
+    const navLogo = document.getElementById('navBrandLogo') as HTMLImageElement | null;
+    if (navLogo) navLogo.src = mode === 'dark' ? '/logos/lplogo-white.svg' : '/logos/lplogo-black.svg';
   });
 
-  const path = window.location.pathname;
-  const isPathEN = path.startsWith('/en');
-  const enToDe: Record<string, string> = {
-    '/en/': '/',
-    '/en/site-notice': '/impressum',
-    '/en/privacy-policy': '/datenschutz'
-  };
-  const deToEn: Record<string, string> = {
-    '/': '/en/',
-    '/impressum': '/en/site-notice',
-    '/datenschutz': '/en/privacy-policy'
-  };
+  document.addEventListener('astro:page-load', () => {
+    const themeBtn = document.getElementById('themeQuickToggle') as HTMLButtonElement | null;
+    const navBrandLogo = document.getElementById('navBrandLogo') as HTMLImageElement | null;
+    const langBtn = document.getElementById('langQuickToggle') as HTMLButtonElement | null;
+    const langLabel = document.getElementById('langQuickLabel') as HTMLElement | null;
 
-  const storedLang = localStorage.getItem('lp-lang-mode');
-  const browserLang = (navigator.language || '').toLowerCase().startsWith('en') ? 'en' : 'de';
-  let currentLangMode = storedLang === 'de' || storedLang === 'en'
-    ? storedLang
-    : browserLang;
+    // Apply current theme to nav elements
+    const currentMode = (document.documentElement.getAttribute('data-theme') as 'dark' | 'light') ||
+      (localStorage.getItem(THEME_KEY) === 'dark' ? 'dark' : 'light');
 
-  if (!storedLang) {
-    if (currentLangMode === 'en' && !isPathEN) {
-      window.location.href = deToEn[path] ?? `/en${path === '/' ? '/' : path}`;
-    } else if (currentLangMode === 'de' && isPathEN) {
-      window.location.href = enToDe[path] ?? (path.replace(/^\/en/, '') || '/');
+    function applyThemeToNav(mode: string) {
+      document.documentElement.setAttribute('data-theme', mode);
+      (window as any).__updateFavicon?.(mode);
+      updateThemeBtnState(mode);
+      if (navBrandLogo) navBrandLogo.src = mode === 'dark' ? '/logos/lplogo-white.svg' : '/logos/lplogo-black.svg';
     }
-  }
 
-  function updateLangButton(mode: string) {
-    if (!langLabel || !langBtn) return;
-    langLabel.textContent = mode.toUpperCase();
-    langBtn.setAttribute('aria-label', mode === 'de' ? 'Deutsch aktiv' : 'English active');
-    document.documentElement.setAttribute('lang', mode);
-  }
-  updateLangButton(currentLangMode);
+    applyThemeToNav(currentMode);
 
-  langBtn?.addEventListener('click', () => {
-    const mode = currentLangMode === 'de' ? 'en' : 'de';
-    localStorage.setItem('lp-lang-mode', mode);
-    currentLangMode = mode;
-    updateLangButton(mode);
+    themeBtn?.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem(THEME_KEY, next);
+      applyThemeToNav(next);
+    });
 
-    if (mode === 'en' && !isPathEN) {
-      window.location.href = deToEn[path] ?? `/en${path === '/' ? '/' : path}`;
-    } else if (mode === 'de' && isPathEN) {
-      window.location.href = enToDe[path] ?? (path.replace(/^\/en/, '') || '/');
+    // Language
+    const path = window.location.pathname;
+    const isPathEN = path.startsWith('/en');
+    const enToDe: Record<string, string> = {
+      '/en/': '/', '/en/site-notice': '/impressum', '/en/privacy-policy': '/datenschutz'
+    };
+    const deToEn: Record<string, string> = {
+      '/': '/en/', '/impressum': '/en/site-notice', '/datenschutz': '/en/privacy-policy'
+    };
+
+    const storedLang = localStorage.getItem('lp-lang-mode');
+    const browserLang = (navigator.language || '').toLowerCase().startsWith('en') ? 'en' : 'de';
+    let currentLangMode = storedLang === 'de' || storedLang === 'en' ? storedLang : browserLang;
+
+    if (!storedLang) {
+      if (currentLangMode === 'en' && !isPathEN) {
+        window.location.href = deToEn[path] ?? `/en${path === '/' ? '/' : path}`;
+        return;
+      } else if (currentLangMode === 'de' && isPathEN) {
+        window.location.href = enToDe[path] ?? (path.replace(/^\/en/, '') || '/');
+        return;
+      }
     }
+
+    function updateLangButton(mode: string) {
+      if (!langLabel || !langBtn) return;
+      langLabel.textContent = mode.toUpperCase();
+      langBtn.setAttribute('aria-label', mode === 'de'
+        ? (langBtn.dataset.labelDe || 'DE')
+        : (langBtn.dataset.labelEn || 'EN'));
+      document.documentElement.setAttribute('lang', mode);
+    }
+    updateLangButton(currentLangMode);
+
+    langBtn?.addEventListener('click', () => {
+      const mode = currentLangMode === 'de' ? 'en' : 'de';
+      localStorage.setItem('lp-lang-mode', mode);
+      currentLangMode = mode;
+      updateLangButton(mode);
+      if (mode === 'en' && !isPathEN) {
+        window.location.href = deToEn[path] ?? `/en${path === '/' ? '/' : path}`;
+      } else if (mode === 'de' && isPathEN) {
+        window.location.href = enToDe[path] ?? (path.replace(/^\/en/, '') || '/');
+      }
+    });
   });
-
-  applyTheme(currentMode);
 </script>

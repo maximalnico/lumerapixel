@@ -1,13 +1,11 @@
 ---
-import { getLangFromUrl, t } from '../i18n';
-const lang = getLangFromUrl(Astro.url);
 ---
 <footer class="lp-footer">
   <div class="lp-footer__line"></div>
   <div class="lp-footer__inner">
     <img src="/logos/lplong-white.svg" alt="LumeraPixel" class="lp-footer__logo" id="footerBrandLogo" />
-    <p class="lp-footer__copy">{t(lang, 'footer.copy')}</p>
-    <p class="lp-footer__credits">Typography by <a href="https://fontshare.com/fonts/satoshi" target="_blank" rel="noopener">Fontshare</a> · Icons by <a href="https://phosphoricons.com/" target="_blank" rel="noopener">Phosphor</a> (MIT)</p>
+    <p class="lp-footer__copy">© 2018–2026 · MultaEnhavo<span class="lp-footer__copy-name"> · Nico Thomas Henkel</span></p>
+    <p class="lp-footer__credits">Typography by <a href="https://fontshare.com/fonts/satoshi" target="_blank" rel="noopener noreferrer">Fontshare</a> · Icons by <a href="https://phosphoricons.com/" target="_blank" rel="noopener noreferrer">Phosphor</a> (MIT)</p>
   </div>
 </footer>
 
@@ -33,7 +31,6 @@ const lang = getLangFromUrl(Astro.url);
     margin-bottom: 0.1rem;
   }
 
-
   .lp-footer__copy {
     font-family: 'Satoshi';
     font-weight: 500;
@@ -41,6 +38,10 @@ const lang = getLangFromUrl(Astro.url);
     color: var(--text);
     letter-spacing: 0.06em;
   }
+  @media (max-width: 820px) {
+    .lp-footer__copy-name { display: block; }
+  }
+
   .lp-footer__credits {
     font-family: 'Satoshi';
     font-weight: 500;
@@ -58,17 +59,8 @@ const lang = getLangFromUrl(Astro.url);
   }
 </style>
 
-
-<script>
-  const footerBrandLogo = document.getElementById('footerBrandLogo') as HTMLImageElement | null;
-
-  function applyFooterLogo() {
-    if (!footerBrandLogo) return;
-    const mode = document.documentElement.getAttribute('data-theme') || 'dark';
-    footerBrandLogo.src = mode === 'dark' ? '/logos/lplong-white.svg' : '/logos/lplong-black.svg';
+<style is:global>
+  [data-theme="light"] #footerBrandLogo {
+    filter: invert(1);
   }
-
-  applyFooterLogo();
-  const themeObserver = new MutationObserver(applyFooterLogo);
-  themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-</script>
+</style>
