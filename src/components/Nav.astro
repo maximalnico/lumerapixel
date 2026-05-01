@@ -324,9 +324,8 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 
   // Media query listener — registered once at module level
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    const saved = localStorage.getItem(THEME_KEY);
-    if (saved === 'dark' || saved === 'light') return;
     const mode = e.matches ? 'dark' : 'light';
+    localStorage.removeItem(THEME_KEY);
     document.documentElement.setAttribute('data-theme', mode);
     (window as any).__updateFavicon?.(mode);
     updateThemeBtnState(mode);
