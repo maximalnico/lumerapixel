@@ -37,7 +37,7 @@ export const ui = {
     'session.scroll_photos': 'Zu den Fotos scrollen',
     'session.section_aria': 'Fotos',
     // Lightbox
-    'lightbox.swipe': 'wischen',
+    'lightbox.swipe': 'swipe',
     'lightbox.close': 'Schließen',
     'lightbox.prev': 'Vorheriges Foto',
     'lightbox.next': 'Nächstes Foto',
