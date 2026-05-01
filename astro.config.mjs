@@ -45,6 +45,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  outDir: '/var/www/lumerapixel',
   site: 'https://lumerapixel.com',
   i18n: {
     defaultLocale: 'de',
