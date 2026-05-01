@@ -105,7 +105,7 @@ const schema = {
   <main class="session-page" id="main-content">
     <header class="session-hero">
       <div class="session-hero__body">
-        <img src={`${photos[0]}?width=1800&quality=85`} alt={title} class="session-hero__image" loading="eager" fetchpriority="high" decoding="async" width="1800" height="1200" />
+        <img src={photos[0]} alt={title} class="session-hero__image" loading="eager" fetchpriority="high" decoding="async" />
         <div class="session-hero__overlay">
           <div class="session-hero__textlab">
             <div class="session-hero__meta">
@@ -140,8 +140,8 @@ const schema = {
     <section id="session-content" class="photo-section" aria-label={t(lang, 'session.section_aria')}>
       <div class="photo-grid" id="photoGrid">
         {photos.map((src, i) => (
-          <button class="photo-item" data-index={i} data-full={src} aria-label={`${t(lang, 'session.photo')} ${i + 1} ${isEN ? 'of' : 'von'} ${session.images}`}>
-            <img src={`${src}?width=1200&quality=84`} alt={`${title} – ${t(lang, 'session.photo')} ${i + 1}`} loading={i < 4 ? 'eager' : 'lazy'} decoding="async" width="1200" />
+          <button class="photo-item" data-index={i} aria-label={`${t(lang, 'session.photo')} ${i + 1} ${isEN ? 'of' : 'von'} ${session.images}`}>
+            <img src={src} alt={`${title} – ${t(lang, 'session.photo')} ${i + 1}`} loading={i < 4 ? 'eager' : 'lazy'} decoding="async" />
           </button>
         ))}
       </div>
@@ -538,11 +538,9 @@ const schema = {
     const sessionPageNav = document.querySelector('.session-page-nav') as HTMLElement | null;
     const photoButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('.photo-item'));
     const photoSources = photoButtons
-      .map(btn => ({
-        src: (btn as HTMLElement).dataset.full || btn.querySelector('img')?.src || '',
-        alt: btn.querySelector('img')?.alt || '',
-      }))
-      .filter(item => Boolean(item.src));
+      .map(btn => btn.querySelector('img'))
+      .filter((img): img is HTMLImageElement => Boolean(img))
+      .map(img => ({ src: img.currentSrc || img.src, alt: img.alt || '' }));
     let currentLightboxIndex = 0;
     let lastFocusedBtn: HTMLElement | null = null;
     let swipeHintTimer: ReturnType<typeof setTimeout> | null = null;
