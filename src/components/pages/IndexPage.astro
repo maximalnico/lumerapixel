@@ -101,7 +101,13 @@ const schema = {
     <section class="masonry-home">
       <section class="fullscreen-header motion-safe:animate-in motion-safe:fade-in" aria-label="Header">
         <div class="fullscreen-header__frame">
-          {headerImage && <img class="fullscreen-header__image" src={headerImage} alt={st(headerSession)} loading="eager" fetchpriority="high" decoding="async" />}
+          {headerImage && <img
+            class="fullscreen-header__image"
+            src={headerImage}
+            srcset={`https://lumerapixel.b-cdn.net/collage.webp?width=800&quality=85 800w, https://lumerapixel.b-cdn.net/collage.webp?width=1200&quality=85 1200w, https://lumerapixel.b-cdn.net/collage.webp?width=1800&quality=85 1800w`}
+            sizes="100vw"
+            alt={st(headerSession)} loading="eager" fetchpriority="high" decoding="async"
+          />}
           <div class="fullscreen-header__overlay">
             <div class="fullscreen-header__glasslab">
               <img src="/logos/lplong-white.svg" alt="LumeraPixel" class="fullscreen-header__logo fullscreen-header__logo--dark" />
@@ -121,10 +127,15 @@ const schema = {
         </div>
         <div class="featured-split__grid">
           {featuredSessions.map((s: any) => {
-            const cover = `${s.folder}/000.webp?width=900&quality=84`;
+            const base = `${s.folder}/000.webp`;
             return (
               <a href={sessionPath(s.slug)} class="featured-split__item">
-                <img src={cover} alt={st(s)} loading="lazy" decoding="async" width="900" height="600" />
+                <img
+                  src={`${base}?width=900&quality=84`}
+                  srcset={`${base}?width=480&quality=84 480w, ${base}?width=900&quality=84 900w, ${base}?width=1200&quality=84 1200w`}
+                  sizes="(max-width: 820px) 100vw, 50vw"
+                  alt={st(s)} loading="lazy" decoding="async" width="900" height="600"
+                />
                 <span class="featured-split__overlay">
                   <span class="featured-split__cat">{sc(s)}</span>
                   <span class="featured-split__title">{st(s)}</span>
@@ -143,7 +154,14 @@ const schema = {
         class="latest-session-strip"
         aria-label={t(lang, 'section.all_aria')}
       >
-        <img id="allSessionsSlideshowImage" src={`${headerSession.folder}/000.webp?width=1400&quality=85`} data-slides={allSessionCovers.join('|')} alt={st(headerSession)} loading="lazy" decoding="async" />
+        <img
+          id="allSessionsSlideshowImage"
+          src={`${headerSession.folder}/000.webp?width=1200&quality=85`}
+          srcset={`${headerSession.folder}/000.webp?width=800&quality=85 800w, ${headerSession.folder}/000.webp?width=1200&quality=85 1200w, ${headerSession.folder}/000.webp?width=1600&quality=85 1600w`}
+          sizes="100vw"
+          data-slides={allSessionCovers.join('|')}
+          alt={st(headerSession)} loading="lazy" decoding="async"
+        />
         <div class="masonry-home__filters-lab latest-session-strip__heading-lab">
           <h2 class="masonry-home__filters-title">{t(lang, 'section.all')}</h2>
         </div>
@@ -164,11 +182,16 @@ const schema = {
 
       <div class="masonry-home__grid">
         {sorted.map((s: any, i: number) => {
-          const cover = `${s.folder}/000.webp?width=700&quality=82`;
+          const base = `${s.folder}/000.webp`;
           const category = sc(s);
           return (
             <a href={sessionPath(s.slug)} class="masonry-card" data-category={category}>
-              <img src={cover} alt={st(s)} loading={i < 4 ? 'eager' : 'lazy'} decoding="async" width="700" />
+              <img
+                src={`${base}?width=700&quality=82`}
+                srcset={`${base}?width=400&quality=82 400w, ${base}?width=700&quality=82 700w, ${base}?width=1000&quality=82 1000w`}
+                sizes="(max-width: 480px) 100vw, (max-width: 700px) 50vw, (max-width: 1100px) 33vw, 25vw"
+                alt={st(s)} loading={i < 4 ? 'eager' : 'lazy'} decoding="async" width="700"
+              />
               <span class="masonry-card__overlay">
                 <span class="masonry-card__pill masonry-card__pill--cat">{category}</span>
                 <span class="masonry-card__pill masonry-card__pill--title">{st(s)}</span>
