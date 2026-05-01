@@ -69,10 +69,9 @@ const canonicalURL = canonical ?? Astro.url.href;
   <!-- Theme init: vor render setzen um FOUC zu verhindern -->
   <script is:inline>
     (function() {
+      const stored = localStorage.getItem('lp-theme-mode');
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const theme = prefersDark ? 'dark' : 'light';
-      localStorage.removeItem('lp-theme');
-      localStorage.removeItem('lp-theme-mode');
+      const theme = (stored === 'dark' || stored === 'light') ? stored : (prefersDark ? 'dark' : 'light');
       document.documentElement.setAttribute('data-theme', theme);
 
       const updateFavicon = (mode) => {

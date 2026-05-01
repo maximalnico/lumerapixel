@@ -33,7 +33,6 @@ const lang = getLangFromUrl(Astro.url);
     margin-bottom: 0.1rem;
   }
 
-
   .lp-footer__copy {
     font-family: 'Satoshi';
     font-weight: 500;
@@ -62,17 +61,8 @@ const lang = getLangFromUrl(Astro.url);
   }
 </style>
 
-
-<script>
-  const footerBrandLogo = document.getElementById('footerBrandLogo') as HTMLImageElement | null;
-
-  function applyFooterLogo() {
-    if (!footerBrandLogo) return;
-    const mode = document.documentElement.getAttribute('data-theme') || 'dark';
-    footerBrandLogo.src = mode === 'dark' ? '/logos/lplong-white.svg' : '/logos/lplong-black.svg';
+<style is:global>
+  [data-theme="light"] #footerBrandLogo {
+    filter: invert(1);
   }
-
-  applyFooterLogo();
-  const themeObserver = new MutationObserver(applyFooterLogo);
-  themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-</script>
+</style>
