@@ -690,83 +690,77 @@ const schema = {
 </style>
 
 <script>
-  // Random slideshow for the "All Sessions" strip.
-  const allSessionsImg = document.getElementById('allSessionsSlideshowImage') as HTMLImageElement | null;
-  if (allSessionsImg) {
-    const slides = (allSessionsImg.dataset.slides || '')
-      .split('|')
-      .map((s) => s.trim())
-      .filter(Boolean);
+  let slideshowInterval: ReturnType<typeof setInterval> | null = null;
 
-    if (slides.length > 1) {
-      let current = allSessionsImg.src;
-      setInterval(() => {
-        const choices = slides.filter((slide) => !current.endsWith(slide));
-        const nextPool = choices.length ? choices : slides;
-        const next = nextPool[Math.floor(Math.random() * nextPool.length)];
-        allSessionsImg.style.opacity = '0.3';
-        const isLightMode = document.documentElement.getAttribute('data-theme') === 'light';
-        allSessionsImg.style.filter = isLightMode
-          ? 'grayscale(1)'
-          : 'grayscale(1) brightness(0.72)';
-        setTimeout(() => {
-          current = next;
-          allSessionsImg.src = next;
-          allSessionsImg.style.opacity = '1';
-          allSessionsImg.style.filter = isLightMode
-            ? 'grayscale(1)'
-            : 'grayscale(1) brightness(0.72)';
-        }, 280);
-      }, 2700);
+  document.addEventListener('astro:before-swap', () => {
+    if (slideshowInterval) { clearInterval(slideshowInterval); slideshowInterval = null; }
+  });
+
+  document.addEventListener('astro:page-load', () => {
+    // All sessions slideshow
+    const allSessionsImg = document.getElementById('allSessionsSlideshowImage') as HTMLImageElement | null;
+    if (allSessionsImg) {
+      const slides = (allSessionsImg.dataset.slides || '').split('|').map(s => s.trim()).filter(Boolean);
+      if (slides.length > 1) {
+        let current = allSessionsImg.src;
+        slideshowInterval = setInterval(() => {
+          const choices = slides.filter(slide => !current.endsWith(slide));
+          const nextPool = choices.length ? choices : slides;
+          const next = nextPool[Math.floor(Math.random() * nextPool.length)];
+          allSessionsImg.style.opacity = '0.3';
+          const isLightMode = document.documentElement.getAttribute('data-theme') === 'light';
+          allSessionsImg.style.filter = isLightMode ? 'grayscale(1)' : 'grayscale(1) brightness(0.72)';
+          setTimeout(() => {
+            current = next;
+            allSessionsImg.src = next;
+            allSessionsImg.style.opacity = '1';
+            allSessionsImg.style.filter = isLightMode ? 'grayscale(1)' : 'grayscale(1) brightness(0.72)';
+          }, 280);
+        }, 2700);
+      }
     }
-  }
 
-  const filterButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('.masonry-home__filter-btn'));
-  const masonryCards = Array.from(document.querySelectorAll<HTMLElement>('.masonry-card'));
+    // Session filter
+    const filterButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('.masonry-home__filter-btn'));
+    const masonryCards = Array.from(document.querySelectorAll<HTMLElement>('.masonry-card'));
 
-  function applySessionFilter(filterValue: string) {
-    masonryCards.forEach((card) => {
-      const category = card.dataset.category;
-      const isVisible = filterValue === 'all' || category === filterValue;
-      card.style.display = isVisible ? 'block' : 'none';
+    function applySessionFilter(filterValue: string) {
+      masonryCards.forEach(card => {
+        const isVisible = filterValue === 'all' || card.dataset.category === filterValue;
+        card.style.display = isVisible ? 'block' : 'none';
+      });
+      filterButtons.forEach(btn => {
+        const active = btn.dataset.sessionFilter === filterValue;
+        btn.classList.toggle('is-active', active);
+        btn.setAttribute('aria-pressed', String(active));
+      });
+    }
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => applySessionFilter(btn.dataset.sessionFilter || 'all'));
     });
 
-    filterButtons.forEach((btn) => {
-      const active = btn.dataset.sessionFilter === filterValue;
-      btn.classList.toggle('is-active', active);
-      btn.setAttribute('aria-pressed', String(active));
+    // Scroll indicators
+    const heroToFeaturedIndicator = document.getElementById('heroToFeaturedIndicator') as HTMLButtonElement | null;
+    const firstFeaturedCard = document.querySelector<HTMLElement>('.featured-split__item');
+    const featuredToLatestIndicator = document.getElementById('featuredToLatestIndicator') as HTMLButtonElement | null;
+    const latestSessionStrip = document.getElementById('latest-session-strip');
+
+    function getGap() {
+      const mainEl = document.querySelector('main');
+      return Number.parseFloat(getComputedStyle(mainEl || document.documentElement).getPropertyValue('--masonry-gap')) || 0;
+    }
+
+    heroToFeaturedIndicator?.addEventListener('click', () => {
+      if (!firstFeaturedCard) return;
+      const top = firstFeaturedCard.getBoundingClientRect().top + window.scrollY - getGap();
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
     });
-  }
 
-  filterButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      applySessionFilter(btn.dataset.sessionFilter || 'all');
+    featuredToLatestIndicator?.addEventListener('click', () => {
+      if (!latestSessionStrip) return;
+      const top = latestSessionStrip.getBoundingClientRect().top + window.scrollY - getGap();
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
     });
   });
-
-  const heroToFeaturedIndicator = document.getElementById('heroToFeaturedIndicator') as HTMLButtonElement | null;
-  const firstFeaturedCard = document.querySelector<HTMLElement>('.featured-split__item');
-  const featuredToLatestIndicator = document.getElementById('featuredToLatestIndicator') as HTMLButtonElement | null;
-  const latestSessionStrip = document.getElementById('latest-session-strip');
-
-  heroToFeaturedIndicator?.addEventListener('click', () => {
-    if (!firstFeaturedCard) return;
-    const mainEl = document.querySelector('main');
-    const masonryGapRaw = getComputedStyle(mainEl || document.documentElement).getPropertyValue('--masonry-gap');
-    const masonryGap = Number.parseFloat(masonryGapRaw) || 0;
-    const top = firstFeaturedCard.getBoundingClientRect().top + window.scrollY - masonryGap;
-    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-  });
-
-  featuredToLatestIndicator?.addEventListener('click', () => {
-    if (!latestSessionStrip) return;
-    const mainEl = document.querySelector('main');
-    const masonryGapRaw = getComputedStyle(mainEl || document.documentElement).getPropertyValue('--masonry-gap');
-    const masonryGap = Number.parseFloat(masonryGapRaw) || 0;
-    const top = latestSessionStrip.getBoundingClientRect().top + window.scrollY - masonryGap;
-    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-  });
-
-
-
 </script>

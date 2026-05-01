@@ -1,5 +1,6 @@
 ---
 import '../styles/tailwind.css';
+import { ClientRouter } from 'astro:transitions';
 export interface Props {
   title?: string;
   description?: string;
@@ -41,6 +42,7 @@ const ogLocale = htmlLang === 'en' ? 'en_US' : 'de_DE';
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href={canonicalURL} />
   <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+  <ClientRouter />
 
   <!-- OpenGraph -->
   <meta property="og:title" content={title} />
@@ -80,7 +82,7 @@ const ogLocale = htmlLang === 'en' ? 'en_US' : 'de_DE';
   <link rel="icon" id="favicon" href="/logos/lplogo-black.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/logos/lplogo-black.svg" />
 
-  <!-- Theme init: vor render setzen um FOUC zu verhindern -->
+  <!-- Theme init: prevent FOUC and persist across View Transitions -->
   <script is:inline>
     (function() {
       localStorage.removeItem('lp-theme');
@@ -98,6 +100,12 @@ const ogLocale = htmlLang === 'en' ? 'en_US' : 'de_DE';
 
       window.__updateFavicon = updateFavicon;
       updateFavicon(theme);
+
+      // Preserve data-theme across View Transitions swaps
+      document.addEventListener('astro:before-swap', (e) => {
+        const current = document.documentElement.getAttribute('data-theme');
+        if (current) e.newDocument.documentElement.setAttribute('data-theme', current);
+      });
     })();
   </script>
 
@@ -297,36 +305,29 @@ const ogLocale = htmlLang === 'en' ? 'en_US' : 'de_DE';
 </head>
 <body>
   <slot />
-  <script>
-    // ── Reveal on scroll ──
-    const revealEls = document.querySelectorAll('.reveal');
-    if (revealEls.length) {
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
-        });
-      }, { threshold: 0.08 });
-      revealEls.forEach(el => io.observe(el));
-    }
-
-    // ── Theme toggle ──
-    window.__toggleTheme = function() {
-      const html = document.documentElement;
-      const current = html.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', next);
-      // Icon updaten
-      document.querySelectorAll('.theme-toggle__icon').forEach(el => {
-        (el as HTMLElement).textContent = next === 'dark' ? '☀️' : '🌙';
+<script>
+  // Re-initialize reveal animation on every page load
+  function initReveal() {
+    const revealEls = document.querySelectorAll('.reveal:not(.is-visible)');
+    if (!revealEls.length) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
       });
-    };
+    }, { threshold: 0.08 });
+    revealEls.forEach(el => io.observe(el));
+  }
+  document.addEventListener('astro:page-load', initReveal);
 
-    window.__updateFavicon = window.__updateFavicon || function(_theme: string) {};
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-      const theme = e.matches ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', theme);
-      (window as any).__updateFavicon?.(theme);
-    });
-  </script>
+  // System theme change listener — registered once
+  window.__updateFavicon = window.__updateFavicon || function(_theme: string) {};
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    const saved = localStorage.getItem('lp-theme-mode');
+    if (saved === 'dark' || saved === 'light') return;
+    const theme = e.matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    (window as any).__updateFavicon?.(theme);
+  });
+</script>
 </body>
 </html>

@@ -510,133 +510,143 @@ const schema = {
 </style>
 
 <script>
-  const sessionScrollBtn = document.getElementById('sessionHeroScrollIndicator') as HTMLButtonElement | null;
-  const sessionContent = document.getElementById('session-content');
-  const sessionLightbox = document.getElementById('sessionLightbox') as HTMLElement | null;
-  const sessionLightboxImg = document.getElementById('sessionLightboxImage') as HTMLImageElement | null;
-  const sessionLightboxBackdrop = document.getElementById('sessionLightboxBackdrop') as HTMLButtonElement | null;
-  const sessionLightboxClose = document.getElementById('sessionLightboxClose') as HTMLButtonElement | null;
-  const sessionLightboxPrev = document.getElementById('sessionLightboxPrev') as HTMLButtonElement | null;
-  const sessionLightboxNext = document.getElementById('sessionLightboxNext') as HTMLButtonElement | null;
-  const lightboxCounter = document.getElementById('lightboxCounter') as HTMLElement | null;
-  const photoButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('.photo-item'));
-  const photoSources = photoButtons
-    .map((btn) => btn.querySelector('img'))
-    .filter((img): img is HTMLImageElement => Boolean(img))
-    .map((img) => ({ src: img.currentSrc || img.src, alt: img.alt || '' }));
-  let currentLightboxIndex = 0;
-
-  sessionScrollBtn?.addEventListener('click', () => {
-    if (!sessionContent) return;
-    const mainEl = document.querySelector('main');
-    const masonryGapRaw = getComputedStyle(mainEl || document.documentElement).getPropertyValue('--masonry-gap');
-    const masonryGap = Number.parseFloat(masonryGapRaw) || 0;
-    const top = sessionContent.getBoundingClientRect().top + window.scrollY - masonryGap;
-    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-  });
-
-  function showLightboxImage(index: number) {
-    if (!sessionLightboxImg || !photoSources.length) return;
-    const normalized = (index + photoSources.length) % photoSources.length;
-    currentLightboxIndex = normalized;
-    sessionLightboxImg.src = photoSources[normalized].src;
-    sessionLightboxImg.alt = photoSources[normalized].alt;
-    if (lightboxCounter) lightboxCounter.textContent = `${normalized + 1} / ${photoSources.length}`;
-  }
-
-  let lastFocusedBtn: HTMLElement | null = null;
-
-  function openLightbox(index: number) {
-    if (!sessionLightbox) return;
-    lastFocusedBtn = document.activeElement as HTMLElement;
-    showLightboxImage(index);
-    sessionLightbox.hidden = false;
-    document.body.style.overflow = 'hidden';
-    sessionLightboxClose?.focus();
-  }
-
-  function closeLightbox() {
-    if (!sessionLightbox || !sessionLightboxImg) return;
-    sessionLightbox.hidden = true;
-    sessionLightboxImg.src = '';
-    document.body.style.overflow = '';
-    lastFocusedBtn?.focus();
-  }
-
-  const focusableSelectors = '#sessionLightboxClose, #sessionLightboxPrev, #sessionLightboxNext, #sessionLightboxBackdrop';
-
-  function trapFocus(e: KeyboardEvent) {
-    if (sessionLightbox?.hidden || e.key !== 'Tab') return;
-    const focusable = Array.from(sessionLightbox!.querySelectorAll<HTMLElement>(focusableSelectors));
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (e.shiftKey) {
-      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
-    } else {
-      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
-    }
-  }
-
-  photoButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const clickedIndex = Number.parseInt(btn.dataset.index || '0', 10) || 0;
-      openLightbox(clickedIndex);
-    });
-  });
-
-  sessionLightboxBackdrop?.addEventListener('click', closeLightbox);
-  sessionLightboxClose?.addEventListener('click', closeLightbox);
-  sessionLightboxPrev?.addEventListener('click', () => showLightboxImage(currentLightboxIndex - 1));
-  sessionLightboxNext?.addEventListener('click', () => showLightboxImage(currentLightboxIndex + 1));
-  window.addEventListener('keydown', (event) => {
-    if (sessionLightbox?.hidden) return;
-    trapFocus(event);
-    if (event.key === 'Escape') closeLightbox();
-    if (event.key === 'ArrowLeft') showLightboxImage(currentLightboxIndex - 1);
-    if (event.key === 'ArrowRight') showLightboxImage(currentLightboxIndex + 1);
-  });
-
-  // Swipe hint
-  const swipeHint = document.getElementById('lightboxSwipeHint');
-  const isMobile = () => window.matchMedia('(max-width: 820px)').matches;
+  let pageController: AbortController | null = null;
   let swipeHintShown = false;
-  let swipeHintTimer: ReturnType<typeof setTimeout> | null = null;
-  function showSwipeHint() {
-    if (!swipeHint || !isMobile() || swipeHintShown) return;
-    swipeHintShown = true;
-    swipeHint.classList.add('is-visible');
-    swipeHintTimer = setTimeout(() => swipeHint.classList.remove('is-visible'), 2000);
-  }
 
-  // Touch swipe (vertical, like Instagram)
-  let touchStartY = 0;
-  sessionLightbox?.addEventListener('touchstart', (e) => {
-    touchStartY = (e as TouchEvent).touches[0].clientY;
-  }, { passive: true });
-  sessionLightbox?.addEventListener('touchend', (e) => {
-    const deltaY = (e as TouchEvent).changedTouches[0].clientY - touchStartY;
-    if (Math.abs(deltaY) > 50) {
-      deltaY < 0
-        ? showLightboxImage(currentLightboxIndex + 1)
-        : showLightboxImage(currentLightboxIndex - 1);
-    }
-  }, { passive: true });
-
-  // Show hint on first open
-  photoButtons.forEach((btn) => {
-    btn.addEventListener('click', () => { showSwipeHint(); });
+  document.addEventListener('astro:before-swap', () => {
+    pageController?.abort();
+    pageController = null;
+    swipeHintShown = false;
   });
 
-  // Hide session nav on scroll down, show on scroll up
-  const sessionPageNav = document.querySelector('.session-page-nav') as HTMLElement | null;
-  let lastScrollY = window.scrollY;
-  window.addEventListener('scroll', () => {
-    const currentY = window.scrollY;
-    if (currentY > lastScrollY && currentY > 150) {
-      sessionPageNav?.classList.add('is-hidden');
-    } else {
-      sessionPageNav?.classList.remove('is-hidden');
+  document.addEventListener('astro:page-load', () => {
+    const sessionLightbox = document.getElementById('sessionLightbox') as HTMLElement | null;
+    if (!sessionLightbox) return; // not a session page
+
+    pageController = new AbortController();
+    const { signal } = pageController;
+
+    const sessionScrollBtn = document.getElementById('sessionHeroScrollIndicator') as HTMLButtonElement | null;
+    const sessionContent = document.getElementById('session-content');
+    const sessionLightboxImg = document.getElementById('sessionLightboxImage') as HTMLImageElement | null;
+    const sessionLightboxBackdrop = document.getElementById('sessionLightboxBackdrop') as HTMLButtonElement | null;
+    const sessionLightboxClose = document.getElementById('sessionLightboxClose') as HTMLButtonElement | null;
+    const sessionLightboxPrev = document.getElementById('sessionLightboxPrev') as HTMLButtonElement | null;
+    const sessionLightboxNext = document.getElementById('sessionLightboxNext') as HTMLButtonElement | null;
+    const lightboxCounter = document.getElementById('lightboxCounter') as HTMLElement | null;
+    const swipeHint = document.getElementById('lightboxSwipeHint') as HTMLElement | null;
+    const sessionPageNav = document.querySelector('.session-page-nav') as HTMLElement | null;
+    const photoButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('.photo-item'));
+    const photoSources = photoButtons
+      .map(btn => btn.querySelector('img'))
+      .filter((img): img is HTMLImageElement => Boolean(img))
+      .map(img => ({ src: img.currentSrc || img.src, alt: img.alt || '' }));
+    let currentLightboxIndex = 0;
+    let lastFocusedBtn: HTMLElement | null = null;
+    let swipeHintTimer: ReturnType<typeof setTimeout> | null = null;
+
+    // Scroll to photos
+    sessionScrollBtn?.addEventListener('click', () => {
+      if (!sessionContent) return;
+      const mainEl = document.querySelector('main');
+      const gap = Number.parseFloat(getComputedStyle(mainEl || document.documentElement).getPropertyValue('--masonry-gap')) || 0;
+      window.scrollTo({ top: Math.max(0, sessionContent.getBoundingClientRect().top + window.scrollY - gap), behavior: 'smooth' });
+    });
+
+    function showLightboxImage(index: number) {
+      if (!sessionLightboxImg || !photoSources.length) return;
+      const normalized = (index + photoSources.length) % photoSources.length;
+      currentLightboxIndex = normalized;
+      sessionLightboxImg.src = photoSources[normalized].src;
+      sessionLightboxImg.alt = photoSources[normalized].alt;
+      if (lightboxCounter) lightboxCounter.textContent = `${normalized + 1} / ${photoSources.length}`;
     }
-    lastScrollY = currentY;
-  }, { passive: true });
+
+    function openLightbox(index: number) {
+      if (!sessionLightbox) return;
+      lastFocusedBtn = document.activeElement as HTMLElement;
+      showLightboxImage(index);
+      sessionLightbox.hidden = false;
+      document.body.style.overflow = 'hidden';
+      sessionLightboxClose?.focus();
+      showSwipeHint();
+    }
+
+    function closeLightbox() {
+      if (!sessionLightbox || !sessionLightboxImg) return;
+      sessionLightbox.hidden = true;
+      sessionLightboxImg.src = '';
+      document.body.style.overflow = '';
+      lastFocusedBtn?.focus();
+    }
+
+    const focusableSelectors = '#sessionLightboxClose, #sessionLightboxPrev, #sessionLightboxNext, #sessionLightboxBackdrop';
+
+    function trapFocus(e: KeyboardEvent) {
+      if (sessionLightbox?.hidden || e.key !== 'Tab') return;
+      const focusable = Array.from(sessionLightbox!.querySelectorAll<HTMLElement>(focusableSelectors));
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    }
+
+    function showSwipeHint() {
+      if (!swipeHint || !window.matchMedia('(max-width: 820px)').matches || swipeHintShown) return;
+      swipeHintShown = true;
+      swipeHint.classList.add('is-visible');
+      swipeHintTimer = setTimeout(() => swipeHint.classList.remove('is-visible'), 2000);
+    }
+
+    // Photo grid clicks
+    photoButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        openLightbox(Number.parseInt(btn.dataset.index || '0', 10) || 0);
+      });
+    });
+
+    // Lightbox controls
+    sessionLightboxBackdrop?.addEventListener('click', closeLightbox);
+    sessionLightboxClose?.addEventListener('click', closeLightbox);
+    sessionLightboxPrev?.addEventListener('click', () => showLightboxImage(currentLightboxIndex - 1));
+    sessionLightboxNext?.addEventListener('click', () => showLightboxImage(currentLightboxIndex + 1));
+
+    // Keyboard — uses signal to auto-cleanup on navigation
+    window.addEventListener('keydown', (event) => {
+      if (sessionLightbox?.hidden) return;
+      trapFocus(event);
+      if (event.key === 'Escape') closeLightbox();
+      if (event.key === 'ArrowLeft') showLightboxImage(currentLightboxIndex - 1);
+      if (event.key === 'ArrowRight') showLightboxImage(currentLightboxIndex + 1);
+    }, { signal });
+
+    // Touch swipe (vertical)
+    let touchStartY = 0;
+    sessionLightbox.addEventListener('touchstart', (e) => {
+      touchStartY = (e as TouchEvent).touches[0].clientY;
+    }, { passive: true, signal });
+    sessionLightbox.addEventListener('touchend', (e) => {
+      const deltaY = (e as TouchEvent).changedTouches[0].clientY - touchStartY;
+      if (Math.abs(deltaY) > 50) {
+        deltaY < 0
+          ? showLightboxImage(currentLightboxIndex + 1)
+          : showLightboxImage(currentLightboxIndex - 1);
+      }
+    }, { passive: true, signal });
+
+    // Scroll hide/show session nav
+    let lastScrollY = window.scrollY;
+    window.addEventListener('scroll', () => {
+      const currentY = window.scrollY;
+      if (currentY > lastScrollY && currentY > 150) {
+        sessionPageNav?.classList.add('is-hidden');
+      } else {
+        sessionPageNav?.classList.remove('is-hidden');
+      }
+      lastScrollY = currentY;
+    }, { passive: true, signal });
+  });
 </script>

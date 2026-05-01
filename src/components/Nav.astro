@@ -310,106 +310,100 @@ const isPrivacyActive = currentPath.includes('datenschutz') || currentPath.inclu
 
 <script>
   const WHITE_ICON_BASE = '/logos/phosphoricons/white';
-  const themeBtn = document.getElementById('themeQuickToggle') as HTMLButtonElement;
-  const themeIcon = document.getElementById('themeQuickIcon') as HTMLImageElement;
-  const navBrandLogo = document.getElementById('navBrandLogo') as HTMLImageElement;
-  const langBtn = document.getElementById('langQuickToggle') as HTMLButtonElement;
-  const langLabel = document.getElementById('langQuickLabel') as HTMLElement;
   const THEME_KEY = 'lp-theme-mode';
-  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-  const storedTheme = localStorage.getItem(THEME_KEY);
-  const prefersDark = mediaQuery.matches;
-  let currentMode = storedTheme === 'dark' || storedTheme === 'light'
-    ? storedTheme
-    : (prefersDark ? 'dark' : 'light');
 
-  function updateThemeButton(mode: string) {
+  function updateThemeBtnState(mode: string) {
+    const themeBtn = document.getElementById('themeQuickToggle') as HTMLButtonElement | null;
+    const themeIcon = document.getElementById('themeQuickIcon') as HTMLImageElement | null;
     if (!themeBtn || !themeIcon) return;
-    themeIcon.src = mode === 'dark'
-      ? `${WHITE_ICON_BASE}/moon.svg`
-      : `${WHITE_ICON_BASE}/sun.svg`;
+    themeIcon.src = mode === 'dark' ? `${WHITE_ICON_BASE}/moon.svg` : `${WHITE_ICON_BASE}/sun.svg`;
     themeBtn.setAttribute('aria-label', mode === 'dark'
       ? (themeBtn.dataset.labelDark || 'Dark Mode')
       : (themeBtn.dataset.labelLight || 'Light Mode'));
   }
 
-  if (themeIcon && !themeIcon.src.includes('/logos/phosphoricons/white/')) {
-    const current = themeIcon.getAttribute('src') || '';
-    themeIcon.src = current.replace('/logos/phosphoricons/', `${WHITE_ICON_BASE}/`);
-  }
-
-  function applyTheme(mode: string) {
-    document.documentElement.setAttribute('data-theme', mode);
-    (window as any).__updateFavicon?.(mode);
-    updateThemeButton(mode);
-    if (navBrandLogo) {
-      navBrandLogo.src = mode === 'dark' ? '/logos/lplogo-white.svg' : '/logos/lplogo-black.svg';
-    }
-  }
-
-  function toggleMode() {
-    currentMode = currentMode === 'dark' ? 'light' : 'dark';
-    localStorage.setItem(THEME_KEY, currentMode);
-    applyTheme(currentMode);
-  }
-  themeBtn?.addEventListener('click', toggleMode);
-
-  mediaQuery.addEventListener('change', (e) => {
+  // Media query listener — registered once at module level
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
     const saved = localStorage.getItem(THEME_KEY);
     if (saved === 'dark' || saved === 'light') return;
-    currentMode = e.matches ? 'dark' : 'light';
-    applyTheme(currentMode);
+    const mode = e.matches ? 'dark' : 'light';
+    localStorage.setItem(THEME_KEY, mode);
+    document.documentElement.setAttribute('data-theme', mode);
+    (window as any).__updateFavicon?.(mode);
+    updateThemeBtnState(mode);
+    const navLogo = document.getElementById('navBrandLogo') as HTMLImageElement | null;
+    if (navLogo) navLogo.src = mode === 'dark' ? '/logos/lplogo-white.svg' : '/logos/lplogo-black.svg';
   });
 
-  const path = window.location.pathname;
-  const isPathEN = path.startsWith('/en');
-  const enToDe: Record<string, string> = {
-    '/en/': '/',
-    '/en/site-notice': '/impressum',
-    '/en/privacy-policy': '/datenschutz'
-  };
-  const deToEn: Record<string, string> = {
-    '/': '/en/',
-    '/impressum': '/en/site-notice',
-    '/datenschutz': '/en/privacy-policy'
-  };
+  document.addEventListener('astro:page-load', () => {
+    const themeBtn = document.getElementById('themeQuickToggle') as HTMLButtonElement | null;
+    const navBrandLogo = document.getElementById('navBrandLogo') as HTMLImageElement | null;
+    const langBtn = document.getElementById('langQuickToggle') as HTMLButtonElement | null;
+    const langLabel = document.getElementById('langQuickLabel') as HTMLElement | null;
 
-  const storedLang = localStorage.getItem('lp-lang-mode');
-  const browserLang = (navigator.language || '').toLowerCase().startsWith('en') ? 'en' : 'de';
-  let currentLangMode = storedLang === 'de' || storedLang === 'en'
-    ? storedLang
-    : browserLang;
+    // Apply current theme to nav elements
+    const currentMode = (document.documentElement.getAttribute('data-theme') as 'dark' | 'light') ||
+      (localStorage.getItem(THEME_KEY) === 'dark' ? 'dark' : 'light');
 
-  if (!storedLang) {
-    if (currentLangMode === 'en' && !isPathEN) {
-      window.location.href = deToEn[path] ?? `/en${path === '/' ? '/' : path}`;
-    } else if (currentLangMode === 'de' && isPathEN) {
-      window.location.href = enToDe[path] ?? (path.replace(/^\/en/, '') || '/');
+    function applyThemeToNav(mode: string) {
+      document.documentElement.setAttribute('data-theme', mode);
+      (window as any).__updateFavicon?.(mode);
+      updateThemeBtnState(mode);
+      if (navBrandLogo) navBrandLogo.src = mode === 'dark' ? '/logos/lplogo-white.svg' : '/logos/lplogo-black.svg';
     }
-  }
 
-  function updateLangButton(mode: string) {
-    if (!langLabel || !langBtn) return;
-    langLabel.textContent = mode.toUpperCase();
-    langBtn.setAttribute('aria-label', mode === 'de'
-      ? (langBtn.dataset.labelDe || 'DE')
-      : (langBtn.dataset.labelEn || 'EN'));
-    document.documentElement.setAttribute('lang', mode);
-  }
-  updateLangButton(currentLangMode);
+    applyThemeToNav(currentMode);
 
-  langBtn?.addEventListener('click', () => {
-    const mode = currentLangMode === 'de' ? 'en' : 'de';
-    localStorage.setItem('lp-lang-mode', mode);
-    currentLangMode = mode;
-    updateLangButton(mode);
+    themeBtn?.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem(THEME_KEY, next);
+      applyThemeToNav(next);
+    });
 
-    if (mode === 'en' && !isPathEN) {
-      window.location.href = deToEn[path] ?? `/en${path === '/' ? '/' : path}`;
-    } else if (mode === 'de' && isPathEN) {
-      window.location.href = enToDe[path] ?? (path.replace(/^\/en/, '') || '/');
+    // Language
+    const path = window.location.pathname;
+    const isPathEN = path.startsWith('/en');
+    const enToDe: Record<string, string> = {
+      '/en/': '/', '/en/site-notice': '/impressum', '/en/privacy-policy': '/datenschutz'
+    };
+    const deToEn: Record<string, string> = {
+      '/': '/en/', '/impressum': '/en/site-notice', '/datenschutz': '/en/privacy-policy'
+    };
+
+    const storedLang = localStorage.getItem('lp-lang-mode');
+    const browserLang = (navigator.language || '').toLowerCase().startsWith('en') ? 'en' : 'de';
+    let currentLangMode = storedLang === 'de' || storedLang === 'en' ? storedLang : browserLang;
+
+    if (!storedLang) {
+      if (currentLangMode === 'en' && !isPathEN) {
+        window.location.href = deToEn[path] ?? `/en${path === '/' ? '/' : path}`;
+        return;
+      } else if (currentLangMode === 'de' && isPathEN) {
+        window.location.href = enToDe[path] ?? (path.replace(/^\/en/, '') || '/');
+        return;
+      }
     }
+
+    function updateLangButton(mode: string) {
+      if (!langLabel || !langBtn) return;
+      langLabel.textContent = mode.toUpperCase();
+      langBtn.setAttribute('aria-label', mode === 'de'
+        ? (langBtn.dataset.labelDe || 'DE')
+        : (langBtn.dataset.labelEn || 'EN'));
+      document.documentElement.setAttribute('lang', mode);
+    }
+    updateLangButton(currentLangMode);
+
+    langBtn?.addEventListener('click', () => {
+      const mode = currentLangMode === 'de' ? 'en' : 'de';
+      localStorage.setItem('lp-lang-mode', mode);
+      currentLangMode = mode;
+      updateLangButton(mode);
+      if (mode === 'en' && !isPathEN) {
+        window.location.href = deToEn[path] ?? `/en${path === '/' ? '/' : path}`;
+      } else if (mode === 'de' && isPathEN) {
+        window.location.href = enToDe[path] ?? (path.replace(/^\/en/, '') || '/');
+      }
+    });
   });
-
-  applyTheme(currentMode);
 </script>
