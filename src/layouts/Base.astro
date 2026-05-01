@@ -4,7 +4,9 @@ export interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  ogImageAlt?: string;
   ogType?: string;
+  articleDate?: string;
   canonical?: string;
   schema?: object;
   hreflangDe?: string;
@@ -15,7 +17,9 @@ const {
   title = 'LumeraPixel – Fotografie by MaximalNico',
   description = 'Lost Places, Automotive & Aerial Photography. LumeraPixel ist das Foto-Projekt von MaximalNico – Nico Henkel aus Bayern.',
   ogImage = 'https://lumerapixel.com/logos/lplong.svg',
+  ogImageAlt = 'LumeraPixel',
   ogType = 'website',
+  articleDate,
   canonical,
   schema,
   hreflangDe,
@@ -23,6 +27,7 @@ const {
   htmlLang = 'de',
 } = Astro.props;
 const canonicalURL = canonical ?? Astro.url.href;
+const ogLocale = htmlLang === 'en' ? 'en_US' : 'de_DE';
 ---
 <!doctype html>
 <html lang={htmlLang} data-theme="dark">
@@ -41,18 +46,22 @@ const canonicalURL = canonical ?? Astro.url.href;
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={ogImage} />
+  <meta property="og:image:alt" content={ogImageAlt} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:type" content={ogType} />
   <meta property="og:url" content={canonicalURL} />
   <meta property="og:site_name" content="LumeraPixel" />
-  <meta property="og:locale" content="de_DE" />
+  <meta property="og:locale" content={ogLocale} />
+  {ogType === 'article' && <meta property="article:author" content="Nico Henkel" />}
+  {ogType === 'article' && articleDate && <meta property="article:published_time" content={articleDate} />}
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
+  <meta name="twitter:image:alt" content={ogImageAlt} />
 
   <!-- Performance -->
   <link rel="preconnect" href="https://lumerapixel.b-cdn.net" />

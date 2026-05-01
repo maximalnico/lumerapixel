@@ -41,15 +41,40 @@ const siteUrl = 'https://lumerapixel.com';
 const pageUrl = isEN ? `${siteUrl}/en/sessions/${slug}` : `${siteUrl}/sessions/${slug}`;
 const deUrl = `${siteUrl}/sessions/${slug}`;
 const enUrl = `${siteUrl}/en/sessions/${slug}`;
-const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.svg`;
+const ogImg = photos[0] ?? `${siteUrl}/logos/lplong.svg`;
+const description = isEN
+  ? (session.description_en || session.subtitle_en || session.title_en || title)
+  : (session.description_de || session.subtitle_de || session.title_de || title);
+const isoDate = `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ImageGallery',
+  name: title,
+  description,
+  url: pageUrl,
+  datePublished: isoDate,
+  locationCreated: session.location ? { '@type': 'Place', name: session.location } : undefined,
+  author: { '@type': 'Person', name: 'Nico Henkel', url: siteUrl },
+  publisher: { '@type': 'Organization', name: 'LumeraPixel', url: siteUrl },
+  image: photos.slice(0, 6).map((src, i) => ({
+    '@type': 'ImageObject',
+    url: src,
+    name: `${title} – ${isEN ? 'Photo' : 'Foto'} ${i + 1}`,
+    author: { '@type': 'Person', name: 'Nico Henkel' },
+  })),
+};
 ---
 
 <Base
   title={`${title} – LumeraPixel`}
-  description={subtitle || title}
+  description={description}
   ogImage={ogImg}
+  ogImageAlt={title}
   ogType="article"
+  articleDate={isoDate}
   canonical={pageUrl}
+  {schema}
   hreflangDe={deUrl}
   hreflangEn={enUrl}
   htmlLang={lang}
@@ -135,6 +160,7 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
       <img src="/logos/phosphoricons/white/caret-right.svg" alt="" />
     </button>
     <img class="lightbox__img" id="sessionLightboxImage" src="" alt="" />
+    <div class="lightbox__counter" id="lightboxCounter" aria-live="polite">1 / {session.images}</div>
     <div class="lightbox__swipe-hint" id="lightboxSwipeHint" aria-hidden="true">
       <img src="/logos/phosphoricons/white/caret-up.svg" alt="" />
       <span>{t(lang, 'lightbox.swipe')}</span>
@@ -307,6 +333,30 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   }
   .lightbox__close img { width: 2.7rem; height: 2.7rem; }
   .lightbox__close:hover { border-color: #E31C8D; }
+
+  .lightbox__counter {
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    height: 4.4rem;
+    padding: 0 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2.7px solid var(--session-border);
+    border-radius: 0 14px 0 14px;
+    background: #000;
+    font-family: 'Satoshi';
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+    color: #fff;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
   .lightbox__nav {
     position: absolute;
     top: 50%;
@@ -370,6 +420,7 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   :global([data-theme="light"]) .session-hero__scroll-indicator { background: #fff; }
   :global([data-theme="light"]) .lightbox__close { background: #fff; }
   :global([data-theme="light"]) .lightbox__nav { background: #fff; }
+  :global([data-theme="light"]) .lightbox__counter { background: #fff; color: #000; }
   :global([data-theme="light"]) .lightbox { --session-border: #404040; }
   :global([data-theme="light"]) .session-hero__side-nav img,
   :global([data-theme="light"]) .session-hero__scroll-indicator img,
@@ -396,6 +447,7 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
     .lightbox__nav { display: none; }
     .lightbox__close { width: 3rem; height: 3rem; }
     .lightbox__close img { width: 1.4rem; height: 1.4rem; }
+    .lightbox__counter { height: 3rem; font-size: 0.78rem; padding: 0 0.8rem; }
     .lightbox__swipe-hint { border-color: #E31C8D; }
     .session-hero__overlay { padding: 0.32rem 0.38rem; }
     .session-hero__textlab { width: 100%; }
@@ -466,6 +518,7 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   const sessionLightboxClose = document.getElementById('sessionLightboxClose') as HTMLButtonElement | null;
   const sessionLightboxPrev = document.getElementById('sessionLightboxPrev') as HTMLButtonElement | null;
   const sessionLightboxNext = document.getElementById('sessionLightboxNext') as HTMLButtonElement | null;
+  const lightboxCounter = document.getElementById('lightboxCounter') as HTMLElement | null;
   const photoButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('.photo-item'));
   const photoSources = photoButtons
     .map((btn) => btn.querySelector('img'))
@@ -488,6 +541,7 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
     currentLightboxIndex = normalized;
     sessionLightboxImg.src = photoSources[normalized].src;
     sessionLightboxImg.alt = photoSources[normalized].alt;
+    if (lightboxCounter) lightboxCounter.textContent = `${normalized + 1} / ${photoSources.length}`;
   }
 
   let lastFocusedBtn: HTMLElement | null = null;
