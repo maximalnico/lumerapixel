@@ -29,6 +29,7 @@ const canonicalURL = canonical ?? Astro.url.href;
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" id="metaThemeColor" content="#000000" />
   <title>{title}</title>
   <meta name="description" content={description} />
   <meta name="author" content="Nico Henkel" />
@@ -80,6 +81,8 @@ const canonicalURL = canonical ?? Astro.url.href;
       const updateFavicon = (mode) => {
         const favicon = document.getElementById('favicon');
         if (favicon) favicon.setAttribute('href', mode === 'dark' ? '/logos/lplogo-white.svg' : '/logos/lplogo-black.svg');
+        const themeMeta = document.getElementById('metaThemeColor');
+        if (themeMeta) themeMeta.setAttribute('content', mode === 'dark' ? '#000000' : '#ffffff');
       };
 
       window.__updateFavicon = updateFavicon;
