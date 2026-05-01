@@ -20,8 +20,8 @@ const allSessions: any[] = Array.isArray(sessionsData)
 
 const sorted = [...allSessions].sort((a, b) => parseDMY(b.date) - parseDMY(a.date));
 const headerSession = sorted[0];
-const headerImage = 'https://lumerapixel.b-cdn.net/collage.webp';
-const allSessionCovers = sorted.map((s: any) => `${s.folder}/000.webp`).filter(Boolean);
+const headerImage = 'https://lumerapixel.b-cdn.net/collage.webp?width=1800&quality=85';
+const allSessionCovers = sorted.map((s: any) => `${s.folder}/000.webp?width=1400&quality=85`).filter(Boolean);
 const totalPhotos = allSessions.reduce((s: number, ses: any) => s + (ses.images || 0), 0);
 const featuredSessions = allSessions.filter((s: any) => s.featured).length >= 2
   ? allSessions.filter((s: any) => s.featured).slice(0, 2)
@@ -121,10 +121,10 @@ const schema = {
         </div>
         <div class="featured-split__grid">
           {featuredSessions.map((s: any) => {
-            const cover = `${s.folder}/000.webp`;
+            const cover = `${s.folder}/000.webp?width=900&quality=84`;
             return (
               <a href={sessionPath(s.slug)} class="featured-split__item">
-                <img src={cover} alt={st(s)} loading="lazy" decoding="async" />
+                <img src={cover} alt={st(s)} loading="lazy" decoding="async" width="900" height="600" />
                 <span class="featured-split__overlay">
                   <span class="featured-split__cat">{sc(s)}</span>
                   <span class="featured-split__title">{st(s)}</span>
@@ -143,7 +143,7 @@ const schema = {
         class="latest-session-strip"
         aria-label={t(lang, 'section.all_aria')}
       >
-        <img id="allSessionsSlideshowImage" src={`${headerSession.folder}/000.webp`} data-slides={allSessionCovers.join('|')} alt={st(headerSession)} loading="lazy" decoding="async" />
+        <img id="allSessionsSlideshowImage" src={`${headerSession.folder}/000.webp?width=1400&quality=85`} data-slides={allSessionCovers.join('|')} alt={st(headerSession)} loading="lazy" decoding="async" />
         <div class="masonry-home__filters-lab latest-session-strip__heading-lab">
           <h2 class="masonry-home__filters-title">{t(lang, 'section.all')}</h2>
         </div>
@@ -164,11 +164,11 @@ const schema = {
 
       <div class="masonry-home__grid">
         {sorted.map((s: any, i: number) => {
-          const cover = `${s.folder}/000.webp`;
+          const cover = `${s.folder}/000.webp?width=700&quality=82`;
           const category = sc(s);
           return (
             <a href={sessionPath(s.slug)} class="masonry-card" data-category={category}>
-              <img src={cover} alt={st(s)} loading={i < 4 ? 'eager' : 'lazy'} decoding="async" />
+              <img src={cover} alt={st(s)} loading={i < 4 ? 'eager' : 'lazy'} decoding="async" width="700" />
               <span class="masonry-card__overlay">
                 <span class="masonry-card__pill masonry-card__pill--cat">{category}</span>
                 <span class="masonry-card__pill masonry-card__pill--title">{st(s)}</span>
