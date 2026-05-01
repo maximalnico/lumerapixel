@@ -54,7 +54,8 @@ const canonicalURL = canonical ?? Astro.url.href;
   <meta name="twitter:image" content={ogImage} />
 
   <!-- Performance -->
-  <link rel="dns-prefetch" href="https://lumerapixel.com" />
+  <link rel="preconnect" href="https://lumerapixel.b-cdn.net" />
+  <link rel="dns-prefetch" href="https://lumerapixel.b-cdn.net" />
 
   <!-- hreflang -->
   {hreflangDe && <link rel="alternate" hreflang="de" href={hreflangDe} />}
@@ -107,7 +108,6 @@ const canonicalURL = canonical ?? Astro.url.href;
     /* ── DARK TOKENS ── */
     :root,
     [data-theme="dark"] {
-      --accent: #404040;
       --accent: #404040;
       --bg:            #000000;
       --bg-card:       rgba(255,255,255,0.04);
