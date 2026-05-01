@@ -77,10 +77,10 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
     </div>
   )}
 
-  <main class="session-page">
+  <main class="session-page" id="main-content">
     <header class="session-hero">
       <div class="session-hero__body">
-        <img src={photos[0]} alt={title} class="session-hero__image" loading="eager" decoding="async" />
+        <img src={photos[0]} alt={title} class="session-hero__image" loading="eager" fetchpriority="high" decoding="async" />
         <div class="session-hero__overlay">
           <div class="session-hero__textlab">
             <div class="session-hero__meta">
@@ -490,21 +490,43 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
     sessionLightboxImg.alt = photoSources[normalized].alt;
   }
 
+  let lastFocusedBtn: HTMLElement | null = null;
+
+  function openLightbox(index: number) {
+    if (!sessionLightbox) return;
+    lastFocusedBtn = document.activeElement as HTMLElement;
+    showLightboxImage(index);
+    sessionLightbox.hidden = false;
+    document.body.style.overflow = 'hidden';
+    sessionLightboxClose?.focus();
+  }
+
   function closeLightbox() {
     if (!sessionLightbox || !sessionLightboxImg) return;
     sessionLightbox.hidden = true;
     sessionLightboxImg.src = '';
     document.body.style.overflow = '';
+    lastFocusedBtn?.focus();
+  }
+
+  const focusableSelectors = '#sessionLightboxClose, #sessionLightboxPrev, #sessionLightboxNext, #sessionLightboxBackdrop';
+
+  function trapFocus(e: KeyboardEvent) {
+    if (sessionLightbox?.hidden || e.key !== 'Tab') return;
+    const focusable = Array.from(sessionLightbox!.querySelectorAll<HTMLElement>(focusableSelectors));
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
   }
 
   photoButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
-      const img = btn.querySelector('img');
-      if (!img || !sessionLightbox || !sessionLightboxImg) return;
       const clickedIndex = Number.parseInt(btn.dataset.index || '0', 10) || 0;
-      showLightboxImage(clickedIndex);
-      sessionLightbox.hidden = false;
-      document.body.style.overflow = 'hidden';
+      openLightbox(clickedIndex);
     });
   });
 
@@ -514,6 +536,7 @@ const ogImg = photos[0] ? `${siteUrl}${photos[0]}` : `${siteUrl}/logos/lplong.sv
   sessionLightboxNext?.addEventListener('click', () => showLightboxImage(currentLightboxIndex + 1));
   window.addEventListener('keydown', (event) => {
     if (sessionLightbox?.hidden) return;
+    trapFocus(event);
     if (event.key === 'Escape') closeLightbox();
     if (event.key === 'ArrowLeft') showLightboxImage(currentLightboxIndex - 1);
     if (event.key === 'ArrowRight') showLightboxImage(currentLightboxIndex + 1);

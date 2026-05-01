@@ -73,6 +73,7 @@ const canonicalURL = canonical ?? Astro.url.href;
   <!-- Theme init: vor render setzen um FOUC zu verhindern -->
   <script is:inline>
     (function() {
+      localStorage.removeItem('lp-theme');
       const stored = localStorage.getItem('lp-theme-mode');
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const theme = (stored === 'dark' || stored === 'light') ? stored : (prefersDark ? 'dark' : 'light');

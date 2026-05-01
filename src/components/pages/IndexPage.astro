@@ -97,7 +97,7 @@ const schema = {
   htmlLang={lang}
 >
   <Nav />
-  <main>
+  <main id="main-content">
     <section class="masonry-home">
       <section class="fullscreen-header motion-safe:animate-in motion-safe:fade-in" aria-label="Header">
         <div class="fullscreen-header__frame">
@@ -151,11 +151,11 @@ const schema = {
 
       <section class="masonry-home__filters" aria-label="Session Filter">
         <div class="masonry-home__filters-controls">
-          <button class="masonry-home__filter-btn is-active" data-session-filter="all" type="button">
+          <button class="masonry-home__filter-btn is-active" data-session-filter="all" type="button" aria-pressed="true">
             {t(lang, 'filter.all')}
           </button>
           {sessionCategories.map((category) => (
-            <button class="masonry-home__filter-btn" data-session-filter={category} type="button">
+            <button class="masonry-home__filter-btn" data-session-filter={category} type="button" aria-pressed="false">
               {category}
             </button>
           ))}
@@ -732,7 +732,9 @@ const schema = {
     });
 
     filterButtons.forEach((btn) => {
-      btn.classList.toggle('is-active', btn.dataset.sessionFilter === filterValue);
+      const active = btn.dataset.sessionFilter === filterValue;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-pressed', String(active));
     });
   }
 
